@@ -198,8 +198,8 @@ $info2[]=array();
 
  }   */
 
-$q1="SELECT distinct lotno+division as lotno ,division FROM enum WHERE division = '$divi' and year = '$kapa' order by lotno";
-
+$q1="SELECT distinct lotno ,division FROM enum WHERE division = '$divi' and year = '$kapa' order by lotno";
+echo $q1."<br />";
 $rs=mysql_query($q1) or die (mysql_error());
 if(mysql_num_rows($rs)==0)
 
@@ -222,6 +222,9 @@ while($data=mysql_fetch_array($rs))
 	//continue;
 	$lotno=$data['lotno'];
 	$divi=$data['division'];
+	//".addslashes($lotno)."
+	
+	$lotno=addslashes($lotno);
 	//	$sum=$data['sum'];
 
 
@@ -229,7 +232,7 @@ while($data=mysql_fetch_array($rs))
 
 	echo ' <tr>
 				  	 <td>'.$i.'</td>
-                    <td>'.$lotno.'/'.$kapa.'('.getExten($lotno,$divi).')</td>
+                    <td>'.$data['lotno'].'/'.$kapa.'('.getExten($lotno,$divi).')</td>
                     <td>'.sum_blazes($lotno,$divi,$kapa-3).'</td>
                     <td>'.sum_blazes($lotno,$divi,$kapa-2).'</td>
                     <td>'.sum_blazes($lotno,$divi,$kapa-1).'</td>

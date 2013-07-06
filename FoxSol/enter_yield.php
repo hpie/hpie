@@ -96,7 +96,7 @@ while($info = mysql_fetch_array( $data ))
 
 	$yf_lot="";
 	$yield_fixed="";
-	$yf_data = mysql_query("SELECT lotno, yield_fixed FROM yield_fixed where lotno='$lot'") or die("No table");
+	$yf_data = mysql_query("SELECT lotno, yield_fixed FROM yield_fixed where lotno='".addslashes($lot)."'") or die("No table");
 	while($yf_info = mysql_fetch_array( $yf_data ))
 	{
 		$yf_lot=$yf_info['lotno'];
