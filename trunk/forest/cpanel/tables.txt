@@ -1,0 +1,101 @@
+-- phpMyAdmin SQL Dump
+-- version 2.11.5
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Sep 23, 2011 at 03:35 PM
+-- Server version: 5.0.51
+-- PHP Version: 5.2.5
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Database: `hishimla_forest`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `c_volume_detail`
+--
+
+CREATE TABLE `c_volume_detail` (
+  `id` int(11) NOT NULL auto_increment,
+  `i_table_id` int(11) NOT NULL COMMENT 'forest department key',
+  `i_tree_type_id` int(11) NOT NULL,
+  `i_category_id` int(11) NOT NULL,
+  `volume` int(200) NOT NULL,
+  `i_status` int(11) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+
+--
+-- Dumping data for table `c_volume_detail`
+--
+
+INSERT INTO `c_volume_detail` (`id`, `i_table_id`, `i_tree_type_id`, `i_category_id`, `volume`, `i_status`) VALUES
+(1, 0, 0, 1, 1, 0),
+(2, 0, 0, 2, 1, 0),
+(3, 0, 0, 3, 0, 0),
+(4, 0, 0, 4, 0, 0),
+(5, 0, 0, 5, 0, 0),
+(6, 0, 0, 6, 0, 0),
+(7, 0, 0, 7, 1, 0),
+(8, 0, 0, 8, 0, 0),
+(9, 0, 0, 9, 1, 0),
+(10, 0, 0, 10, 0, 0),
+(11, 1, 5, 1, 1, 0),
+(12, 1, 5, 2, 0, 0),
+(13, 1, 5, 3, 0, 0),
+(14, 1, 5, 4, 1, 0),
+(15, 1, 5, 5, 1, 0),
+(16, 1, 5, 6, 1, 0),
+(17, 1, 5, 7, 1, 0),
+(18, 1, 5, 8, 111, 0),
+(19, 1, 5, 9, 111, 0),
+(20, 1, 5, 10, 0, 0),
+(21, 2, 0, 1, 0, 0),
+(22, 2, 0, 2, 0, 0),
+(23, 2, 0, 3, 0, 0),
+(24, 2, 0, 4, 0, 0),
+(25, 2, 0, 5, 1, 0),
+(26, 2, 0, 6, 0, 0),
+(27, 2, 0, 7, 1, 0),
+(28, 2, 0, 8, 0, 0),
+(29, 2, 0, 9, 1, 0),
+(30, 2, 0, 10, 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `m_timber_type`
+--
+
+CREATE TABLE `m_timber_type` (
+  `id` int(11) NOT NULL auto_increment,
+  `i_timber_id` int(11) NOT NULL,
+  `vc_name` varchar(200) NOT NULL,
+  `volume` float NOT NULL,
+  `i_status` int(11) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+
+--
+-- Dumping data for table `m_timber_type`
+--
+
+INSERT INTO `m_timber_type` (`id`, `i_timber_id`, `vc_name`, `volume`, `i_status`) VALUES
+(4, 21, '21x21', 0, 1),
+(5, 21, '18x18', 0, 1),
+(6, 21, '16x16', 0, 1),
+(7, 21, '13x13', 0, 1),
+(8, 22, '350x26x13', 0, 1),
+(9, 22, '275x26x13', 0, 1),
+(10, 22, '244x26x13', 0, 1),
+(11, 22, '183x26x13', 0, 1),
+(12, 22, ' 305x21x10', 0, 1),
+(13, 22, ' 244x21x10', 0, 1),
+(14, 23, 'F/Wood', 0, 1),
+(15, 23, 'D/Dima', 0, 1),
+(16, 24, 'Hakk. 85Cm and above', 0, 1),
+(17, 24, 'Hakk. below 85Cm', 0, 1);

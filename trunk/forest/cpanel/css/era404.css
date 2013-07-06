@@ -1,0 +1,554 @@
+/*----------------------------------------------------------*/
+/* GUI ELEMENTS */
+/*----------------------------------------------------------*/
+html, body	{
+	/*background: #3C507A url(http://www.era404.com/img/bg.jpg) repeat-x left top;*/
+}
+#header	{
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 0;
+	width: 826px;
+	height: 12px !important;
+	background:url(http://www.era404.com/img/top.jpg) no-repeat center bottom; 
+}
+#bodyDiv	{
+	margin-left: auto;
+	margin-right: auto;
+	width: 826px;
+}
+#sandwich {
+	width: 826px;
+	background: #CCC url(http://www.era404.com/img/bgTile.jpg) repeat-y center top;
+	font-size: 0px !important;
+	line-height: 0 !important;
+}
+.myleft {
+	background: url(http://www.era404.com/img/leftTile.jpg) repeat-y left top;
+	width: 13px;
+	float: left;
+}
+.content {
+	margin-top: 0;
+	width: 800px;
+	color: #CCCCCC;
+	float: left;
+	overflow: hidden;
+}
+.myright {
+	background: url(http://www.era404.com/img/rightTile.jpg) repeat-y left top;
+	width: 13px;
+	float: left;
+}
+#blueline	{
+	background:#2c3f62;
+	font-size: 10px;
+	color: white;
+	line-height:1;
+}
+.midrow	{
+	background: url(http://www.era404.com/img/midrowBG.jpg) repeat-y left top;
+	float: left;
+}
+.floater	{
+	float: left;
+}
+.float50	{
+	float: left;
+	width: 48%;
+	border: 1px solid;
+}
+.clearing	{
+	clear: both;
+	height: 1px;
+	line-height: 1px;
+	font-size: 1px;
+	background: url(http://www.era404.com/img/bottom.jpg) no-repeat center top;
+}
+#footer	{
+	padding-top: 8px;
+	letter-spacing: 1px;
+	width: 826px;
+	height:16px;
+	text-align: center;
+	color: #506288;
+	font: 7pt Arial Narrow, Helvetica Narrow !important;
+	background: url(http://www.era404.com/img/bottom.jpg) no-repeat center top;
+}
+#titleBar	{
+	background: #3C507A url(http://www.era404.com/img/titleBarTile.jpg) repeat-x left top;
+	line-height:1 !important;
+	height: 33px !important;
+}
+#textArea	{
+	width: 586px;
+	height: 100%;
+	padding-top: 15px;
+	float: left;
+}
+.extArea	{
+	width: 796px;
+	background-color: #FFFFFF;
+	padding-top: 15px;
+	float: left;
+}
+.sucErr	{
+	border: 1px solid #6c90d8;
+	background-color: #eff4ff;
+	width: 400px;
+}
+.tableHeader	{
+	background-color: #3C507A;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+#functionArea	{
+	width: 214px;
+	height: 100%;
+	padding-top: 15px;
+	float: left;
+}
+.leftText	{
+	background: url(http://www.era404.com/img/leftText.jpg) no-repeat left top;
+}
+.rightText	{
+	background: url(http://www.era404.com/img/rightText.jpg) no-repeat left top;
+}
+.functionRight	{
+	background: url(http://www.era404.com/img/functionRight.jpg) no-repeat left top;
+}
+.functionLeft	{
+	background: url(http://www.era404.com/img/functionLeft.jpg) no-repeat left top;
+}
+.fctRight	{
+	height: 100%;
+	background: url(http://www.era404.com/img/functionRightTile.jpg) repeat-y left top;
+	float: left;
+}
+.fctLeft	{
+	height: 100%;
+	background: url(http://www.era404.com/img/functionLeftTile.jpg) repeat-y left top;
+	float: left;
+}
+.previewItem	{
+	float: left;
+	border-top: 1px solid #EEEEEE;
+	height: 150px;
+	width: 194px;
+	padding-top: 10px;
+}
+.previewIcon	{
+	float: left;
+}
+#portIcons	{
+	padding-left: 10px;
+}
+.portIcon	{
+	float: left;
+	border: 1px solid;
+	border-color: #FFFFFF;
+}
+.portIcon:hover	{
+	float: left;
+	border: 1px solid;
+	border-color: #FC7800;
+}
+#portText	{
+	width: 255px;
+	height: 100%;
+	padding-top: 15px;
+	float: left;
+	padding-left: 33px;
+}
+#reelText	{
+	width: 250px;
+	height: 100%;
+	padding-top: 15px;
+	float: left;
+	padding-left: 33px;
+	height: 300px;
+}
+#portImage	{
+	float: left;
+	padding-bottom: 20px;
+	padding-right: 15px;
+}
+#functStretch	{
+	height: 400px;
+}
+#nav	{
+	height: 45px;
+	line-height: 0;
+}
+/*----------------------------------------------------------*/
+/* FORMATTING ELEMENTS */
+/*----------------------------------------------------------*/
+a	{
+	color: #FC7800;
+	text-decoration: none;
+}
+a:hover	{
+	text-decoration: underline;
+}
+#pageLinks	{
+	padding-top: 0;
+	padding-left: 15px;
+	padding-bottom: 10px;
+	text-align: left;
+}
+#topPages	{
+	padding-top: 0;
+	padding-right: 20px;
+	text-align: right;
+}
+#bottomPages	{
+	padding-top: 0;
+	padding-left: 15px;
+	text-align: left;
+	float: right;
+}
+#homeLinks	{
+	border-top: #CCC 1px solid;
+	padding-top: 14px;
+	padding-bottom: 14px;
+	float: left;
+}
+.hlHome	{
+	width: 654px;
+}
+.hlInt	{
+	width: 100%;
+}
+#homeLinks a	{
+	font: bold 8pt Arial Narrow, Helvetica Narrow !important;
+	color: #777777;
+	padding-left: 20px;
+	padding-right: 20px;
+	text-decoration: none;
+}
+#homeLinks a:hover	{
+	font: bold 8pt Arial Narrow, Helvetica Narrow !important;
+	color: #FC7800;
+	padding-left: 20px;
+	padding-right: 20px;
+	text-decoration: none;
+}
+#bottomLinks	{
+	padding-top: 5px;
+	height: 16px;
+	border-top: 1px solid #CCCCCC;
+	background: #F0F2F3;
+	float: left;
+	width: 800px;
+}
+#bottomLinks a	{
+	font: 7pt Arial Narrow, Helvetica Narrow !important;
+	text-align: center;
+	letter-spacing: 1px;
+	color: #2C3F62;
+	text-decoration: none;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+#bottomLinks a:hover	{
+	font: 7pt Arial Narrow, Helvetica Narrow !important;
+	text-align: center;
+	letter-spacing: 1px;
+	color: #FC7800;
+	text-decoration: none;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+.projectLink	{
+	font: 7pt Verdana;
+	font-weight: bold;
+	color: #FC7800;
+	text-decoration: none;
+	line-height: 15px;
+}
+.projectLink:hover	{
+	font: 7pt Verdana;
+	font-weight: bold;
+	color: #FC7800;
+	text-decoration: underline;
+	line-height: 15px;
+}
+.boldLinks	{
+	font-family: Arial Narrow, Helvetica Narrow;
+	font-weight: bold;
+	font-size: 11px;
+	color: #3C507A;
+	text-decoration: none;
+}
+.boldLinks:hover	{
+	font-family: Arial Narrow, Helvetica Narrow;
+	font-weight: bold;
+	font-size: 11px;
+	color: #FC7800;
+	text-decoration: underline;
+}
+#quickSearch	{
+	margin-top: 9px;
+	float: right;
+	height: 10px;
+	padding-right: 40px;
+	line-height: 0;
+}
+.dropDown	{
+	font: 9px Verdana, Arial, Helvetica, sans-serif !important;
+	font-size: 9px !important;
+	color: #999999;
+	font-size: 9px !important;
+	width: 130px !important;
+	height: 18px !important;
+}
+.textField	{
+	font-family: Verdana, Arial, Helvetica, sans-serif !important;
+	color: #999999;
+	font-size: 9px !important;
+}
+#sectionHeader	{
+	font: bold 13pt Arial Narrow, Helvetica Narrow !important; 
+	color: #2C3F62;
+	font-weight: bold;
+	padding-top: 9px;
+	padding-left: 33px;
+	float: left;
+}
+.headlines {
+	font-size: 12px;
+	font-family: Arial Narrow, Helvetica Narrow;
+	font-weight: bold;
+	color: #2C3F62;
+}
+.emailCopy {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	line-height: 13px;
+	font-weight: normal;
+	color: #999999;
+	text-align: left;
+}
+
+#options	{
+	line-height: 1;
+	font-size: 10pt;
+	float:right;
+	padding-right: 25px;
+}
+#pageBtns	{
+	line-height: 1;
+	font-size: 10pt;
+	float: right;
+	padding-right: 33px;
+}
+.rightText p	{
+	padding-left: 15px;
+}
+.leftText p	{
+	padding-left: 33px;
+}
+#textArea p	{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: normal;
+	text-align: justify;
+	color: #999999;
+	line-height: 1.5;
+	padding-right: 25px;	
+}
+#textArea td	{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: normal;
+	text-align: left;
+	color: #999999;
+	line-height: 1.5;	
+}
+td	{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: normal;
+	text-align: justify;
+	color: #999999;
+	line-height: 1.5;
+}
+#portText p	{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: normal;
+	text-align: justify;
+	color: #999999;
+	line-height: 1.5;
+	padding-right: 15px;
+}
+#reelText p	{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: normal;
+	text-align: justify;
+	color: #999999;
+	line-height: 1.5;
+	padding-right: 15px;
+}
+#functionArea p	{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: normal;
+	text-align: left;
+	color: #999999;
+	line-height: 1.5;
+	padding-left: 20px;
+	padding-right: 25px;
+}
+.subheads {
+	font: 9px Verdana;
+	font-weight: bold;
+	color: #AAAAAA;
+	margin-bottom: 15px;
+}
+.boldCopy {
+	font-weight: bold;
+	color: #AAAAAA;
+}
+h1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	text-align: left;
+	color: #999999;
+	line-height: 1.5;
+	padding-left: 33px;
+	padding-right: 25px;
+}
+ul {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: normal;
+	text-align: left;
+	color: #999999;
+	line-height: 1.5;
+	padding-left: 45px;
+}
+li {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: normal;
+	text-align: left;
+	color: #999999;
+	line-height: 1.5;
+}
+.standardCopy {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: normal;
+	text-align: justify;
+	color: #999999;
+	line-height: 1.5;
+	padding-left: 33px;
+	padding-right: 25px;
+}
+.litText	{
+	color: #FC7800;
+}
+#pageLinks a	{
+	font: 8pt Arial Narrow, Helvetica Narrow;
+	color: #777777;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-decoration: none;
+}
+#pageLinks a:hover	{
+	font: 8pt Arial Narrow, Helvetica Narrow;
+	color: #FC7800;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-decoration: none;
+}
+#topPages a	{
+	font: 8pt Arial Narrow, Helvetica Narrow;
+	color: #777777;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-decoration: none;
+}
+#topPages a:hover	{
+	font: 8pt Arial Narrow, Helvetica Narrow;
+	color: #FC7800;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-decoration: none;
+}
+#bottomPages a	{
+	font: 8pt Arial Narrow, Helvetica Narrow;
+	color: #777777;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-decoration: none;
+}
+#bottomPages a:hover	{
+	font: 8pt Arial Narrow, Helvetica Narrow;
+	color: #FC7800;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-decoration: none;
+}
+#footer	a	{
+	padding-top: 8px;
+	letter-spacing: 1px;
+	width: 826px;
+	height:16px;
+	text-align: center;
+	color: #506288;
+	text-decoration: none;
+	font: 7pt Arial Narrow, Helvetica Narrow !important;
+	background: url(http://www.era404.com/img/bottom.jpg) no-repeat center top;
+}
+#footer	a:hover	{
+	padding-top: 8px;
+	letter-spacing: 1px;
+	width: 826px;
+	height:16px;
+	text-align: center;
+	color: #7082A8;
+	text-decoration: none;
+	font: 7pt Arial Narrow, Helvetica Narrow !important;
+	background: url(http://www.era404.com/img/bottom.jpg) no-repeat center top;
+}
+.separator	{
+	background:url(http://www.era404.com/img/dotted_grey.jpg) repeat-x center top; 
+	height: 3px;
+	width: 90%;
+}
+.separator2	{
+	background:url(http://www.era404.com/img/dotted_white.jpg) repeat-x center top; 
+	height: 3px;
+	width: 90%;
+}
+.imgLeft	{
+	float: left;
+}
+.imgRight	{
+	float: right;
+}
+h1	{
+	line-height: 0;
+	font: 1px Arial Narrow, Helvetica Narrow !important;
+	color: #1A2946;
+}
+h1 a	{
+	line-height: 0;
+	font: 1px Arial Narrow, Helvetica Narrow !important;
+	color: #1A2946;
+}
+h72	{
+	height: 72px;
+	line-height: 1em;
+}
+.headlinesOrange {
+
+	font-size: 12px;
+	font-family: Arial Narrow, Helvetica Narrow;
+	font-weight: bold;
+	color: #2C3F62;
+}
