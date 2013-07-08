@@ -82,6 +82,8 @@ echo '<script type="text/javascript">
 }			
 				
 $lot = $_POST['lot'];
+//TODO:Sunil
+$lot=addslashes($lotno);
 $year=$_POST['year'];
 $divi=$_POST['divi'];
 

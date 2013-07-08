@@ -11,6 +11,8 @@ if(isset($_POST['lot']) && ($_POST['inputsubmit']) && $_POST['divi']){
 		
 		$_SESSION['lotnu']=$_POST['lot'];
 		$lotno = $_POST['lot'];
+		//TODO:Sunil
+		$lotno=addslashes($lotno);
 		$divi=$_POST['divi'];
 		if($_POST['inputsubmit'] == "Edit Lot"){
 		$data = mysql_query("SELECT * FROM lot_desc WHERE lotno='$lotno' and division='$divi'") or die("No table"); 
