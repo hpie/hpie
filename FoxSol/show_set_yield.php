@@ -83,34 +83,36 @@ while($info = mysql_fetch_array( $data ))
 {
 	$lot=$info['lotno'];
 
+	$currlot=addslashes($lot);;
+	
 	$exten=$info['exten'];
 	$yfixed=$_POST["$i"];
-	
+
 
 	//TODO:Sunil sont insert already present record
 	$yf_lot="";
 	$yield_fixed="";
-	$yf_data = mysql_query("SELECT lotno, yield_fixed FROM yield_fixed where lotno='$lot'") or die("No table");
+	$yf_data = mysql_query("SELECT lotno, yield_fixed FROM yield_fixed where lotno='$currlot'") or die("No table");
 	while($yf_info = mysql_fetch_array( $yf_data ))
 	{
 		$yf_lot=$yf_info['lotno'];
 		$yield_fixed=$yf_info['yield_fixed'];
 	}
-	
+
 	if($lot==$yf_lot)
 	{
-		echo '<tr><td>'.($i+1).'</td><td>'.$lot.'/'.$year.'('.$exten.')</td><td>'.$yfixed.'</td><td> Existing </td></tr>';	
-	}else 
+		echo '<tr><td>'.($i+1).'</td><td>'.$lot.'/'.$year.'('.$exten.')</td><td>'.$yfixed.'</td><td> Existing </td></tr>';
+	}else
 	{
 		echo '<tr><td>'.($i+1).'</td><td>'.$lot.'/'.$year.'('.$exten.')</td><td>'.$yfixed.'</td><td style="color:red"> New </td></tr>';
 		echo '<input type="hidden" name="lot'.$insertCount.'" value="'.$lot.'"/>';
 		echo '<input type="hidden" name="yield'.$insertCount.'" value="'.$yfixed.'"/>';
 		$insertCount++;
 	}
-	
+
 	$i++;
-	
-	
+
+
 }
 
 $_SESSION['numlots'] = $insertCount;

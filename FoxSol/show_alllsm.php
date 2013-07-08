@@ -107,6 +107,7 @@ $i=1;
 while($row = mysql_fetch_array( $datan ))
 {
 	$lotno=$row['lotno'];
+	$lotno=addslashes($lotno);
 	$frange=$row['frange'];
 	$divi=$row['division'];
 	$lsmname=getLSMname($lotno,$divi,$kapa);

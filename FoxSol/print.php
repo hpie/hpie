@@ -96,6 +96,7 @@ echo "<table width=900px border=1><tr><td>S.No.</td><td>Lot No.</td><td>Unit</td
 while($row=mysql_fetch_array($datan))
 {
 	$lotno=$row['lotno'];
+	$lotno=addslashes($lotno);
 	$divi=$row['division'];
 	$frange=$row['frange'];
 	$rsd=$row['rsd'];
@@ -125,7 +126,8 @@ Forest Working Division, <?php echo strtoupper($_SESSION['fwd']); ?>
 &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
 &nbsp &nbsp &nbsp Forest Division, <?php echo $divi ; ?></h3>
 </center>
-<input type="button" onclick="javascript:window.location.assign('client.php')" value="Back" />
+<input type="button"
+	onclick="javascript:window.location.assign('client.php')" value="Back" />
 <input type="button" name="but" onClick="print()" value="Print List"><br>
 <br>
 </div>
