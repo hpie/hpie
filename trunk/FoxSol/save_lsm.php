@@ -35,8 +35,9 @@ $q="update current_lsm set fromdate='$fromdate'  where lotno='$lotno' and divisi
 
 
 if(mysql_query($q))
-header ("Location:show_msg.php?msg=LSM Added Successfully");
-
-
+{
+	//header ("Location:show_msg.php?msg=LSM Added Successfully");
+	echo("<h2>Data Entered Successfully</h2>");
+}
 ?>
-
+<input type="button" onclick="javascript:window.location.assign('client.php')" value="Back" />

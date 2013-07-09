@@ -73,13 +73,13 @@ for($i=0;$i<$num;$i++)
 	}
 }
 
-header("Location:show_msg.php?msg='Data Entered Successfully'");
+//header("Location:show_msg.php?msg='Data Entered Successfully'");
 
 
 
 
 ?> <br />
-
+<h2>Data Entered Successfully</h2>
 </div>
 
 <!-- content-wrap ends here --></div>

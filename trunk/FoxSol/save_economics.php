@@ -62,8 +62,9 @@ $_SESSION['rate']=$avgrate;
 	}
 	
 
-	header('Location:print_economics.php');
-	
+	//header('Location:print_economics.php');
+	echo("<h2>Data Entered Successfully</h2>");
 	
 
 ?>
+<input type="button" onclick="javascript:window.location.assign('client.php')" value="Back" />
