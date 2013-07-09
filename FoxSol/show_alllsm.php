@@ -7,7 +7,7 @@ if((!$_SESSION['logged']) || ($_SESSION['category'] != 'client')){
 require('connectDB.php');
 function getForests($lotno,$divi,$year)
 {
-	$rs=mysql_query("select forest from verify where lotno='$lotno' and year='$year' and division='$divi'");
+	$rs=mysql_query("select distinct forest from verify where lotno='$lotno' and year='$year' and division='$divi'");
 
 	$forestArr=array();
 	while($row=mysql_fetch_array($rs))
@@ -78,7 +78,7 @@ Forest Working Division, <?php echo strtoupper($_SESSION['fwd']); ?></h1>
 <h3>Current LSM List Detail for the Resin Season <?php echo $kapa;?></b></h3>
 <?php
 
-function	getLSMname($lotno,$divi,$year)
+function getLSMname($lotno,$divi,$year)
 {
 
 	$rs=mysql_query("select lsmname from current_lsm where year='$year' and division='$divi' and lotno='$lotno' and todate='0000-00-00'");
@@ -107,18 +107,18 @@ $i=1;
 while($row = mysql_fetch_array( $datan ))
 {
 	$lotno=$row['lotno'];
-	$lotno=addslashes($lotno);
+	$currlot=addslashes($lotno);
 	$frange=$row['frange'];
 	$divi=$row['division'];
-	$lsmname=getLSMname($lotno,$divi,$kapa);
-	$fromdate=(getlsmDateStart($lotno,$divi,$kapa)=='0000-00-00')?"NOT STARTED YET":getDDMMYY(getlsmDateStart($lotno,$divi,$kapa));
-	$alotdate=getlsmDateAlot($lotno,$divi,$kapa);
+	$lsmname=getLSMname($currlot,$divi,$kapa);
+	$fromdate=(getlsmDateStart($currlot,$divi,$kapa)=='0000-00-00')?"NOT STARTED YET":getDDMMYY(getlsmDateStart($currlot,$divi,$kapa));
+	$alotdate=getlsmDateAlot($currlot,$divi,$kapa);
 
 
 
 
 
-	echo "<tr><td>". $i . "</td><td>" . $lotno."/".$kapa. "(".getExten($lotno,$divi).")</td><td>" . $frange . "</td><td>" . getUnit($lotno,$divi) . "</td><td>" .getForests($lotno,$divi,$kapa). "</td><td>" . $lsmname. "</td><td>" . getDDMMYY($alotdate) . "</td><td>" . ($fromdate) . "</td><td>" . $divi . "</td></tr>";
+	echo "<tr><td>". $i . "</td><td>" . $lotno."/".$kapa. "(".getExten($currlot,$divi).")</td><td>" . $frange . "</td><td>" . getUnit($currlot,$divi) . "</td><td>" .getForests($currlot,$divi,$kapa). "</td><td>" . $lsmname. "</td><td>" . getDDMMYY($alotdate) . "</td><td>" . ($fromdate) . "</td><td>" . $divi . "</td></tr>";
 
 	$i++;
 }
@@ -139,7 +139,7 @@ Forest Working Division, <?php echo strtoupper($_SESSION['fwd']); ?>
 &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
 &nbsp &nbsp &nbspForest Division , <?php echo $divi ; ?></h3>
 </center>
-
+<input type="button" onclick="javascript:window.location.assign('client.php')" value="Back" />
 <input type="button" name="but" onClick="print()" value="Print List"><br>
 <br>
 </div>

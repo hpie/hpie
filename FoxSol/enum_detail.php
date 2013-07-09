@@ -13,12 +13,13 @@ $_SESSION['kapa']=$kapa;
 $lot = $_POST['lot'];
 
 //TODO:Sunil
-$lot=addslashes($lot);
+//$currlot=addslashes($lot);
+$currlot=$lot;
 
 $divi=$_POST['divi'];
 $_SESSION['divi']=$divi;
 
-$q="select * from enum where lotno='".$lot."' and Year='$kapa' and division='$divi'";
+$q="select * from enum where lotno='".$currlot."' and Year='$kapa' and division='$divi'";
 if(mysql_num_rows(mysql_query($q))>0)
 {
 	echo '<script type="text/javascript">
@@ -114,7 +115,7 @@ print date("jS F Y, g:i A");
 
 echo "<table cellspacing=10><tr><td>Lot No: </td><td><input id='inputtext1' type='text' name='lotno' disabled='disabled' value='". $lot ."/". $kapa . "(".getExten($lot,$divi).")'/></td><td></td></tr>";
 
-$ql="SELECT * FROM lot_desc WHERE lotno = '$lot' and division='$divi' ORDER BY lotno ASC";
+$ql="SELECT * FROM lot_desc WHERE lotno = '$currlot' and division='$divi' ORDER BY lotno ASC";
 $data = mysql_query($ql) or die("No table");
 if(mysql_num_rows($data)<1)
 {

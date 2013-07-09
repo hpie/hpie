@@ -99,7 +99,7 @@ function get_yield_fixed($lotno,$divi,$year)
 
 	<?php
 
-	$q="select distinct(lotno+division) lotno,division,rate,leadmanD,leadmulD,leadtracD ,tenblazes,tchargeavg from upset_price where division='$divi' and   year='$year' and id in(select max(id) from upset_price where division='$divi' group by lotno+division+year) order by lotno";
+	$q="select distinct lotno,division,rate,leadmanD,leadmulD,leadtracD ,tenblazes,tchargeavg from upset_price where division='$divi' and   year='$year' and id in(select max(id) from upset_price where division='$divi' group by lotno+division+year) order by lotno";
 	$rs=mysql_query($q) or die();
 	$i=1;
 	$totblazes=0;
@@ -107,7 +107,7 @@ function get_yield_fixed($lotno,$divi,$year)
 	{
 		$lotno=$row['lotno'];
 		
-		$lotno=addslashes($lotno);
+		$currlot=addslashes($lotno);
 		$divi=$row['division'];
 		$rate=$row['rate'];
 		$transrate=$row['tchargeavg'];
@@ -123,7 +123,7 @@ function get_yield_fixed($lotno,$divi,$year)
 		$totblazes+=$tenblazes;
 
 		$leaddistance=($row['leadmanD']!=0)  .",". $row['leadmulD'];
-		echo '<tr><td>'.$i.'</td><td>'.$lotno.'/'.$year.'('.getExten($lotno,$divi).')</td><td>'.$tenblazes.'</td><td>'.get_yield_fixed($lotno,$divi,$year).'</td><td>';foreach($leadmanD as $lead)
+		echo '<tr><td>'.$i.'</td><td>'.$lotno.'/'.$year.'('.getExten($currlot,$divi).')</td><td>'.$tenblazes.'</td><td>'.get_yield_fixed($currlot,$divi,$year).'</td><td>';foreach($leadmanD as $lead)
 		{
 			if($lead!=0)
 			echo $lead.",";

@@ -82,7 +82,7 @@ print date("jS F Y, g:i A");
 echo '<form action="save_yieldObSS.php" method="post">';
 $divi=$_POST['divi'];
 $year=$_POST['year'];
-$data = mysql_query("SELECT distinct(lotno+division)as lotno FROM verify where division='$divi' and year='$year' order by lotno") or die("No table");
+$data = mysql_query("SELECT distinct lotno FROM verify where division='$divi' and year='$year' order by lotno") or die("No table");
 
 $num=$_SESSION['numlots'];
 
@@ -92,6 +92,7 @@ while($info = mysql_fetch_array( $data ))
 {
 	$lot=$info['lotno'];
 	$currlot=addslashes($lot);
+	
 	//$exten=$info['exten'];
 	$yfixed=$_POST["$i"];
 	echo '<tr><td>'.($i+1).'</td><td>'.$lot.'/'.$year.'('.getExten($currlot,$divi).')</td><td>'.$yfixed.'</td></tr>';
