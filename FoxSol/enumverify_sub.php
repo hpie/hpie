@@ -41,10 +41,11 @@ if(isset($_SESSION['count']) && ($_SESSION['lot']) && ($_SESSION['range']) && ($
 		}
 
 		//header("Location: show_msg.php?msg='Data entered successfully'");
-		exit;
+		
 		mysql_close($con);
 		echo("<h2>Data Entered Successfully</h2>");
-		
+		echo("<input type=\".button.\" onclick=.\" javascript:window.location.assign('client.php').\"  value=.\" Back.\"  />");
+		exit;
 	}else if($_POST['val']=="update")
 	{
 		$ppl = $_SESSION['count'];
@@ -79,16 +80,20 @@ if(isset($_SESSION['count']) && ($_SESSION['lot']) && ($_SESSION['range']) && ($
 		}
 
 		//header("Location: show_msg.php?msg='Data entered successfully'");
-		exit;
+		
 		mysql_close($con);
 		echo("<h2>Data Entered Successfully</h2>");
+		echo("<input type=\".button.\" onclick=.\" javascript:window.location.assign('client.php').\"  value=.\" Back.\"  />");
+		exit;
 	}
 	
 }
 else{
 	//header("Location: show_msg.php?msg='Please Fill in all the details'");
-	exit;
+	
 	mysql_close($con);
 	echo("<h2>Please Fill in all the details</h2>");
+	echo("<input type=\".button.\" onclick=.\" javascript:window.location.assign('client.php').\"  value=.\" Back.\"  />");
+	exit;
 }
 ?>
