@@ -99,7 +99,8 @@ function get_yield_fixed($lotno,$divi,$year)
 
 	<?php
 
-	$q="select distinct lotno,division,rate,leadmanD,leadmulD,leadtracD ,tenblazes,tchargeavg from upset_price where division='$divi' and   year='$year' and id in(select max(id) from upset_price where division='$divi' group by lotno+division+year) order by lotno";
+	//$q="select distinct lotno,division,rate,leadmanD,leadmulD,leadtracD ,tenblazes,tchargeavg from upset_price where division='$divi' and   year='$year' and id in(select max(id) from upset_price where division='$divi' group by lotno+division+year) order by lotno";
+	$q="select distinct lotno,division,rate,leadmanD,leadmulD,leadtracD ,tenblazes,tchargeavg from upset_price where division='$divi' and   year='$year' order by lotno";
 	$rs=mysql_query($q) or die();
 	$i=1;
 	$totblazes=0;
