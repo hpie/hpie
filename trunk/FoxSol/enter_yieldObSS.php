@@ -15,7 +15,7 @@ $divi=$_POST['divi'];
 
 
 
-$data = mysql_query("SELECT distinct (lotno+division) as lotno from verify where division='$divi' and year='$kapa'  order by lotno") or die("No table");
+$data = mysql_query("SELECT distinct lotno from verify where division='$divi' and year='$kapa'  order by lotno") or die("No table");
 
 $_SESSION['numlots']=mysql_num_rows($data);
 
@@ -122,10 +122,10 @@ while($info = mysql_fetch_array( $data ))
 	$lot=$info['lotno'];
 
 	//TODO:Sunil
-	$lot=addslashes($lot);
+	$currlot=addslashes($lot);
 
 	$year=$_POST['year'];
-	echo '<tr><td>'.$lot.'/'.$year.'('.getExten($lot,$divi).')</td><td><input type="text" name="'.$i.'" onkeypress=\"return isNumberKey(event)\ value="'.get_yield_obtainedSS($lot,$divi,$year).'"/></td></tr>';
+	echo '<tr><td>'.$lot.'/'.$year.'('.getExten($currlot,$divi).')</td><td><input type="text" name="'.$i.'" onkeypress=\"return isNumberKey(event)\ value="'.get_yield_obtainedSS($currlot,$divi,$year).'"/></td></tr>';
 	$i++;
 }
 echo '</table>';

@@ -70,7 +70,7 @@ $kapa=$_POST['year'];
 $divi=$_REQUEST['divi'];
 
 //$data = mysql_query("SELECT SUM(blaze) FROM verify WHERE year='$kapa' GROUP BY lotno,division") or die("No table"); //
-$datan = mysql_query("SELECT DISTINCT (lotno+division)as lotno, division FROM verify where  year='$kapa' order by lotno") or die("No table");
+//$datan = mysql_query("SELECT DISTINCT (lotno+division)as lotno, division FROM verify where  year='$kapa' order by lotno") or die("No table");
 
 ?>
 <html>
@@ -80,9 +80,9 @@ $datan = mysql_query("SELECT DISTINCT (lotno+division)as lotno, division FROM ve
 <body>
 <div align=center>
 <center>
-<h1><b>Himachal Pradesh State Forest Corporation Limited<br>
+<h1>Himachal Pradesh State Forest Corporation Limited<br>
 Forest Working Division, <?php echo strtoupper($_SESSION['fwd']); ?></h1>
-<h3>Verified List Detail for the Resin Season <?php echo $kapa;?></b></h3>
+<h3>Verified List Detail for the Resin Season <?php echo $kapa;?></h3>
 <?php
 //$datan = mysql_query("SELECT DISTINCT (lotno+division)as lotno, division, frange,rsd FROM verify where division='$divi' and  year='$kapa' order by lotno") or die("No table");
 $datan = mysql_query("SELECT DISTINCT lotno, division, frange,rsd FROM verify where division='$divi' and  year='$kapa' order by lotno") or die("No table");
@@ -96,14 +96,14 @@ echo "<table width=900px border=1><tr><td>S.No.</td><td>Lot No.</td><td>Unit</td
 while($row=mysql_fetch_array($datan))
 {
 	$lotno=$row['lotno'];
-	$lotno=addslashes($lotno);
+	$currlot=addslashes($lotno);
 	$divi=$row['division'];
 	$frange=$row['frange'];
 	$rsd=$row['rsd'];
-	$totBlaze=getTotBlazes($lotno,$divi,$kapa);
-	$fitBlaze=getFitBlazes($lotno,$divi,$kapa);
+	$totBlaze=getTotBlazes($currlot,$divi,$kapa);
+	$fitBlaze=getFitBlazes($currlot,$divi,$kapa);
 	$unfitBlaze=$totBlaze-$fitBlaze;
-	echo "<tr><td>". $i . "</td><td>" . $lotno."/".$kapa. "(".getExten($lotno,$divi).")</td><td>" . getUnit($lotno,$divi) . "</td><td>" . $frange . "</td><td>" .getForests($lotno,$divi,$kapa). "</td><td>" . $rsd. "</td><td>" . $divi . "</td><td>" . $totBlaze . "</td><td>" . $fitBlaze . "</td><td>" . $unfitBlaze . "</td></tr>";
+	echo "<tr><td>". $i . "</td><td>" . $lotno."/".$kapa. "(".getExten($currlot,$divi).")</td><td>" . getUnit($currlot,$divi) . "</td><td>" . $frange . "</td><td>" .getForests($currlot,$divi,$kapa). "</td><td>" . $rsd. "</td><td>" . $divi . "</td><td>" . $totBlaze . "</td><td>" . $fitBlaze . "</td><td>" . $unfitBlaze . "</td></tr>";
 	$ttl +=$totBlaze;
 	$ttl1+=$fitBlaze;
 	$ttl2+=$unfitBlaze;
