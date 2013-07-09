@@ -84,10 +84,10 @@
 			}
 		}
 
-		function validateLogin($login,$password){
+		function validateLogin($login,$password, $division){
 			global $db;
 			$password = $db->password($password);
-			echo $sql = "SELECT * FROM ".TBL_ADMINS." WHERE login ='".$login."' AND password ='".$password."' AND status ='y'";
+			echo $sql = "SELECT * FROM ".TBL_ADMINS." WHERE login ='".$login."' AND password ='".$password."' AND division ='".$division."' AND status ='y'";
 			$row = $db->select($sql);
 			if(!empty($row)){
 				return true;
@@ -118,13 +118,14 @@
 			}
 		}
 
-		function doLogin($login,$password){
+		function doLogin($login,$password, $division){
 			global $db;
 			$password = $db->password($password);
-			echo $sql = "SELECT * FROM ".TBL_ADMINS." WHERE login ='".$login."' AND password ='".$password."'";
+			echo $sql = "SELECT * FROM ".TBL_ADMINS." WHERE login ='".$login."' AND password ='".$password."' AND division ='".$division."'";
 			$row = $db->select($sql);
 			
 			if(!empty($row)){
+					$_SESSION['centerKey']=$division;
 			        $_SESSION['logedInUser']=$login;
 					setcookie('sessAdminID',$row[0]['id'],time()+3600);
 					setcookie('sessAdminName',$row[0]['first_name']." ".$row[0]['last_name'],time()+3600);

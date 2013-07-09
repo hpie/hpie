@@ -33,7 +33,7 @@ class ForestDO {
 		$list = array();
 		$count= 0;
 
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Forest List from Forest Master Data");
 		while($row =  mysql_fetch_array($result))
 		{
 			$forestVO = new ForestVO();
@@ -54,7 +54,7 @@ class ForestDO {
 		$list = array();
 		$count= 0;
 
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Forest DFO List from Forest Master Data");
 		while($row =  mysql_fetch_array($result))
 		{
 			$forestVO = new ForestVO();

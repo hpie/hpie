@@ -22,7 +22,7 @@
   <input type="password" name="password" id="password"  required="" value='<?=$password?>'/>
 </p>
 <p>
-  <label for="Name"> You are logging to: <b> <?php echo($_SESSION['centerKey'])?> <b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <a href="index.php?changeDiv=yes">Change Division</a></label>
+  <label for="Name"> You are logging to: <b> <?php echo($_SESSION['centerKey'])?> <b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <a href="<?php echo BASE_URL?>index.php?changeDiv=yes">Change Division</a></label>
 </p>
 
 <p>

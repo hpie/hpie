@@ -33,7 +33,7 @@ class CategoryDO {
 		$list = array();
 		$count= 0;
 		
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception in Category during fetching Forest Master Data");
 		while($row =  mysql_fetch_array($result))
 		{
 			$forestVO = new ForestVO();
