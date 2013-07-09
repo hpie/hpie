@@ -1,7 +1,7 @@
 <?php
 session_start();
 require("connectDB.php");
-if((!$_SESSION['logged']) || ($_SESSION['category'] != 'client')){
+if(!$_SESSION['logged']){
 	header("Location: index.php");
 	exit;
 
