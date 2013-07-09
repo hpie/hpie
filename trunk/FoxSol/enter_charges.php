@@ -83,7 +83,7 @@ echo '<script type="text/javascript">
 				
 $lot = $_POST['lot'];
 //TODO:Sunil
-$lot=addslashes($lotno);
+$currlot=addslashes($lotno);  // currently not used
 $year=$_POST['year'];
 $divi=$_POST['divi'];
 

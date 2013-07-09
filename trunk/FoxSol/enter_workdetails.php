@@ -54,7 +54,7 @@ $year=$_POST['year'];
 $divi=$_POST['divi'];
 
 //TODO:Sunil
-$lot=addslashes($lot);
+//$currlot=addslashes($lot);  
 
 $_SESSION['lot']=$lot;
 $_SESSION['year']=$year;

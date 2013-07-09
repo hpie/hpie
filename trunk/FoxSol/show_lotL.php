@@ -16,7 +16,7 @@ function getExten($lotno,$divi)
 }
 $year=$_POST['year'];
 $lot=$_POST['lot'];
-$lot=addslashes($lot);
+//$lot=addslashes($lot);
 $divi=$_POST['divi'];
 
 

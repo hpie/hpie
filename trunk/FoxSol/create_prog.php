@@ -10,7 +10,7 @@ if(isset($_SESSION["yrop"]) && ($_POST["lot"]) && ($_POST["work"]) && ($_POST["d
 	$lotno=$_POST["lot"] . "/" . $_SESSION["yrop"];
 	$ltn=$_POST["lot"];
 	//TODO:Sunil
-	$ltn = addslashes($ltn);
+	//$ltn = addslashes($ltn);
 	$_SESSION['lotnop']=$lotno;
 	$work=$_POST["work"];
 	$_SESSION['workp']=$work;

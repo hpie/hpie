@@ -12,7 +12,7 @@ $_SESSION['kapa']=$kapa;
 
 $lot = $_POST['lot'];
 //TODO:Sunil
-$lot = addslashes($lot);
+$currlot=addslashes($lot);  //
 $divi=$_POST['divi'];
 $_SESSION['divi']=$divi;
 
