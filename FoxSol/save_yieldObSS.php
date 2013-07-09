@@ -50,16 +50,18 @@ $kapa=$_POST['year'];
 for($i=0;$i<$num;$i++)
 {
 	$lotno=$_POST['lot'.$i];
+	//$currlot=addslashes($lotno);
 	$yield=$_POST['yield'.$i];
 
 	$q="select lotno from SSyield_obtained where lotno='$lotno' and Year='$kapa' and division='$divi'";
+	echo $q;
 	$rs=mysql_query($q) or die();
 	echo mysql_num_rows($rs) ;
 
 	if(mysql_num_rows($rs)>0)
 	{
 		$q="update SSyield_obtained set yield_Obtained='$yield' where lotno='$lotno' and Year='$kapa' and division='$divi'";
-		mysql_query($q);
+		mysql_query($q)  or die();
 	}
 
 
@@ -73,13 +75,13 @@ for($i=0;$i<$num;$i++)
 	}
 }
 
-header("Location:show_msg.php?msg='Data Entered Successfully'");
+//header("Location:show_msg.php?msg='Data Entered Successfully'");
 
 
 
 
 ?> <br />
-
+<h2>Data Entered Successfully</h2>
 </div>
 
 <!-- content-wrap ends here --></div>
