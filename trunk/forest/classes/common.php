@@ -1199,7 +1199,7 @@ class common{
 		$arrCondition = array('i_ecnomics_master_id'=>$ecnomicsId);
 		$db->delete($fromTable,$arrCondition);
 		$sql = "insert into  ".$fromTable."  select * from  ".$toTable.' '.$wherCondition;
-		$result= mysql_query($sql) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($sql) or die("Exception in Ecomics during fetching Forest Master Data");
 	}
 
 

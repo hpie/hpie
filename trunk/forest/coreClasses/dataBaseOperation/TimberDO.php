@@ -33,7 +33,7 @@ class TimberDO {
 		$list = array();
 		$count= 0;
 
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Timber List from Forest Master Data");
 		while($row =  mysql_fetch_array($result))
 		{
 			$timberVO = new TimberVO();
@@ -52,7 +52,7 @@ class TimberDO {
 		$list = array();
 		$count= 0;
 
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Timber Category from Forest Master Data");
 		while($row =  mysql_fetch_assoc($result))
 		{
 			$list[$row['i_category_id']][$row['i_timber_id']] = $row;
@@ -72,7 +72,7 @@ function getTimberCategoryRelationDetail($i_mark_id,$ecnomicsId,$i_tree_id)
 		$list = array();
 		$count= 0;
 
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Timber Category Relation from Forest Master Data");
 		while($row =  mysql_fetch_assoc($result))
 		{
 			$list[$row['i_category_id']][$row['i_timber_id']] = $row;
@@ -92,7 +92,7 @@ function getCategoryFillingRelation($i_mark_id,$ecnomicsId)
 		$list = array();
 		$count= 0;
 
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Category Felling Relation from Forest Master Data");
      
 		while($row =  mysql_fetch_assoc($result))
 		{
@@ -123,7 +123,7 @@ function getMarkingOverHeadRelation($i_mark_id,$ecnomicsMaster)
 		$list = array();
 		$count= 0;
 
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Marking Overhead Relation from Forest Master Data");
 		while($row =  mysql_fetch_assoc($result))
 		{
 			$list[$row['i_overhead_id']] = $row;
@@ -146,7 +146,7 @@ function getOtherExpensis($i_mark_id,$ecnomicsMaster)
 		$list = array();
 		$count= 0;
 
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Other Expenses from Forest Master Data");
 		while($row =  mysql_fetch_assoc($result))
 		{
 			$list[$row['i_overhead_id']] = $row;
@@ -170,7 +170,7 @@ function getMarkingTransPortationRelation($i_mark_id,$ecnomicsMaster)
 		$list = array();
 		$count= 0;
 
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Transport Relation from Forest Master Data");
 		while($row =  mysql_fetch_assoc($result))
 		{
 			$list[$row['i_overhead_id']] = $row;
@@ -194,7 +194,7 @@ function getMarkingHandlingCharges($i_mark_id,$ecnomicsMaster)
 		$list = array();
 		$count= 0;
 
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Handling Charges from Forest Master Data");
 		while($row =  mysql_fetch_assoc($result))
 		{
 			$list[$row['i_overhead_id']] = $row;
@@ -213,7 +213,7 @@ function getCategoryConversionRelation($i_mark_id,$ecnomicsId)
 		$list = array();
 		$count= 0;
 
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Conversion Relation from Forest Master Data");
 		while($row =  mysql_fetch_assoc($result))
 		{
 			$list[$row['i_category_id']] = $row['i_value'];
@@ -233,7 +233,7 @@ function getCategoryConversionRelation($i_mark_id,$ecnomicsId)
 		$list = array();
 		$count= 0;
 	
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Treewise Conversion Relation from Forest Master Data");
 		while($row =  mysql_fetch_assoc($result))
 		{
 			$list[$row['i_category_id']] = $row['i_value'];
@@ -292,7 +292,7 @@ function getEcnomicsPriceRelation($i_mark_id,$ecnomicsMaster)
 		$list = array();
 		$count= 0;
 
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Price Relation from Forest Master Data");
 		while($row =  mysql_fetch_assoc($result))
 		{
 			$list[$row['i_timber_id']] = $row;
@@ -312,7 +312,7 @@ function getTimberPriceDefault($forestID)
 		$list = array();
 		$count= 0;
 
-		$result= mysql_query($query) or die("Exception during fetching Forest Master Data");
+		$result= mysql_query($query) or die("Exception during fetching Timper Price from Forest Master Data");
 		while($row =  mysql_fetch_assoc($result))
 		{
 			$row['i_value']=$row['price'];

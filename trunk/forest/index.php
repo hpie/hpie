@@ -14,11 +14,11 @@ include 'include_files.php';
 
 if($_GET['changeDiv']=="yes")
 {
-	session_destroy();	
+	session_destroy();
 	header("location:".BASE_URL."index.php");
 }
-	
-	
+
+
 if($_POST)
 {
 	if($_POST['butDivSubmit']!="")
@@ -49,18 +49,18 @@ if(!$_SESSION['centerKey'])
 		<td><?php
 		echo(makeSelectOptions($divionLoginList, "division", "0", "", "", ""));
 		?></td>
-		<tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td><input type="submit" id="Subdiv" name="butDivSubmit"
-					value="Choose Division"</td>
-				<tr>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><input type="submit" id="Subdiv" name="butDivSubmit"
+			value="Choose Division" /></td>
+	</tr>
 
 </table>
 </center>
 </form>
 
-<?php
+		<?php
 }else{
 
 
@@ -625,7 +625,7 @@ if(!$_SESSION['centerKey'])
 			echo '<div id="content">';
 			include('ecnomics/transPortationConversionNewEconomics.php');
 		}
-		
+
 		if($_GET['page']=='logout'){
 			session_destroy();
 			header("location:".BASE_URL."index.php");
