@@ -137,6 +137,7 @@ if(isset($_POST['submitted']))
 					<option value="Shimla">Shimla</option>
 					<option value="Solan">Solan</option>
 					<option value="SunderNagar">SunderNagar</option>
+					<option value="Test">Test</option>
 					<option value="Una">Una</option>
 					</select>
 					 
