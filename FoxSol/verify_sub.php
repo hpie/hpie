@@ -43,7 +43,7 @@ if(isset($_SESSION['count']) && ($_SESSION['lot']) && ($_SESSION['range']) && ($
 		mysql_close($con);
 		//header("Location: show_msg.php?msg='Data entered successfully'");
 		echo("<h2>Data Entered Successfully</h2>");
-		echo("<input type=\".button.\" onclick=.\" javascript:window.location.assign('client.php').\"  value=.\" Back.\"  />");
+		echo("<input type=\"button\" onclick=\" javascript:window.location.assign('client.php')\"  value=\" Back\"  />");
 		exit;
 	}else if ($_POST['val']=="update")
 	{
@@ -81,7 +81,7 @@ if(isset($_SESSION['count']) && ($_SESSION['lot']) && ($_SESSION['range']) && ($
 		mysql_close($con);
 		//header("Location: show_msg.php?msg='Data entered successfully'");
 		echo("<h2>Data Entered Successfully</h2>");
-		echo("<input type=\".button.\" onclick=.\" javascript:window.location.assign('client.php').\"  value=.\" Back.\"  />");
+		echo("<input type=\"button\" onclick=\" javascript:window.location.assign('client.php')\"  value=\" Back\"  />");
 		exit;
 	}
 }
@@ -89,7 +89,7 @@ else{
 	mysql_close($con);
 	//header("Location: show_msg.php?msg='Please Fill in all the details'");
 	echo("<h2>Please Fill in all the details</h2>");
-	echo("<input type=\".button.\" onclick=.\" javascript:window.location.assign('client.php').\"  value=.\" Back.\"  />");
+	echo("<input type=\"button\" onclick=\" javascript:window.location.assign('client.php')\"  value=\" Back\"  />");
 	exit;
 
 }

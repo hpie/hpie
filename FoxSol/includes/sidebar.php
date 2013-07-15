@@ -49,6 +49,7 @@ echo '<div class="sidebox">
 					<li><a href="edit_ver_lot.php">Delete Verified Lot</a></li>
 					<li><a href="del_sel_prog_yr.php">Delete Progress Report</a></li>
 					<li><a href="set_charges.php">Enter/Edit the Schedule Rates</a></li>
+					<li><a href="del_complete_lot.php">Delete Everything for Lot</a></li>
 						<li><a href="logout.php">Logout</a></li>
 									
 				</ul>	
