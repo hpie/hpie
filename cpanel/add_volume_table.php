@@ -14,6 +14,8 @@
 
 	$table			= 'm_forest_volume';
 	//$arrDepartment  = $common->getAllDepartments();
+	$arrDepartment  = $common->getAllDepartments();
+	$arrDivisions  = $common->getAllDividions();
    
 	if(isset($_GET['id']) && $_GET['id'] != ""){
 		$id = $_GET['id'];
@@ -22,6 +24,9 @@
 		$Label	= "Edit Volume Table";
     	$vc_name  = $row[0]['vc_name'];
 		$i_forest_id    = $row[0]['i_forest_id'];
+		
+		$i_department_id    = $row[0]['i_department_id'];
+		$i_division_id    = $row[0]['i_division_id'];
 		//$i_department_id = $row[0]['i_department_id'];
 
 	}
@@ -36,9 +41,9 @@
 			//}
 		}
 
-		if( $_POST['i_forest_id']=='' || $vc_name==''){
-			if($_POST['i_forest_id']==''){
-			$arrError[] = "Please select forest ";
+		if( $vc_name==''){
+			if($_POST['i_forest_id']=='' && $_POST['i_department_id']=='' &&  $_POST['i_division_id']==''){
+			$arrError[] = "Please Division Or Forest or Department  ";
 			}	 	
 			if($vc_name==''){
 			$arrError[] = "Please fill table name";
@@ -46,7 +51,7 @@
 			
 		}
 		else{
-		if(!$common->checkExistingTableOption($table,$id,$_POST['i_forest_id'],$vc_name)){
+		if(!$common->checkExistingTableOption($table,$id,$_POST['i_forest_id'],$_POST['i_division_id'],$_POST['i_department_id'],$vc_name)){
 		if(!$id){
 			
 			

@@ -1,7 +1,7 @@
 <? 
  if(isset($_SESSION['userId']) && $_SESSION['userId']!=Null ){
 	 
-	echo 'checkes';
+	
 	// $result1=$user->updateLogin($_SESSION['userId']);
      //$state=$user->checkLoginTime();
   

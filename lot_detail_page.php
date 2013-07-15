@@ -34,6 +34,20 @@
 		}
 	}
 	
+	
+	//Added Division Logic in the Where clause.......... 
+	
+	if($whereClause =='')
+		{
+			$whereClause='WHERE i_division_id = "'.$_SESSION['centerKey'].'"';
+		}
+		else
+		{
+			$whereClause.='and i_division_id = "'.$_SESSION['centerKey'].'"';
+		}
+	
+	//Added Division Logic in the where clause ends.....
+	
 
 	$start			=		0; 
 	$recNo			=		0;

@@ -14,6 +14,7 @@
 
 
 	$table			= 'm_forest_department';
+	$arrDivisions  = $common->getAllDividions();
 	
 	if(isset($_GET['id']) && $_GET['id'] != ""){
 		$id = $_GET['id'];
@@ -21,6 +22,7 @@
 		
 		$Label	= "Edit Forest Department";
     	$vc_name  = $row[0]['vc_name'];
+    	$i_division_id  = $row[0]['i_division_id'];
 		
 	}
 	if(isset($_POST['submit']) && $_POST['submit'] != ""){
@@ -35,6 +37,10 @@
 		if($vc_name==''){
 			if($vc_name==''){
 			$arrError[] = "Please fill forest department name";
+			}
+			
+		  if($i_division_id==''){
+			$arrError[] = "Please fill Division";
 			}
 			
 		}

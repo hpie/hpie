@@ -128,8 +128,10 @@ else
 
 	<tr>
 		<td class="fill"><em>*</em><?php echo $cnameDivision;?></td>
-		<td><span style="position: relative;"> <?php echo makeSelectOptions($divionList,"i_division_id",$i_division_id,"",0,"class='required'");?>
-		</span></td>
+		<td><span style="position: relative;"> <?php echo $_SESSION['currentDivisionDetail']['vc_name']?>
+		</span>
+		<input type='hidden' value='<?php echo $_SESSION['centerKey'] ?>' name='i_division_id' id='i_division_id'/>
+		</td>
 	</tr>
 
 	<tr>

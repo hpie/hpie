@@ -131,11 +131,13 @@
 			global $db;
 			$password = $db->password($password);
 			//$sql = "SELECT * FROM ".TBL_USERS." WHERE user_name ='".$user_name."' AND password ='".$password."' and is_verified='1' AND is_active ='1'";
-			$sql = "SELECT * FROM ".TBL_USERS." WHERE user_name ='".$user_name."' AND password ='".$password."' AND division ='".$division."' AND i_status ='1'";
+			//$sql = "SELECT * FROM ".TBL_USERS." WHERE user_name ='".$user_name."' AND password ='".$password."' AND division ='".$division."' AND i_status ='1'";
+			$sql = "SELECT * FROM ".TBL_USERS." WHERE user_name ='".$user_name."' AND password ='".$password."'  AND i_status ='1'";
+			echo $sql;
 			$row = $db->select($sql);
 			if(!empty($row)){
 				$_SESSION['userId']=$row[0]['id'];
-				$_SESSION['divId']=$row[0]['division'];
+				$_SESSION['divId']=$row[0]['i_division_id'];
 				return true;
 			}else{
 				return false;

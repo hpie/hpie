@@ -361,6 +361,23 @@ class common{
 		}
 	}
 
+		
+function getAllDividions(){
+		global $db;
+		$sql  = "SELECT * FROM m_division WHERE i_status = '1'";
+		$rows  = $db->select($sql);
+		if(!empty($rows)){
+			$arrDepartments = array();
+			foreach($rows as $row){
+				$arrDepartments[$row['id']] = $row['vc_name'];
+			}
+			return $arrDepartments;
+		}else{
+			return false;
+		}
+	}
+	
+	
 	function getAllForests(){
 		global $db;
 		$sql  = "SELECT * FROM m_forest WHERE i_status = '1'";
@@ -536,7 +553,7 @@ class common{
 		$where="";
 		$arrVolumeTables = array();
 		if($fid!=0){
-			$where='and i_forest_id=\''.$fid.'\'';
+			$where='and (i_forest_id=\''.$fid.'\' or i_division_id=\''.$_SESSION['centerKey'].'\')';
 		}
 		$sql  = "SELECT * FROM m_forest_volume WHERE i_status = '1' ".$where.' order by vc_name';
 		$rows  = $db->select($sql);
@@ -579,14 +596,14 @@ class common{
 		}
 	}
 
-	function checkExistingTableOption($table,$id,$fId,$title){
+	function checkExistingTableOption($table,$id,$fId,$i_division_id,$i_department,$title){
 		global $db;
 		$where="";
 		if($id!=0){
 			$where='and id!='.$id;
 		}
-		$sql = "SELECT * FROM ".$table." WHERE i_forest_id = '".$fId."' and vc_name='".$title."'";
-			
+		$sql = "SELECT * FROM ".$table." WHERE i_forest_id = '".$fId."' and i_division_id= '".$i_division_id."' and i_department_id= '".$i_department."' and vc_name='".$title."'";
+		echo $sql;
 		$row = $db->select($sql);
 
 		if(!empty($row)){
@@ -1282,7 +1299,7 @@ class common{
 
 	}
 
-	function generateForm ($_SERVER,$pageKey,$markDetailId,$economicsId)
+	function generateForm ($pageKey,$markDetailId,$economicsId)
 	{
 
 
@@ -1312,7 +1329,7 @@ class common{
 		<?php
 	}
 
-	function generateFormCreation ($_SERVER,$pageKey,$markDetailId,$economicsId)
+	function generateFormCreation (	$pageKey,$markDetailId,$economicsId)
 	{
 
 
@@ -1341,7 +1358,7 @@ class common{
 				</script>
 		<?php
 	}
-	function generateFormTreeForm ($_SERVER,$pageKey,$markDetailId,$i_tree_id)
+	function generateFormTreeForm ($pageKey,$markDetailId,$i_tree_id)
 	{
 		$i_tree_id=($i_tree_id=='0' ? ' ':$i_tree_id); 
 
@@ -2371,6 +2388,20 @@ class common{
 		}
 		return '';
 	}
+function getDevisonDFOs($table ,$orderby,$i_dividion_id){
+		global $db;
+		$sql  = "SELECT * FROM ".$table." WHERE i_status = '1'  and i_division_id='".$i_dividion_id."' order by ".$orderby;
+		$rows  = $db->select($sql);
+		if(!empty($rows)){
+			$arrCategory = array();
+			foreach($rows as $row){
+				$arrOptions[$row['id']] = $row['vc_name'];
 
+			}
+			return $arrOptions;
+		}else{
+			return false;
+		}
+	}
 }
 ?>

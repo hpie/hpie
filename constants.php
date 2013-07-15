@@ -74,9 +74,12 @@ for($y=2000;$y<=$maxYear;$y++){
  $arrYears[$y]=$y;
 }
 
-$dfoList=$common->getAllOptionOrder('m_forest_department','vc_name');
+$dfoList=$common->getDevisonDFOs('m_forest_department','vc_name',$_SESSION['centerKey']);
+
+
+
 $divionList=$common->getAllOptionOrder('m_division','vc_name');
-$divionLoginList=$common->getAllOptionByName('m_division','vc_name');
+$divionLoginList=$common->getAllOptionOrder('m_division','vc_name');
 
 /* function */
 function makeSelectOptions($arrData,$name,$selectedIndex=0,$javascript="",$size=0,$str=""){

@@ -18,7 +18,12 @@
 					<td valign='top' align='left' width='80%'><input type ='text' name='vc_name' value ='<?=$vc_name;?>'></td>
 				</tr>
 				
-				
+				<tr class='even'>
+					<td valign='top' align='left' width='20%' class='label'>Division</td>
+					<td valign='top' align='left' width='80%'>
+						<?=$db->makeSelectOptions($arrDivisions,"i_division_id",$i_division_id);?>	
+					</td>
+				</tr>
 					
 				<tr class='odd'>
 					<td valign='top' colspan='2' align='right'>
