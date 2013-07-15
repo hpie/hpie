@@ -1,9 +1,19 @@
 <?php
-ob_start(); session_start();
-
+ob_start(); 
+session_start();
 include('html/header.php');
 include 'include_files.php';
-
+	
+if(isset($_SESSION['currentDivisionDetail']))
+   {
+		$_SESSION['centerKey']=$_SESSION['currentDivisionDetail']['id'];
+   }
+  else 
+  {
+  	
+  } 
+	
+	
 ?>
 
 <div id='contractorDetail'
@@ -11,57 +21,7 @@ include 'include_files.php';
 </div>
 
 <?php
-
-if($_GET['changeDiv']=="yes")
 {
-	session_destroy();
-	header("location:".BASE_URL."index.php");
-}
-
-
-if($_POST)
-{
-	if($_POST['butDivSubmit']!="")
-	{
-		if($_POST['division']!="")
-		{
-			$_SESSION['centerKey']=$_POST['division'];
-		}else
-		{
-			header("location:".BASE_URL."index.php");
-		}
-			
-	}else{
-		header("location:".BASE_URL."index.php");
-	}
-}
-
-if(!$_SESSION['centerKey'])
-{
-	?>
-<form name="divSelectForm" method="post">
-<center>
-<table style="width: 400px;">
-	<tr>
-		<td>
-		<h5>Choose a Division to Login</h5>
-		</td>
-		<td><?php
-		echo(makeSelectOptions($divionLoginList, "division", "0", "", "", ""));
-		?></td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><input type="submit" id="Subdiv" name="butDivSubmit"
-			value="Choose Division" /></td>
-	</tr>
-
-</table>
-</center>
-</form>
-
-		<?php
-}else{
 
 
 	$currentPage="home";
@@ -635,6 +595,7 @@ if(!$_SESSION['centerKey'])
 		if(!isset($_SESSION['userId']))
 		{
 			//include('html/left_nevi.php');
+			echo 'inclusing logiv';
 			echo '<div id="content">';
 			include('login.php');
 		}else{

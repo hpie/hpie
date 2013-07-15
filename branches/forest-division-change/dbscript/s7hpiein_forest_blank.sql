@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 09, 2013 at 08:34 PM
+-- Generation Time: Jul 15, 2013 at 12:47 PM
 -- Server version: 5.5.32-cll
 -- PHP Version: 5.3.17
 
@@ -800,6 +800,7 @@ CREATE TABLE IF NOT EXISTS `m_forest_department` (
   `id` varchar(200) NOT NULL,
   `id1` int(11) NOT NULL AUTO_INCREMENT,
   `vc_name` varchar(200) NOT NULL,
+  `i_division_id` varchar(150) NOT NULL,
   `i_status` int(11) NOT NULL,
   PRIMARY KEY (`id1`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -1397,11 +1398,14 @@ CREATE TABLE IF NOT EXISTS `r_tree_opening_category` (
 CREATE TABLE IF NOT EXISTS `users` (
   `id` varchar(200) NOT NULL,
   `id1` int(11) NOT NULL AUTO_INCREMENT,
+  `i_division_id` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL DEFAULT '',
   `last_name` varchar(255) NOT NULL DEFAULT '',
   `user_name` varchar(256) NOT NULL,
   `email` varchar(100) NOT NULL DEFAULT '',
   `password` varchar(64) NOT NULL DEFAULT '',
+  `phone_no` varchar(15) NOT NULL,
+  `mobile_no` varchar(15) NOT NULL,
   `joined_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modified_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `ip_address` varchar(15) NOT NULL DEFAULT '000.000.000.000',
@@ -1415,23 +1419,23 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `id1`, `first_name`, `last_name`, `user_name`, `email`, `password`, `joined_on`, `modified_on`, `ip_address`, `last_login`, `division`, `i_status`) VALUES
-('1', 11, 'priyanka', 'test', 'Priyanka', '', 'test', '2013-05-27 11:30:48', '0000-00-00 00:00:00', '000.000.000.000', '', NULL, 1),
-('2', 12, 'jagdeep', 'singh', 'jagdeep', 'jagdeep.hsp@gmail.com', '123456', '2013-05-27 11:30:48', '0000-00-00 00:00:00', '000.000.000.000', '', NULL, 1),
-('3', 13, 'Chopal', 'User', 'chopal', 'fchopal@hpie.in', 'chopal123', '2013-07-05 14:18:34', '0000-00-00 00:00:00', '000.000.000.000', '', 'Chopal', 1),
-('4', 14, 'Chamba', 'User', 'chamba', 'fchamba@hpie.in', 'chamba123', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Chamba', 1),
-('5', 15, 'Dharamsala', 'User', 'dsala', 'fchamba@hpie.in', 'dsala123', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Dharamsala', 1),
-('6', 16, 'Fatehpur', 'User', 'fpur', 'fchamba@hpie.in', 'fpur123', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Fatehpur', 1),
-('7', 17, 'Hamirpur', 'User', 'hpur', 'fchamba@hpie.in', 'hpur123', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Hamirpur', 1),
-('8', 18, 'Kullu', 'User', 'kullu', 'fchamba@hpie.in', 'kullu123', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Kullu', 1),
-('8', 19, 'Mandi', 'User', 'mandi123', 'fchamba@hpie.in', 'mandi123', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Mandi', 1),
-('10', 20, 'Nahan', 'User', 'nahan', 'fchamba@hpie.in', 'nahan123', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Nahan', 1),
-('11', 21, 'Rampur', 'User', 'rpur', 'fchamba@hpie.in', 'rpur123', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Rampur', 1),
-('12', 22, 'Sawra', 'User', 'sawra', 'fchamba@hpie.in', 'sawra123', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Sawra', 1),
-('13', 23, 'Shimla', 'User', 'shimla', 'fchamba@hpie.in', 'shimla123', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Shimla', 1),
-('14', 24, 'Solan', 'User', 'solan', 'fchamba@hpie.in', 'solan123', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Solan', 1),
-('15', 25, 'SunderNagar', 'User', 'snagar', 'fchamba@hpie.in', 'snagar123', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'SunderNagar', 1),
-('16', 26, 'Una', 'User', 'una123', 'fchamba@hpie.in', 'una123', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Una', 1);
+INSERT INTO `users` (`id`, `id1`, `i_division_id`, `first_name`, `last_name`, `user_name`, `email`, `password`, `phone_no`, `mobile_no`, `joined_on`, `modified_on`, `ip_address`, `last_login`, `division`, `i_status`) VALUES
+('1', 11, '', 'priyanka', 'test', 'Priyanka', '', 'test', '', '', '2013-05-27 11:30:48', '0000-00-00 00:00:00', '000.000.000.000', '', NULL, 1),
+('2', 12, '', 'jagdeep', 'singh', 'jagdeep', 'jagdeep.hsp@gmail.com', '123456', '', '', '2013-05-27 11:30:48', '0000-00-00 00:00:00', '000.000.000.000', '', NULL, 1),
+('3', 13, '', 'Chopal', 'User', 'chopal', 'fchopal@hpie.in', 'chopal123', '', '', '2013-07-05 14:18:34', '0000-00-00 00:00:00', '000.000.000.000', '', 'Chopal', 1),
+('4', 14, '', 'Chamba', 'User', 'chamba', 'fchamba@hpie.in', 'chamba123', '', '', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Chamba', 1),
+('5', 15, '', 'Dharamsala', 'User', 'dsala', 'fchamba@hpie.in', 'dsala123', '', '', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Dharamsala', 1),
+('6', 16, '', 'Fatehpur', 'User', 'fpur', 'fchamba@hpie.in', 'fpur123', '', '', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Fatehpur', 1),
+('7', 17, '', 'Hamirpur', 'User', 'hpur', 'fchamba@hpie.in', 'hpur123', '', '', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Hamirpur', 1),
+('8', 18, '', 'Kullu', 'User', 'kullu', 'fchamba@hpie.in', 'kullu123', '', '', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Kullu', 1),
+('8', 19, '', 'Mandi', 'User', 'mandi123', 'fchamba@hpie.in', 'mandi123', '', '', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Mandi', 1),
+('10', 20, '', 'Nahan', 'User', 'nahan', 'fchamba@hpie.in', 'nahan123', '', '', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Nahan', 1),
+('11', 21, '', 'Rampur', 'User', 'rpur', 'fchamba@hpie.in', 'rpur123', '', '', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Rampur', 1),
+('12', 22, '', 'Sawra', 'User', 'sawra', 'fchamba@hpie.in', 'sawra123', '', '', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Sawra', 1),
+('13', 23, '', 'Shimla', 'User', 'shimla', 'fchamba@hpie.in', 'shimla123', '', '', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Shimla', 1),
+('14', 24, '', 'Solan', 'User', 'solan', 'fchamba@hpie.in', 'solan123', '', '', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Solan', 1),
+('15', 25, '', 'SunderNagar', 'User', 'snagar', 'fchamba@hpie.in', 'snagar123', '', '', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'SunderNagar', 1),
+('16', 26, '', 'Una', 'User', 'una123', 'fchamba@hpie.in', 'una123', '', '', '2013-05-27 06:00:48', '0000-00-00 00:00:00', '000.000.000.000', '0000-00-00 00:00:00', 'Una', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

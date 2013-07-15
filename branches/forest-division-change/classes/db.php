@@ -3,7 +3,7 @@ class db{
 	private $hConn;
 	public $showQueries;
 	public $dbName;
-/*database constructor start*/
+	/*database constructor start*/
 	public function __construct($arrConfig=null){
 		global $conn;
 		$this->arrConfig =$arrConfig;
@@ -23,8 +23,8 @@ class db{
 		$this->selectDb($this->arrConfig['db_name']);
 	}
 
-/*database constructor end*/
-/*select database start*/
+	/*database constructor end*/
+	/*select database start*/
 
 	public function selectDb($dbName){
 		$this->dbName = $dbName;
@@ -34,7 +34,7 @@ class db{
 			//echo "database selected";
 		}
 	}
-/*select database end*/
+	/*select database end*/
 
 	public function __destruct(){
 		if(is_resource($this->hConn)){
@@ -42,7 +42,7 @@ class db{
 		}
 	}
 
-/*select function  start*/
+	/*select function  start*/
 	public function select($sql){
 
 		if($this->showQueries){
@@ -51,7 +51,7 @@ class db{
 		$hRes = mysql_query($sql,$this->hConn);
 		if(!is_resource($hRes)){
 			$err = mysql_error($this->hConn);
-				throw new exception($err);
+			throw new exception($err);
 		}
 		$arReturn = array();
 		while(($row =mysql_fetch_assoc($hRes))){
@@ -60,9 +60,9 @@ class db{
 		return $arReturn;
 	}
 
-/*select function  end*/
-/*insert  function  start*/
-    public function setXbyY ($query,$id=0) {
+	/*select function  end*/
+	/*insert  function  start*/
+	public function setXbyY ($query,$id=0) {
 		$this->id	   = $id;
 		$queryResponse = mysql_query($query) or die(mysql_error()."<br>".$query);
 		$generatedID   = mysql_insert_id();
@@ -84,7 +84,7 @@ class db{
 	}
 
 	public function insert($table,$arFieldValues){
-		$arFieldValues['id']=$_SESSION['centerKey'].(rand(100, 100000000) * 100);
+		$arFieldValues['id']=(rand(100, 100000000) * 100);
 		$fields		= array_keys($arFieldValues);
 		$values		= array_values($arFieldValues);
 		$escVals	= array();
@@ -94,14 +94,14 @@ class db{
 			}
 			$escVals[] = $val;
 		}
-	 $sql = "INSERT INTO $table (";
+	   $sql = "INSERT INTO $table (";
 		$sql .=join(', ', $fields);
 		$sql .=') VALUES(';
 		$sql .=join(', ', $escVals);
 		$sql .=')';
 		//echo $sql;
-//echo "<br/>";
-//exit;
+		//echo "<br/>";
+		//exit;
 		if($this->showQueries){
 			$this->showQueries($sql);
 		}
@@ -120,8 +120,8 @@ class db{
 		return $arFieldValues['id'];
 	}
 
-/*insert  function  end*/
-/*update  function  starts*/
+	/*insert  function  end*/
+	/*update  function  starts*/
 
 	public function update($table,$arFieldValues,$arConditions){
 		$arUpdates = array();
@@ -142,8 +142,8 @@ class db{
 
 		$sql = "UPDATE $table SET ";
 		$sql .= join(', ', $arUpdates);
-		 $sql .= ' WHERE '. join(' AND ', $arWhere);
-		
+		$sql .= ' WHERE '. join(' AND ', $arWhere);
+
 		if($this->showQueries){
 			$this->showQueries($sql);
 		}
@@ -155,8 +155,8 @@ class db{
 		//return mysql_affected_rows();
 		return mysql_affected_rows();
 	}
-/*update  function  starts*/
-/*delete  function  starts*/
+	/*update  function  starts*/
+	/*delete  function  starts*/
 
 	public function delete($table,$arConditions){
 		$arWhere = array();
@@ -193,7 +193,7 @@ class db{
 	}
 
 	public function makeSelectOptions($arrData,$name,$selectedIndex=0,$javascript="",$size=0,$str=""){
-/*echo '<pre>'; print_r($arrData); echo '<pre>';*/
+		/*echo '<pre>'; print_r($arrData); echo '<pre>';*/
 		$strOptions= "";
 		if(isset($javascript) && $javascript != ""){
 			$callJs = "onchange ='javascript:".$javascript."(this.value)'";
@@ -223,8 +223,8 @@ class db{
 
 
 
-public function makeAnySelectOptions($arrData,$name,$selectedIndex=0,$javascript="",$size=0,$str=""){
-/*echo '<pre>'; print_r($arrData); echo '<pre>';*/
+	public function makeAnySelectOptions($arrData,$name,$selectedIndex=0,$javascript="",$size=0,$str=""){
+		/*echo '<pre>'; print_r($arrData); echo '<pre>';*/
 		$strOptions= "";
 		if(isset($javascript) && $javascript != ""){
 			$callJs = "onchange ='javascript:".$javascript."(this.value)'";
@@ -251,28 +251,28 @@ public function makeAnySelectOptions($arrData,$name,$selectedIndex=0,$javascript
 		}
 		return $strOptions;
 	}
-/*delete  function  end*/
-/*display  queries function  starts*/
+	/*delete  function  end*/
+	/*display  queries function  starts*/
 
 	public function showQueries($sql){
 		echo "<font style ='color:#ff0000'>".$sql."<br/></font>";
 	}
 
-/*display  queries function  end*/
-public function display_paging($total, $limit, $pagenumber, $baseurl,$showpages){
-	/*
-	Usage examples:
-	echo display_paging( $total, $limit, $page, $baseurl );
+	/*display  queries function  end*/
+	public function display_paging($total, $limit, $pagenumber, $baseurl,$showpages){
+		/*
+		 Usage examples:
+		 echo display_paging( $total, $limit, $page, $baseurl );
 
-	Show 3rd page with 10 records from a set of hundred
-	echo display_paging( 100, 10, 3, $baseurl );
+		 Show 3rd page with 10 records from a set of hundred
+		 echo display_paging( 100, 10, 3, $baseurl );
 
-	Using with normal variable passing links
-	echo display_paging( $total, $limit, $page, "?view=prod&cat=cat&page=" );
+		 Using with normal variable passing links
+		 echo display_paging( $total, $limit, $page, "?view=prod&cat=cat&page=" );
 
-	Using this with mod_rewrite (setup your rules in htaccess)
-	echo display_paging( $total, $limit, $page, "/prod/cat/page/" );
-	*/
+		 Using this with mod_rewrite (setup your rules in htaccess)
+		 echo display_paging( $total, $limit, $page, "/prod/cat/page/" );
+		 */
 		$html			= "";
 		$icon_first		='<div title="first" class="next_prev_link">Start</div>';
 		$icon_last		='<div class="next_prev_link" title="last" >End</div>';
@@ -288,256 +288,256 @@ public function display_paging($total, $limit, $pagenumber, $baseurl,$showpages)
 		$html = '<div id="pageLinks">';
 		// if first link is needed
 		if($pagenumber > 1) { $previous = $pagenumber -1;
-			$html .= '<a href="'.$baseurl.'1">'.$icon_first.'</a> ';
+		$html .= '<a href="'.$baseurl.'1">'.$icon_first.'</a> ';
 		}
 		// if previous link is needed
 		if($pagenumber > 2) {    $previous = $pagenumber -1;
-			$html .= '<a href="'.$baseurl.''.$previous.'">'.$icon_previous.'</a> ';
+		$html .= '<a href="'.$baseurl.''.$previous.'">'.$icon_previous.'</a> ';
 		}
 		// print page numbers
 		if ($pages>=2) { $p=1;
-			$html .= "| Page: ";
-			$pages_before = $pagenumber - 1;
-			$pages_after = $pages - $pagenumber;
-			$show_before = floor($showpages / 2);
-			$show_after = floor($showpages / 2);
-			if ($pages_before < $show_before){
-				$dif = $show_before - $pages_before;
-				$show_after = $show_after + $dif;
-			}
-			if ($pages_after < $show_after){
-				$dif = $show_after - $pages_after;
-				$show_before = $show_before + $dif;
-			}
-			$minpage = $pagenumber - ($show_before+1);
-			$maxpage = $pagenumber + ($show_after+1);
+		$html .= "| Page: ";
+		$pages_before = $pagenumber - 1;
+		$pages_after = $pages - $pagenumber;
+		$show_before = floor($showpages / 2);
+		$show_after = floor($showpages / 2);
+		if ($pages_before < $show_before){
+			$dif = $show_before - $pages_before;
+			$show_after = $show_after + $dif;
+		}
+		if ($pages_after < $show_after){
+			$dif = $show_after - $pages_after;
+			$show_before = $show_before + $dif;
+		}
+		$minpage = $pagenumber - ($show_before+1);
+		$maxpage = $pagenumber + ($show_after+1);
 
-			if ($pagenumber > ($show_before+1) && $showpages > 0) {
-				$html .= " ... ";
-			}
-			while ($p <= $pages) {
-				if ($p > $minpage && $p < $maxpage) {
-					if ($pagenumber == $p) {
-							$html .= " <b class='active'>".$p."</b>";
-					} else {
-						$html .= ' <a href="'.$baseurl.$p.'">'.$p.'</a>';
-					}
+		if ($pagenumber > ($show_before+1) && $showpages > 0) {
+			$html .= " ... ";
+		}
+		while ($p <= $pages) {
+			if ($p > $minpage && $p < $maxpage) {
+				if ($pagenumber == $p) {
+					$html .= " <b class='active'>".$p."</b>";
+				} else {
+					$html .= ' <a href="'.$baseurl.$p.'">'.$p.'</a>';
 				}
-				$p++;
 			}
-			if ($maxpage-1 < $pages && $showpages > 0) {
-				$html .= " ... ";
-			}
+			$p++;
+		}
+		if ($maxpage-1 < $pages && $showpages > 0) {
+			$html .= " ... ";
+		}
 		}
 		// if next link is needed
 		if($end < $total) { $next = $pagenumber +1;
-			if ($next != ($p-1)) {
-				$html .= ' | <a href="'.$baseurl.$next.'">'.$icon_next.'</a>';
-			} else {$html .= ' | ';}
+		if ($next != ($p-1)) {
+			$html .= ' | <a href="'.$baseurl.$next.'">'.$icon_next.'</a>';
+		} else {$html .= ' | ';}
 		}
 		// if last link is needed
 		if($end < $total) { $last = $p -1;
-			$html .= ' <a href="'.$baseurl.$last.'">'.$icon_last.'</a>';
+		$html .= ' <a href="'.$baseurl.$last.'">'.$icon_last.'</a>';
 		}
 		$html .= '</div>';
 		// return paging links
 		return $html;
-}
-		function makeCheckBoxes($arrData,$name,$selectedBoxes=array(),$column){
+	}
+	function makeCheckBoxes($arrData,$name,$selectedBoxes=array(),$column){
 
 
-			$strTable = "<table class='adminlist1'  width ='80%' align ='left' cellpadding='0' cellspacing='0' style ='border:1px solid #bebebe;'>";
-			 $totalRecords = count($arrData);
-			$width = floor(100/$column);
-			$strTable .= "<tr class='row0'><td align ='left' valign ='top' width='".$width."%'>";
-			$strTable .=  "<input style='width:20px;height:18px;' name='toggle' onclick='check_all_links($totalRecords);' type='checkbox'>".CHECK_ALL_TEXT;
-			$strTable .= "</td>";
-			for($j=0;$j<$column-1;$j++){
-				$strTable .="<td width='".$width."%'>&nbsp;</td>";
-			}
-			$strTable .="</tr>";
+		$strTable = "<table class='adminlist1'  width ='80%' align ='left' cellpadding='0' cellspacing='0' style ='border:1px solid #bebebe;'>";
+		$totalRecords = count($arrData);
+		$width = floor(100/$column);
+		$strTable .= "<tr class='row0'><td align ='left' valign ='top' width='".$width."%'>";
+		$strTable .=  "<input style='width:20px;height:18px;' name='toggle' onclick='check_all_links($totalRecords);' type='checkbox'>".CHECK_ALL_TEXT;
+		$strTable .= "</td>";
+		for($j=0;$j<$column-1;$j++){
+			$strTable .="<td width='".$width."%'>&nbsp;</td>";
+		}
+		$strTable .="</tr>";
 
-			if(!empty($arrData)){
-				$counter = 0;
-				$i		 = 1;
-				$loopCounter = 0;
-				foreach($arrData as $k=>$v){
-					if($counter == 0){
-						$strTable .= "<tr class='row0'>";
-					}
-					$checked= "";
-					if(in_array($k,$selectedBoxes)){
-						$checked= "checked";
-					}
-					switch($v){
+		if(!empty($arrData)){
+			$counter = 0;
+			$i		 = 1;
+			$loopCounter = 0;
+			foreach($arrData as $k=>$v){
+				if($counter == 0){
+					$strTable .= "<tr class='row0'>";
+				}
+				$checked= "";
+				if(in_array($k,$selectedBoxes)){
+					$checked= "checked";
+				}
+				switch($v){
 					case "Home":
-					$checklabel=	HOME_LABEL_TEXT;
-					break;
+						$checklabel=	HOME_LABEL_TEXT;
+						break;
 					case "Schools":
-					$checklabel=	SCHOOL_LABEL_TEXT;
-					break;
+						$checklabel=	SCHOOL_LABEL_TEXT;
+						break;
 					case "Levels":
-					$checklabel=	LEVELS_LABEL_TEXT;
-					break;
+						$checklabel=	LEVELS_LABEL_TEXT;
+						break;
 					case "Categories":
-					$checklabel=	CATEGORIES_LABEL_TEXT;
-					break;
+						$checklabel=	CATEGORIES_LABEL_TEXT;
+						break;
 					case "Templates":
-					$checklabel=	TEMPLATES_LABEL_TEXT;
-					break;
+						$checklabel=	TEMPLATES_LABEL_TEXT;
+						break;
 					case "Live Reports":
-					$checklabel=	LIVE_REPORT_LABEL_TEXT;
-					break;
+						$checklabel=	LIVE_REPORT_LABEL_TEXT;
+						break;
 					case "Tests":
-					$checklabel=	TEST_LABEL_TEXT;
-					break;
+						$checklabel=	TEST_LABEL_TEXT;
+						break;
 					case "Students":
-					$checklabel=	STUDENT_LABEL_TEXT;
-					break;
+						$checklabel=	STUDENT_LABEL_TEXT;
+						break;
 					case "Groups":
-					$checklabel=	GROUP_LABEL_TEXT;
-					break;
+						$checklabel=	GROUP_LABEL_TEXT;
+						break;
 					case "Countries":
-					$checklabel=	COUNTRY_LABEL_TEXT;
-					break;
+						$checklabel=	COUNTRY_LABEL_TEXT;
+						break;
 					case "States":
-					$checklabel=	STATE_LABEL_TEXT;
-					break;
+						$checklabel=	STATE_LABEL_TEXT;
+						break;
 					case "Subscriptions":
-					$checklabel=	SUBSCRIPTION_LABEL_TEXT;
-					break;
+						$checklabel=	SUBSCRIPTION_LABEL_TEXT;
+						break;
 					case "Admin Users":
-					$checklabel=	ADMIN_USER_LABEL_TEXT;
-					break;
+						$checklabel=	ADMIN_USER_LABEL_TEXT;
+						break;
 					case "Others":
-					$checklabel=	OTHERS_LABEL_TEXT;
-					break;
+						$checklabel=	OTHERS_LABEL_TEXT;
+						break;
 					case "Weeks":
-					$checklabel=	WEEK_LABEL_TEXT;
-					break;
+						$checklabel=	WEEK_LABEL_TEXT;
+						break;
 					case "Add New School":
-					$checklabel=	ADD_SCHOOL_LABEL_TEXT;
-					break;
+						$checklabel=	ADD_SCHOOL_LABEL_TEXT;
+						break;
 					case "Add Level":
-					$checklabel=	ADD_LEVEL_LABEL_TEXT;
-					break;
+						$checklabel=	ADD_LEVEL_LABEL_TEXT;
+						break;
 					case "Add Category":
-					$checklabel=	ADD_CATEGORY_LABEL_TEXT;
-					break;
+						$checklabel=	ADD_CATEGORY_LABEL_TEXT;
+						break;
 					case "Add Template":
-					$checklabel=	ADD_TEMPLATE_LABEL_TEXT;
-					break;
+						$checklabel=	ADD_TEMPLATE_LABEL_TEXT;
+						break;
 					case "Templates":
-					$checklabel=	TEMPLATES_LABEL_TEXT;
-					break;
+						$checklabel=	TEMPLATES_LABEL_TEXT;
+						break;
 					case "Add Page":
-					$checklabel=	"Add Page";
-					break;
+						$checklabel=	"Add Page";
+						break;
 					case "Add Test":
-					$checklabel=	ADD_TEST_LABEL_TEXT;
-					break;
+						$checklabel=	ADD_TEST_LABEL_TEXT;
+						break;
 					case "Add student":
-					$checklabel=	ADD_STUDENT_LABEL_TEXT;
-					break;
+						$checklabel=	ADD_STUDENT_LABEL_TEXT;
+						break;
 					case "Add Group":
-					$checklabel=	ADD_GROUP_LABEL_TEXT;
-					break;
+						$checklabel=	ADD_GROUP_LABEL_TEXT;
+						break;
 					case "Add Country":
-					$checklabel=	ADD_COUNTRY_LABEL_TEXT;
-					break;
+						$checklabel=	ADD_COUNTRY_LABEL_TEXT;
+						break;
 					case "Add State":
-					$checklabel=	ADD_STATE_LABEL_TEXT;
-					break;
+						$checklabel=	ADD_STATE_LABEL_TEXT;
+						break;
 					case "Add Subscription":
-					$checklabel=	ADD_SUBSCRIPTION_LABEL_TEXT;
-					break;
+						$checklabel=	ADD_SUBSCRIPTION_LABEL_TEXT;
+						break;
 					case "Add Admin User":
-					$checklabel=	ADD_ADMIN_USER_LABEL_TEXT;
-					break;
+						$checklabel=	ADD_ADMIN_USER_LABEL_TEXT;
+						break;
 					case "Admin Links":
-					$checklabel=	ADMIN_LINKS_LABEL_TEXT;
-					break;
+						$checklabel=	ADMIN_LINKS_LABEL_TEXT;
+						break;
 					case "Roles":
-					$checklabel=	ROLES_LABEL_TEXT;
-					break;
+						$checklabel=	ROLES_LABEL_TEXT;
+						break;
 					case "Site Pages":
-					$checklabel=	SITE_PAGES_LABEL_TEXT;
-					break;
+						$checklabel=	SITE_PAGES_LABEL_TEXT;
+						break;
 					case "Word Frequency":
-					$checklabel=	WORD_FREQUENCY_LABEL_TEXT;
-					break;
+						$checklabel=	WORD_FREQUENCY_LABEL_TEXT;
+						break;
 					case "Add Word Frequency":
-					$checklabel=	ADD_WORD_FREQUENCY_LABEL_TEXT;
-					break;
+						$checklabel=	ADD_WORD_FREQUENCY_LABEL_TEXT;
+						break;
 					case "Easy":
-					$checklabel=	EASY_LABEL_TEXT;
-					break;
+						$checklabel=	EASY_LABEL_TEXT;
+						break;
 					case "Normal":
-					$checklabel=	NORMAL_LABEL_TEXT;
-					break;
+						$checklabel=	NORMAL_LABEL_TEXT;
+						break;
 					case "Difficult":
-					$checklabel=	DIFFICULT_LABEL_TEXT;
-					break;
+						$checklabel=	DIFFICULT_LABEL_TEXT;
+						break;
 					case "Global Configuration":
-					$checklabel=	GLOBAL_CONFIG_LABEL_TEXT;
-					break;
+						$checklabel=	GLOBAL_CONFIG_LABEL_TEXT;
+						break;
 					case "Faqs":
-					$checklabel=	FAQ_LABEL_TEXT;
-					break;
+						$checklabel=	FAQ_LABEL_TEXT;
+						break;
 					case "Add Faq":
-					$checklabel=	ADD_FAQ_LABEL_TEXT;
-					break;
+						$checklabel=	ADD_FAQ_LABEL_TEXT;
+						break;
 					case "Add Flash Image":
-					$checklabel=	"Add Flash Image";
-					break;
+						$checklabel=	"Add Flash Image";
+						break;
 					case "Flash Images":
-					$checklabel=	"Flash Images";
-					break;
+						$checklabel=	"Flash Images";
+						break;
 					case "Add Live Help":
-					$checklabel=	"Add Live Help";
-					break;
+						$checklabel=	"Add Live Help";
+						break;
 
 					case "Live Help":
-					$checklabel=	"Live Help";
-					break;
+						$checklabel=	"Live Help";
+						break;
 				}
 
-				 $strTable .= "<td align ='left' valign ='top' width='".$width."%'><input style='width:20px;height:18px;' type='checkbox' name ='".$name."[".$i."]' value ='".$k."' ".$checked."> ".$checklabel."</td>";
-					$counter++;
-					$loopCounter++;
-					if($counter == $column){
-						$strTable .="</tr>";
-						$counter =0;
-					}elseif($loopCounter == $totalRecords){
-						for($k=$counter;$k<$column;$k++){
-							$strTable .="<td width='".$width."%'></td>";
-						}
-						$strTable .="</tr>";
+				$strTable .= "<td align ='left' valign ='top' width='".$width."%'><input style='width:20px;height:18px;' type='checkbox' name ='".$name."[".$i."]' value ='".$k."' ".$checked."> ".$checklabel."</td>";
+				$counter++;
+				$loopCounter++;
+				if($counter == $column){
+					$strTable .="</tr>";
+					$counter =0;
+				}elseif($loopCounter == $totalRecords){
+					for($k=$counter;$k<$column;$k++){
+						$strTable .="<td width='".$width."%'></td>";
 					}
-					$i++;
+					$strTable .="</tr>";
 				}
+				$i++;
 			}
-			$strTable .= "</table>";
-			return $strTable;
 		}
+		$strTable .= "</table>";
+		return $strTable;
+	}
 
 	function set_status($table,$data){
 		$motive = $data['motive'];
 		$action = "";
 		switch($motive){
 			case 'Activate':
-			$is_active = 1;
-			$action	 = "update";
-			break;
+				$is_active = 1;
+				$action	 = "update";
+				break;
 
 			case 'Deactivate':
-			$is_active = 0;
-			$action	 = "update";
-			break;
+				$is_active = 0;
+				$action	 = "update";
+				break;
 
 			case 'Remove':
-			$action	= "delete";
-			break;
+				$action	= "delete";
+				break;
 		}
 
 		if(isset($data['chk'])){
@@ -650,26 +650,26 @@ public function display_paging($total, $limit, $pagenumber, $baseurl,$showpages)
 	}
 
 	function isActive($table,$a_data){
-			foreach($a_data as $key=>$value){
-				$id	=	$key;
-				$status		=	$value;
-				if($status == 'Activate'){
-					$isActive = '1';
-				}else{
-					$isActive = '0';
-				}
-				$arFieldValues = array("i_status"=>$isActive);
-				$arConditions  = array("id"=>$id);
-				$this->update($table,$arFieldValues,$arConditions);
+		foreach($a_data as $key=>$value){
+			$id	=	$key;
+			$status		=	$value;
+			if($status == 'Activate'){
+				$isActive = '1';
+			}else{
+				$isActive = '0';
+			}
+			$arFieldValues = array("i_status"=>$isActive);
+			$arConditions  = array("id"=>$id);
+			$this->update($table,$arFieldValues,$arConditions);
 		}
 	}
 
 	public function deleteConversion($id,$markId,$month,$year,$c_id){
 
 
-		  $sql = "Delete FROM c_filling_detail  WHERE  month ='".$month."' and year='".$year."' and i_tree_id=".$id." and i_contractor_id=".$c_id."  AND i_mark_id =".$markId ;
-         $err = mysql_error($this->hConn).$sql;
-		 //die();
+		$sql = "Delete FROM c_filling_detail  WHERE  month ='".$month."' and year='".$year."' and i_tree_id=".$id." and i_contractor_id=".$c_id."  AND i_mark_id =".$markId ;
+		$err = mysql_error($this->hConn).$sql;
+		//die();
 		if($this->showQueries){
 			$this->showQueries($sql);
 		}
@@ -683,13 +683,13 @@ public function display_paging($total, $limit, $pagenumber, $baseurl,$showpages)
 	}
 
 
-public function deleteProgressDetail($progressConversionId){
+	public function deleteProgressDetail($progressConversionId){
 
 
-		  $sql = "Delete FROM progress_conversion_detail  WHERE   	i_progress_id ='".$progressConversionId."'" ;
+		$sql = "Delete FROM progress_conversion_detail  WHERE   	i_progress_id ='".$progressConversionId."'" ;
 
-		  $err = mysql_error($this->hConn).$sql;
-		 //die();
+		$err = mysql_error($this->hConn).$sql;
+		//die();
 		if($this->showQueries){
 			$this->showQueries($sql);
 		}
@@ -797,13 +797,13 @@ public function deleteProgressDetail($progressConversionId){
 		}
 		return mysql_affected_rows();
 	}
-public function deleteProgressTransportDetail($progressConversionId){
+	public function deleteProgressTransportDetail($progressConversionId){
 
 
-		  $sql = "Delete FROM progress_transportation_detail  WHERE   	i_progress_id ='".$progressConversionId ."'" ;
+		$sql = "Delete FROM progress_transportation_detail  WHERE   	i_progress_id ='".$progressConversionId ."'" ;
 
-		  $err = mysql_error($this->hConn).$sql;
-		 //die();
+		$err = mysql_error($this->hConn).$sql;
+		//die();
 		if($this->showQueries){
 			$this->showQueries($sql);
 		}
@@ -816,13 +816,13 @@ public function deleteProgressTransportDetail($progressConversionId){
 		return mysql_affected_rows();
 	}
 
-public function deleteProgressFellingDetail($progressConversionId){
+	public function deleteProgressFellingDetail($progressConversionId){
 
 
-		  $sql = "Delete FROM progress_felling_detail  WHERE   	i_progress_id ='".$progressConversionId."'" ;
+		$sql = "Delete FROM progress_felling_detail  WHERE   	i_progress_id ='".$progressConversionId."'" ;
 
-		  $err = mysql_error($this->hConn).$sql;
-		 //die();
+		$err = mysql_error($this->hConn).$sql;
+		//die();
 		if($this->showQueries){
 			$this->showQueries($sql);
 		}
@@ -856,13 +856,13 @@ public function deleteProgressFellingDetail($progressConversionId){
 
 
 
-public function deleteProgressFellingCharges($progressConversionId){
+	public function deleteProgressFellingCharges($progressConversionId){
 
 
-		  $sql = "Delete FROM progress_felling_charges  WHERE   	i_progress_id ='".$progressConversionId ."'" ;
+		$sql = "Delete FROM progress_felling_charges  WHERE   	i_progress_id ='".$progressConversionId ."'" ;
 
-		  $err = mysql_error($this->hConn).$sql;
-		 //die();
+		$err = mysql_error($this->hConn).$sql;
+		//die();
 		if($this->showQueries){
 			$this->showQueries($sql);
 		}
@@ -895,13 +895,13 @@ public function deleteProgressFellingCharges($progressConversionId){
 		return mysql_affected_rows();
 	}
 
-public function deleteProgressConversionCharges($progressConversionId){
+	public function deleteProgressConversionCharges($progressConversionId){
 
 
-		  $sql = "Delete FROM progress_conversion_charges  WHERE   	i_progress_id ='".$progressConversionId."'" ;
+		$sql = "Delete FROM progress_conversion_charges  WHERE   	i_progress_id ='".$progressConversionId."'" ;
 
-		  $err = mysql_error($this->hConn).$sql;
-		 //die();
+		$err = mysql_error($this->hConn).$sql;
+		//die();
 		if($this->showQueries){
 			$this->showQueries($sql);
 		}
@@ -914,13 +914,13 @@ public function deleteProgressConversionCharges($progressConversionId){
 		return mysql_affected_rows();
 	}
 
-public function deleteProgressOverHeadDetail($progressConversionId){
+	public function deleteProgressOverHeadDetail($progressConversionId){
 
 
-		  $sql = "Delete FROM progress_overhead_detail  WHERE   	i_progress_id ='".$progressConversionId ."'";
+		$sql = "Delete FROM progress_overhead_detail  WHERE   	i_progress_id ='".$progressConversionId ."'";
 
-		  $err = mysql_error($this->hConn).$sql;
-		 //die();
+		$err = mysql_error($this->hConn).$sql;
+		//die();
 		if($this->showQueries){
 			$this->showQueries($sql);
 		}
@@ -933,13 +933,13 @@ public function deleteProgressOverHeadDetail($progressConversionId){
 		return mysql_affected_rows();
 	}
 
-public function deleteInventoryDetail($progressConversionId){
+	public function deleteInventoryDetail($progressConversionId){
 
 
-		  $sql = "Delete FROM inventory_detail  WHERE   		i_inventory_id ='".$progressConversionId."'" ;
+		$sql = "Delete FROM inventory_detail  WHERE   		i_inventory_id ='".$progressConversionId."'" ;
 
-		  $err = mysql_error($this->hConn).$sql;
-		 //die();
+		$err = mysql_error($this->hConn).$sql;
+		//die();
 		if($this->showQueries){
 			$this->showQueries($sql);
 		}

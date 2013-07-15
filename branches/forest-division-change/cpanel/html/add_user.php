@@ -60,6 +60,13 @@
 				</tr>
 				
 				<tr class='even'>
+					<td valign='top' align='left' width='20%' class='label'>Division</td>
+					<td valign='top' align='left' width='80%'>
+						<?=$db->makeSelectOptions($arrDivisions,"i_division_id",$i_division_id);?>	
+					</td>
+				</tr>
+				
+				<tr class='even'>
 					<td valign='top' colspan='2' align='right'>
 						<input type ='button'  class='btnReset' name='back' id ='back' value ='Back' onClick='javascript:history.back(-1);'>
 						<input type ='hidden' name ='id' id ='id' value ='<?=$id;?>'>

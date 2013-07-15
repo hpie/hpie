@@ -87,7 +87,7 @@
 		function validateLogin($login,$password, $division){
 			global $db;
 			$password = $db->password($password);
-			echo $sql = "SELECT * FROM ".TBL_ADMINS." WHERE login ='".$login."' AND password ='".$password."' AND division ='".$division."' AND status ='y'";
+			$sql = "SELECT * FROM ".TBL_ADMINS." WHERE login ='".$login."' AND password ='".$password."'  AND status ='y'";
 			$row = $db->select($sql);
 			if(!empty($row)){
 				return true;
@@ -121,7 +121,7 @@
 		function doLogin($login,$password, $division){
 			global $db;
 			$password = $db->password($password);
-			echo $sql = "SELECT * FROM ".TBL_ADMINS." WHERE login ='".$login."' AND password ='".$password."' AND division ='".$division."'";
+			echo $sql = "SELECT * FROM ".TBL_ADMINS." WHERE login ='".$login."' AND password ='".$password."'";
 			$row = $db->select($sql);
 			
 			if(!empty($row)){

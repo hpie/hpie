@@ -7,6 +7,8 @@
 	include("html/header.php");
 	
 	
+	$arrDivisions  = $common->getAllDividions();
+	
 	$userLabel	= "Add New User";
 	$arrError		= array();
 	$id				= 0;
@@ -43,6 +45,8 @@
 		$city           =$row[0]['city'];
 		$state          =$row[0]['state'];
 		$zip	        =$row[0]['zip'];
+		$i_division_id	        =$row[0]['i_division_id'];
+		
 		
 	}
 	if(isset($_POST['submit']) && $_POST['submit'] != ""){
