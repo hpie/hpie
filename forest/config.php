@@ -2,9 +2,9 @@
 	global $db,$a_config,$conn,$page,$html,$common,$conn;
 	
 	$a_config =	array('host'=>'localhost',
-					'user'=>'root',
-					'password'=>'',
-					'db_name'=>'hishimla_forest_new',
+					'user'=>'s7hpiein_forest',
+					'password'=>'f0r3%t',
+					'db_name'=>'s7hpiein_forest',
 					'show_queries'=>false);
 	
 	/*$a_config =	array('host'=>'localhost',
