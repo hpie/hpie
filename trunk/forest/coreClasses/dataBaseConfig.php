@@ -1,10 +1,10 @@
 <?php
 
  $hostName="localhost";
- $userName="root";
- $passWord="";
+ $userName="s7hpiein_forest";
+ $passWord="f0r3%t";
  $data_database_port="3363";
- $databaseName="hishimla_forest_new" ;
+ $databaseName="s7hpiein_forest" ;
 
 /*
 $hostName="localhost";
