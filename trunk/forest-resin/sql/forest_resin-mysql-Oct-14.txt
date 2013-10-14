@@ -1,0 +1,470 @@
+-- phpMyAdmin SQL Dump
+-- version 3.3.9
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Oct 14, 2013 at 12:36 AM
+-- Server version: 5.5.8
+-- PHP Version: 5.3.5
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Database: `forest_resin`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `m_dfo`
+--
+
+CREATE TABLE IF NOT EXISTS `m_dfo` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `dfo_code` varchar(50) NOT NULL,
+  `dfo_name` varchar(100) NOT NULL,
+  `division_code` varchar(50) NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `m_dfo`
+--
+
+INSERT INTO `m_dfo` (`id`, `dfo_code`, `dfo_name`, `division_code`, `status_cd`, `created_dt`, `created_by`, `updated_dt`, `updated_by`) VALUES
+(1, 'Shimla_Dfo', 'DFO Shimla', 'Shimla', 'A', '2013-09-29 14:30:00', 'system', '0000-00-00 00:00:00', NULL),
+(2, 'Theog_Dfo', 'DFo Theog', 'Shimla', 'A', '2013-09-29 14:30:00', 'system', '0000-00-00 00:00:00', NULL),
+(3, 'Ani_Dfo', 'DFO Ani', 'Shimla', 'A', '2013-09-29 14:30:00', 'system', '0000-00-00 00:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `m_division`
+--
+
+CREATE TABLE IF NOT EXISTS `m_division` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `division_code` varchar(50) NOT NULL,
+  `division_name` varchar(100) NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+
+--
+-- Dumping data for table `m_division`
+--
+
+INSERT INTO `m_division` (`id`, `division_code`, `division_name`, `status_cd`, `created_dt`, `created_by`, `updated_dt`, `updated_by`) VALUES
+(1, 'Chamba', 'Chamba', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL),
+(2, 'Chopal', 'Chopal', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL),
+(3, 'Dharamsala', 'Dharamsala', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL),
+(4, 'Fatehpur', 'Fatehpur', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL),
+(5, 'Hamirpur', 'Hamirpur', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL),
+(6, 'Kullu', 'Kullu', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL),
+(7, 'Mandi', 'Mandi', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL),
+(8, 'Nahan', 'Nahan', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL),
+(9, 'Rampur', 'Rampur', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL),
+(10, 'Sawra', 'Sawra', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL),
+(11, 'Shimla', 'Shimla', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL),
+(12, 'Solan', 'Solan', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL),
+(13, 'Sundernagar', 'Sundernagar', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL),
+(14, 'Una', 'Una', 'A', '2013-09-29 14:29:03', 'system', '0000-00-00 00:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `m_forest`
+--
+
+CREATE TABLE IF NOT EXISTS `m_forest` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `forest_code` varchar(50) NOT NULL,
+  `forest_name` varchar(100) NOT NULL,
+  `range_code` varchar(50) NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `m_forest`
+--
+
+INSERT INTO `m_forest` (`id`, `forest_code`, `forest_name`, `range_code`, `status_cd`, `created_dt`, `created_by`, `updated_dt`, `updated_by`) VALUES
+(1, 'Shimla_Frst', 'Shimla Forest', 'Shimla_Rng', 'A', '2013-09-29 14:31:52', 'system', '0000-00-00 00:00:00', NULL),
+(2, 'Shoghi_Frst', 'Shoghi Forest', 'Shimla_Rng', 'A', '2013-09-29 14:31:52', 'system', '0000-00-00 00:00:00', NULL),
+(3, 'Theog_Frst', 'Theog Forest', 'Theog_Rng', 'A', '2013-09-29 14:31:52', 'system', '0000-00-00 00:00:00', NULL),
+(4, 'Kotgarh_Frst', 'Kotgarh Forest', 'Kotgarh_Rng', 'A', '2013-09-29 14:31:52', 'system', '0000-00-00 00:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `m_forest_rsd`
+--
+
+CREATE TABLE IF NOT EXISTS `m_forest_rsd` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `forest_rsd_code` varchar(50) NOT NULL,
+  `forest_code` varchar(50) NOT NULL,
+  `forest_rsd_name` varchar(100) NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `m_forest_rsd`
+--
+
+INSERT INTO `m_forest_rsd` (`id`, `forest_rsd_code`, `forest_code`, `forest_rsd_name`, `status_cd`, `created_dt`, `created_by`, `updated_dt`, `updated_by`) VALUES
+(1, 'Shimla_RSD', 'Shimla_Frst', 'Shimla_RSD', 'A', '2013-09-29 14:32:15', 'system', '0000-00-00 00:00:00', NULL),
+(2, 'Sanjauli_RSD', 'Shimla_Frst', 'Sanjauli_RSD', 'A', '2013-09-29 14:32:15', 'system', '0000-00-00 00:00:00', NULL),
+(3, 'Kumarsain_RSD', 'Kotgarh_Frst', 'Kumarsain_RSD', 'A', '2013-09-29 14:32:15', 'system', '0000-00-00 00:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `m_lot`
+--
+
+CREATE TABLE IF NOT EXISTS `m_lot` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `lot_no` varchar(100) NOT NULL,
+  `lot_desc` varchar(500) NOT NULL,
+  `forest_code` varchar(50) NOT NULL,
+  `division_code` varchar(50) NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `m_lot`
+--
+
+INSERT INTO `m_lot` (`id`, `lot_no`, `lot_desc`, `forest_code`, `division_code`, `status_cd`, `created_dt`, `created_by`, `updated_dt`, `updated_by`) VALUES
+(1, '1-Shimla', 'First Lot for Shimla', 'Shimla_Frst', 'Shimla', 'A', '2013-09-29 14:36:42', 'system', '2013-10-14 03:29:31', ''),
+(2, '1-Shimla', ' First Lot for Shimla', 'Shoghi_Frst', 'Shimla', 'A', '2013-09-29 14:36:42', 'system', '2013-10-14 03:29:31', ''),
+(3, '2-Shimla', 'Second Lot for Shimla Updated', 'Theog_Frst', 'Shimla', 'A', '2013-09-29 14:36:42', 'system', '2013-10-14 02:33:48', ''),
+(4, '3-Shimla', ' Third Lot for Shimla', 'Shoghi_Frst', 'Shimla', 'A', '2013-10-12 15:07:34', 'system', '2013-10-14 02:06:11', ''),
+(5, '3-Shimla', ' Third Lot for Shimla', 'Shimla_Frst', 'Shimla', 'A', '2013-10-12 15:07:34', 'system', '2013-10-14 02:06:11', ''),
+(6, '4-Shimla', 'Fourth Lot for Shimla', 'Theog_Frst', 'Shimla', 'A', '2013-10-12 15:07:34', 'system', '0000-00-00 00:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `m_range`
+--
+
+CREATE TABLE IF NOT EXISTS `m_range` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `range_code` varchar(50) NOT NULL,
+  `range_name` varchar(100) NOT NULL,
+  `dfo_code` varchar(50) NOT NULL,
+  `division_code` varchar(50) NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `m_range`
+--
+
+INSERT INTO `m_range` (`id`, `range_code`, `range_name`, `dfo_code`, `division_code`, `status_cd`, `created_dt`, `created_by`, `updated_dt`, `updated_by`) VALUES
+(1, 'Shimla_Rng', 'Shimla Range', 'Shimla_Dfo', 'Shimla', 'A', '2013-09-29 14:31:28', 'system', '0000-00-00 00:00:00', NULL),
+(2, 'Theog_Rng', 'Theog Range', 'Shimla_Dfo', 'Shimla', 'A', '2013-09-29 14:31:28', 'system', '0000-00-00 00:00:00', NULL),
+(3, 'Kotgarh_Rng', 'Kotgarh Range', 'Ani_Dfo', 'Shimla', 'A', '2013-09-29 14:31:28', 'system', '0000-00-00 00:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `m_role`
+--
+
+CREATE TABLE IF NOT EXISTS `m_role` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `role_code` varchar(50) NOT NULL,
+  `role_desc` varchar(500) NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `m_role`
+--
+
+INSERT INTO `m_role` (`id`, `role_code`, `role_desc`, `status_cd`, `created_dt`, `created_by`, `updated_dt`, `updated_by`) VALUES
+(1, 'sysadmin', 'sysadmin', 'I', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(2, 'director', 'Director', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(3, 'manager', 'Divisional Manager', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(4, 'admin', 'Can create masters', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(5, 'user', 'User makes entries to the system', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(6, 'client', 'Client only views reports', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(7, 'guest', 'View Only', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `m_schedule_rate`
+--
+
+CREATE TABLE IF NOT EXISTS `m_schedule_rate` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `srate_code` varchar(50) NOT NULL,
+  `srate_name` varchar(100) NOT NULL,
+  `srate_desc` varchar(500) NOT NULL,
+  `srate` float(10,2) NOT NULL,
+  `season_year` date NOT NULL,
+  `division_code` varchar(50) NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
+
+--
+-- Dumping data for table `m_schedule_rate`
+--
+
+INSERT INTO `m_schedule_rate` (`id`, `srate_code`, `srate_name`, `srate_desc`, `srate`, `season_year`, `division_code`, `status_cd`, `created_dt`, `created_by`, `updated_dt`, `updated_by`) VALUES
+(1, 'yps-h-20', 'Yield per Section 20Q Hot', 'Yield per Section 20Q Hot', 503.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(2, 'yps-mh-20', 'Yield per Section 20Q Moderately Hot', 'Yield per Section 20Q Moderately Hot', 577.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(3, 'yps-c-20', 'Yield per Section 20Q Cold', 'Yield per Section 20Q Cold', 687.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(4, 'yps-mhs-20', 'Yield per Section 20Q Moderately Hot Sun', 'Yield per Section 20Q Moderately Hot for Sundernagar', 577.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(5, 'yps-h-25', 'Yield per Section 25Q Hot', 'Yield per Section 25Q Hot', 565.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(6, 'yps-mh-25', 'Yield per Section 25Q Moderately Hot', 'Yield per Section 25Q Moderately Hot', 651.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(7, 'yps-c-25', 'Yield per Section 25Q Cold', 'Yield per Section 25Q Cold', 786.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(8, 'yps-mhs-25', 'Yield per Section 25Q Moderately Hot Sun', 'Yield per Section 25Q Moderately Hot for Sundernagar', 651.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(9, 'yps-h-30', 'Yield per Section 30Q Hot', 'Yield per Section 30Q Hot', 687.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(10, 'yps-mh-30', 'Yield per Section 30Q Moderately Hot', 'Yield per Section 30Q Moderately Hot', 773.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(11, 'yps-c-30', 'Yield per Section 30Q Cold', 'Yield per Section 30Q Cold', 993.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(12, 'yps-mhs-30', 'Yield per Section 30Q Moderately Hot Sun', 'Yield per Section 30Q Moderately Hot for Sundernagar', 773.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(13, 'yps-h-35', 'Yield per Section 35Q Hot', 'Yield per Section 35Q Hot', 749.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(14, 'yps-mh-35', 'Yield per Section 35Q Moderately Hot', 'Yield per Section 35Q Moderately Hot', 835.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(15, 'yps-c-35', 'Yield per Section 35Q Cold', 'Yield per Section 35Q Cold', 1031.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(16, 'yps-mhs-35', 'Yield per Section 35Q Moderately Hot Sun', 'Yield per Section 35Q Moderately Hot for Sundernagar', 835.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(17, 'yps-h-40', 'Yield per Section 40Q Hot', 'Yield per Section 40Q Hot', 810.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(18, 'yps-mh-40', 'Yield per Section 40Q Moderately Hot', 'Yield per Section 40Q Moderately Hot', 908.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(19, 'yps-c-40', 'Yield per Section 40Q Cold', 'Yield per Section 40Q Cold', 1129.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(20, 'yps-mhs-40', 'Yield per Section 40Q Moderately Hot Sun', 'Yield per Section 40Q Moderately Hot for Sundernagar', 908.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(21, 'yps-h-45', 'Yield per Section 45Q Hot', 'Yield per Section 45Q Hot', 908.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(22, 'yps-mh-45', 'Yield per Section 45Q Moderately Hot', 'Yield per Section 45Q Moderately Hot', 1018.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(23, 'yps-c-45', 'Yield per Section 45Q Cold', 'Yield per Section 45Q Cold', 1228.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(24, 'yps-mhs-45', 'Yield per Section 40Q Moderately Hot Sun', 'Yield per Section 40Q Moderately Hot for Sundernagar', 1043.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(25, 'yps-h-50', 'Yield per Section 50Q Hot', 'Yield per Section 50Q Hot', 1051.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(26, 'yps-mh-50', 'Yield per Section 50Q Moderately Hot', 'Yield per Section 50Q Moderately Hot', 1068.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(27, 'yps-c-50', 'Yield per Section 50Q Cold', 'Yield per Section 50Q Cold', 1301.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(28, 'yps-mhs-50', 'Yield per Section 50Q Moderately Hot Sun', 'Yield per Section 50Q Moderately Hot for Sundernagar', 1068.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(29, 'yps-mhs-42', 'Yield per Section 42Q Moderately Hot Sun', 'Yield per Section 42Q Moderately Hot for Sundernagar', 1019.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(30, 'csps-1000', 'Crop Setting per Section of 1000', 'Crop Setting per Section of 1000', 1873.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(31, 'mc-1000', 'Mate Comission per Quintal', 'Mate Comission per Quintal', 20.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(32, 'rc-rsd-l-1000', 'Resin carriage to RSD Manual per Qtl', 'Carriage of Reain to RSD per quintal per KM by Labor', 42.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(33, 'rc-rsd-m-1000', 'Resin carriage to RSD Mule per Qtl', 'Carriage of Reain to RSD per quintal per KM by Mule', 34.00, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(34, 'tc-e-m-100', 'Tin carriage(empty) per 100 per KM', 'Carriage of empty tins per 100 per KM by Labor', 32.25, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(35, 'let-100-50', 'Loading empty tins per 100 per 50 mts', 'Loadin of empty tins per 100 per 50 mtrs by Labor', 27.85, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(36, 'let-100-100', 'Loading empty tins per 100 per 100 mts', 'Loadin of empty tins per 100 per 100 mtrs by Labor', 30.85, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(37, 'led-100-50', 'Loading empty drums per 100 per 50 mts', 'Loadin of empty drums per 100 per 50 mtrs by Labor', 36.60, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(38, 'led-100-100', 'Loading empty drums per 100 per 100 mts', 'Loadin of empty drums per 100 per 100 mtrs by Labor', 36.60, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(39, 'lft-100-50', 'Loading resin filled tins per 100 per 50 mts', 'Loadin of resin filled tins per 100 per 50 mtrs by Labor', 96.90, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(40, 'lft-100-100', 'Loading resin filled tins per 100 per 100 mts', 'Loadin of resin filled tins per 100 per 100 mtrs by Labor', 113.05, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(41, 'lfd-100-50', 'Loading resin filled drums per 100 per 50 mts', 'Loadin of resin filled drums per 100 per 50 mtrs by Labor', 133.40, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(42, 'lfd-100-100', 'Loading resin filled drums per 100 per 100 mts', 'Loadin of resin filled drums per 100 per 100 mtrs by Labor', 140.40, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(43, 'uet-100-50', 'Unloading empty tins per 100 per 50 mts', 'Unloading of empty tins per 100 per 50 mtrs by Labor', 27.85, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(44, 'uet-100-100', 'unloading empty tins per 100 per 100 mts', 'Unloading of empty tins per 100 per 100 mtrs by Labor', 30.85, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(45, 'ued-100-50', 'Unloading empty drums per 100 per 50 mts', 'Loading of empty drums per 100 per 50 mtrs by Labor', 36.60, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(46, 'ued-100-100', 'Unloading empty drums per 100 per 100 mts', 'Loading of empty drums per 100 per 100 mtrs by Labor', 36.60, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(47, 'uft-100-50', 'Unloading resin filled tins per 100 per 50 mts', 'Loading of resin filled tins per 100 per 50 mtrs by Labor', 96.90, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(48, 'uft-100-100', 'Unloading resin filled tins per 100 per 100 mts', 'Loading of resin filled tins per 100 per 100 mtrs by Labor', 113.05, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(49, 'ufd-100-50', 'Unloading resin filled drums per 100 per 50 mts', 'Loading of resin filled drums per 100 per 50 mtrs by Labor', 133.40, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(50, 'ufd-100-100', 'Unloading resin filled drums per 100 per 100 mts', 'Loading of resin filled drums per 100 per 100 mtrs by Labor', 140.40, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(51, 'col-100', 'Conversion of lips per 100', 'Conversion of lips (per 100 lips)', 29.55, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(52, 'cop-1', 'Conversion of pots', 'Conversion of tin pots (per pot)', 1.05, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(53, 'mcd-1000', 'Material carriage per quintal', 'Carriage of depot material per qtl', 14.78, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(54, 'sft-1', 'Soldering of resin filled tins', 'Soldering of resin filled tins (per tin)', 2.10, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(55, 'tpt-25', 'Transportation of resin ', 'Transportation of resin upto 25 km', 28.80, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL),
+(56, 'tpt-r-1', 'Transportation of resin per km ', 'Transportation of resin per km beyond 25 km', 0.40, '2013-09-30', 'Shimla', 'A', '2013-09-30 09:15:35', 'system', '0000-00-00 00:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `m_unit`
+--
+
+CREATE TABLE IF NOT EXISTS `m_unit` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `unit_code` varchar(50) NOT NULL,
+  `unit_name` varchar(100) NOT NULL,
+  `division_code` varchar(50) NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `m_unit`
+--
+
+INSERT INTO `m_unit` (`id`, `unit_code`, `unit_name`, `division_code`, `status_cd`, `created_dt`, `created_by`, `updated_dt`, `updated_by`) VALUES
+(1, 'Shimla_unit', 'Shimla Unit', 'Shimla', 'A', '2013-09-29 14:29:44', 'system', '0000-00-00 00:00:00', NULL),
+(2, 'Theog_unit', 'Theog Unit', 'Shimla', 'A', '2013-09-29 14:29:44', 'system', '0000-00-00 00:00:00', NULL),
+(3, 'Kotgarh_unit', 'Kotgarh Unit', 'Shimla', 'A', '2013-09-29 14:29:44', 'system', '0000-00-00 00:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `m_user`
+--
+
+CREATE TABLE IF NOT EXISTS `m_user` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_fname` varchar(100) NOT NULL,
+  `user_lname` varchar(100) NOT NULL,
+  `user_id` varchar(100) NOT NULL,
+  `user_pass` varchar(100) NOT NULL,
+  `user_email` varchar(100) NOT NULL,
+  `role_code` varchar(50) NOT NULL,
+  `division_code` varchar(50) NOT NULL,
+  `user_desc` varchar(500) NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+
+--
+-- Dumping data for table `m_user`
+--
+
+INSERT INTO `m_user` (`id`, `user_fname`, `user_lname`, `user_id`, `user_pass`, `user_email`, `role_code`, `division_code`, `user_desc`, `status_cd`, `created_dt`, `created_by`, `updated_dt`, `updated_by`) VALUES
+(1, 'Admin', 'Shimla', 'admin', '5f4dcc3b5aa765d61d8327deb882cf99', 'forest@forest.com', 'admin', 'Shimla', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(2, 'User', 'Chamba', 'chamba', '2be70f6897e5e8bb554828cfdd09917f', 'forest@forest.com', 'client', 'Chamba', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(3, 'User', 'Chopal', 'chopal', 'c4f49cce9573ccee3bb8b0477e256055', 'forest@forest.com', 'client', 'Chopal', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(4, 'User', 'Dharamsala', 'dharamsala', '471e3a446997b62eb780e641a8593d32', 'forest@forest.com', 'client', 'Dharamsala', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(5, 'User', 'Fatehpur', 'fatehpur', '7b45d5cf2eb40eee83f5181e9878b8da', 'forest@forest.com', 'client', 'Fatehpur', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(6, 'User', 'Hamirpur', 'hamirpur', '5699dd828b0471208fd7915fe405a7ab', 'forest@forest.com', 'client', 'Hamirpur', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(7, 'User', 'Kullu', 'kullu', '600d40f0e5eeb8d47299b7661284decb', 'forest@forest.com', 'client', 'Kullu', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(8, 'User', 'Mandi', 'mandi', 'b45203151a9f2a7368ea53ab8c51d3a7', 'forest@forest.com', 'client', 'Mandi', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(9, 'User', 'Nahan', 'nahan', '65368e319c522edcb2981b90189e115d', 'forest@forest.com', 'client', 'Nahan', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(10, 'User', 'Rampur', 'rampur', 'e4353b8889087deaf0c684a60065c9cd', 'forest@forest.com', 'client', 'Rampur', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(11, 'User', 'Sawra', 'sawra', '0e1cc7c95ff39b0b79fccf310103be86', 'forest@forest.com', 'client', 'Sawra', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(12, 'User', 'Shimla', 'shimla', '340b2cdaf0720e1cabe4f9270474ef39', 'forest@forest.com', 'client', 'Shimla', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(13, 'User', 'Solan', 'solan', '794bde2ceefa657be4b59ee162b48eb4', 'forest@forest.com', 'client', 'Solan', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(14, 'User', 'SunderNagar', 'sundernagar', '30190339abe8cd55aa8ed242ea14415a', 'forest@forest.com', 'client', 'SunderNagar', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(15, 'User', 'Una', 'una', '3fff14fd3bef9016d6d7a83beabf6aac', 'forest@forest.com', 'client', 'Una', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(16, 'Admin', 'Shimla', 'adminshimla', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'Shimla', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(17, 'Admin', 'Chamba', 'adminchamba', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'Chamba', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(18, 'Admin', 'Chopal', 'adminchopal', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'Chopal', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(19, 'Admin', 'Dharamsala', 'admindharamsala', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'Dharamsala', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(20, 'Admin', 'Fatehpur', 'adminfatehpur', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'Fatehpur', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(21, 'Admin', 'Hamirpur', 'adminhamirpur', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'Hamirpur', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(22, 'Admin', 'Kullu', 'adminkullu', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'Kullu', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(23, 'Admin', 'Mandi', 'adminmandi', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'Mandi', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(24, 'Admin', 'Nahan', 'adminnahan', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'Nahan', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(25, 'Admin', 'Rampur', 'adminrampur', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'Rampur', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(26, 'Admin', 'Sawra', 'adminsawra', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'Sawra', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(27, 'Admin', 'Solan', 'adminsolan', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'Solan', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(28, 'Admin', 'SunderNagar', 'adminsundernagar', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'SunderNagar', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL),
+(29, 'Admin', 'Una', 'adminuna', 'eff7d5dba32b4da32d9a67a519434d3f', 'forest@forest.com', 'admin', 'Una', '', 'A', '2013-09-29 14:27:25', NULL, '0000-00-00 00:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `t_blazes_for_tapping`
+--
+
+CREATE TABLE IF NOT EXISTS `t_blazes_for_tapping` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `division_code` varchar(50) NOT NULL,
+  `unit_code` varchar(50) NOT NULL,
+  `dfo_code` varchar(50) NOT NULL,
+  `range_code` varchar(50) NOT NULL,
+  `forest_code` varchar(50) NOT NULL,
+  `lot_no` varchar(100) NOT NULL,
+  `blazes_received` int(11) NOT NULL DEFAULT '0',
+  `taken_over_dt` date NOT NULL,
+  `season_year` date NOT NULL COMMENT 'Will be the year for which the lot is in force.',
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `t_blazes_for_tapping`
+--
+
+INSERT INTO `t_blazes_for_tapping` (`id`, `division_code`, `unit_code`, `dfo_code`, `range_code`, `forest_code`, `lot_no`, `blazes_received`, `taken_over_dt`, `season_year`, `status_cd`, `created_dt`, `created_by`, `updated_dt`, `updated_by`) VALUES
+(1, 'Shimla', 'Shimla_unit', 'Shimla_Dfo', 'Shimla_Rng', 'Shoghi_Frst', '1-Shimla', 101, '2010-02-15', '2011-02-15', 'A', '2013-10-13 13:13:45', 'system', '2013-10-14 05:35:43', 'admin'),
+(2, 'Shimla', 'Shimla_unit', 'Shimla_Dfo', 'Shimla_Rng', 'Shimla_Frst', '1-Shimla', 100, '2010-02-15', '2010-02-15', 'A', '2013-10-13 13:27:12', 'system', '2013-10-14 03:38:44', ''),
+(3, 'Shimla', 'Shimla_unit', 'Shimla_Dfo', 'Theog_Rng', 'Theog_Frst', '2-Shimla', 200, '2010-02-15', '2010-02-15', 'A', '2013-10-13 13:28:28', 'system', '0000-00-00 00:00:00', NULL),
+(4, 'Shimla', 'Theog_unit', 'Theog_Dfo', 'Theog_Rng', 'Theog_Frst', '4-Shimla', 400, '2010-02-15', '2010-02-15', 'A', '2013-10-13 13:28:28', 'system', '0000-00-00 00:00:00', NULL),
+(5, 'Shimla', 'Shimla_unit', 'Shimla_Dfo', 'Shimla_Rng', 'Shoghi_Frst', '3-Shimla', 300, '2010-02-15', '2010-02-15', 'A', '2013-10-13 13:28:28', 'system', '0000-00-00 00:00:00', NULL),
+(6, 'Shimla', 'Shimla_unit', 'Shimla_Dfo', 'Shimla_Rng', 'Shimla_Frst', '3-Shimla', 300, '2010-02-15', '2010-02-15', 'A', '2013-10-13 13:28:28', 'system', '0000-00-00 00:00:00', NULL),
+(7, 'Shimla', 'Shimla_unit', 'Shimla_Dfo', 'Shimla_Rng', 'Shimla_Frst', '1-Shimla', 150, '2012-02-15', '2012-02-15', 'A', '2013-10-14 05:49:59', 'admin', '0000-00-00 00:00:00', NULL),
+(8, 'Shimla', 'Shimla_unit', 'Shimla_Dfo', 'Theog_Rng', 'Theog_Frst', '2-Shimla', 250, '2012-02-15', '2012-02-15', 'A', '2013-10-14 05:50:42', 'admin', '0000-00-00 00:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `t_proposed_yield_form_blazes`
+--
+
+CREATE TABLE IF NOT EXISTS `t_proposed_yield_form_blazes` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `division_code` varchar(50) NOT NULL,
+  `unit_code` varchar(50) NOT NULL,
+  `dfo_code` varchar(50) NOT NULL,
+  `forest_code` varchar(50) NOT NULL,
+  `lot_no` varchar(100) NOT NULL,
+  `blazes_received` int(11) NOT NULL DEFAULT '0',
+  `proposed_yield` int(11) NOT NULL DEFAULT '0',
+  `approved_yield` int(11) NOT NULL DEFAULT '0',
+  `approval_status` varchar(5) DEFAULT 'A',
+  `season_year` date NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `t_proposed_yield_form_blazes`
+--
+
