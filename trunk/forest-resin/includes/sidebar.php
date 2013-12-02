@@ -29,6 +29,13 @@ if(!empty($_SESSION['role']))
       				<li><a href="sel_month_prog.php">Monthly Progress Report</a></li>
 				<li><a href="set_yieldSS_Obtained.php">Enter/Edit the Yield Sent to Factory</a></li>
 				<li><a href="set_yield_Obtained.php">Enter/Edit the Actual Yield Obtained </a></li>
+				
+				
+				<li><a href="edit_lot_sel.php">Edit Lot Description</a></li>
+				<li><a href="edit_ver_lot.php">Delete Verified Lot</a></li>
+				<li><a href="del_sel_prog_yr.php">Delete Progress Report</a></li>
+				<li><a href="set_charges.php">Enter/Edit the Schedule Rates</a></li>
+				<li><a href="del_complete_lot.php">Delete Everything for Lot</a></li>
 										
 				<li><a href="logout.php">Logout</a></li>
 								
@@ -37,7 +44,7 @@ if(!empty($_SESSION['role']))
 		</div>
             
 <?php          
-	}else if($_SESSION['role']=='admin')
+	}else if($_SESSION['role']=='sysadmin' || $_SESSION['role']=='admin' || $_SESSION['role']=='manager' || $_SESSION['role']=='director')
 	{
 			
 ?>
@@ -47,15 +54,15 @@ if(!empty($_SESSION['role']))
             		<ul class="sidemenu">
 				<li><a href="home.php" class="top">My Page</a></li>
 				<li><a href="change-password.php">Change My Password</a></li>
-				<li><a href="member.php" class="top">Add a Member</a></li>
-				<li><a href="del_sel_mem.php">Delete a Member</a></li>
+				<li><a href="unit-master.php">Manage Units</a></li>
+				<li><a href="dfo-master.php">Manage DFOs</a></li>
+				<li><a href="range-master.php">Manage Forest Ranges</a></li>
+				<li><a href="forest-master.php">Manage Forests</a></li>
+				<li><a href="forest-rsd-master.php">Manage Forest's RSD</a></li>
+				<li><a href="srate-master.php">Schedule Rates</a></li>
+				<li><a href="#"></a></li>
 				<li><a href="lot-master.php">Manage Lots</a></li>
 				<li><a href="receive-blazes.php">View Blazes List</a></li>
-				<li><a href="edit_lot_sel.php">Edit Lot Description</a></li>
-				<li><a href="edit_ver_lot.php">Delete Verified Lot</a></li>
-				<li><a href="del_sel_prog_yr.php">Delete Progress Report</a></li>
-				<li><a href="set_charges.php">Enter/Edit the Schedule Rates</a></li>
-				<li><a href="del_complete_lot.php">Delete Everything for Lot</a></li>
 				<li><a href="logout.php">Logout</a></li>
 									
 			</ul>	

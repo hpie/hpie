@@ -3,7 +3,7 @@
 	
 	//Page messages
 	$titleMsg="Welcome: Forest Resin Module";
-	$pageTitle="Login:".$_SESSION['division'];
+	$pageTitle="Login:";
 	$action="";
 	$error="";
 	$msg="";
@@ -25,7 +25,7 @@
 	}
 	
 	//initilize DB
-	include "/db/db.php";
+	include "./db/db.php";
 	
 	if(isset($_POST['submitted']))
 	{

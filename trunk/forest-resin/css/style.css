@@ -113,6 +113,11 @@ input.textbox {
 	width: 200px;
 	padding: 2px 3px; 
 }
+input.textboxSmall { 
+	/*background: #FFF url(../images/gradientbg.jpg) repeat-x;*/
+	width: 100px;
+	padding: 2px 3px; 
+}
 
 input.button { 
 	margin: 0; 
@@ -142,6 +147,13 @@ input.submit:hover { background: inherit; color: #006699; text-decoration: under
 	border:0px;
 	width: 200px;
 }
+
+.lblTextSmall{
+	background-color:#eeeeee;
+	border:0px;
+	width: 100px;
+}
+
 .editImgBut{
 	background:url(../images/edit.png) no-repeat;
 	background-position:center;
@@ -208,7 +220,15 @@ input.submit:hover { background: inherit; color: #006699; text-decoration: under
 	border-color: #ff0000;
 	width:22px;
     height:22px;
-	}	
+	}
+	
+.actionTxtBut{
+	vertical-align:bottom;
+	font-size:6;
+	}
+.actionTxtBut:hover{
+	border-color: #ff0000;
+	}		
 	
 	
 

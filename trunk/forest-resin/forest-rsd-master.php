@@ -7,73 +7,72 @@
 	{
 		if($action=="update")
 		{
-			//$db->query("UPDATE m_lot SET lot_desc='".$_POST['lot_desc']."', forest_code='".$_POST['forest_code']."', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
-			$db->query("UPDATE m_lot SET lot_desc='".$_POST['lot_desc']."', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
+			$db->query("UPDATE m_forest_rsd SET forest_rsd_name='".$_POST['forest_rsd_name']."', forest_rsd_distance='".$_POST['forest_rsd_distance']."', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
 			//$db->debug();
 			if($db->rows_affected>0)
 			{ 
-				$_SESSION['msg']="Lot Successfully Updated.";
+				$_SESSION['msg']="Forest RSD Successfully Updated.";
 			}else
 			{
-				$_SESSION['msg']="Problem updating lot. Please try again.";
+				$_SESSION['msg']="Problem updating forest rsd. Please try again.";
 			}
-			Header("Location: lot-master.php");
+			Header("Location: forest-rsd-master.php");
 		}else if($action=="save")
 		{
-			$exist = $db->get_row("SELECT * FROM m_lot WHERE lot_no='".$_POST['lot_no']."' AND division_code='".$_SESSION['division']."'",ARRAY_A);
+			$exist = $db->get_row("SELECT forest_rsd_code FROM m_forest_rsd WHERE forest_rsd_code='".$_POST['forest_rsd_code']."' AND division_code='".$_SESSION['division']."'",ARRAY_A);
 			if(isset($exist))
 			{
-				$_SESSION['msg']="Entry for Lot [".$_POST['lot_no']."] for Division already exists." ;	
+				$_SESSION['msg']="Entry for RSD [".$_POST['forest_rsd_code']."] for Division already exists." ;	
 			}else
 			{
 				foreach ($_POST['forest_code'] as $forest_code)
 				{
-				    $db->query("INSERT INTO m_lot (id, lot_no, lot_desc, forest_code, division_code, created_by) VALUES (NULL, '".$_POST['lot_no']."', '".$_POST['lot_desc']."', '".$forest_code."', '".$_SESSION['division']."', '".$_POST['created_by']."')");
+				    $db->query("INSERT INTO m_forest_rsd (id, forest_rsd_code, forest_code,	forest_rsd_name, forest_rsd_distance, created_by) VALUES (NULL, '".$_POST['forest_rsd_code']."', '".$_POST['forest_code']."', '".$_POST['forest_rsd_name']."', '".$_POST['forest_rsd_distance']."', '".$_POST['created_by']."')");
 					//$db->debug();
 					if($db->rows_affected>0)
 					{ 
-						$_SESSION['msg']="Lot [".$_POST['lot_no']."] Successfully Created.";
+						$_SESSION['msg']="Forest RSD [".$_POST['forest_rsd_code']."] Successfully Created.";
 					}else
 					{
-						$_SESSION['msg']="Problem creating lot. Please try again.";
+						$_SESSION['msg']="Problem creating forest rsd. Please try again.";
 					}			        
 				}
 			}
-			Header("Location: lot-master.php");
+			Header("Location: forest-rsd-master.php");
 		}else if($action=="status")
 		{
 			$status="";
 			if($_POST['status_cd'] =="A")
 			{
-				$db->query("UPDATE m_lot SET status_cd='I', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE lot_no='".$_POST['lot_no']."'");
+				$db->query("UPDATE m_forest_rsd SET status_cd='I', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
 				$status="Inactive";
 			}else if($_POST['status_cd'] =="I")
 			{
-				$db->query("UPDATE m_lot SET status_cd='A', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE lot_no='".$_POST['lot_no']."'");
+				$db->query("UPDATE m_forest_rsd SET status_cd='A', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
 				$status="Active";
 			}
 			//$db->debug();
 			if($db->rows_affected>0)
 			{ 
-				$_SESSION['msg']="Lot [".$_POST['lot_no']."] is now set to ".$status.".";
+				$_SESSION['msg']="Forest RSD [".$_POST['forest_rsd_code']."] is now set to ".$status.".";
 			}else
 			{
-				$_SESSION['msg']="Problem updating lot. Please try again.";
+				$_SESSION['msg']="Problem updating forest rsd. Please try again.";
 			}
-			Header("Location: lot-master.php");
+			Header("Location: forest-rsd-master.php");
 		}else if($action=="delete")
 		{
-			$db->query("UPDATE m_lot SET status_cd='D', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE lot_no='".$_POST['lot_no']."'");
+			$db->query("UPDATE m_forest_rsd SET status_cd='D', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
 			$status="deleted";
 			//$db->debug();
 			if($db->rows_affected>0)
 			{ 
-				$_SESSION['msg']="Lot [".$_POST['lot_no']."] is now marked as ".$status.".";
+				$_SESSION['msg']="Forest RSD [".$_POST['forest_rsd_code']."] is now marked as ".$status.".";
 			}else
 			{
-				$_SESSION['msg']="Problem updating lot. Please try again.";
+				$_SESSION['msg']="Problem updating forest rsd. Please try again.";
 			}
-			Header("Location: lot-master.php");
+			Header("Location: forest-rsd-master.php");
 		}
 		
 		
@@ -135,17 +134,19 @@
                 	{
                 ?>	
                 	<br />	
-                	<form action="lot-master.php" method="post" id="lotForm" data-validate="parsley">
+                	<form action="forest-rsd-master.php" method="post" id="forestRsdForm" data-validate="parsley">
 						<fieldset>
-						<legend><font size=5 color=#72A545>Create Lot</font></legend><br />
+						<legend><font size=5 color=#72A545>Create Forest RSD</font></legend><br />
 							<p style="color:#CC0000"><?php echo $error; ?></p>
 							<div style="margin:10px; 0px; 0px; 0px;">
-								<label for="lot_no">Lot No:</label>
-								<input class="textbox" id="lot_no" type="text" name="lot_no" data-required="true" data-error-message="Lot Number is required"/>
-								<label for="lot_desc">Lot Description:</label>
-								<input class="textbox"  id="lot_desc" type="text" name="lot_desc" data-required="true" data-error-message="Lot description is required" />
-								<label for="forest_code">Forest:</label>
-								<select multiple id="forest_code" name="forest_code[]" data-required="true" data-error-message="Forest is required">
+								<label for="lot_no">Forest RSD Code:</label>
+								<input class="textbox" id="forest_rsd_code" type="text" name="forest_rsd_code" data-required="true" data-error-message="Forest RSD Code is required"/>
+								<label for="lot_desc">Forest RSD Name:</label>
+								<input class="textbox"  id="forest_rsd_name" type="text" name="forest_rsd_name" data-required="true" data-error-message="Forest RSD Name is required" />
+								<label for="lot_desc">Forest RSD Distance:</label>
+								<input class="textbox"  id="forest_rsd_distance" type="text" name="forest_rsd_distance" data-required="true" data-error-message="Forest RSD distance is required" data-type="number" data-type-number-message="Only number is allowed"/>
+								<label for="range_code">Forest:</label>
+								<select id="forest_code" name="forest_code" data-required="true" data-error-message="Forest is required">
 								 <?php 
 								  $forests = $db->get_results("SELECT f.forest_code, f.forest_name, f.range_code FROM m_forest f,  m_range r WHERE f.range_code=r.range_code AND r.division_code='".$_SESSION['division']."' AND f.status_cd='A'",ARRAY_A);
 			 
@@ -168,28 +169,30 @@
 			  	<?php 
 			  		}else if($action=="edit")
                 	{
-                		$lot = $db->get_row("SELECT * FROM m_lot WHERE id='".$_POST['rowid']."'",ARRAY_A);
+                		$forestRsd = $db->get_row("SELECT * FROM m_forest_rsd WHERE id='".$_POST['rowid']."'",ARRAY_A);
                 		                	
               	?>
               		<br />
-              		<form action="lot-master.php" method="post" id="lotForm" data-validate="parsley">
+              		<form action="forest-rsd-master.php" method="post" id="forestRsdForm" data-validate="parsley">
 						<fieldset>
-						<legend><font size=5 color=#72A545>Update Lot</font></legend><br />
+						<legend><font size=5 color=#72A545>Update Forest RSD</font></legend><br />
 							<p style="color:#CC0000"><?php echo $error; ?></p>
 							<div style="margin:10px; 0px; 0px; 0px;">
-								<label for="lot_no">Lot No:</label>
-								<input class="lblText" readonly="readonly" id="lot_no" type="text" name="lot_no" data-required="true" data-error-message="Lot Number is required" value="<?php echo($lot['lot_no']);?>"/>
-								<label for="lot_desc">Lot Description:</label>
-								<input class="textbox"  id="lot_desc" type="text" name="lot_desc" data-required="true" data-error-message="Lot description is required" value="<?php echo($lot['lot_desc']);?>"/>
+								<label for="forest_code">Forest RSD Code:</label>
+								<input class="lblText" readonly="readonly" id="forest_rsd_code" type="text" name="forest_rsd_code" data-required="true" data-error-message="Forest RSD Code is required" value="<?php echo($forestRsd['forest_rsd_code']);?>"/>
+								<label for="lot_desc">Forest RSD Name:</label>
+								<input class="textbox"  id="forest_rsd_name" type="text" name="forest_rsd_name" data-required="true" data-error-message="Forest RSD Name is required" value="<?php echo($forestRsd['forest_rsd_name']);?>"/>
+								<label for="lot_desc">Forest RSD Distance:</label>
+								<input class="textbox"  id="forest_rsd_distance" type="text" name="forest_rsd_distance" data-required="true" data-error-message="Forest RSD Distance is required" data-type="number" data-type-number-message="Only number is allowed" value="<?php echo($forestRsd['forest_rsd_distance']);?>"/>
 								<label for="forest_code">Forest:</label>
-								<select class="lblText" readonly="readonly" id="forest_code" name="forest_code" data-required="true" data-error-message="Forest is required">
+								<select id="forest_code" name="forest_code" data-required="true" data-error-message="Forest is required">
 									<option value=''>Select</option>
 								 <?php 
 								  $forests = $db->get_results("SELECT f.forest_code, f.forest_name, f.range_code FROM m_forest f,  m_range r WHERE f.range_code=r.range_code AND r.division_code='".$_SESSION['division']."' AND f.status_cd='A'",ARRAY_A);
 			 
 						            foreach ( $forests as $forest )
 						            {
-						            	if($forest['forest_code']==$lot['forest_code'])
+						            	if($forest['forest_code']==$forestRsd['forest_code'])
 						            	{
 						            		echo ("<option value='".$forest['forest_code']."' selected='selected'>".$forest['forest_name']."[ ".$forest['range_code']."]</option>");
 						            	}else
@@ -200,7 +203,7 @@
 						            }
 								 ?>
 								</select>
-								<input name="rowid" type="hidden" value="<?php echo($lot['id']);?>"/>
+								<input name="rowid" type="hidden" value="<?php echo($forestRsd['id']);?>"/>
 								<input name="updated_by" type="hidden" id="updated_by" value="<?php echo($_SESSION['userid']);?>" />
 								
 								<br /><br />
@@ -213,56 +216,47 @@
 				<?php 
 			  		}else
                 	{
-                		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Lots</h1> <table> <tr> <td>Lot No</td> <td>Lot Description</td> <td>Forest</td> <td>Status</td> <td>Action</td></tr>"); 
-                		$lots = $db->get_results("SELECT * FROM m_lot WHERE division_code='".$_SESSION['division']."' GROUP BY lot_no" ,ARRAY_A);
-
-                		
-				         foreach ( $lots as $lot )
+                		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Forest RSD</h1> <table> <tr> <td>Forest RSD Code</td> <td>Forest RSD Name</td> <td>Forest Code</td> <td>Forest RSD Distance</td> <td>Status</td> <td>Action</td></tr>"); 
+                		$forestRsds = $db->get_results("SELECT fr.id, fr.forest_rsd_code, fr.forest_rsd_name, fr.forest_code, fr.forest_rsd_distance, fr.status_cd FROM m_forest_rsd fr, m_forest f,  m_range r WHERE fr.forest_code=f.forest_code  AND f.range_code=r.range_code AND r.division_code='".$_SESSION['division']."' ORDER BY fr.forest_rsd_name" ,ARRAY_A);
+	
+				         foreach ( $forestRsds as $forestRsd )
 				         { 
-			         	 	$lotForests = $db->get_results("SELECT forest_code FROM m_lot WHERE lot_no='".$lot['lot_no']."'",ARRAY_A);
-			 	            
 			         	 	echo(" <tr>");
-			         	 	echo(" <td>".$lot['lot_no']."</td> <td>".$lot['lot_desc']."</td>");
+			         	 	echo(" <td>".$forestRsd['forest_rsd_code']."</td> <td>".$forestRsd['forest_rsd_name']."</td>");
 				         	
-				         	echo(" <td>");
-				         	foreach ( $lotForests as $forest )
-				         	{
-				         		echo($forest['forest_code']." <br />");
-				         	}
-				         	echo(" </td>");
+				         	echo(" <td>".$forestRsd['forest_code']."</td>");
 				         	
-				         	echo("<td>".$lot['status_cd']."</td>");
+				         	echo(" <td>".$forestRsd['forest_rsd_distance']."</td>");
+				         	
+				         	echo("<td>".$forestRsd['status_cd']."</td>");
 				         	
 				         	echo(" <td>");
 				         	
 			     ?>
-			     			<form style="margin:0px; border:0px; background-color:inherit;" action="lot-master.php" method="post" id="lotActionForm">
+			     			<form style="margin:0px; border:0px; background-color:inherit;" action="forest-rsd-master.php" method="post" id="forestRsdActionForm">
 							<!-- Create row specific actions -->
 			     			<?php 
-								if($lot['status_cd']=="D")
+								if($forestRsd['status_cd']=="D")
 			         	 		{
 			         	 			echo("<input class='statusDImgBut' id='status' type='submit' name='action' value='Status' title='This record is marked to be deleted. Contact Admin'/> &nbsp;");
-								}else if($lot['status_cd']=="I")
+								}else if($forestRsd['status_cd']=="I")
 			         	 		{
 				         	 		echo("<input class='statusIImgBut' id='status' type='submit' name='action' value='Status' title='This record is Inactive. Click to Activate'/> &nbsp;");
 								
-			         	 		}else if($lot['status_cd']=="A")
+			         	 		}else if($forestRsd['status_cd']=="A")
 			         	 		{
 			         	 			echo("<input class='statusAImgBut' id='status' type='submit' name='action' value='Status' title='Active record. Click to set as Inactive'/> &nbsp;");
 			         	 		
-				         	 		if($db->num_rows==1)
-				         	 		{
-				         	 			echo("<input class='editImgBut' id='editlot' type='submit' name='action' value='Edit' title='Edit this record'/> &nbsp;");
-									}
+				         	 		echo("<input class='editImgBut' id='editlot' type='submit' name='action' value='Edit' title='Edit this record'/> &nbsp;");
 									
 									echo("<input class='deleteImgBut' id='deletelot' type='submit' name='action' value='Delete' title='Mark this record as deleted' />");
 							 
 			         	 		}// else status
 							?>
 							<!-- End row specific actions -->	
-								<input name="lot_no" type="hidden" value="<?php echo($lot['lot_no']);?>" />
-								<input name="status_cd" type="hidden" value="<?php echo($lot['status_cd']);?>" />
-								<input name="rowid" type="hidden" value="<?php echo($lot['id']);?>" />
+								<input name="forest_rsd_code" type="hidden" value="<?php echo($forestRsd['forest_rsd_code']);?>" />
+								<input name="status_cd" type="hidden" value="<?php echo($forestRsd['status_cd']);?>" />
+								<input name="rowid" type="hidden" value="<?php echo($forestRsd['id']);?>" />
 								<input name="submitted" type="hidden" id="submitted" value="1"/>
 							</form>
 			     <?php 
@@ -276,7 +270,7 @@
 				?>
               		<div>
               			<br /><br />
-              			<form action="lot-master.php" method="post" id="lotForm">
+              			<form action="forest-rsd-master.php" method="post" id="forestRsdForm">
 							<input class="submit" id="cancel" type="submit" name="action" value="Cancel"/>
 							<input class="submit" id="newlot" type="submit" name="action" value="New"/>
 							<input name="submitted" type="hidden" id="submitted" value="1" />
