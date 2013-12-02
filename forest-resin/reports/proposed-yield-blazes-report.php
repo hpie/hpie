@@ -19,21 +19,14 @@
 			Header("Location: receive-blazes.php");
 		}else if($action=="save")
 		{
-			$exist = $db->get_row("SELECT * FROM t_blazes_for_tapping WHERE lot_no='".$_POST['lot_no']."' AND forest_code='".$_POST['forest_code']."' AND season_year='".$_POST['season_year']."'",ARRAY_A);
-			if(isset($exist))
-			{
-				$_SESSION['msg']="Blazes entry for Lot [".$_POST['lot_no']."] and Forest [".$_POST['forest_code']."] already exist for Season [".$_POST['season_year']."]" ;	
+			$db->query("INSERT INTO t_blazes_for_tapping (id, lot_no, forest_code, unit_code, dfo_code, range_code, blazes_received, taken_over_dt,	season_year, division_code, created_by) VALUES (NULL, '".$_POST['lot_no']."', '".$_POST['forest_code']."', '".$_POST['unit_code']."', '".$_POST['dfo_code']."', '".$_POST['range_code']."', '".$_POST['blazes_received']."', '".$_POST['season_year']."', '".$_POST['season_year']."', '".$_SESSION['division']."', '".$_POST['created_by']."')");
+			$db->debug();
+			if($db->rows_affected>0)
+			{ 
+				$_SESSION['msg']="Blazes for Lot [".$_POST['lot_no']."] Successfully Created.";
 			}else
 			{
-				$db->query("INSERT INTO t_blazes_for_tapping (id, lot_no, forest_code, unit_code, dfo_code, range_code, blazes_received, taken_over_dt,	season_year, division_code, created_by) VALUES (NULL, '".$_POST['lot_no']."', '".$_POST['forest_code']."', '".$_POST['unit_code']."', '".$_POST['dfo_code']."', '".$_POST['range_code']."', '".$_POST['blazes_received']."', '".$_POST['season_year']."', '".$_POST['season_year']."', '".$_SESSION['division']."', '".$_POST['created_by']."')");
-				//$db->debug();
-				if($db->rows_affected>0)
-				{ 
-					$_SESSION['msg']="Blazes for Lot [".$_POST['lot_no']."] Successfully Created.";
-				}else
-				{
-					$_SESSION['msg']="Problem creating lot. Please try again.";
-				}
+				$_SESSION['msg']="Problem creating lot. Please try again.";
 			}
 			Header("Location: receive-blazes.php");
 		}else if($action=="status")
@@ -70,10 +63,14 @@
 				$_SESSION['msg']="Problem updating lot. Please try again.";
 			}
 			Header("Location: receive-blazes.php");
+		}else if($action=='proposedYieldForLot')
+		{
+			$action="proposedYieldForLot";
 		}
+		//$db->debug();
 		
 		
-				//$db->debug();
+		
 		
 	}// if submitted
 
@@ -130,7 +127,6 @@
                 	if($action=="create")
                 	{
                 ?>		
-                	<br />
                 	<form action="receive-blazes.php" method="post" id="blazesForm" data-validate="parsley">
 						<fieldset>
 						<legend><font size=5 color=#72A545>Manage Blazes</font></legend><br />
@@ -192,10 +188,8 @@
 			  	<?php 
 			  		}else if($action=="edit")
                 	{
-                		$blazes = $db->get_row("SELECT * FROM t_blazes_for_tapping WHERE id='".$_POST['rowid']."'",ARRAY_A);
-                		                	
-              	?>
-              		<br />
+                		$blazes = $db->get_row("SELECT * FROM t_proposed_yield_form_blazes WHERE id='".$_POST['rowid']."'",ARRAY_A);
+                ?>
               		<form action="receive-blazes.php" method="post" id="blazesForm" data-validate="parsley">
 						<fieldset>
 						<legend><font size=5 color=#72A545>Update Lot</font></legend><br />
@@ -220,9 +214,9 @@
 								
 								<label for="season_year">Tapping Season:</label>
 								 <?php 
-								 	//$common->getSeasonYearList($blazes['season_year']);
+								 	$common->getSeasonYearList($blazes['season_year']);
 								 ?>
-								<input class="lblText" readonly="readonly" id="season_year" type="text" name="season_year" value="<?php echo($blazes['season_year']);?>"/>
+								
 								
 								<input name="rowid" type="hidden" value="<?php echo($blazes['id']);?>"/>
 								<input name="updated_by" type="hidden" id="updated_by" value="<?php echo($_SESSION['userid']);?>" />
@@ -233,14 +227,134 @@
 								
 							</div>
 						</fieldset>
-				  	</form>			  
+				  	</form>
+				 <?php 
+			  		}else if($action=="proposedYieldForLot")
+                	{
+                		$isNew=FALSE;
+                		$unit_code="";
+                		$dfo_code="";
+                		$range_code="";
+                		$forest_code="";
+                		$lot_no="";
+                		$blazes_received="";
+                		$proposed_yield="";
+                		$approved_yield="";
+                		$season_year="";
+                		$rowid="0";
+                		
+                		$proposedYield = $db->get_row("SELECT * FROM t_proposed_yield_form_blazes WHERE lot_no='".$_POST['lot_no']."' AND season_year='".$_POST['season_year']."'",ARRAY_A);
+                		
+                		if(isset($proposedYield))
+                		{
+                			$unit_code=$proposedYield['unit_code'];
+                			$dfo_code=$proposedYield['dfo_code'];
+                			$range_code=$proposedYield['range_code'];
+                			$forest_code=$proposedYield['forest_code'];
+                			$lot_no=$proposedYield['lot_no'];
+                			$blazes_received=$proposedYield['blazes_received'];
+                			$proposed_yield=$proposedYield['proposed_yield'];
+                			$approved_yield=$proposedYield['approved_yield'];
+                			$season_year=$proposedYield['season_year'];
+                			$rowid=$proposedYield['id'];
+                			$isNew=FALSE;
+                		}else
+                		{
+                			$unit_code=$_POST['unit_code'];
+                			$dfo_code=$_POST['dfo_code'];
+                			$range_code=$_POST['range_code'];
+                			$forest_code=$_POST['forest_code'];
+                			$lot_no=$_POST['lot_no'];
+                			$blazes_received=$_POST['blazes_received'];
+                			$season_year=$_POST['season_year'];
+                			$rowid="0";
+                			$isNew=TRUE;
+                		}
+                 ?>
+              		<form action="receive-blazes.php" method="post" id="blazesForm" data-validate="parsley">
+						<fieldset>
+						<legend><font size=5 color=#72A545>Proposed/Approved Yield for Lot Season <?php echo $season_year; ?></font></legend><br />
+							<p style="color:#CC0000"><?php echo $error; ?></p>
+							<div style="margin:10px; 0px; 0px; 0px;">
+							<table style="position:relative" border="1">
+								<tr>
+									<td rowspan="2">Unit</td> 
+									<td rowspan="2">Lot Number</td> 
+									<td rowspan="2">Forest</td> 
+									<td rowspan="2">No of Blazes</td> 
+									<td colspan="3">Per section yield obtained for</td> 
+									<td rowspan="2">Average Yield (of last 3 years)</td> 
+									<td rowspan="2">Proposed Yield by DM</td> 
+									<td rowspan="2">Approved Yield by Director</td>
+								</tr>
+								<?php $common->getLastThreeSeasonYear($season_year) ?>
+								<tr>
+									<td><input class="lblText" readonly="readonly" id="unit_code" type="text" name="unit_code" value="<?php echo($unit_code);?>"/></td> 
+									<td><input class="lblText" readonly="readonly" id="lot_no" type="text" name="lot_no" value="<?php echo($lot_no);?>"/></td>
+									<td>
+										<input class="lblText" readonly="readonly" id="forest_code" type="text" name="forest_code" value="<?php echo($forest_code);?>"/>
+										<input id="dfo_code" type="hidden" name="dfo_code" value="<?php echo($dfo_code);?>"/>
+										<input id="range_code" type="hidden" name="range_code" value="<?php echo($range_code);?>"/>
+									</td>
+									<td><input class="lblText" readonly="readonly" id="blazes_received" type="text" name="blazes_received" value="<?php echo($blazes_received);?>"/></td>
+									<td>50</td> 
+									<td>100</td> 
+									<td>150</td> 
+									<td>100</td> 
+									<td>
+										<?php
+											if($_SESSION['role']=="manager")
+											{
+										?>
+												<input class="textbox" id="blazes_received" type="text" name="blazes_received" value="<?php echo($proposed_yield);?>"/>
+										<?php
+											}else
+											{
+										?>		
+												<input class="lblText" readonly="readonly" id="blazes_received" type="text" name="blazes_received" value="<?php echo($proposed_yield);?>"/>
+										<?php
+											} // role DM 
+										?>		
+									</td> 
+									<td>
+										<?php
+											if($_SESSION['role']=="director")
+											{
+										?>
+												<input class="textbox" id="blazes_received" type="text" name="blazes_received" value="<?php echo($approved_yield);?>"/>
+										<?php
+											}else
+											{
+										?>			
+												<input class="lblText" readonly="readonly" id="blazes_received" type="text" name="blazes_received" value="<?php echo($approved_yield);?>"/>
+										<?php
+											} // role Director  
+										?>		
+									</td>
+								</tr>
+								
+								</table>
+								<label for="season_year">Tapping Season:</label>
+								 <?php 
+								 	$common->getSeasonYearList($season_year);
+								 ?>
+								
+								
+								<input name="rowid" type="hidden" value="<?php echo($rowid);?>"/>
+								<input name="updated_by" type="hidden" id="updated_by" value="<?php echo($_SESSION['userid']);?>" />
+								
+								<br /><br />
+								<input class="submit" id="updatelot" type="submit" name="action" value="Update"/>
+								<input name="submitted" type="hidden" id="submitted" value="1" />
+								
+							</div>
+						</fieldset>
+				  	</form> 				  
 				<?php 
 			  		}else
                 	{
-                		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Blazes Received</h1>");
-                		 
-                		echo("<table> <tr> <td>Range</td> <td>Unit (DFO)</td> <td>Lot No</td> <td>Forest</td> <td>No of Blazes</td> <td>Season</td> <td>Status</td> <td>Action</td></tr>"); 
-                		$tappings = $db->get_results("SELECT * FROM t_blazes_for_tapping WHERE division_code='".$_SESSION['division']."' ORDER BY season_year, lot_no, range_code",ARRAY_A);
+                		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Blazes Received</h1> <table> <tr> <td>Range</td> <td>Unit (DFO)</td> <td>Lot No</td> <td>Forest</td> <td>No of Blazes</td> <td>Season</td> <td>Status</td> <td>Action</td></tr>"); 
+                		$tappings = $db->get_results("SELECT * FROM t_blazes_for_tapping WHERE division_code='".$_SESSION['division']."' ORDER BY season_year, created_dt, lot_no, range_code  ",ARRAY_A);
 
                 		
 				         foreach ( $tappings as $tapping )
@@ -265,7 +379,7 @@
 				         	echo(" <td>");
 				         	
 			     ?>
-			     			<form style="margin:0px; border:0px; background-color:inherit;" action="receive-blazes.php" method="post" id="blazesActionForm_<?php echo($tapping['id']);?>" name="blazesActionForm_<?php echo($tapping['id']);?>">
+			     			<form style="margin:0px; border:0px; background-color:inherit;" action="receive-blazes.php" method="post" id="blazesActionForm">
 							<!-- Create row specific actions -->
 			     			<?php 
 								if($tapping['status_cd']=="D")
@@ -284,24 +398,12 @@
 				         	 			echo("<input class='editImgBut' id='editlot' type='submit' name='action' value='Edit' title='Edit this record'/> &nbsp;");
 									//}
 									
-									echo("<input class='deleteImgBut' id='deletelot' type='submit' name='action' value='Delete' title='Mark this record as deleted'/> &nbsp;");
-									
-									echo("<input class='actionTxtBut' id='propyield' type='submit' name='action' value='Proposed Yield' title='Enter/View Proposed yield' onClick='setFormAction(\"blazesActionForm_".$tapping['id']."\",\"proposed-yield-blazes.php\")' /> &nbsp;");
-									
-									echo("<input class='actionTxtBut' id='upsertprice' type='submit' name='action' value='Upset Price' title='Enter/View/Calculate Upsert Price' onClick='setFormAction(\"blazesActionForm_".$tapping['id']."\",\"rate-calculation-lot.php\")' /> &nbsp;");
-									
-									echo("<input class='actionTxtBut' id='upsertprice' type='submit' name='action' value='Proposed Rate' title='Enter/View Proposed rate' onClick='setFormAction(\"blazesActionForm_".$tapping['id']."\",\"proposed-rate-blazes.php\")' />");
+									echo("<input class='deleteImgBut' id='deletelot' type='submit' name='action' value='Delete' title='Mark this record as deleted'/>");
 							 
 			         	 		}// else status
 							?>
 							<!-- End row specific actions -->	
 								<input name="lot_no" type="hidden" value="<?php echo($tapping['lot_no']);?>" />
-								<input name="unit_code" type="hidden" value="<?php echo($tapping['unit_code']);?>" />
-								<input name="dfo_code" type="hidden" value="<?php echo($tapping['dfo_code']);?>" />
-								<input name="range_code" type="hidden" value="<?php echo($tapping['range_code']);?>" />
-								<input name="forest_code" type="hidden" value="<?php echo($tapping['forest_code']);?>" />
-								<input name="blazes_received" type="hidden" value="<?php echo($tapping['blazes_received']);?>" />
-								<input name="season_year" type="hidden" value="<?php echo($tapping['season_year']);?>" />
 								<input name="status_cd" type="hidden" value="<?php echo($tapping['status_cd']);?>" />
 								<input name="rowid" type="hidden" value="<?php echo($tapping['id']);?>" />
 								<input name="submitted" type="hidden" id="submitted" value="1"/>

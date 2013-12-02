@@ -17,7 +17,7 @@
 	}
 	
 	//initilize DB
-	include "/db/db.php";
+	include "./db/db.php";
 	
 	if(isset($_POST['submitted']))
 	{
