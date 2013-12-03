@@ -170,9 +170,9 @@
 										
 								</table>
 								
-								<input name="rowid" type="hidden" value="<?php echo($eowArray['id']);?>"/>
-								<input name="rate_calculation_for_lot_id" type="hidden" value="<?php echo($eowArray['rate_calculation_for_lot_id']);?>"/>
-								<input name="eow_code" type="hidden" value="<?php echo($eowArray['eow_code']);?>"/>
+								<input id="rowid" name="rowid" type="hidden" value="<?php echo($eowArray['id']);?>"/>
+								<input id="rate_calculation_for_lot_id" name="rate_calculation_for_lot_id" type="hidden" value="<?php echo($eowArray['rate_calculation_for_lot_id']);?>"/>
+								<input id="eow_code" name="eow_code" type="hidden" value="<?php echo($eowArray['eow_code']);?>"/>
 								<input name="season_year" type="hidden" value="<?php echo($season_year);?>"/>
 								<?php
 									if(!$eowArray['id']=="0")

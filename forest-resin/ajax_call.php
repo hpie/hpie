@@ -36,6 +36,8 @@
 	 
  	if($_GET['get']=='calExpenditureDetails')
 	 {
+	 	$rowId=$_GET['rowId'];
+	 	
 	 	$zoneCode=$_GET['zoneCode'];
 	 	$totalBlazes=$_GET['totalBlazes'];
 	 	$yieldFixed=$_GET['yieldFixed'];
@@ -44,7 +46,26 @@
 	 	$distanceToRsd=$_GET['distanceToRsd'];
 	 	$seasonYear=$_GET['seasonYear'];
 	 	
-		$eowCalArray = $common->getCalculatedExpenditureOnWork($totalBlazes, $yieldFixed, $turnout, $totalTurnout, $zoneCode, $distanceToRsd, $seasonYear);
+	 	$eowCalArray=array();
+	 	if($rowId>0)
+	 	{
+	 		$rcalId=$_GET['rcalId'];
+	 		$forestCode=$_GET['forestCode'];
+	 		$eowCode=$_GET['eowCode'];
+	 		$eowCalArray=$common->getExpenditureOnWork($rcalId, $forestCode, $eowCode);
+	 		
+	 		if($eowCalArray['zone_code']!=$zoneCode)
+	 		{
+	 			$eowArray = $common->getCalculatedExpenditureOnWork($totalBlazes, $yieldFixed, $turnout, $totalTurnout, $zoneCode, $distanceToRsd, $seasonYear);
+	 			$eowCalArray = array_merge($eowCalArray, $eowArray); 	
+	 		}
+	 		
+	 	}else
+	 	{
+	 		$eowCalArray = $common->getCalculatedExpenditureOnWork($totalBlazes, $yieldFixed, $turnout, $totalTurnout, $zoneCode, $distanceToRsd, $seasonYear);	
+	 	}
+	 	
+		
 		$details='<tr><td>Expenditure Type</td> <td>Details</td> <td>Amount</td> </tr>';
 		$details.='<tr>';
 		$details.='<td>Crop setting at </td>';
@@ -102,8 +123,8 @@
 		$details.='<tr>';
 		$details.='<td>Carriage of Resin (Mules)</td>';
 			$details.='<td>';
-			$details.='<input class="lblTextSmall" readonly="readonly" id="total_tins" type="text" name="total_tins" value="'.$eowCalArray['total_tins'].'"/>'; 
-			$details.='to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_mule_rsd" type="text" name="dist_carriage_mule_rsd" value="'.$eowCalArray['dist_carriage_mule_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
+			$details.='<input class="lblTextSmall" readonly="readonly" id="turnout_carriage_mule_rsd" type="text" name="turnout_carriage_mule_rsd" value="'.$eowCalArray['turnout_carriage_mule_rsd'].'" onclick="makeSmallTextEditable(this,\' \')"/>qtl'; 
+			$details.=' to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_mule_rsd" type="text" name="dist_carriage_mule_rsd" value="'.$eowCalArray['dist_carriage_mule_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
 			$details.=' at Rs.<input class="lblTextSmall" readonly="readonly" id="cost_carriage_mule_rsd" type="text" name="cost_carriage_mule_rsd" value="'.$eowCalArray['cost_carriage_mule_rsd'].'"/>per km.';
 			$details.=' | <input id="apply_carriage_mule_rsd" type="checkbox" name="apply_carriage_mule_rsd" value="1" onclick="calculateCarriageExp(this)"/> is applied. ';
 			$details.='</td>';
@@ -113,8 +134,8 @@
 		$details.='<tr>';
 		$details.='<td>Carriage of Resin (Manual)</td>';
 			$details.='<td>';
-			$details.='<input class="lblTextSmall" readonly="readonly" id="total_tins" type="text" name="total_tins" value="'.$eowCalArray['total_tins'].'"/>'; 
-			$details.='to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_manual_rsd" type="text" name="dist_carriage_manual_rsd" value="'.$eowCalArray['dist_carriage_manual_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
+			$details.='<input class="lblTextSmall" readonly="readonly" id="turnout_carriage_manual_rsd" type="text" name="turnout_carriage_manual_rsd" value="'.$eowCalArray['turnout_carriage_manual_rsd'].'" onclick="makeSmallTextEditable(this,\' \')"/>qtl'; 
+			$details.=' to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_manual_rsd" type="text" name="dist_carriage_manual_rsd" value="'.$eowCalArray['dist_carriage_manual_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
 			$details.=' at Rs.<input class="lblTextSmall" readonly="readonly" id="cost_carriage_manual_rsd" type="text" name="cost_carriage_manual_rsd" value="'.$eowCalArray['cost_carriage_manual_rsd'].'"/>per km.';
 			$details.=' | <input id="apply_carriage_manual_rsd" type="checkbox" name="apply_carriage_manual_rsd" value="1" onclick="calculateCarriageExp(this)"/> is applied. ';
 			$details.='</td>';
@@ -124,8 +145,8 @@
 		$details.='<tr>';
 		$details.='<td>Carriage of Resin (Tractor)</td>';
 			$details.='<td>';
-			$details.='<input class="lblTextSmall" readonly="readonly" id="total_tins" type="text" name="total_tins" value="'.$eowCalArray['total_tins'].'"/>'; 
-			$details.='to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_tractor_rsd" type="text" name="dist_carriage_tractor_rsd" value="'.$eowCalArray['dist_carriage_tractor_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
+			$details.='<input class="lblTextSmall" readonly="readonly" id="turnout_carriage_tractor_rsd" type="text" name="turnout_carriage_tractor_rsd" value="'.$eowCalArray['turnout_carriage_tractor_rsd'].'" onclick="makeSmallTextEditable(this,\' \')"/>qtl'; 
+			$details.=' to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_tractor_rsd" type="text" name="dist_carriage_tractor_rsd" value="'.$eowCalArray['dist_carriage_tractor_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
 			$details.=' at Rs.<input class="lblTextSmall" readonly="readonly" id="cost_carriage_tractor_rsd" type="text" name="cost_carriage_tractor_rsd" value="'.$eowCalArray['cost_carriage_mule_rsd'].'"/>per km.';
 			$details.=' | <input id="apply_carriage_tractor_rsd" type="checkbox" name="apply_carriage_tractor_rsd" value="1" onclick="calculateCarriageExp(this)"/> is applied. ';
 			$details.='</td>';
@@ -135,8 +156,8 @@
 		$details.='<tr>';
 		$details.='<td>Carriage of Resin (Other)</td>';
 			$details.='<td>';
-			$details.='<input class="lblTextSmall" readonly="readonly" id="total_tins" type="text" name="total_tins" value="'.$eowCalArray['total_tins'].'"/>'; 
-			$details.='to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_other_rsd" type="text" name="dist_carriage_other_rsd" value="'.$eowCalArray['dist_carriage_other_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
+			$details.='<input class="lblTextSmall" readonly="readonly" id="turnout_carriage_other_rsd" type="text" name="turnout_carriage_other_rsd" value="'.$eowCalArray['turnout_carriage_other_rsd'].'" onclick="makeSmallTextEditable(this,\' \')"/>qtl'; 
+			$details.=' to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_other_rsd" type="text" name="dist_carriage_other_rsd" value="'.$eowCalArray['dist_carriage_other_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
 			$details.=' at Rs.<input class="lblTextSmall" readonly="readonly" id="cost_carriage_other_rsd" type="text" name="cost_carriage_other_rsd" value="'.$eowCalArray['cost_carriage_manual_rsd'].'"/>per km.';
 			$details.=' | <input id="apply_carriage_other_rsd" type="checkbox" name="apply_carriage_other_rsd" value="1" onclick="calculateCarriageExp(this)"/> is applied. ';
 			$details.='</td>';
