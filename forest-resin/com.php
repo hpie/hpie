@@ -185,7 +185,7 @@
 								
 								<br /><br />
 								<?php
-									if($_SESSION['role']=="director" || $_SESSION['role']=="sysadmin")
+									if($_SESSION['role']=="admin" || $_SESSION['role']=="manager" || $_SESSION['role']=="director" || $_SESSION['role']=="sysadmin")
 									{
 								?>	
 									<input class="submit" id="updatecom" type="submit" name="action" value="Set Cost" onclick="tb_remove();" />

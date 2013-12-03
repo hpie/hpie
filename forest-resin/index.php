@@ -33,7 +33,13 @@
 		$pass=$_POST['pass'];
 		$division=$_POST['division'];
 		
-		$user = $db->get_row("SELECT * FROM m_user WHERE user_id='$username' AND user_pass='".md5($pass)."' AND division_code= '$division'");
+		if($username=="sysadmin" || $username=="director")
+		{
+			$user = $db->get_row("SELECT * FROM m_user WHERE user_id='$username' AND user_pass='".md5($pass)."'");
+		}else
+		{
+			$user = $db->get_row("SELECT * FROM m_user WHERE user_id='$username' AND user_pass='".md5($pass)."' AND division_code= '$division'");
+		}
 		
 		if($user)
 		{
@@ -48,7 +54,13 @@
 				$_SESSION['lname'] = $user->user_lname;
 				$_SESSION['email'] = $user->user_fname;
 				$_SESSION['role'] = $user->role_code;
-				$_SESSION['division'] = $user->division_code;
+				if($user->user_id=="sysadmin" || $user->user_id=="director")
+				{
+					$_SESSION['division'] = $division;
+				}else
+				{
+					$_SESSION['division'] = $user->division_code;
+				}
 				$_SESSION['logged'] = TRUE;
 				$_SESSION['msg'] = "";  
 				
