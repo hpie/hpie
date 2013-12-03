@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `m_user` (
 -- INSERT--
 INSERT INTO `m_user` (`id`, `user_fname`, `user_lname`, `user_id`, `user_pass`, `user_email`, `role_code`, `division_code`, `user_desc`, `status_cd`) 
 VALUES
-(1, 'Admin', 'Shimla', 'admin', '5f4dcc3b5aa765d61d8327deb882cf99', 'forest@forest.com', 'sysadmin', 'Shimla', '', 'A'),
+(1, 'Admin', 'Shimla', 'sysadmin', '5f4dcc3b5aa765d61d8327deb882cf99', 'forest@forest.com', 'sysadmin', 'Shimla', '', 'A'),
 (2, 'User', 'Chamba', 'chamba', '5f4dcc3b5aa765d61d8327deb882cf99', 'forest@forest.com', 'client', 'Chamba', '', 'A'),
 (3, 'User', 'Chopal', 'chopal', '5f4dcc3b5aa765d61d8327deb882cf99', 'forest@forest.com', 'client', 'Chopal', '', 'A'),
 (4, 'User', 'Dharamsala', 'dharamsala', '5f4dcc3b5aa765d61d8327deb882cf99', 'forest@forest.com', 'client', 'Dharamsala', '', 'A'),

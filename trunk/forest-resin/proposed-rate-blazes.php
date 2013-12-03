@@ -433,7 +433,7 @@
 								
 								<br /><br />
 								<?php
-									if($_SESSION['role']=="director" || $_SESSION['role']=="sysadmin")
+									if($_SESSION['role']=="manager" || $_SESSION['role']=="director" || $_SESSION['role']=="sysadmin")
 									{
 								?>	
 									<input class="submit" id="updatelot" type="submit" name="action" value="Set Rate" />
