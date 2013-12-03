@@ -104,7 +104,7 @@ function validateCarriageDistance(thisObj)
 			isValid=true;
 		}
 	}
-	alert(isValid);
+	//alert(isValid);
 	if(!isValid)
 	{
 		document.getElementById("apply_"+carriageType).checked=false;
@@ -117,10 +117,12 @@ function validateCarriageDistance(thisObj)
 //common function called from ajax_call.php to calculate carriage.
 function calculateCarriageExp(thisObj)
 {
+	//turnout_carriage_mule_rsd
 	//dist_carriage_mule_rsd
 	//cost_carriage_mule_rsd
 	//apply_carriage_mule_rsd
 	//exp_carriage_mule_rsd
+	
 	var chkbox = thisObj.name;
 	var carriageType = chkbox.slice(6);
 	//alert(carriageType);
@@ -131,7 +133,8 @@ function calculateCarriageExp(thisObj)
 		{
 			var dist = document.getElementById("dist_"+carriageType).value;
 			var cost = document.getElementById("cost_"+carriageType).value;
-			var turnout = document.getElementById("turnout").value;
+			//var turnout = document.getElementById("turnout").value;
+			var turnout = document.getElementById("turnout_"+carriageType).value;
 			document.getElementById("exp_"+carriageType).value=(turnout*cost*dist).toFixed(2)
 		}else
 		{
@@ -286,7 +289,13 @@ function calculateExpenditureDetails(thisObj)
 		  totalTurnout=document.getElementById("total_turnout").value;
 		  distanceToRsd=document.getElementById("distance_to_rsd").value;
 		  seasonYear=document.getElementById("season_year").value;
-		  var fileCall='ajax_call.php?get=calExpenditureDetails&zoneCode='+thisObj.value+'&totalBlazes='+totalBlazes+'&yieldFixed='+yieldFixed+'&turnout='+turnout+'&totalTurnout='+totalTurnout+'&distanceToRsd='+distanceToRsd+'&seasonYear='+seasonYear;
+		  
+		  rowId=document.getElementById("rowid").value;
+		  rcalId=document.getElementById("rate_calculation_for_lot_id").value;
+		  forestCode=document.getElementById("forest_code").value;
+		  eowCode=document.getElementById("eow_code").value;
+		  
+		  var fileCall='ajax_call.php?get=calExpenditureDetails&zoneCode='+thisObj.value+'&totalBlazes='+totalBlazes+'&yieldFixed='+yieldFixed+'&turnout='+turnout+'&totalTurnout='+totalTurnout+'&distanceToRsd='+distanceToRsd+'&seasonYear='+seasonYear+'&rowId='+rowId+'&rcalId='+rcalId+'&forestCode='+forestCode+'&eowCode='+eowCode;
 
 		  xmlhttp.open("GET",fileCall,true);
 		  xmlhttp.send();
