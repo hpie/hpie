@@ -1,10 +1,11 @@
 <?php 
+session_start();
  if(isset($_GET['get']))
  { 
  	//initilize DB
 	include "./db/db.php";
 	require_once "./classes/common.php";
-	$common	= new common();
+	$common	= new common($_SESSION['division']);
 	
 	 if($_GET['get']=='lotForests')
 	 {
@@ -187,12 +188,36 @@
 	 
  	if($_GET['get']=='calCostOfMaterialDetails')
 	 {
+	 	$rowId=$_GET['rowId'];
+	 	
 	 	$numberOfMazdoor=$_GET['numberOfMazdoor'];
+	 	$enteredMazdoors=$_GET['enteredMazdoors'];
 	 	$totalBlazes=$_GET['totalBlazes'];
 	 	$seasonYear=$_GET['seasonYear'];
 	 	
-		$comCalArray = $common->getCalculatedCostOfMaretial($totalBlazes, $numberOfMazdoor, $seasonYear);
-		$details='<tr><td>Expenditure Type</td> <td>Details</td> <td>Amount</td> </tr>';
+	 	$comCalArray=array();
+	 	
+	 	$details='<tr><td>Expenditure Type</td> <td>Details</td> <td>Amount</td> </tr>';
+	 	if($rowId>0)
+	 	{
+	 		$rcalId=$_GET['rcalId'];
+	 		$forestCode=$_GET['forestCode'];
+	 		$comCode=$_GET['comCode'];
+	 		$comCalArray=$common->getCostOfMaretial($rcalId, $forestCode, $comCode);
+	 		
+	 		if($comCalArray['number_of_mazdoor']!=$enteredMazdoors)
+	 		{
+	 			$details.='<tr><td colspan="3">No of Mazdoor has changed from '.$comCalArray['number_of_mazdoor'].' to '.$enteredMazdoors.'. Re-calculation required.</td></tr>';
+	 			$comArray = $common->getCalculatedCostOfMaretial($totalBlazes, $numberOfMazdoor, $seasonYear);
+	 			$comCalArray = array_merge($comCalArray, $comArray); 
+	 		}
+	 		
+	 	}else
+	 	{
+	 		$comCalArray = $common->getCalculatedCostOfMaretial($totalBlazes, $numberOfMazdoor, $seasonYear);	
+	 	}
+	 	
+		
 		$details.='<tr>';
 		$details.='<td>Blaze frame cost at </td>';
 		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_blaze_frame" type="text" name="cost_blaze_frame" value="'.$comCalArray['cost_blaze_frame'].'"/> </td>';
@@ -240,7 +265,7 @@
 		
 		$details.='<tr>';
 		$details.='<td>Pots cost at </td>';
-		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_pots" type="text" name="cost_pots" value="'.$comCalArray['cost_pots'].'"/> for '.($comCalArray['blazes_received']/2).' pots</td>';
+		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_pots" type="text" name="cost_pots" value="'.$comCalArray['cost_pots'].'"/> for '. ceil(($comCalArray['blazes_received']/2)).' pots</td>';
 		$details.='<td><input class="lblText" readonly="readonly" id="exp_pots" type="text" name="exp_pots" value="'.$comCalArray['exp_pots'].'"/> </td>';
 		$details.='<tr>';
 		
@@ -294,6 +319,89 @@
 			$details.='</td>';
 		$details.='<td><input class="lblText" readonly="readonly" id="exp_charcoal" type="text" name="exp_charcoal" value="'.$comCalArray['exp_charcoal'].'"/> </td>';
 		$details.='<tr>';
+		
+		// new addition
+		$details.='<tr>';
+		$details.='<td>Blower </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_blower" type="text" name="qty_blower" value="'.$comCalArray['qty_blower'].'" data-required="true" data-error-message="Please enter qunatity for blower" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_blower, exp_blower)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_blower" type="text" name="cost_blower" value="'.$comCalArray['cost_blower'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_blower" type="text" name="exp_blower" value="'.$comCalArray['exp_blower'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Solder Iron </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_solder_iron" type="text" name="qty_solder_iron" value="'.$comCalArray['qty_solder_iron'].'" data-required="true" data-error-message="Please enter qunatity for solder iron" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_solder_iron, exp_solder_iron)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_solder_iron" type="text" name="cost_solder_iron" value="'.$comCalArray['cost_solder_iron'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_solder_iron" type="text" name="exp_solder_iron" value="'.$comCalArray['exp_solder_iron'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Paint </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_paint" type="text" name="qty_paint" value="'.$comCalArray['qty_paint'].'" data-required="true" data-error-message="Please enter qunatity for paint" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_paint, exp_paint)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_paint" type="text" name="cost_paint" value="'.$comCalArray['cost_paint'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_paint" type="text" name="exp_paint" value="'.$comCalArray['exp_paint'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Cylinder 50ml </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_cylinder_50ml" type="text" name="qty_cylinder_50ml" value="'.$comCalArray['qty_cylinder_50ml'].'" data-required="true" data-error-message="Please enter qunatity for cylinder 50ml" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_cylinder_50ml, exp_cylinder_50ml)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_cylinder_50ml" type="text" name="cost_cylinder_50ml" value="'.$comCalArray['cost_cylinder_50ml'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_cylinder_50ml" type="text" name="exp_cylinder_50ml" value="'.$comCalArray['exp_cylinder_50ml'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Cylinder 500ml </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_cylinder_500ml" type="text" name="qty_cylinder_500ml" value="'.$comCalArray['qty_cylinder_500ml'].'" data-required="true" data-error-message="Please enter qunatity for cylinder 500ml" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_cylinder_500ml, exp_cylinder_500ml)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_cylinder_500ml" type="text" name="cost_cylinder_500ml" value="'.$comCalArray['cost_cylinder_500ml'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_cylinder_500ml" type="text" name="exp_cylinder_500ml" value="'.$comCalArray['exp_cylinder_500ml'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Beaker 500ml </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_beaker_500ml" type="text" name="qty_beaker_500ml" value="'.$comCalArray['qty_beaker_500ml'].'" data-required="true" data-error-message="Please enter qunatity for beaker 500ml" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_beaker_500ml, exp_beaker_500ml)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_beaker_500ml" type="text" name="cost_beaker_500ml" value="'.$comCalArray['cost_beaker_500ml'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_beaker_500ml" type="text" name="exp_beaker_500ml" value="'.$comCalArray['exp_beaker_500ml'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Beaker 1000ml </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_beaker_1000ml" type="text" name="qty_beaker_1000ml" value="'.$comCalArray['qty_beaker_1000ml'].'" data-required="true" data-error-message="Please enter qunatity for beaker 1000ml" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_beaker_1000ml, exp_beaker_1000ml)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_beaker_1000ml" type="text" name="cost_beaker_1000ml" value="'.$comCalArray['cost_beaker_1000ml'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_beaker_1000ml" type="text" name="exp_beaker_1000ml" value="'.$comCalArray['exp_beaker_1000ml'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Funnel </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_funnel" type="text" name="qty_funnel" value="'.$comCalArray['qty_funnel'].'" data-required="true" data-error-message="Please enter qunatity for funnel" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_funnel, exp_funnel)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_funnel" type="text" name="cost_funnel" value="'.$comCalArray['cost_funnel'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_funnel" type="text" name="exp_funnel" value="'.$comCalArray['exp_funnel'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Other </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_other" type="text" name="qty_other" value="'.$comCalArray['qty_other'].'" data-required="true" data-error-message="Please enter qunatity for other" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_other, exp_other)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_other" type="text" name="cost_other" value="'.$comCalArray['cost_other'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_other" type="text" name="exp_other" value="'.$comCalArray['exp_other'].'"/> </td>';
+		$details.='<tr>';
+		//
 		
 		$details.='<tr>';
 		$details.='<td>Sharpening Material cost </td>';

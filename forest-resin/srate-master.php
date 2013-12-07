@@ -7,11 +7,11 @@
 	{
 		if($action=="update")
 		{
-			$db->query("UPDATE m_schedule_rate SET srate_name='".$_POST['srate_name']."', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
+			$db->query("UPDATE m_schedule_rate SET srate_desc='".$_POST['srate_desc']."', srate='".$_POST['srate']."', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
 			//$db->debug();
 			if($db->rows_affected>0)
 			{ 
-				$_SESSION['msg']="Unit Successfully Updated.";
+				$_SESSION['msg']="Schedule Rate Successfully Updated.";
 			}else
 			{
 				$_SESSION['msg']="Problem updating srate. Please try again.";
@@ -155,20 +155,32 @@
 							<p style="color:#CC0000"><?php echo $error; ?></p>
 							<div style="margin:10px; 0px; 0px; 0px;">
 								<label for="srate_code">Rate Code:</label>
-								<input class="lblText" readonly="readonly" id="srate_code" type="text" name="srate_code" data-required="true" data-error-message="Unit Code is required" value="<?php echo($srate['srate_code']);?>"/>
+								<input class="lblText" readonly="readonly" id="srate_code" type="text" name="srate_code" data-required="true" data-error-message="Rate Code is required" value="<?php echo($srate['srate_code']);?>"/>
 								<label for="srate_name">Rate Name:</label>
-								<input class="textbox"  id="srate_name" type="text" name="srate_name" data-required="true" data-error-message="Unit Name is required" value="<?php echo($srate['srate_name']);?>"/>
+								<input class="lblText"  readonly="readonly" id="srate_name" type="text" name="srate_name" data-required="true" data-error-message="Rate Name is required" value="<?php echo($srate['srate_name']);?>"/>
 								<label for="srate_name">Rate Description:</label>
-								<input class="textbox"  id="srate_desc" type="text" name="srate_desc" data-required="true" data-error-message="Unit Name is required" value="<?php echo($srate['srate_desc']);?>"/>
+								<input class="textbox"  id="srate_desc" type="text" name="srate_desc" data-required="true" data-error-message="Rate Description is required" value="<?php echo($srate['srate_desc']);?>"/>
 								<label for="srate_name">Rate Set:</label>
-								<input class="textbox"  id="srate" type="text" name="srate" data-required="true" data-error-message="Unit Name is required" value="<?php echo($srate['srate']);?>"/>
+								<input class="textbox"  id="srate" type="text" name="srate" data-required="true" data-error-message="Rate is required" value="<?php echo($srate['srate']);?>"/>
 								
 								<input name="rowid" type="hidden" value="<?php echo($srate['id']);?>"/>
 								<input name="updated_by" type="hidden" id="updated_by" value="<?php echo($_SESSION['userid']);?>" />
 								
 								<br /><br />
-								<!--<input class="submit" id="updatelot" type="submit" name="action" value="Update"/>-->
-								<input name="submitted" type="hidden" id="submitted" value="1" />
+								<?php
+									if($_SESSION['role']=="manager" || $_SESSION['role']=="director" || $_SESSION['role']=="sysadmin")
+									{
+								?>	
+									<input class="submit" id="updaterate" type="submit" name="action" value="Update"/>
+									<input name="submitted" type="hidden" id="submitted" value="1" />
+								<?php
+									}else
+									{
+								?>	
+									<label>Login with privilage to update Costs</label>
+								<?php
+									} // role Director  
+								?>
 								
 							</div>
 						</fieldset>
@@ -176,7 +188,7 @@
 				<?php 
 			  		}else
                 	{
-                		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Schedule Rates Master</h1> <table> <tr> <td>Rate Code</td> <td>Rate Name</td> <td>Rate Description</td> <td>Current Rate</td> <td>Status</td> <td>Action</td></tr>"); 
+                		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Schedule Rates Master</h1> <form> <span> </span> <table> <tr> <td>Rate Code</td> <td>Rate Name</td> <td>Rate Description</td> <td>Current Rate</td> <td>Status</td> <td>Action</td></tr>"); 
                 		$srates = $db->get_results("SELECT * FROM m_schedule_rate WHERE division_code='".$_SESSION['division']."' ORDER BY srate_name" ,ARRAY_A);
 	
 				         foreach ( $srates as $srate )

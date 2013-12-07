@@ -117,7 +117,7 @@
 	//}
 	
 	require_once "./classes/common.php";
-	$common	= new common();
+	$common	= new common($_SESSION['division']);
 	
 	
 ?>
