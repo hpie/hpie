@@ -7,7 +7,7 @@
 	{
 		if($action=="update")
 		{
-			$db->query("UPDATE m_forest SET forest_name='".$_POST['forest_name']."', range_code='".$_POST['range_code']."', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
+			$db->query("UPDATE m_forest SET forest_name='".$_POST['forest_name']."', range_code='".$_POST['range_code']."', forest_rsd_code='".$_POST['forest_rsd_code']."', forest_rsd_distance='".$_POST['forest_rsd_distance']."', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
 			//$db->debug();
 			if($db->rows_affected>0)
 			{ 
@@ -19,7 +19,7 @@
 			Header("Location: forest-master.php");
 		}else if($action=="save")
 		{
-			$db->query("INSERT INTO m_forest (id, forest_code, forest_name, range_code, created_by) VALUES (NULL, '".$_POST['forest_code']."', '".$_POST['forest_name']."', '".$_POST['range_code']."', '".$_POST['created_by']."')");
+			$db->query("INSERT INTO m_forest (id, forest_code, forest_name, range_code, forest_rsd_code, forest_rsd_distance, created_by) VALUES (NULL, '".$_POST['forest_code']."', '".$_POST['forest_name']."', '".$_POST['range_code']."', '".$_POST['forest_rsd_code']."', '".$_POST['forest_rsd_distance']."', '".$_POST['created_by']."')");
 			//$db->debug();
 			if($db->rows_affected>0)
 			{ 
@@ -145,6 +145,23 @@
 						            }
 								 ?>
 								</select>
+								
+								
+								<label for="forest_rsd">Forest RSD:</label>
+								<select id="forest_rsd_code" name="forest_rsd_code" data-required="true" data-error-message="RSD is required">
+								<?php 
+								  $rsds = $db->get_results("SELECT forest_rsd_code, forest_rsd_name FROM m_forest_rsd WHERE division_code='".$_SESSION['division']."' AND status_cd='A'",ARRAY_A);
+			 					 
+						            foreach ( $rsds as $rsd )
+						            {
+						            	echo "<option value='".$rsd['forest_rsd_code']."'>".$rsd['forest_rsd_name']."</option>";
+						            	
+						            }
+								 ?>
+								</select>
+								<label for="rsd_distance">Forest RSD Distance:</label>
+								<input class="textbox"  id="forest_rsd_distance" type="text" name="forest_rsd_distance" data-required="true" data-error-message="Forest RSD distance is required" data-type="number" data-type-number-message="Only number is allowed"/>
+								
 								<input name="created_by" type="hidden" id="created_by" value="<?php echo($_SESSION['userid'])?>" />
 								
 								<br /><br />
@@ -189,6 +206,27 @@
 						            }
 								 ?>
 								</select>
+								
+								<label for="forest_rsd">Forest RSD:</label>
+								<select id="forest_rsd_code" name="forest_rsd_code" data-required="true" data-error-message="RSD is required">
+								<?php 
+								  $rsds = $db->get_results("SELECT forest_rsd_code, forest_rsd_name FROM m_forest_rsd WHERE division_code='".$_SESSION['division']."' AND status_cd='A'",ARRAY_A);
+			 					 
+						            foreach ( $rsds as $rsd )
+						            {
+						            	if($rsd['forest_rsd_code']==$forest['forest_rsd_code'])
+						            	{
+						            		echo "<option value='".$rsd['forest_rsd_code']."' selected='selected>".$rsd['forest_rsd_name']."</option>";
+						            	}else 
+						            	{
+						            		echo "<option value='".$rsd['forest_rsd_code']."'>".$rsd['forest_rsd_name']."</option>";
+						            	}
+						            	
+						            }
+								 ?>
+								</select>
+								<label for="rsd_distance">Forest RSD Distance:</label>
+								<input class="textbox"  id="forest_rsd_distance" type="text" name="forest_rsd_distance" data-required="true" data-error-message="Forest RSD distance is required" data-type="number" data-type-number-message="Only number is allowed"  value="<?php echo($forest['forest_rsd_distance']);?>"/>
 								<input name="rowid" type="hidden" value="<?php echo($forest['id']);?>"/>
 								<input name="updated_by" type="hidden" id="updated_by" value="<?php echo($_SESSION['userid']);?>" />
 								
@@ -202,8 +240,8 @@
 				<?php 
 			  		}else
                 	{
-                		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Forests</h1> <table> <tr> <td>Forest Code</td> <td>Forest Name</td> <td>Range</td> <td>Status</td> <td>Action</td></tr>"); 
-                		$forests = $db->get_results("SELECT f.id, f.forest_code, f.forest_name, f.range_code, f.status_cd FROM m_forest f,  m_range r WHERE f.range_code=r.range_code AND r.division_code='".$_SESSION['division']."' ORDER BY f.forest_name" ,ARRAY_A);
+                		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Forests</h1> <table> <tr> <td>Forest Code</td> <td>Forest Name</td> <td>Range</td> <td>RSD</td> <td>RSD Distnace</td><td>Status</td> <td>Action</td></tr>"); 
+                		$forests = $db->get_results("SELECT f.id, f.forest_code, f.forest_name, f.range_code, f.forest_rsd_code, f.forest_rsd_distance, f.status_cd FROM m_forest f,  m_range r WHERE f.range_code=r.range_code AND r.division_code='".$_SESSION['division']."' ORDER BY f.forest_name" ,ARRAY_A);
 	
 				         foreach ( $forests as $forest )
 				         { 
@@ -211,6 +249,8 @@
 			         	 	echo(" <td>".$forest['forest_code']."</td> <td>".$forest['forest_name']."</td>");
 				         	
 				         	echo(" <td>".$forest['range_code']."</td>");
+				         	echo(" <td>".$forest['forest_rsd_code']."</td>");
+				         	echo(" <td>".$forest['forest_rsd_distance']."</td>");
 				         	
 				         	echo("<td>".$forest['status_cd']."</td>");
 				         	

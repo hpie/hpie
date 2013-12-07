@@ -485,13 +485,15 @@
                                 </tr>
                                 	<?php
                                 		$index=0; 
-										$tappings = $db->get_results("SELECT t.forest_code, t.blazes_received, t.proposed_yield, t.approved_yield,  f.forest_name FROM t_proposed_yield_form_blazes t , m_forest f WHERE t.forest_code=f.forest_code AND lot_no='".$lot_no."' AND season_year='".$season_year."'",ARRAY_A);
-			 	            			
+										//$tappings = $db->get_results("SELECT t.forest_code, t.blazes_received, t.proposed_yield, t.approved_yield,  f.forest_name FROM t_proposed_yield_form_blazes t , m_forest f WHERE t.forest_code=f.forest_code AND lot_no='".$lot_no."' AND season_year='".$season_year."'",ARRAY_A);
+			 	            			$tappings = $db->get_results("SELECT t.forest_code, t.blazes_received, t.proposed_yield, t.approved_yield,  f.forest_name, f.forest_rsd_code, f.forest_rsd_distance FROM t_proposed_yield_form_blazes t , m_forest f WHERE t.forest_code=f.forest_code AND lot_no='".$lot_no."' AND season_year='".$season_year."'",ARRAY_A);
 										foreach ( $tappings as $tapping )
 				         				{ 
 							         	 	echo(" <tr>");
 							         	 	echo(" <td>".$tapping['forest_name']."</td>");
-								         	$forestRsds = $db->get_results("SELECT forest_rsd_name, forest_rsd_distance FROM m_forest f, m_forest_rsd r WHERE f.forest_code=r.forest_code AND f.forest_code='".$tapping['forest_code']."'",ARRAY_A); 
+								         	//multiple rsd's per forest
+							         	 	/*
+							         	 	$forestRsds = $db->get_results("SELECT forest_rsd_name, forest_rsd_distance FROM m_forest f, m_forest_rsd r WHERE f.forest_code=r.forest_code AND f.forest_code='".$tapping['forest_code']."'",ARRAY_A); 
 								         	echo(" <td>");
 								         	$forest_rsd_distance=0;
 								         	$rsdCount=0;
@@ -506,7 +508,11 @@
 								         		$rsdCount=1;
 								         	}
 								         	$forest_rsd_distance=($forest_rsd_distance/$rsdCount); // average distance
-								         	
+								         	*/
+							         	 	
+							         	 	// only one RSD per forest
+							         	 	$forest_rsd_distance=$tapping['forest_rsd_distance'];
+							         	 	echo(" <td>".$tapping['forest_code']." [".$tapping['forest_rsd_distance']."]" );
 								         	echo(" </td>");
 								         	
 								         	echo("<td>".$tapping['blazes_received']."</td>");
