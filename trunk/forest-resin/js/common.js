@@ -313,6 +313,7 @@ function calculateCostOfMaterialDetails(thisObj)
 	//alert(window.parent.document.getElementById("number_of_mazdoors").value);
 	//alert(window.parent.document.getElementById("number_of_forests").value);
 	thisObj.value = window.parent.document.getElementById("number_of_mazdoors").value;
+	enteredMazdoors = window.parent.document.getElementById("number_of_mazdoors").value;
 	avgMazdoor = (window.parent.document.getElementById("number_of_mazdoors").value)/(window.parent.document.getElementById("number_of_forests").value);
 	//alert(thisObj.value);
 	
@@ -339,7 +340,13 @@ function calculateCostOfMaterialDetails(thisObj)
 			  
 			  totalBlazes=document.getElementById("blazes_received").value;
 			  seasonYear=document.getElementById("season_year").value;
-			  var fileCall='ajax_call.php?get=calCostOfMaterialDetails&numberOfMazdoor='+avgMazdoor+'&totalBlazes='+totalBlazes+'&seasonYear='+seasonYear;
+			  
+			  rowId=document.getElementById("rowid").value;
+			  rcalId=document.getElementById("rate_calculation_for_lot_id").value;
+			  forestCode=document.getElementById("forest_code").value;
+			  comCode=document.getElementById("com_code").value;
+			  
+			  var fileCall='ajax_call.php?get=calCostOfMaterialDetails&enteredMazdoors='+enteredMazdoors+'&numberOfMazdoor='+avgMazdoor+'&totalBlazes='+totalBlazes+'&seasonYear='+seasonYear+'&rowId='+rowId+'&rcalId='+rcalId+'&forestCode='+forestCode+'&comCode='+comCode;
 
 			  xmlhttp.open("GET",fileCall,true);
 			  xmlhttp.send();

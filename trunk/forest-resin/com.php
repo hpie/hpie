@@ -22,7 +22,7 @@
 	if($comArray['id']=="0")
 	{
 		//$comArray['id']="0";
-		//$eowArray['rate_calculation_for_lot_id']=$rcal_id;
+		//$comArray['rate_calculation_for_lot_id']=$rcal_id;
 		$comArray['division_code']=$division_code;
 		$comArray['unit_code']=$unit_code;
 		$comArray['lot_no']=$lot_no;
@@ -65,8 +65,8 @@
 		$comArray['exp_charcoal']="";
 		$comArray['cost_tool_sharpen']="";
 		$comArray['exp_tool_sharpen']="";
-		$eowArray['season_year']=$season_year;
-		$eowArray['status_cd']="A";
+		$comArray['season_year']=$season_year;
+		$comArray['status_cd']="A";
 	}else
 	{
 		//$comArray['id']="0";
@@ -154,9 +154,6 @@
                                 <tr>    
                                 	<td  colspan="4"><input id="number_of_mazdoor" type="hidden" name="number_of_mazdoor" value="<?php echo($comArray['number_of_mazdoor']);?>" /></td>
                                 </tr>
-                                <script>
-                                	calculateCostOfMaterialDetails(number_of_mazdoor);
-                                </script>
                                 <tr>    
 									<td colspan="4">Cost Details</td>
                                 </tr>
@@ -169,9 +166,9 @@
 										
 								</table>
 								
-								<input name="rowid" type="hidden" value="<?php echo($comArray['id']);?>"/>
-								<input name="rate_calculation_for_lot_id" type="hidden" value="<?php echo($comArray['rate_calculation_for_lot_id']);?>"/>
-								<input name="com_code" type="hidden" value="<?php echo($comArray['com_code']);?>"/>
+								<input id="rowid" name="rowid" type="hidden" value="<?php echo($comArray['id']);?>"/>
+								<input id="rate_calculation_for_lot_id" name="rate_calculation_for_lot_id" type="hidden" value="<?php echo($comArray['rate_calculation_for_lot_id']);?>"/>
+								<input id="com_code" name="com_code" type="hidden" value="<?php echo($comArray['com_code']);?>"/>
 								<input name="season_year" type="hidden" value="<?php echo($season_year);?>"/>
 								<?php
 									if(!$comArray['id']=="0")
@@ -204,6 +201,9 @@
 						</fieldset>
 				  	</form>		  
 					
+					<script>
+                    	calculateCostOfMaterialDetails(number_of_mazdoor);
+                    </script>
 			</div>
 		<!-- post ends here -->		        
 

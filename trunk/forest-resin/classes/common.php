@@ -1,6 +1,11 @@
 <?php
 class common
 {
+	public $division;
+    
+	 public function __construct($param) {
+    	$this->division = $param;
+  	}
 	
 	function makeSelectOptions($arrData,$name,$selectedIndex=0,$javascript="",$size=0,$str="")
 	{
@@ -194,7 +199,8 @@ class common
 	function getAllScheduleRates($season_year)
 	{
 		global $db;
-		$scheduleRates = $db->get_results("SELECT srate_code, srate FROM m_schedule_rate ",ARRAY_A);
+		$scheduleRates = $db->get_results("SELECT srate_code, srate FROM m_schedule_rate WHERE division_code='".$this->division."' AND season_year='".$season_year."'",ARRAY_A);
+		//$db->debug();
 		$scheduleRate=array();
 		foreach ( $scheduleRates as $rate )
 	    {
@@ -324,6 +330,33 @@ class common
 			$comArray['exp_charcoal']="";
 			$comArray['cost_tool_sharpen']="";
 			$comArray['exp_tool_sharpen']="";
+			$comArray['cost_blower']="";
+			$comArray['qty_blower']="";
+			$comArray['exp_blower']="";
+			$comArray['cost_solder_iron']="";
+			$comArray['qty_solder_iron']="";
+			$comArray['exp_solder_iron']="";
+			$comArray['cost_paint']="";
+			$comArray['qty_paint']="";
+			$comArray['exp_paint']="";
+			$comArray['cost_cylinder_50ml']="";
+			$comArray['qty_cylinder_50ml']="";
+			$comArray['exp_cylinder_50ml']="";
+			$comArray['cost_cylinder_500ml']="";
+			$comArray['qty_cylinder_500ml']="";
+			$comArray['exp_cylinder_500ml']="";
+			$comArray['cost_beaker_500ml']="";
+			$comArray['qty_beaker_500ml']="";
+			$comArray['exp_beaker_500ml']="";
+			$comArray['cost_beaker_1000ml']="";
+			$comArray['qty_beaker_1000ml']="";
+			$comArray['exp_beaker_1000ml']="";
+			$comArray['cost_funnel']="";
+			$comArray['qty_funnel']="";
+			$comArray['exp_funnel']="";
+			$comArray['cost_other']="";
+			$comArray['qty_other']="";
+			$comArray['exp_other']="";
 			$comArray['season_year']="";
 			$comArray['status_cd']="A";
 			//$comArray['created_dt']="";
@@ -530,48 +563,75 @@ class common
 	function getCalculatedCostOfMaretial($total_blazes, $number_of_mazdoor, $season_year)
 	{
 		$scheduleRate=$this->getAllScheduleRates($season_year);
-		$eowCalArray=array();
+		$comCalArray=array();
 		
-		$eowCalArray['blazes_received']=$total_blazes;
-		$eowCalArray['number_of_mazdoor']=$number_of_mazdoor;
+		$comCalArray['blazes_received']=$total_blazes;
+		$comCalArray['number_of_mazdoor']=$number_of_mazdoor;
 		
-		$eowCalArray['cost_blaze_frame']=$scheduleRate['cblfrm-1'];
-		$eowCalArray['exp_blaze_frame']=round(($eowCalArray['number_of_mazdoor']*$eowCalArray['cost_blaze_frame']),2);
-		$eowCalArray['cost_bark_shaver']=$scheduleRate['cbrsvr-1'];
-		$eowCalArray['exp_bark_shaver']=round(($eowCalArray['number_of_mazdoor']*$eowCalArray['cost_bark_shaver']),2);
-		$eowCalArray['cost_groove_cutter']=$scheduleRate['cgrcut-1'];
-		$eowCalArray['exp_groove_cutter']=round(($eowCalArray['number_of_mazdoor']*$eowCalArray['cost_groove_cutter']),2);
-		$eowCalArray['cost_freshning_knife']=$scheduleRate['cfrknv-1'];
-		$eowCalArray['exp_freshning_knife']=round(($eowCalArray['number_of_mazdoor']*$eowCalArray['cost_freshning_knife']),2);
-		$eowCalArray['cost_spray_bottle']=$scheduleRate['cspbtl-1'];
-		$eowCalArray['exp__spray_bottle']=round(($eowCalArray['number_of_mazdoor']*$eowCalArray['cost_spray_bottle']),2);
-		$eowCalArray['cost_hammer_nailpuller']=$scheduleRate['chmplr-1'];
-		$eowCalArray['exp_hammer_nailpuller']=round(($eowCalArray['number_of_mazdoor']*$eowCalArray['cost_hammer_nailpuller']),2);
-		$eowCalArray['cost_pot_scrapper']=$scheduleRate['cptscr-1'];
-		$eowCalArray['exp_pot_scrapper']=round(($eowCalArray['number_of_mazdoor']*$eowCalArray['cost_pot_scrapper']),2);
-		$eowCalArray['cost_pots']=$scheduleRate['cop-1'];
-		$eowCalArray['exp_pots']=round((($eowCalArray['blazes_received']*$eowCalArray['cost_pots'])/2),2);  // 50% reusability
-		$eowCalArray['cost_lips']=$scheduleRate['col-100'];  // per 100
-		$eowCalArray['exp_lips']=round((($eowCalArray['blazes_received']*$eowCalArray['cost_lips'])/100),2);
-		$eowCalArray['cost_wire_nails_5cm']=$scheduleRate['cwrnls-5-1'];
-		$eowCalArray['qty_wire_nails_5cm']="0";
-		$eowCalArray['exp_wire_nails_5cm']="";
-		$eowCalArray['cost_wire_nails_2cm']=$scheduleRate['cwrnls-2-1'];
-		$eowCalArray['qty_wire_nails_2cm']="0";
-		$eowCalArray['exp_wire_nails_2cm']="";
-		$eowCalArray['cost_solder']=$scheduleRate['csldr-1'];
-		$eowCalArray['qty_solder']="0";
-		$eowCalArray['exp_solder']="";
-		$eowCalArray['cost_naushader']=$scheduleRate['cnudr-1'];
-		$eowCalArray['qty_naushader']="0";
-		$eowCalArray['exp_naushader']="";
-		$eowCalArray['cost_charcoal']=$scheduleRate['cchcl-1'];
-		$eowCalArray['qty_charcoal']="0";
-		$eowCalArray['exp_charcoal']="";
-		$eowCalArray['cost_tool_sharpen']=$scheduleRate['cshpn-1'];
-		$eowCalArray['exp_tool_sharpen']=round(($eowCalArray['number_of_mazdoor']*$eowCalArray['cost_pot_scrapper']),2);
+		$comCalArray['cost_blaze_frame']=$scheduleRate['cblfrm-1'];
+		$comCalArray['exp_blaze_frame']=round(($comCalArray['number_of_mazdoor']*$comCalArray['cost_blaze_frame']),2);
+		$comCalArray['cost_bark_shaver']=$scheduleRate['cbrsvr-1'];
+		$comCalArray['exp_bark_shaver']=round(($comCalArray['number_of_mazdoor']*$comCalArray['cost_bark_shaver']),2);
+		$comCalArray['cost_groove_cutter']=$scheduleRate['cgrcut-1'];
+		$comCalArray['exp_groove_cutter']=round(($comCalArray['number_of_mazdoor']*$comCalArray['cost_groove_cutter']),2);
+		$comCalArray['cost_freshning_knife']=$scheduleRate['cfrknv-1'];
+		$comCalArray['exp_freshning_knife']=round(($comCalArray['number_of_mazdoor']*$comCalArray['cost_freshning_knife']),2);
+		$comCalArray['cost_spray_bottle']=$scheduleRate['cspbtl-1'];
+		$comCalArray['exp__spray_bottle']=round(($comCalArray['number_of_mazdoor']*$comCalArray['cost_spray_bottle']),2);
+		$comCalArray['cost_hammer_nailpuller']=$scheduleRate['chmplr-1'];
+		$comCalArray['exp_hammer_nailpuller']=round(($comCalArray['number_of_mazdoor']*$comCalArray['cost_hammer_nailpuller']),2);
+		$comCalArray['cost_pot_scrapper']=$scheduleRate['cptscr-1'];
+		$comCalArray['exp_pot_scrapper']=round(($comCalArray['number_of_mazdoor']*$comCalArray['cost_pot_scrapper']),2);
+		$comCalArray['cost_pots']=$scheduleRate['cop-1'];
+		$comCalArray['exp_pots']=round((ceil($comCalArray['blazes_received']/2)*$comCalArray['cost_pots']),2);  // 50% reusability
+		$comCalArray['cost_lips']=$scheduleRate['col-100'];  // per 100
+		$comCalArray['exp_lips']=round((($comCalArray['blazes_received']*$comCalArray['cost_lips'])),2);
+		$comCalArray['cost_wire_nails_5cm']=$scheduleRate['cwrnls-5-1'];
+		$comCalArray['qty_wire_nails_5cm']="0";
+		$comCalArray['exp_wire_nails_5cm']="";
+		$comCalArray['cost_wire_nails_2cm']=$scheduleRate['cwrnls-2-1'];
+		$comCalArray['qty_wire_nails_2cm']="0";
+		$comCalArray['exp_wire_nails_2cm']="";
+		$comCalArray['cost_solder']=$scheduleRate['csldr-1'];
+		$comCalArray['qty_solder']="0";
+		$comCalArray['exp_solder']="";
+		$comCalArray['cost_naushader']=$scheduleRate['cnudr-1'];
+		$comCalArray['qty_naushader']="0";
+		$comCalArray['exp_naushader']="";
+		$comCalArray['cost_charcoal']=$scheduleRate['cchcl-1'];
+		$comCalArray['qty_charcoal']="0";
+		$comCalArray['exp_charcoal']="";
+		$comCalArray['cost_tool_sharpen']=$scheduleRate['cshpn-1'];
+		$comCalArray['cost_blower']=$scheduleRate['cblowr-1'];
+		$comCalArray['qty_blower']="0";
+		$comCalArray['exp_blower']="";
+		$comCalArray['cost_solder_iron']=$scheduleRate['csldriron-1'];
+		$comCalArray['qty_solder_iron']="0";
+		$comCalArray['exp_solder_iron']="";
+		$comCalArray['cost_paint']=$scheduleRate['cpaint-1'];
+		$comCalArray['qty_paint']="0";
+		$comCalArray['exp_paint']="";
+		$comCalArray['cost_cylinder_50ml']=$scheduleRate['cmcyl-50'];
+		$comCalArray['qty_cylinder_50ml']="0";
+		$comCalArray['exp_cylinder_50ml']="";
+		$comCalArray['cost_cylinder_500ml']=$scheduleRate['cmcyl-500'];
+		$comCalArray['qty_cylinder_500ml']="0";
+		$comCalArray['exp_cylinder_500ml']="";
+		$comCalArray['cost_beaker_500ml']=$scheduleRate['cbeaker-500'];
+		$comCalArray['qty_beaker_500ml']="0";
+		$comCalArray['exp_beaker_500ml']="";
+		$comCalArray['cost_beaker_1000ml']=$scheduleRate['cbeaker-1000'];
+		$comCalArray['qty_beaker_1000ml']="0";
+		$comCalArray['exp_beaker_1000ml']="";
+		$comCalArray['cost_funnel']=$scheduleRate['cfunnel-1'];
+		$comCalArray['qty_funnel']="0";
+		$comCalArray['exp_funnel']="";
+		$comCalArray['cost_other']=$scheduleRate['cother-1'];
+		$comCalArray['qty_other']="0";
+		$comCalArray['exp_other']="";
+		$comCalArray['exp_tool_sharpen']=round(($comCalArray['number_of_mazdoor']*$comCalArray['cost_tool_sharpen']),2);
 		
-		return $eowCalArray;
+		return $comCalArray;
 	}	
 		
 	

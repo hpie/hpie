@@ -387,7 +387,16 @@ VALUES
 (NULL, 'csldr-1', 'Cost of Solder', 'Unit cost Solder per KG', '81.50', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL),
 (NULL, 'cnudr-1', 'Cost of Naushadar', 'Unit cost Naushadar per KG', '30', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL),
 (NULL, 'cchcl-1', 'Cost of Charcoal', 'Unit cost Charcoal per KG', '14.80', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL),
-(NULL, 'cshpn-1', 'Cost of Sharpening Material', 'Unit cost Sharpening Material', '75', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL);
+(NULL, 'cshpn-1', 'Cost of Sharpening Material', 'Unit cost Sharpening Material', '75', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL),
+(NULL, 'cblowr-1', 'Cost of Blower per RSD', 'Unit cost of Blower per RSD', '75', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL),
+(NULL, 'csldriron-1', 'Cost of Solder Iron', 'Unit cost of Solder Iron', '75', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL),
+(NULL, 'cpaint-1', 'Cost of Paint per Lot', 'Cost of paint per lot', '75', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL),
+(NULL, 'cmcyl-50', 'Cost of Measuring Cylinder 50 ML', 'Unit cost of Measuring Cylinder 50 ML', '75', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL),
+(NULL, 'cmcyl-500', 'Cost of Measuring Cylinder 500 ML', 'Unit cost of Measuring Cylinder 500 ML', '75', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL),
+(NULL, 'cbeaker-500', 'Cost of Beaker 500 ML', 'Unit cost of Beaker 500 ML', '75', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL),
+(NULL, 'cbeaker-1000', 'Cost of Beaker 1000 ML', 'Unit cost of Beaker 1000 ML', '75', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL),
+(NULL, 'cfunnel-1', 'Cost of Funnel', 'Unit cost of Funnel', '75', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL),
+(NULL, 'cother-1', 'Cost of other type', 'Unit cost of Other', '75', now(), 'Shimla', 'A', CURRENT_TIMESTAMP, 'system', '0000-00-00 00:00:00', NULL);
 
 
 -- --------------------------------------------------------------------------------------------------------
@@ -682,6 +691,33 @@ CREATE TABLE IF NOT EXISTS `t_cost_of_material` (
   `exp_charcoal` float (10,2) NOT NULL DEFAULT '0' COMMENT 'Expenditure   cost_charcoal*qty_charcoal',
   `cost_tool_sharpen` float (10,2) NOT NULL DEFAULT '0',
   `exp_tool_sharpen` float (10,2) NOT NULL DEFAULT '0' COMMENT 'Expenditure   number_of_mazdoor*cost_tool_sharpen',
+  `cost_blower` float (10,2) NOT NULL DEFAULT '0',
+  `qty_blower` int NOT NULL DEFAULT '0',
+  `exp_blower` float (10,2) NOT NULL DEFAULT '0' COMMENT 'Expenditure   cost_blower*qty_blower',
+  `cost_solder_iron` float (10,2) NOT NULL DEFAULT '0',
+  `qty_solder_iron` int NOT NULL DEFAULT '0',
+  `exp_solder_iron` float (10,2) NOT NULL DEFAULT '0' COMMENT 'Expenditure   cost_solder_iron*qty_solder_iron',
+  `cost_paint` float (10,2) NOT NULL DEFAULT '0',
+  `qty_paint` float (10,1) NOT NULL DEFAULT '0',
+  `exp_paint` float (10,2) NOT NULL DEFAULT '0' COMMENT 'Expenditure   cost_paint*qty_paint',
+  `cost_cylinder_50ml` float (10,2) NOT NULL DEFAULT '0',
+  `qty_cylinder_50ml` int NOT NULL DEFAULT '0',
+  `exp_cylinder_50ml` float (10,2) NOT NULL DEFAULT '0' COMMENT 'Expenditure   cost_cylinder_50ml*qty_cylinder_50ml',
+  `cost_cylinder_500ml` float (10,2) NOT NULL DEFAULT '0',
+  `qty_cylinder_500ml` int NOT NULL DEFAULT '0',
+  `exp_cylinder_500ml` float (10,2) NOT NULL DEFAULT '0' COMMENT 'Expenditure   cost_cylinder_500ml*qty_cylinder_500ml',
+  `cost_beaker_500ml` float (10,2) NOT NULL DEFAULT '0',
+  `qty_beaker_500ml` int NOT NULL DEFAULT '0',
+  `exp_beaker_500ml` float (10,2) NOT NULL DEFAULT '0' COMMENT 'Expenditure   cost_beaker_500ml*qty_beaker_500ml',
+  `cost_beaker_1000ml` float (10,2) NOT NULL DEFAULT '0',
+  `qty_beaker_1000ml` int NOT NULL DEFAULT '0',
+  `exp_beaker_1000ml` float (10,2) NOT NULL DEFAULT '0' COMMENT 'Expenditure   cost_beaker_1000ml*qty_beaker_1000ml',
+  `cost_funnel` float (10,2) NOT NULL DEFAULT '0',
+  `qty_funnel` int NOT NULL DEFAULT '0',
+  `exp_funnel` float (10,2) NOT NULL DEFAULT '0' COMMENT 'Expenditure   cost_funnel*qty_funnel',
+  `cost_other` float (10,2) NOT NULL DEFAULT '0',
+  `qty_other` int NOT NULL DEFAULT '0',
+  `exp_other` float (10,2) NOT NULL DEFAULT '0' COMMENT 'Expenditure   cost_other*qty_other',
   `season_year` date NOT NULL,
   `status_cd` varchar(5) DEFAULT 'A',
   `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -693,3 +729,16 @@ CREATE TABLE IF NOT EXISTS `t_cost_of_material` (
 
 
 -- INSERT--
+
+
+
+
+-- -------------------ALTER Statements if data is there----------------------------------------------------
+-- --------m_forest--------
+ALTER TABLE  `m_forest` ADD  `forest_rsd_code` VARCHAR( 50 ) NOT NULL COMMENT  'RSD associated with the forest' AFTER  `range_code`
+ALTER TABLE  `m_forest` ADD  `forest_rsd_distance` FLOAT( 10, 1 ) NOT NULL COMMENT  'Distance for RSD for the the forest' AFTER  `forest_rsd_code`
+
+
+-- --------m_forest_rsd--------
+ALTER TABLE  `m_forest_rsd` CHANGE  `forest_rsd_distance`  `division_code` VARCHAR( 50 ) NOT NULL
+ALTER TABLE  `m_forest_rsd` DROP  `forest_code`
