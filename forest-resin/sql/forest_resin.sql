@@ -742,3 +742,21 @@ ALTER TABLE  `m_forest` ADD  `forest_rsd_distance` FLOAT( 10, 1 ) NOT NULL COMME
 -- --------m_forest_rsd--------
 ALTER TABLE  `m_forest_rsd` CHANGE  `forest_rsd_distance`  `division_code` VARCHAR( 50 ) NOT NULL
 ALTER TABLE  `m_forest_rsd` DROP  `forest_code`
+
+-- --------t_rate_calculation_for_lot--------
+ALTER TABLE  `t_rate_calculation_for_lot` ADD  `fwd` TINYINT NOT NULL DEFAULT  '1' COMMENT  'True if forest wise data is inserted else false is data is lotwise' AFTER  `season_year`
+
+-- --------t_expenditure_on_work--------
+ALTER TABLE  `t_expenditure_on_work` ADD  `fwd` TINYINT NOT NULL DEFAULT  '1' COMMENT  'True if forest wise data is inserted else false is data is lotwise' AFTER  `season_year`
+
+-- --------t_cost_of_material--------
+ALTER TABLE  `t_cost_of_material` ADD  `fwd` TINYINT NOT NULL DEFAULT  '1' COMMENT  'True if forest wise data is inserted else false is data is lotwise' AFTER  `season_year`
+
+-- --------t_expenditure_on_work--------
+ALTER TABLE  `t_expenditure_on_work` CHANGE  `cost_crop_setting`  `cost_crop_setting` FLOAT( 10, 2 ) NOT NULL DEFAULT  '0' COMMENT  'Crop setting rate per thousand balzes.',
+CHANGE  `exp_crop_setting`  `exp_crop_setting` FLOAT( 10, 2 ) NOT NULL DEFAULT  '0' COMMENT  'Expenditure calcualted for crop setting (totalblz*cost_cs/1000).',
+CHANGE  `cost_extr`  `cost_extr` FLOAT( 10, 2 ) NOT NULL DEFAULT  '0',
+CHANGE  `cost_tpt_tins_to_forest`  `cost_tpt_tins_to_forest` FLOAT( 10, 2 ) NOT NULL DEFAULT  '0.00' COMMENT  'Cost to transportation/carrying of empty tins to forest '
+
+-- --------t_expenditure_on_work--------
+ALTER TABLE  `t_expenditure_on_work` CHANGE  `exp_extr_turnout`  `exp_extr_turnout` FLOAT( 10, 2 ) NOT NULL DEFAULT  '0.000' COMMENT  'Expenditure calcualted for extraction (totalturnout*cost_extr).'

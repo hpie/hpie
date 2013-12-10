@@ -100,10 +100,16 @@ class common
 		
 	}
 	
-	function getSeasonYearList($season_year)
+	function getSeasonYearList($season_year, $javascript="")
 	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
 		//$saesonList = array("Peter"=>"35","Ben"=>"37","Joe"=>"43");
-		$selectList='<select id="season_year" name="season_year" data-required="true" data-error-message="Season is required">'; 
+		$selectList='<select id="season_year" name="season_year" '.$callJs.' data-required="true" data-error-message="Season is required">'; 
         $oldestYear = 2010; 
 		$currYear = intval(date('Y')+2); 
         
@@ -142,6 +148,25 @@ class common
 		echo $tableTow;
 	}
 	
+	function getLastThreeSeasonYearCols($season_year)
+	{
+		//$saesonList = array("Peter"=>"35","Ben"=>"37","Joe"=>"43");
+		 
+		$time = strtotime($season_year);
+		// You can now use date() functions with $time, like
+		$currYear = intval(date('Y', $time)); 
+        $oldestYear = $currYear-3; 
+        $tableTow='';
+		
+            for($i = $oldestYear; $i < $currYear; $i++)
+            { 
+            	$tableTow.='<td>' . $i . '</td>';
+            } 
+    	//$tableTow.="</tr>";
+		
+		echo $tableTow;
+	}
+	
 	
 	function getPerSectionYieldForLastThreeSeason($season_year, $lot_no)
 	{
@@ -157,15 +182,37 @@ class common
             for($i = $oldestYear; $i < $currYear; $i++)
             { 
             	$val=$i."-02-15";
-            	$approvedYield = $db->get_row("SELECT sum(approved_yield) as approved_yield  FROM t_proposed_yield_form_blazes WHERE lot_no='".$lot_no."' AND season_year='".$val."'",ARRAY_A);
+            	$approvedYield = $db->get_row("SELECT approved_yield  FROM t_proposed_yield_form_blazes WHERE lot_no='".$lot_no."' AND season_year='".$val."'",ARRAY_A);
             	$avgYield+=$approvedYield['approved_yield'];
             	$tableRow.="<tr> <td> Year " . $i . "</td> <td>".$approvedYield['approved_yield']."</td></tr>";
             } 
-            $tableRow.="<tr> <td> Average Yield (of last 3 years)</td> <td>".($avgYield/3)."</td></tr>";
+            $tableRow.="<tr> <td> Average Yield (of last 3 years)</td> <td>".round(($avgYield/3),3)."</td></tr>";
     	
 		echo $tableRow;
 	}
 	
+	function getPerSectionYieldForLastThreeSeasonForReport($season_year, $lot_no)
+	{
+		//$saesonList = array("Peter"=>"35","Ben"=>"37","Joe"=>"43");
+		global $db;
+		$time = strtotime($season_year);
+		// You can now use date() functions with $time, like
+		$currYear = intval(date('Y', $time)); 
+        $oldestYear = $currYear-3;
+		$tableRow="";
+        $avgYield=0;
+        	//$tableRow.="<tr>";
+            for($i = $oldestYear; $i < $currYear; $i++)
+            { 
+            	$val=$i."-02-15";
+            	$approvedYield = $db->get_row("SELECT proposed_yield  FROM t_proposed_yield_form_blazes WHERE lot_no='".$lot_no."' AND season_year='".$val."'",ARRAY_A);
+            	$avgYield+=$approvedYield['proposed_yield'];
+            	$tableRow.="<td>".$approvedYield['proposed_yield']."</td>";
+            } 
+            $tableRow.=" <td>".round(($avgYield/3),3)."</td>";
+    	
+		echo $tableRow;
+	}
 	
 	function getZoneList($zone_code, $javascript="")
 	{
@@ -314,8 +361,8 @@ class common
 			$comArray['cost_lips']="";
 			$comArray['exp_lips']="";
 			$comArray['cost_wire_nails_5cm']="";
-			$comArray['qty_wire_nails_5cm$']="";
-			$comArray['exp_wire_nails_5cm$']="";
+			$comArray['qty_wire_nails_5cm']="";
+			$comArray['exp_wire_nails_5cm']="";
 			$comArray['cost_wire_nails_2cm']="";
 			$comArray['qty_wire_nails_2cm']="";
 			$comArray['exp_wire_nails_2cm']="";
@@ -515,6 +562,8 @@ class common
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mhs-50']);
 			}
 		}
+		
+		$eowCalArray['exp_extr_turnout']=round($eowCalArray['exp_extr_turnout'],2);  // round to two desimal places
 		
 		$eowCalArray['total_tins']=round((($turnout/17)*100),0);
 		$eowCalArray['distance_to_rsd']=$distance_to_rsd;

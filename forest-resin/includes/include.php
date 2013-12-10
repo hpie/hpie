@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="./css/style.css" type="text/css" />
 <link rel="stylesheet" href="./css/tableCSS.css" type="text/css" />
 <link rel="stylesheet" href="./css/thickbox.css" type="text/css" media="screen" />	
+<link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />	
 <script type="text/javascript" src="./js/parsley-standalone.min.js"></script>
 <script type="text/javascript" src="./js/jquery-1.5.2.min.js"></script>
 <script type="text/javascript" src="./js/thickbox-compressed.js"></script>
