@@ -58,6 +58,19 @@
 			$_SESSION['filter-division']=$_POST['filter-division'];
 		}
 		
+		// report actions
+		if($_POST['action']=="Show Report")
+		{
+			$action="report";
+			//$reportLot=$_POST['lot_no'];
+			//$reportSeason=$_POST['season_year'];
+		}else 
+		{
+			//$reportLot="";
+			//$reportSeason="";
+		}
+		
+		
 		//page specific actions
 		//proposed-yield-blazes.php
 		if($_POST['action']=="Proposed Yield")

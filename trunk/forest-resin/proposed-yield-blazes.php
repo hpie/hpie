@@ -300,7 +300,7 @@
                 		$lot_no=$_POST['lot_no'];
                 		$season_year=$_POST['season_year'];
                 		$tappings = $db->get_results("SELECT * FROM t_blazes_for_tapping WHERE division_code='".$_SESSION['division']."'AND lot_no='".$lot_no."' AND season_year='".$season_year."' ORDER BY lot_no, forest_code",ARRAY_A);
-                		$proposedYield = $db->get_row("SELECT  SUM(proposed_yield) AS proposed_yield, SUM(approved_yield) AS approved_yield FROM t_proposed_yield_form_blazes WHERE lot_no='".$lot_no."' AND season_year='".$season_year."'",ARRAY_A);
+                		$proposedYield = $db->get_row("SELECT  proposed_yield, approved_yield FROM t_proposed_yield_form_blazes WHERE lot_no='".$lot_no."' AND season_year='".$season_year."'",ARRAY_A);
                 	?>
 
 					<br />

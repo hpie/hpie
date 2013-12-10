@@ -446,6 +446,13 @@ input.submit:hover { background: inherit; color: #006699; text-decoration: under
 	padding-left: 20px; margin: 0 10px 0 5px;
 }
 
+.signTable
+{
+	width:80%;
+	height:80%;
+	margin:10px;padding:10px;
+	border:1px solid #3f7f00;
+}
 /* footer */
 #footer {
 	clear: both;
@@ -491,3 +498,51 @@ input.submit:hover { background: inherit; color: #006699; text-decoration: under
 /* additional classes */
 .clear { clear: both; }
 .gray  { color: #BFBFBF; }
+
+/* report classes */
+.divTitle 
+{
+	padding: 0 0 0 15px;
+	
+}
+
+.divTable 
+{
+	display: table;
+	padding: 0 0 0 20px;
+	
+}
+.divRow 
+{
+    display: table-row;
+}
+.divCellLeft
+{
+    display: table-cell;
+    padding-right: 25px;
+    text-align: left;
+}
+.divCellRight
+{
+    display: table-cell;
+    padding-right: 25px;
+    text-align: right;
+}
+.divCellLeftBorder
+{
+    display: table-cell;
+    padding-right: 25px;
+    text-align: left;
+    border:1px solid #3f7f00;
+}
+.divCellRightBorder
+{
+    display: table-cell;
+    padding-right: 25px;
+    text-align: right;
+    border:1px solid #3f7f00;
+}    
+
+#left p, #right p, #middle p {
+    margin: 1px 1px;
+	}

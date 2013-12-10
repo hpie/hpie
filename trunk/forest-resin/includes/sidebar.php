@@ -57,12 +57,18 @@ if(!empty($_SESSION['role']))
 				<li><a href="unit-master.php">Manage Units</a></li>
 				<li><a href="dfo-master.php">Manage DFOs</a></li>
 				<li><a href="range-master.php">Manage Forest Ranges</a></li>
-				<li><a href="forest-master.php">Manage Forests</a></li>
 				<li><a href="forest-rsd-master.php">Manage Forest's RSD</a></li>
+				<li><a href="forest-master.php">Manage Forests</a></li>
 				<li><a href="srate-master.php">Schedule Rates</a></li>
 				<li><a href="#"></a></li>
 				<li><a href="lot-master.php">Manage Lots</a></li>
 				<li><a href="receive-blazes.php">View Blazes List</a></li>
+				<li><a href="#"></a></li>
+				<li><a href="report-lot-blazes.php">Verify Blazes Report</a></li>
+				<li><a href="report-range-blazes.php">Blazes Taken Over Report</a></li>
+				<li><a href="report-proposed-extraction-yield.php">Proposed Resin Yield Report</a></li>
+				<li><a href="report-proposed-upset-price.php">Proposed Upset Price Report</a></li>
+				<li><a href="report-upset-price-details.php">Upset Price Report</a></li>
 				<li><a href="logout.php">Logout</a></li>
 									
 			</ul>	

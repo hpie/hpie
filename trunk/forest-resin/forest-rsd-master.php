@@ -25,9 +25,9 @@
 				$_SESSION['msg']="Entry for RSD [".$_POST['forest_rsd_code']."] for Division already exists." ;	
 			}else
 			{
-				foreach ($_POST['forest_code'] as $forest_code)
-				{
-				    $db->query("INSERT INTO m_forest_rsd (id, forest_rsd_code, forest_rsd_name, division_code, created_by) VALUES (NULL, '".$_POST['forest_rsd_code']."', '".$_POST['forest_rsd_name']."', '".$_SESSION['divisioin']."', '".$_POST['created_by']."')");
+//				foreach ($_POST['forest_code'] as $forest_code)
+//				{
+				    $db->query("INSERT INTO m_forest_rsd (id, forest_rsd_code, forest_rsd_name, division_code, created_by) VALUES (NULL, '".$_POST['forest_rsd_code']."', '".$_POST['forest_rsd_name']."', '".$_SESSION['division']."', '".$_POST['created_by']."')");
 					//$db->debug();
 					if($db->rows_affected>0)
 					{ 
@@ -36,7 +36,7 @@
 					{
 						$_SESSION['msg']="Problem creating forest rsd. Please try again.";
 					}			        
-				}
+//				}
 			}
 			Header("Location: forest-rsd-master.php");
 		}else if($action=="status")

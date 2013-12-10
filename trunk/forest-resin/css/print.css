@@ -1,0 +1,84 @@
+/*!
+ * print.css v1.0.0
+ * http://printstylesheet.com/
+ *
+ * Copyright (c) 2011 David Bushell
+ * Dual licensed under the BSD or MIT licenses: http://printstylesheet.com/license.txt
+ 
+ * Author: David Bushell
+ * http://dbushell.com/
+ */
+@media only print
+{
+	/* hide every element within the body */
+	body * 
+	{ 
+		background: none;
+		background-color:white;
+		 
+	}
+	
+	.donotprint
+	{
+		display: none;
+	}
+
+	.CSSTableGenerator h1
+	{
+		font-size: 14pt;
+		background: bolder;
+		text-align: center;
+		
+		
+	}
+	
+	.CSSTableGenerator h2
+	{
+		font-size: 12pt;
+		font-weight: bolder;
+		text-align: center;
+	}
+	
+	
+	.reportTable
+	{
+		border:1px solid #3f7f00;
+		width:100%;
+		height:100%;
+		margin:0px;padding:0px;
+	}	
+		
+	.headRow
+	{
+		font-size: 10pt;
+		font-weight: bolder;
+	}
+	
+	.dataRow
+	{
+		font-size: 10pt;
+	}
+	
+	.totalRow
+	{
+		font-size: 10pt;
+		font-weight: bold;
+	}
+	
+	.footRow
+	{
+		font-size: 12pt;
+		font-weight: bolder;
+	}
+	
+	.signTable
+	{
+		font-size: 10pt;
+		font-weight: bold;
+		width:90%;
+		height:90%;
+		margin:20px;padding:10px;
+	}
+	/* add a friendy reminder not to waste paper after the body */
+	body:after { content: "This is a computer generated report!"; }
+}
