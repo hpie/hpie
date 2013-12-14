@@ -354,7 +354,7 @@
 							<div style="margin:10px; 0px; 0px; 0px;">
 							<table style="position:relative" border="1">
 								<tr>
-									<td>Unit</td> <td><input class="lblText" readonly="readonly" id="unit_code" type="text" name="unit_code" value="<?php echo($unit_code);?>"/></td>
+									<td>Unit</td> <td> <?php echo($common->getNameForCode($unit_code, "unit_code", "unit_name", "m_unit")); ?> <input class="lblText" readonly="readonly" id="unit_code" type="hidden" name="unit_code" value="<?php echo($unit_code);?>"/></td>
                                 </tr>
                                 <tr>    
 									<td>Lot Number</td> <td><input class="lblText" readonly="readonly" id="lot_no" type="text" name="lot_no" value="<?php echo($lot_no);?>"/></td>

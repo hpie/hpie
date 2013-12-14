@@ -89,7 +89,7 @@
 			            echo("<table class='reportTable'> <tr class='headRow'> <td>Sr. No.</td> <td>Range</td> <td>No of Blazes</td> <td>Taking Over Date</td></tr>");
 			            foreach ($reportData as $data )
 						{
-							echo("<tr class='dataRow'> <td>".$index."</td> <td>".$data['range_code']."</td> <td>".$data['total_blazes_received']."</td> <td>".$data['season_year']."</td></tr>");
+							echo("<tr class='dataRow'> <td>".$index."</td> <td>".$common->getNameForCode($data['range_code'], "range_code", "range_name", "m_range")."</td> <td>".$data['total_blazes_received']."</td> <td>".$data['season_year']."</td></tr>");
 							$total+=$data['total_blazes_received'];
 							$index++;
 						}

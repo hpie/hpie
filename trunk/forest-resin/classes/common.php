@@ -243,6 +243,15 @@ class common
 	}
 	
 	
+	function getNameForCode($code, $code_col, $return_col, $table_name)
+	{
+		//$saesonList = array("Peter"=>"35","Ben"=>"37","Joe"=>"43");
+		global $db;
+		$valRow = $db->get_row("SELECT ".$return_col."  FROM ".$table_name." WHERE ".$code_col."='".$code."'",ARRAY_A);
+        return $valRow[$return_col];
+	}
+	
+	
 	function getAllScheduleRates($season_year)
 	{
 		global $db;

@@ -227,7 +227,8 @@
 				         	echo(" <td>");
 				         	foreach ( $lotForests as $forest )
 				         	{
-				         		echo($forest['forest_code']." <br />");
+				         		echo($common->getNameForCode($forest['forest_code'], "forest_code", "forest_name", "m_forest"));
+				         		echo(" <br />");
 				         	}
 				         	echo(" </td>");
 				         	

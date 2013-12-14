@@ -373,11 +373,16 @@
 	                ?>		
 	                		
 	                			<tr>
-									<td>Unit</td> <td><input class="lblText" readonly="readonly" id="unit_code" type="text" name="unit_code" value="<?php echo($tapping['unit_code']);?>"/></td>
+									<td>Unit</td> 
+									<td>
+										<?php echo($common->getNameForCode($tapping['unit_code'], "unit_code", "unit_name", "m_unit")); ?>
+										<input class="lblText" readonly="readonly" id="unit_code" type="hidden" name="unit_code" value="<?php echo($tapping['unit_code']);?>"/>
+									</td>
                                 </tr>
                                 <tr>    
 									<td>Forest</td> <td>
-										<input class="lblText" readonly="readonly" id="forest_code" type="text" name="forest_code" value="<?php echo($tapping['forest_code']);?>"/>
+										<?php echo($common->getNameForCode($tapping['forest_code'], "forest_code", "forest_name", "m_forest")); ?>
+										<input class="lblText" readonly="readonly" id="forest_code" type="hidden" name="forest_code" value="<?php echo($tapping['forest_code']);?>"/>
 										<input id="dfo_code" type="hidden" name="dfo_code" value="<?php echo($tapping['dfo_code']);?>"/>
 									</td>
                                  </tr>
