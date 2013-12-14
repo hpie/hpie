@@ -96,8 +96,8 @@ function validateCarriageDistance(thisObj)
 		var dist_total_entered = parseFloat(dist_carriage_mule_rsd)+parseFloat(dist_carriage_manual_rsd)+parseFloat(dist_carriage_tractor_rsd)+parseFloat(dist_carriage_other_rsd); 
 		if(distance_to_rsd<dist_total_entered)
 		{
-			isValid=false;
-			alert("Total of all carriage distance is "+dist_total_entered+" and cannot be grater than "+ distance_to_rsd);
+			isValid=true; // always true they dont need validation
+			//alert("Total of all carriage distance is "+dist_total_entered+" and cannot be grater than "+ distance_to_rsd);
 			
 		}else
 		{
