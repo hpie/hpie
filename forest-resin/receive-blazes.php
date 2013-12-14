@@ -248,13 +248,13 @@
 			         	 	//$lotForests = $db->get_results("SELECT forest_code FROM t_blazes_for_tapping WHERE lot_no='".$tapping['lot_no']."'",ARRAY_A);
 			 	            
 			         	 	echo(" <tr>");
-			         	 	echo(" <td>".$tapping['range_code']."</td> <td>".$tapping['unit_code']." (".$tapping['dfo_code'].")</td>  <td>".$tapping['lot_no']."</td>");
+			         	 	echo(" <td>".$common->getNameForCode($tapping['range_code'], "range_code", "range_name", "m_range")."</td> <td>".$common->getNameForCode($tapping['unit_code'], "unit_code", "unit_name", "m_unit")." <br /> (".$common->getNameForCode($tapping['dfo_code'], "dfo_code", "dfo_name", "m_dfo").")</td>  <td>".$tapping['lot_no']."</td>");
 				         	
 				         	echo(" <td>");
 				         	//foreach ( $lotForests as $forest )
 				         	//{
 				         		//echo($forest['forest_code']." <br />");
-				         		echo($tapping['forest_code']);
+				         		echo($common->getNameForCode($tapping['forest_code'], "forest_code", "forest_name", "m_forest"));
 				         	//}
 				         	echo(" </td>");
 				         	

@@ -91,7 +91,7 @@
 			            echo("<td>Average of Last Three Years</td> <td>Yield proposed by DM</td> <td>Yield approved by Director</td></tr>");
 			            foreach ($reportData as $data )
 						{
-							echo("<tr class='dataRow'> <td>".$index."</td> <td>".$data['unit_code']."</td> <td>".$data['lot_no']."</td> <td>".$data['total_blazes_received']."</td> ");
+							echo("<tr class='dataRow'> <td>".$index."</td> <td>".$common->getNameForCode($data['unit_code'], "unit_code", "unit_name", "m_unit")."</td> <td>".$data['lot_no']."</td> <td>".$data['total_blazes_received']."</td> ");
 							$common->getPerSectionYieldForLastThreeSeasonForReport($data['season_year'], $data['lot_no']);
 							echo("<td>".$data['proposed_yield']."</td> <td>".$data['approved_yield']."</td></tr>");
 							//$total+=$data['total_blazes_received'];

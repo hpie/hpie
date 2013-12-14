@@ -438,6 +438,7 @@
 
                 			$isNew=TRUE;
                 		}
+                		
                  ?>
                  	<br />
                  	<form action="rate-calculation-lot.php" method="post" id="upsetPriceForm" data-validate="parsley"  onsubmit="return calculateScheduleRate(exp_eow, exp_com, total_turnout, total_eow, total_com, total_expenditure, rate_calculated)" >
@@ -450,7 +451,7 @@
 									<td colspan="2">Division</td> <td colspan="3"><input class="lblText" readonly="readonly" id="division_code" type="text" name="division_code" value="<?php echo($_SESSION['division']);?>"/></td>
                                 </tr>
                                 <tr>
-									<td colspan="2">Unit</td> <td colspan="3"><input class="lblText" readonly="readonly" id="unit_code" type="text" name="unit_code" value="<?php echo($unit_code);?>"/></td>
+									<td colspan="2">Unit</td> <td colspan="3"><?php echo $common->getNameForCode($unit_code, "unit_code", "unit_name", "m_unit");?> <input class="lblText" readonly="readonly" id="unit_code" type="hidden" name="unit_code" value="<?php echo($unit_code);?>"/></td>
                                 </tr>
                                 <tr>    
 									<td>Lot Number </td> <td><input class="lblText" readonly="readonly" id="lot_no" type="text" name="lot_no" value="<?php echo($lot_no);?>"/></td>
@@ -512,7 +513,7 @@
 							         	 	
 							         	 	// only one RSD per forest
 							         	 	$forest_rsd_distance=$tapping['forest_rsd_distance'];
-							         	 	echo(" <td>".$tapping['forest_code']." [".$tapping['forest_rsd_distance']."]" );
+							         	 	echo(" <td>".$common->getNameForCode($tapping['forest_rsd_code'], "forest_rsd_code", "forest_rsd_name", "m_forest_rsd")." [".$tapping['forest_rsd_distance']."]" );
 								         	echo(" </td>");
 								         	
 								         	echo("<td>".$tapping['blazes_received']."</td>");

@@ -102,8 +102,8 @@
 			            		}else 
 			            		{
 			            			echo("<tr> <td>".$index."</td>");
-									echo("<td>".$data['range_code']."</td>"); 	
-									echo("<td>".$data['unit_code']."</td> <td>".$data['lot_no']."</td> <td>".$data['forest_code']."</td> <td>".$data['blazes_received']."</td> <td>".$data['season_year']."</td>");
+									echo("<td>".$common->getNameForCode($data['range_code'], "range_code", "range_name", "m_range")."</td>"); 	
+									echo("<td>".$common->getNameForCode($data['unit_code'], "unit_code", "unit_name", "m_unit")."</td> <td>".$data['lot_no']."</td> <td>".$common->getNameForCode($data['forest_code'], "forest_code", "forest_name", "m_forest")."</td> <td>".$data['blazes_received']."</td> <td>".$data['season_year']."</td>");
 									echo("</tr>");
 			            		}
 			            	}else 
