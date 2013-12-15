@@ -216,7 +216,7 @@
 						            {
 						            	if($rsd['forest_rsd_code']==$forest['forest_rsd_code'])
 						            	{
-						            		echo "<option value='".$rsd['forest_rsd_code']."' selected='selected>".$rsd['forest_rsd_name']."</option>";
+						            		echo "<option value='".$rsd['forest_rsd_code']."' selected='selected'>".$rsd['forest_rsd_name']."</option>";
 						            	}else 
 						            	{
 						            		echo "<option value='".$rsd['forest_rsd_code']."'>".$rsd['forest_rsd_name']."</option>";

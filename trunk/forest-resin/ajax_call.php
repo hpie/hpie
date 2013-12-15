@@ -411,6 +411,257 @@ session_start();
 		
 	 	echo $details;
 	 }
+	 
+	 
+	 // for tender
+	 if($_GET['get']=='getLotDetailsForTender')
+	 {
+	 	$lotNo=$_GET['lotNo'];
+	 	$seasonYear=$_GET['seasonYear'];
+	 	
+	 	$rateCalculated = $db->get_row("SELECT id, total_blazes, avg_yield_fixed, total_turnout, total_com, eow_code FROM t_rate_calculation_for_lot WHERE lot_no='".$lotNo."' AND season_year='".$seasonYear."'",ARRAY_A);
+	 	$details='<table> <tr>';
+	 	$details.='<td>';
+	 	$details.='<label for="con_gen">Number of Blazes:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="blazes_received" type="text" name="blazes_received" data-required="true" data-error-message="Total Blazes is required" value="'.$rateCalculated['total_blazes'].'"/> ';
+		$details.='</td>';
+		$details.='<td>';
+		$details.='<label for="con_gen">Yield:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="yield_fixed" type="text" name="yield_fixed" data-required="true" data-error-message="Yield Fixed is required" value="'.$rateCalculated['avg_yield_fixed'].'"/>';
+		$details.='</td>';
+		$details.='</tr>';
+		$details.='<tr>';
+		$details.='<td>';
+		$details.='<label for="con_gen">Trunout:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="total_turnout" type="text" name="total_turnout" data-required="true" data-error-message="Turnout is required" value="'.$rateCalculated['total_turnout'].'"/>';
+		$details.='</td>';
+		$details.='<td>';
+		$details.='<label for="con_gen">Cost of Material:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="total_com" type="text" name="total_com" data-required="true" data-error-message="Cost of Material is required" value="'.$rateCalculated['total_com'].'"/>';
+		$details.='</td>';
+		$details.='<td>';
+		$details.='<label for="con_gen">Tool Charges:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="cost_tool" type="text" name="cost_tool" data-required="true" data-error-message="Cost of Material is required" value="'.round($rateCalculated['total_com']/$rateCalculated['total_turnout'],2).'"/>';
+		$details.='</td>';
+		$details.='</tr> </table>';
+		echo $details;
+	 }
+	 
+	 
+ 	// for tender
+	 if($_GET['get']=='getRateDetailsForTender')
+	 {
+	 	$zoneCode=$_GET['zoneCode'];
+	 	$totalTurnout=$_GET['totalTurnout'];
+	 	$seasonYear=$_GET['seasonYear'];
+	 	
+	 	$scheduleRate = $common->getAllScheduleRates($seasonYear);
+	 	 	
+	 	$costExtr=0;
+	 	$tenderSlab="";
+		 if($zoneCode=="c")
+			{
+				if($totalTurnout<21)
+				{
+					$costExtr=$scheduleRate['yps-c-20'];
+					$tenderSlab="upto 20 Qtl";
+				}else if($totalTurnout<26)
+				{
+					$costExtr=$scheduleRate['yps-c-25'];
+					$tenderSlab="upto 20.1 to 25 Qtl";
+				}else if($totalTurnout<31)
+				{
+					$costExtr=$scheduleRate['yps-c-30'];
+					$tenderSlab="upto 25.1 to 30 Qtl";
+				}else if($totalTurnout<36)
+				{
+					$costExtr=$scheduleRate['yps-c-35'];
+					$tenderSlab="upto 30.1 to 35 Qtl";
+				}else if($totalTurnout<41)
+				{
+					$costExtr=$scheduleRate['yps-c-40'];
+					$tenderSlab="upto 35.1 to 40 Qtl";
+				}else if($totalTurnout<46)
+				{
+					$costExtr=$scheduleRate['yps-c-45'];
+					$tenderSlab="upto 40.1 to 45 Qtl";
+				}else if($totalTurnout>45)
+				{
+					$costExtr=$scheduleRate['yps-c-50'];
+					$tenderSlab="45.1 and above Qtl";
+				}
+				
+			}else if($zoneCode=="h")
+			{
+				if($totalTurnout<21)
+				{
+					$costExtr=$scheduleRate['yps-h-20'];
+					$tenderSlab="upto 20 Qtl";
+				}else if($totalTurnout<26)
+				{
+					$costExtr=$scheduleRate['yps-h-25'];
+					$tenderSlab="upto 20.1 to 25 Qtl";
+				}else if($totalTurnout<31)
+				{
+					$costExtr=$scheduleRate['yps-h-30'];
+					$tenderSlab="upto 25.1 to 30 Qtl";
+				}else if($totalTurnout<36)
+				{
+					$costExtr=$scheduleRate['yps-h-35'];
+					$tenderSlab="upto 30.1 to 35 Qtl";
+				}else if($totalTurnout<41)
+				{
+					$costExtr=$scheduleRate['yps-h-40'];
+					$tenderSlab="upto 35.1 to 40 Qtl";
+				}else if($totalTurnout<46)
+				{
+					$costExtr=$scheduleRate['yps-h-45'];
+					$tenderSlab="upto 40.1 to 45 Qtl";
+				}else if($totalTurnout>45)
+				{
+					$costExtr=$scheduleRate['yps-h-50'];
+					$tenderSlab="45.1 and above Qtl";
+				}
+			}else if($zoneCode=="mh")
+			{
+				if($totalTurnout<21)
+				{
+					$costExtr=$scheduleRate['yps-mh-20'];
+					$tenderSlab="upto 20 Qtl";
+				}else if($totalTurnout<26)
+				{
+					$costExtr=$scheduleRate['yps-mh-25'];
+					$tenderSlab="upto 20.1 to 25 Qtl";
+				}else if($totalTurnout<31)
+				{
+					$costExtr=$scheduleRate['yps-mh-30'];
+					$tenderSlab="upto 25.1 to 30 Qtl";
+				}else if($totalTurnout<36)
+				{
+					$costExtr=$scheduleRate['yps-mh-35'];
+					$tenderSlab="upto 30.1 to 35 Qtl";
+				}else if($totalTurnout<41)
+				{
+					$costExtr=$scheduleRate['yps-mh-40'];
+					$tenderSlab="upto 35.1 to 40 Qtl";
+				}else if($totalTurnout<46)
+				{
+					$costExtr=$scheduleRate['yps-mh-45'];
+					$tenderSlab="upto 40.1 to 45 Qtl";
+				}else if($totalTurnout>45)
+				{
+					$costExtr=$scheduleRate['yps-mh-50'];
+					$tenderSlab="45.1 and above Qtl";
+				}
+			}else if($zoneCode=="mhs")
+			{
+				if($totalTurnout<21)
+				{
+					$costExtr=$scheduleRate['yps-mhs-20'];
+					$tenderSlab="upto 20 Qtl";
+				}else if($totalTurnout<26)
+				{
+					$costExtr=$scheduleRate['yps-mhs-25'];
+					$tenderSlab="upto 20.1 to 25 Qtl";
+				}else if($totalTurnout<31)
+				{
+					$costExtr=$scheduleRate['yps-mhs-30'];
+					$tenderSlab="upto 25.1 to 30 Qtl";
+				}else if($totalTurnout<36)
+				{
+					$costExtr=$scheduleRate['yps-mhs-35'];
+					$tenderSlab="upto 30.1 to 35 Qtl";
+				}else if($totalTurnout<41)
+				{
+					$costExtr=$scheduleRate['yps-mhs-40'];
+					$tenderSlab="upto 35.1 to 40 Qtl";
+				}else if($totalTurnout<43)
+				{
+					$costExtr=$scheduleRate['yps-mhs-42'];
+					$tenderSlab="upto 40.1 to 42 Qtl";
+				}else if($totalTurnout<46)
+				{
+					$costExtr=$scheduleRate['yps-mhs-45'];
+					$tenderSlab="upto 42.1 to 45 Qtl";
+				}else if($totalTurnout>45)
+				{
+					$costExtr=$scheduleRate['yps-mhs-50'];
+					$tenderSlab="45.1 and above Qtl";
+				}
+			}
+			
+	 	$costCropSetting=$scheduleRate['csps-1000']; // crop setting
+	 	$costManualCarriage=$scheduleRate['rc-rsd-l-1000']; // carriage manual
+	 	$costMuleCarriage=$scheduleRate['rc-rsd-m-1000']; // carriage mule
+	 	$costtractorCarriage=$scheduleRate['rc-rsd-t-1000']; // carriage tractor
+	 	$costOtherCarriage=$scheduleRate['rc-rsd-o-1000']; // carriage other
+	 	
+		$details='<table> <tr>';
+	 	$details.='<td>';
+	 	$details.='<label for="con_gen">Slab:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="tender_slab" type="text" name="tender_slab" data-required="true" data-error-message="Slab is required" value="'.$tenderSlab.'"/>';
+		$details.='</td>';
+		$details.='<td>';
+		$details.='<label for="con_gen">Cost Extraction:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="cost_extr" type="text" name="cost_extr" data-required="true" data-error-message="Cost Extraction is required" value="'.$costExtr.'"/>';
+		$details.='</td>';
+		$details.='</tr>';
+		
+		$details.='<tr>';
+		$details.='<td colspan="2">';
+		$details.='<label for="con_gen">Carriage Charges from Forest to RSD</label>';
+		$details.='</td>';
+		$details.='</tr>';
+		
+		$details.='<tr>';
+		$details.='<td>';
+		$details.='<label for="con_gen">Mule:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="cost_carriage_mule_rsd" type="text" name="cost_carriage_mule_rsd" data-required="true" data-error-message="Cost Mule Carriage is required"  value="'.$costMuleCarriage.'"/>';
+		$details.='</td>';
+		$details.='<td>';
+		$details.='<label for="con_gen">Manual:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="cost_carriage_manual_rsd" type="text" name="cost_carriage_manual_rsd" data-required="true" data-error-message="Cost Manual Carriage is required"  value="'.$costManualCarriage.'"/>';
+		$details.='</td>';
+		$details.='</tr>';
+		
+		$details.='<tr>';
+		$details.='<td>';
+		$details.='<label for="con_gen">Tractor:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="cost_carriage_tractor_rsd" type="text" name="cost_carriage_tractor_rsd" data-required="true" data-error-message="Cost Tractor Carriage is required"  value="'.$costtractorCarriage.'"/>';
+		$details.='</td>';
+		$details.='<td>';
+		$details.='<label for="con_gen">Other:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="cost_carriage_other_rsd" type="text" name="cost_carriage_other_rsd" data-required="true" data-error-message="Cost Other Carriage is required"  value="'.$costOtherCarriage.'"/>';
+		$details.='</td>';
+		$details.='</tr>';
+		
+		$details.='<tr>';
+		$details.='<td>';
+		$details.='<label for="con_gen">Crop Setting:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="cost_crop_setting" type="text" name="cost_crop_setting" data-required="true" data-error-message="Cost Crop setting required"  value="'.$costCropSetting.'"/>';
+		$details.='</td>';
+		$details.='</tr> </table>';
+		echo $details;
+	 }
+	 
+	 // for tender
+	 if($_GET['get']=='getDetailsForContractor')
+	 {
+	 	$contractorCode=$_GET['contractorCode'];
+	 	
+	 	$contractor = $db->get_row("SELECT * FROM m_contractor WHERE contractor_code='".$contractorCode."'",ARRAY_A);
+	 	$details='<table> <tr>';
+	 	$details.='<td>';
+	 	$details.='<label for="con_gen">Contractor Class:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="contractor_class" type="text" name="contractor_class" data-required="true" data-error-message="Total Blazes is required" value="'.$contractor['contractor_class'].'"/> ';
+		$details.='</td>';
+		$details.='<td>';
+	 	$details.='<label for="con_gen">Contractor Valid Date:</label>';
+		$details.='<input class="lblText" readonly="readonly" id="contractor_valid_dt" type="text" name="contractor_valid_dt" data-error-message="Total Blazes is required" value="'.$contractor['contractor_valid_dt'].'"/> ';
+		$details.='</td>';
+		$details.='</tr> </table>';
+		echo $details;
+	 }
  
  }
 ?>

@@ -2,9 +2,11 @@
 	session_start();
 	//include config
 	include "config.php";
-	$titleMsg="Upset-Price-Detail-Report";
+	$titleMsg="Tender Form";
 	$reportLot="";
 	$reportSeason="";
+	$zoneCode="";
+	$emMode="";	
 	if(isset($_POST['submitted']))
 	{
 		if($action=="report")
@@ -66,39 +68,163 @@
                  </h1>
        
                 <br />
-                	<form action="report-upset-price-details.php" method="post" name="blazesReportForm" id="blazesReportForm"> 
-						<table class="donotprint" border='1'> 
-							<tr> 
-								<td>Select Lot No. for Report: &nbsp; 
-									<select id="lot_no" name="lot_no" data-required="true" data-error-message="Lot Number is required">
-										<option value=''>Select</option>
-										 <?php 
-										  $lots = $db->get_results("SELECT lot_no, lot_desc FROM m_lot WHERE division_code='".$_SESSION['division']."' AND status_cd='A' GROUP BY lot_no"  ,ARRAY_A);
-					 
-								            foreach ( $lots as $lot )
-								            {
-								            	if($lot['lot_no']==$reportLot)
-								            	{
-								            		echo ("<option value='".$lot['lot_no']."' selected='selected'>".$lot['lot_no']."(".$lot['lot_desc'].")</option>");
-								            	}else
-								            	{
-								            		echo ("<option value='".$lot['lot_no']."'>".$lot['lot_no']."(".$lot['lot_desc'].")</option>");
-								            	}
-								            	
-								            }
-										 ?>
-									</select> &nbsp; 
-									for Year: &nbsp; 
-									<?php $common->getSeasonYearList($reportSeason,''); ?> &nbsp;
-									<input class="submit" id="submit" type="submit" name="action" value="Show Report"/>
-									<input name="submitted" type="hidden" id="submitted" value="1" />
-								</td> 
-							</tr> 
-						</table>
-					</form>	
-							
-			     <?php
-			     	if($action=="report")
+                <?php
+                	if($action=="create")
+                	{
+                ?>	
+                	<br />	
+                	<form action="tender-form-details.php" method="post" id="forestForm" data-validate="parsley">
+						<fieldset>
+						<legend><font size=5 color=#72A545>Crate Tender Entry</font></legend><br />
+							<p style="color:#CC0000"><?php echo $error; ?></p>
+							<div style="margin:10px; 0px; 0px; 0px;">
+								<label for="con_phone">Season Year:</label>
+								<?php $common->getSeasonYearList($reportSeason,''); ?>
+								<label for="con_no">Tender From No:</label>
+								<input class="textbox" id="tender_form_no" type="text" name="tender_form_no" data-required="true" data-error-message="Form No is required"/>
+								<label for="con_fname">Notice No:</label>
+								<input class="textbox"  id="tender_notice_no" type="text" name="tender_notice_no" data-required="true" data-error-message="Notice No is required" />
+								<label for="con_lname">Tender Date:</label>
+								<input class="textbox"  id="tender_date" type="text" name="tender_date" data-required="true" data-error-message="Tender Date is required" />
+								<label for="con_ffname">Form Cost:</label>
+								<input class="textbox"  id="tender_value" type="text" name="tender_value" data-required="true" data-error-message="Tender Form Cost is required" value="100"/>
+								
+								<label for="con_llname">Lot No:</label>
+								<select id="lot_no" name="lot_no" data-required="true" data-error-message="Lot Number is required" onchange="loadLotDetailsForTender(this);">
+									<option value=''>Select</option>
+									 <?php 
+									  $lots = $db->get_results("SELECT lot_no, lot_desc FROM m_lot WHERE division_code='".$_SESSION['division']."' AND status_cd='A' GROUP BY lot_no"  ,ARRAY_A);
+				 
+							            foreach ( $lots as $lot )
+							            {
+							            	if($lot['lot_no']==$reportLot)
+							            	{
+							            		echo ("<option value='".$lot['lot_no']."' selected='selected'>".$lot['lot_no']."(".$lot['lot_desc'].")</option>");
+							            	}else
+							            	{
+							            		echo ("<option value='".$lot['lot_no']."'>".$lot['lot_no']."(".$lot['lot_desc'].")</option>");
+							            	}
+							            	
+							            }
+									 ?>
+								</select>
+								<div id="tender_lot_info_div"></div>
+								
+								<label for="con_gen">Zone:</label>
+								<?php $common->getZoneList($zoneCode,"loadRateDetailsForTender"); ?>
+								<div id="tender_exp_zone_div"></div>
+								
+								<label for="con_llname">Contractor Code:</label>
+								<select id="contractor_code" name="contractor_code" data-required="true" data-error-message="Contractor is required" onchange="loadDetailsForContractor(this);">
+									<option value=''>Select</option>
+									 <?php 
+									  $contractors = $db->get_results("SELECT * FROM m_contractor WHERE division_code='".$_SESSION['division']."' AND status_cd='A' ORDER BY contractor_fname"  ,ARRAY_A);
+				 
+							            foreach ( $contractors as $contractor )
+							            {
+							            	echo ("<option value='".$contractor['contractor_code']."'>".$contractor['contractor_fname'].", ".$contractor['contractor_lname']." [".$contractor['contractor_code']."] </option>");
+							            }
+									 ?>
+								</select>
+								<div id="tender_contractor_info_div"></div>
+								
+								<label for="con_add">Rate Offered:</label>
+								<input class="textbox" id="rate_offered" name="rate_offered" data-required="true" data-error-message="Rate Offered is required" />
+								<label for="con_po">EMD Mode:</label>
+								<?php $common->getPaymentModeList($emMode,"setEmDesc"); ?>
+								<label for="con_teh">EMD Draft No:</label>
+								<input class="textbox" id="em_desc" type="text" name="em_desc" data-required="true" data-error-message="Draft No is required"/>
+								<label for="con_distt">EMD Date:</label>
+								<input class="textbox" id="em_date" type="text" name="em_date" data-required="true" data-error-message="EMD Date is required"/>
+								<label for="con_pin">Ernest Money Deposited:</label>
+								Rs.<input class="textbox" id="em_deposited" type="text" name="em_deposited"  data-required="true" data-error-message="EMD is required"/>
+								
+													
+								<input name="created_by" type="hidden" id="created_by" value="<?php echo($_SESSION['userid'])?>" />
+								
+								<br /><br />
+								<input class="submit" id="addcon" type="submit" name="action" value="Save"/>
+								<input name="submitted" type="hidden" id="submitted" value="1" />
+								
+							</div>
+						</fieldset>
+				  	</form>
+				  	<script>
+				  	$j(function() {
+				  		$j( "#contractor_valid_dt" ).datepicker(
+				                 	{ dateFormat: 'yy-mm-dd', 
+					                   showAnim: 'slide', 
+					                   yearRange: '2000:2025' 
+					                });
+					  });
+					</script>
+			  	<?php 
+			  		}else if($action=="edit")
+                	{
+                		$contractor = $db->get_row("SELECT * FROM m_contractor WHERE id='".$_POST['rowid']."'",ARRAY_A);
+                		                	
+              	?>
+              		<br />
+              		<form action="tender-form-details.php" method="post" id="forestForm" data-validate="parsley">
+						<fieldset>
+						<legend><font size=5 color=#72A545>Update Tender Enrty</font></legend><br />
+							<p style="color:#CC0000"><?php echo $error; ?></p>
+							<div style="margin:10px; 0px; 0px; 0px;">
+								
+								<label for="con_no">Contractor reg No:</label>
+								<input  class="lblText" readonly="readonly" id="contractor_code" type="text" name="contractor_code" data-required="true" data-error-message="Reg No is required" value="<?php echo($contractor['contractor_code']);?>"/>
+								<label for="con_fname">First Name:</label>
+								<input class="textbox"  id="contractor_fname" type="text" name="contractor_fname" data-required="true" data-error-message="First Name is required" value="<?php echo($contractor['contractor_fname']);?>"/>
+								<label for="con_lname">Last Name:</label>
+								<input class="textbox"  id="contractor_lname" type="text" name="contractor_lname" data-required="true" data-error-message="Last Name is required" value="<?php echo($contractor['contractor_lname']);?>"/>
+								<label for="con_ffname">Father&apos;s First Name:</label>
+								<input class="textbox"  id="contractor_ffname" type="text" name="contractor_ffname" data-required="true" data-error-message="Father's First Name is required" value="<?php echo($contractor['contractor_ffname']);?>"/>
+								<label for="con_llname">Father&apos;s Last Name:</label>
+								<input class="textbox"  id="contractor_flname" type="text" name="contractor_flname" data-required="true" data-error-message="Father's Last Name is required" value="<?php echo($contractor['contractor_flname']);?>"/>
+								<label for="con_gen">Contractor Gender:</label>
+								<input class="textbox" id="contractor_gender" type="text" name="contractor_gender" data-required="true" data-error-message="Gender is required" value="<?php echo($contractor['contractor_gender']);?>"/>
+								
+								<label for="con_add">Contractor Address:</label>
+								<textarea class="textbox" id="contractor_address" name="contractor_address" data-required="true" data-error-message="Address is required"><?php echo($contractor['contractor_address']);?></textarea>
+								<label for="con_po">Post Office:</label>
+								<input class="textbox" id="contractor_po" type="text" name="contractor_po" data-required="true" data-error-message="Post Office is required" value="<?php echo($contractor['contractor_po']);?>"/>
+								<label for="con_teh">Tehsil:</label>
+								<input class="textbox" id="contractor_teh" type="text" name="contractor_teh" data-required="true" data-error-message="Tehsil is required" value="<?php echo($contractor['contractor_teh']);?>"/>
+								<label for="con_distt">District:</label>
+								<input class="textbox" id="contractor_distt" type="text" name="contractor_distt" data-required="true" data-error-message="District is required" value="<?php echo($contractor['contractor_distt']);?>"/>
+								<label for="con_pin">Pin:</label>
+								<input class="textbox" id="contractor_pin" type="text" name="contractor_pin" value="<?php echo($contractor['contractor_pin']);?>"/>
+								<label for="con_phone">Phone:</label>
+								<input class="textbox" id="contractor_phone" type="text" name="contractor_phone" value="<?php echo($contractor['contractor_phone']);?>"/>
+								<label for="con_phone">Mobile:</label>
+								<input class="textbox" id="contractor_mobile" type="text" name="contractor_mobile" value="<?php echo($contractor['contractor_mobile']);?>"/>
+								
+								<label for="con_class">Class:</label>
+								<input class="textbox" id="contractor_class" type="text" name="contractor_class" data-required="true" data-error-message="Class is required" value="<?php echo($contractor['contractor_class']);?>"/>
+								<label for="con_phone">Valid Till:</label>
+								<input class="textbox" id="contractor_valid_dt" type="text" name="contractor_valid_dt" data-required="true" data-error-message="Valid date is required" value="<?php echo($contractor['contractor_valid_dt']);?>"/>
+								
+								<input name="rowid" type="hidden" value="<?php echo($contractor['id']);?>"/>
+								<input name="updated_by" type="hidden" id="updated_by" value="<?php echo($_SESSION['userid']);?>" />
+								
+								<br /><br />
+								<input class="submit" id="updatelot" type="submit" name="action" value="Update"/>
+								<input name="submitted" type="hidden" id="submitted" value="1" />
+								
+							</div>
+						</fieldset>
+				  	</form>	
+				  	<script>
+				  	$j(function() {
+				  		$j( "#contractor_valid_dt" ).datepicker(
+			                 	{ dateFormat: 'yy-mm-dd', 
+					                   showAnim: 'slide', 
+					                   yearRange: '2000:2025' 
+					                });
+					  });
+					</script>		  
+				<?php 
+			  		}else if($action=="report")
 			     	{
 			     		$reportData = $db->get_row("SELECT id, unit_code, lot_no, total_blazes, avg_yield_fixed, total_turnout, eow_code, com_code, total_eow, total_com, total_expenditure, rate_calculated, season_year, fwd from  t_rate_calculation_for_lot WHERE lot_no='".$_POST['lot_no']."' AND season_year='".$_POST['season_year']."'",ARRAY_A);
 			     		if(isset($reportData))
@@ -116,12 +242,13 @@
 				     		echo("<div class='CSSTableGenerator'>");
 				     		echo("<h2>Himachal Pradesh State Forest Development Corporation Limited</h2>");
 				            echo("<h2>Forest Working Division ".$_SESSION['division']." </h2>");
-				     		echo("<h1>Upset Price Details of Resin Lot ".$_POST['lot_no']." for Season ".$_POST['season_year']."</h1>");
+				     		echo("<h1>Tender Form for Resin Extraction & Carriage Work from Forests to Road Side Depot</h1>");
 				     		
+				     		// ".$_POST['lot_no']." for Season ".$_POST['season_year'].
 				     		echo("<div class='divTable'>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>1.</span> <span class='divCellLeft'>Name of FWD</span> <span class='divCellLeftBorder'>".$_SESSION['division']."</span> </div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>2.</span> <span class='divCellLeft'>Lot No</span> <span class='divCellLeftBorder'>".$reportData['lot_no']."</span> </div> ");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>3.</span> <span class='divCellLeft'>Name of Forest</span> <span class='divCellLeft'>Name of RSD</span> <span class='divCellLeft'>Zone</span> <span class='divCellLeft'>No of Blazes</span> </div> ");
+				     		echo("<div class='divRow'> <span class='divCellLeft'>Unit</span> <span class='divCellLeftBorder'>".$common->getUnitList("")."</span> <span class='divCellLeft'>Name of FWD</span> <span class='divCellLeftBorder'>".$_SESSION['division']."</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellRight'>Value Rs. 100</span></div>");
+				     		echo("<div class='divRow'> <span class='divCellLeft'>Tender From Number</span> <span class='divCellLeft'>....................</span> </div> ");
+				     		echo("<div class='divRow'> <span class='divCellLeft'>Notice No.</span> <span class='divCellLeft'>....................</span> </div> ");
 				     		foreach ($eowData as $eow )
 			            	{
 				     			echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeftBorder'>".$common->getNameForCode($eow['forest_code'], "forest_code", "forest_name", "m_forest")."</span> <span class='divCellLeftBorder'>".$common->getNameForCode($common->getNameForCode($eow['forest_code'], "forest_code", "forest_rsd_code", "m_forest"), "forest_rsd_code", "forest_rsd_name", "m_forest_rsd")."</span> <span class='divCellLeftBorder'>".$eow['zone_code']."</span> <span class='divCellRightBorder'>".$eow['blazes_received']."</span> </div>");
@@ -317,40 +444,109 @@
 			     		}// if reportData
 			     		
 			     		
-			     	}    
-				 ?>
-				 
-				 	 <div>
+			     	}else
+                	{
+                ?>
+                      <form action="tender-form-details.php" method="post" name="tenderReportForm" id="tenderReportForm"> 
+								<table class="donotprint" border='1'> 
+									<tr> 
+										<td>Filter Lot No. : &nbsp; 
+											<select id="lot_no" name="lot_no" data-required="true" data-error-message="Lot Number is required">
+												<option value=''>Select</option>
+												 <?php 
+												  $lots = $db->get_results("SELECT lot_no, lot_desc FROM m_lot WHERE division_code='".$_SESSION['division']."' AND status_cd='A' GROUP BY lot_no"  ,ARRAY_A);
+							 
+										            foreach ( $lots as $lot )
+										            {
+										            	if($lot['lot_no']==$reportLot)
+										            	{
+										            		echo ("<option value='".$lot['lot_no']."' selected='selected'>".$lot['lot_no']."(".$lot['lot_desc'].")</option>");
+										            	}else
+										            	{
+										            		echo ("<option value='".$lot['lot_no']."'>".$lot['lot_no']."(".$lot['lot_desc'].")</option>");
+										            	}
+										            	
+										            }
+												 ?>
+											</select> &nbsp; 
+											for Year: &nbsp; 
+											<?php $common->getSeasonYearList($reportSeason,''); ?> &nbsp;
+											<input class="submit" id="submit" type="submit" name="action" value="Show Report"/>
+											<input name="submitted" type="hidden" id="submitted" value="1" />
+										</td> 
+									</tr> 
+								</table>
+							</form>
+				<?php 					
+                		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Tenders</h1> <table> <tr> <td>Froms No</td> <td>Noice No</td> <td>Contractor</td> <td>Lot No</td> <td>Valid Till</td> <td>Rate Offered</td><td>EMD</td> <td>Status</td></tr>"); 
+                		$tenders= $db->get_results("SELECT * FROM t_tender_form_resin WHERE division_code='".$_SESSION['division']."' ORDER BY tender_date, tender_form_no" ,ARRAY_A);
+	
+				         foreach ( $tenders as $tender )
+				         { 
+			         	 	echo(" <tr>");
+			         	 	echo(" <td>".$tender['tender_form_no']."</td> <td>".$tender['tender_notice_no']."</td> <td>".$tender['contractor_code']."</td>");
+				         	
+				         	echo(" <td>".$tender['lot_no']."</td>");
+				         	echo(" <td>".$tender['contractor_valid_dt']."</td>");
+				         	echo(" <td>".$tender['rate_offered']."</td>");
+				         	echo(" <td>".$tender['em_deposited']."</td>");
+				         	
+				         	echo("<td>".$tender['status_cd']."</td>");
+				         	
+				         	echo(" <td>");
+				         	
+			     ?>
+					     	
+				
+			     			<form style="margin:0px; border:0px; background-color:inherit;" action="tender-form-details.php" method="post" id="contactorActionForm">
+							<!-- Create row specific actions -->
+			     			<?php 
+								if($tender['status_cd']=="D")
+			         	 		{
+			         	 			echo("<input class='statusDImgBut' id='status' type='submit' name='action' value='Status' title='This record is marked to be deleted. Contact Admin'/> &nbsp;");
+								}else if($tender['status_cd']=="I")
+			         	 		{
+				         	 		echo("<input class='statusIImgBut' id='status' type='submit' name='action' value='Status' title='This record is Inactive. Click to Activate'/> &nbsp;");
+								
+			         	 		}else if($tender['status_cd']=="A")
+			         	 		{
+			         	 			echo("<input class='statusAImgBut' id='status' type='submit' name='action' value='Status' title='Active record. Click to set as Inactive'/> &nbsp;");
+			         	 		
+				         	 		echo("<input class='editImgBut' id='editlot' type='submit' name='action' value='Edit' title='Edit this record'/> &nbsp;");
+									
+									echo("<input class='deleteImgBut' id='deletelot' type='submit' name='action' value='Delete' title='Mark this record as deleted' />");
+							 
+			         	 		}// else status
+							?>
+							<!-- End row specific actions -->	
+								<input name="tender_form_no" type="hidden" value="<?php echo($tender['tender_form_no']);?>" />
+								<input name="status_cd" type="hidden" value="<?php echo($tender['status_cd']);?>" />
+								<input name="rowid" type="hidden" value="<?php echo($tender['id']);?>" />
+								<input name="submitted" type="hidden" id="submitted" value="1"/>
+							</form>
+			     <?php 
+			         	 	echo(" </td>");
+			         	 	
+				         	echo(" <tr>");
+				         	
+				         }// lots loop
+				         
+				         echo(" </table> </div>");
+				?>
+              		<div>
               			<br /><br />
-              			<center>
-              			<table class="signTable">
-              				
-              				<tr>
-              					<td>
-              						&nbsp; 
-              					</td>
-              					<td align="right">
-              						Divisional Manager, <br />
-              						Forest Working Division, <br />
-              						<?php echo($_SESSION['division']);?>
-              					</td>
-              				</tr>	
-              			</table>
-              			</center>		
-              		</div>
-              		 -->
-              		<div class="donotprint">
-              			<br /><br />
-              			<form action="report-upset-price-details.php" method="post" name="reportForm" id="reportForm">
-							<table class="donotprint" width="100%">
-								<tr>
-									<td align="left"> <input class="submit" id="cancel" type="submit" name="action" value="Cancel" /> <input name="submitted" type="hidden" id="submitted" value="1" /></td>
-									<td align="right"> <img src="./images/button-print.png" alt="Print" onclick="javascript:window.print();" /> </td> 
-								</tr>
-							</table>	
+              			<form action="tender-form-details.php" method="post" id="tenderForm">
+							<input class="submit" id="cancel" type="submit" name="action" value="Cancel"/>
+							<input class="submit" id="newlot" type="submit" name="action" value="New"/>
+							<input name="submitted" type="hidden" id="submitted" value="1" />
 						</form>		
               		</div>
               	
+              	<?php 
+				         
+			  		} // end else list 
+			  		//$db->debug();
+              	?>	
 			</div>
 		<!-- post ends here -->		        
 

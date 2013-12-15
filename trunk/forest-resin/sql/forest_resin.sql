@@ -597,11 +597,11 @@ CREATE TABLE IF NOT EXISTS `t_expenditure_on_work` (
   `exp_eow` float (10,2) NOT NULL DEFAULT '0' COMMENT 'Total EOW Expenditure   sum of all the exp for this record',
   `blazes_received` int  NOT NULL DEFAULT '0',
   `yield_fixed` float(10,3)  NOT NULL DEFAULT '0',
-  `cost_crop_setting` int  NOT NULL DEFAULT '0' COMMENT  'Crop setting rate per thousand balzes.',
-  `exp_crop_setting` int  NOT NULL DEFAULT '0' COMMENT  'Expenditure calcualted for crop setting (totalblz*cost_cs/1000).', 
-  `cost_extr` int  NOT NULL DEFAULT '0',
+  `cost_crop_setting` float(10,2)  NOT NULL DEFAULT '0' COMMENT  'Crop setting rate per thousand balzes.',
+  `exp_crop_setting` float(10,2)  NOT NULL DEFAULT '0' COMMENT  'Expenditure calcualted for crop setting (totalblz*cost_cs/1000).', 
+  `cost_extr` float (10,2)  NOT NULL DEFAULT '0',
   `turnout` float (10,3) NOT NULL DEFAULT '0' COMMENT  'Calcualted as (total_blazes*yield_fixed/1000).',
-  `exp_extr_turnout` float (10,3)  NOT NULL DEFAULT '0' COMMENT  'Expenditure calcualted for extraction (totalturnout*cost_extr).',
+  `exp_extr_turnout` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Expenditure calcualted for extraction (totalturnout*cost_extr).',
   `total_tins` int  NOT NULL DEFAULT '0' COMMENT  'Total Tins Needed ((totalturnout/weightofTin)*100).',
   `distance_to_rsd` float (10,1)  NOT NULL DEFAULT '0' COMMENT  'average distance from forest to RSD',
   `cost_tpt_tins_to_forest` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Cost to transportation/carrying of empty tins to forest ',
@@ -730,7 +730,71 @@ CREATE TABLE IF NOT EXISTS `t_cost_of_material` (
 
 -- INSERT--
 
+-- --Contractor Table-------------------------------------
+CREATE TABLE IF NOT EXISTS `m_contractor` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `division_code` varchar (50) NOT NULL,
+  `contractor_code` varchar (50) NOT NULL,
+  `contractor_fname` varchar (50) NOT NULL,
+  `contractor_lname` varchar (50) NOT NULL,
+  `contractor_ffname` varchar (50) NOT NULL,
+  `contractor_flname` varchar (50) NOT NULL,
+  `contractor_gender` varchar (50) NOT NULL,
+  `contractor_address` varchar (100) NOT NULL,
+  `contractor_po` varchar (50) NOT NULL,
+  `contractor_teh` varchar (50) NOT NULL,
+  `contractor_distt` varchar (50) NOT NULL,
+  `contractor_pin` varchar (50) NOT NULL,
+  `contractor_phone` varchar (50) NOT NULL,
+  `contractor_mobile` varchar (50) NOT NULL,
+  `contractor_class` varchar (50) NOT NULL,
+  `contractor_valid_dt` date NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  
 
+-- --Tender Form Table-------------------------------------
+CREATE TABLE IF NOT EXISTS `t_tender_form_resin` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `division_code` varchar (50) NOT NULL,
+  `tender_form_no` varchar (50) NOT NULL,
+  `tender_notice_no` varchar (50) NOT NULL,
+  `tender_date` date NOT NULL,
+  `tender_value` int NOT NULL,
+  `lot_no` varchar (50) NOT NULL,
+  `blazes_received` int NOT NULL,
+  `yield_fixed` float(10,3)  NOT NULL DEFAULT '0',
+  `tender_slab` int NOT NULL,
+  `zone_code` varchar (50) NOT NULL,
+  `cost_extr` float (10,2)  NOT NULL DEFAULT '0',
+  `cost_carriage_mule_rsd` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Cost for mule carriage per quintal',
+  `cost_carriage_manual_rsd` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Cost for manual carriage per quintal',
+  `cost_carriage_tractor_rsd` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Cost for tractor carriage per quintal',
+  `cost_carriage_other_rsd` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Cost for other carriage per quintal',
+  `cost_crop_setting` float(10,2)  NOT NULL DEFAULT '0' COMMENT  'Crop setting rate per thousand balzes.',
+  `total_com` float (10,2) NOT NULL DEFAULT '0',
+  `cost_tool` float (10,2) NOT NULL DEFAULT '0' COMMENT  'Calculate tool cost per qtl total_com/totalturnout .',
+  `contractor_code` varchar (50) NOT NULL,
+  `contractor_class` varchar (50) NOT NULL,
+  `contractor_valid_dt` date NOT NULL,
+  `rate_offered` float (10,2)  NOT NULL DEFAULT '0',
+  `em_mode` varchar (50)  NOT NULL COMMENT  'Ernest money mode  cash draft etc.',
+  `em_desc` varchar (50)  NOT NULL COMMENT  'Draft no if draft or other desc.',
+  `em_date` date NOT NULL COMMENT  'Ernest deposti date or dtaft date.',
+  `em_deposited` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Ernest money deposited.',
+  `season_year` date NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A' COMMENT  'A accepsted R rejected D deleted I Inactive.',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 -- -------------------ALTER Statements if data is there----------------------------------------------------
