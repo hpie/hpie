@@ -149,6 +149,26 @@ function calculateCarriageExp(thisObj)
 	
 }
 
+
+// function called from tender-form-details to validate Payment by Draft and make Draft No mandatory 
+function setEmDesc(thisObj)
+{
+	if(thisObj.value!="")
+	{
+		if(thisObj.value=="Cash")
+		{
+			document.getElementById("em_desc").value="Paid by Cash";
+			document.getElementById("em_desc").readOnly=true;
+		}else
+		{
+			document.getElementById("em_desc").readOnly=false;
+			document.getElementById("em_desc").value="";
+		}
+			
+	}
+	
+}
+
 // function called from rate-calculation-lot.php
 function calculateScheduleRate(exp_eow, exp_com, total_turnout, total_eow, total_com, total_expenditure, rate_calculated)
 {
@@ -360,4 +380,133 @@ function calculateCostOfMaterialDetails(thisObj)
 		document.getElementById("tblCostDetail").innerHTML="<tr> <td>No details captured. Please select the correct Zone.</td> </tr>";
 	}
 	
+}
+
+// Tender
+function loadLotDetailsForTender(thisObj)
+{
+	seasonYear=document.getElementById("season_year").value;
+	if(seasonYear=="")
+	{
+		alert("Season Year for Tender is required."); 
+		thisObj.selectedIndex="0";
+		return false;
+	}
+	
+	if(thisObj.value!="")
+	{
+		var xmlhttp;
+		if (window.XMLHttpRequest)
+		   {// code for IE7+, Firefox, Chrome, Opera, Safari
+		    xmlhttp=new XMLHttpRequest();
+		   }
+		else
+		   {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		   }
+		  xmlhttp.onreadystatechange=function()
+		   {
+			  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			  {
+				  document.getElementById("tender_lot_info_div").innerHTML=xmlhttp.responseText;
+			  }
+		  }
+		  var fileCall='ajax_call.php?get=getLotDetailsForTender&lotNo='+thisObj.value+'&seasonYear='+seasonYear;
+	
+		  xmlhttp.open("GET",fileCall,true);
+		  xmlhttp.send();
+	}
+	else
+	{
+		document.getElementById("tender_lot_info_div").innerHTML="<label for='dfo_code'>Failed to get Data. Please try again</label>";
+	}	  
+
+}
+//Tender
+function loadRateDetailsForTender(thisObj)
+{
+	seasonYear=document.getElementById("season_year").value;
+	totalTurnout="";
+	if(seasonYear=="")
+	{
+		alert("Season Year for Tender is required."); 
+		thisObj.selectedIndex="0";
+		return false;
+	}else if(document.getElementById("lot_no").value=="")
+	{
+		alert("Lot for Tender is required.");
+		thisObj.selectedIndex="0";
+		return false;
+	}else
+	{
+		totalTurnout=document.getElementById("total_turnout").value;
+	}
+		
+	if(totalTurnout=="")
+	{
+		alert("Turnout for Tender from Lot is required."); 
+		thisObj.selectedIndex="0";
+		return false;
+	}
+	
+	if(thisObj.value!="")
+	{
+		var xmlhttp;
+		if (window.XMLHttpRequest)
+		   {// code for IE7+, Firefox, Chrome, Opera, Safari
+		    xmlhttp=new XMLHttpRequest();
+		   }
+		else
+		   {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		   }
+		  xmlhttp.onreadystatechange=function()
+		   {
+			  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			  {
+				  document.getElementById("tender_exp_zone_div").innerHTML=xmlhttp.responseText;
+			  }
+		  }
+		  var fileCall='ajax_call.php?get=getRateDetailsForTender&zoneCode='+thisObj.value+'&seasonYear='+seasonYear+'&totalTurnout='+totalTurnout;
+	
+		  xmlhttp.open("GET",fileCall,true);
+		  xmlhttp.send();
+	}
+	else
+	{
+		document.getElementById("tender_exp_zone_div").innerHTML="<label for='dfo_code'>Failed to get Data. Please try again</label>";
+	}	  
+
+}
+//Tender
+function loadDetailsForContractor(thisObj)
+{
+	if(thisObj.value!="")
+	{
+		var xmlhttp;
+		if (window.XMLHttpRequest)
+		   {// code for IE7+, Firefox, Chrome, Opera, Safari
+		    xmlhttp=new XMLHttpRequest();
+		   }
+		else
+		   {// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		   }
+		  xmlhttp.onreadystatechange=function()
+		   {
+			  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			  {
+				  document.getElementById("tender_contractor_info_div").innerHTML=xmlhttp.responseText;
+			  }
+		  }
+		  var fileCall='ajax_call.php?get=getDetailsForContractor&contractorCode='+thisObj.value;
+	
+		  xmlhttp.open("GET",fileCall,true);
+		  xmlhttp.send();
+	}
+	else
+	{
+		document.getElementById("tender_contractor_info_div").innerHTML="<label for='dfo_code'>Failed to get Data. Please try again</label>";
+	}	  
+
 }

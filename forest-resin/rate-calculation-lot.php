@@ -468,14 +468,14 @@
                 						{
                                 ?>		
                                 <tr>    
-									<td colspan="2">Numbar of Mazdoor(s) for the Lot</td> <td colspan="3"><input class="lblText" readonly="readonly" id="number_of_mazdoors" type="text" name="number_of_mazdoors" value="<?php echo($number_of_mazdoors);?>" onclick="makeTextEditable(this, 'Re-calculate Cost of Material for all Forests')" onchange="makeTextReadonly(this, '')"/> Click to edit</td>
+									<td colspan="2">Number of Mazdoor(s) for the Lot</td> <td colspan="3"><input class="lblText" readonly="readonly" id="number_of_mazdoors" type="text" name="number_of_mazdoors" value="<?php echo($number_of_mazdoors);?>" onclick="makeTextEditable(this, 'Re-calculate Cost of Material for all Forests')" onchange="makeTextReadonly(this, '')"/> Click to edit</td>
 								</tr>
                             	<?php
                 						}else
                 						{ 
                             	?>
                             	<tr>    
-									<td colspan="2">Numbar of Mazdoor(s) for the Lot</td> <td colspan="3"><input class="textbox" id="number_of_mazdoors" type="text" name="number_of_mazdoors" value="<?php echo($number_of_mazdoors);?>" onchange="makeTextReadonly(this, '')" /></td>
+									<td colspan="2">Number of Mazdoor(s) for the Lot</td> <td colspan="3"><input class="textbox" id="number_of_mazdoors" type="text" name="number_of_mazdoors" value="<?php echo($number_of_mazdoors);?>" onchange="makeTextReadonly(this, '')" /></td>
 								</tr>
                             	<?php
                 						} 

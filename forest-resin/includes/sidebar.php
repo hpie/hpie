@@ -59,10 +59,12 @@ if(!empty($_SESSION['role']))
 				<li><a href="range-master.php">Manage Forest Ranges</a></li>
 				<li><a href="forest-rsd-master.php">Manage Forest's RSD</a></li>
 				<li><a href="forest-master.php">Manage Forests</a></li>
+				<li><a href="contractor-master.php">Manage Contractors</a></li>
 				<li><a href="srate-master.php">Schedule Rates</a></li>
 				<li><a href="#"></a></li>
 				<li><a href="lot-master.php">Manage Lots</a></li>
 				<li><a href="receive-blazes.php">View Blazes List</a></li>
+				<li><a href="tender-form-details.php">Tender Forms</a></li>
 				<li><a href="#"></a></li>
 				<li><a href="report-lot-blazes.php">Verify Blazes Report</a></li>
 				<li><a href="report-range-blazes.php">Blazes Taken Over Report</a></li>

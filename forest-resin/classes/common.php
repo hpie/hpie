@@ -214,6 +214,34 @@ class common
 		echo $tableRow;
 	}
 	
+	function getPaymentModeList($payment_mode, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		$zoneList = array("Cash"=>"Cash", "Draft"=>"Draft");
+		$selectList='<select id="em_mode" name="em_mode" '.$callJs.' data-required="true" data-error-message="Payment mode is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+		
+		foreach($zoneList as $zone_c=>$zone_v)
+		{
+			if($zone_c==$payment_mode)
+	        {	
+	     	   $selectList.='<option value="'.$zone_c.'" selected="selected">' . $zone_v . '</option>';
+	        }else
+	        {
+	        	$selectList.='<option value="'. $zone_c .'">' . $zone_v . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}
+	
 	function getZoneList($zone_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -223,7 +251,7 @@ class common
 		}
 		
 		$zoneList = array("c"=>"Cold", "h"=>"Hot", "mh"=>"Moderate Hot", "mhs"=>"Moderate Hot Sundernagar");
-		$selectList='<select id="zone_code" name="zone_code" '.$callJs.' data-required="true" data-error-message="Zome is required">'; 
+		$selectList='<select id="zone_code" name="zone_code" '.$callJs.' data-required="true" data-error-message="Zone is required">'; 
         
 		$selectList.='<option value="">Select</option>';
 		
@@ -242,6 +270,36 @@ class common
 		echo $selectList;
 	}
 	
+	
+	// unit list
+	function getUnitList($unit_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		global $db;
+		$units = $db->get_results("SELECT *  FROM m_unit WHERE division_code='".$this->division."' AND status_cd='A'",ARRAY_A);
+		//$zoneList = array("c"=>"Cold", "h"=>"Hot", "mh"=>"Moderate Hot", "mhs"=>"Moderate Hot Sundernagar");
+		$selectList='<select id="unit_code" name="unit_code" '.$callJs.' data-required="true" data-error-message="Zome is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+		
+		foreach($units as $unit)
+		{
+			if($unit['unit_code']==$unit_code)
+	        {	
+	     	   $selectList.='<option value="'.$unit['unit_code'].'" selected="selected">' . $unit['unit_name'] . '</option>';
+	        }else
+	        {
+	        	$selectList.='<option value="'. $unit['unit_code'] .'">' . $unit['unit_name'] . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}
 	
 	function getNameForCode($code, $code_col, $return_col, $table_name)
 	{
