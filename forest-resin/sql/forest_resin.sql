@@ -632,6 +632,10 @@ CREATE TABLE IF NOT EXISTS `t_expenditure_on_work` (
   `exp_soldering_of_resin` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Expentiture on Soldering of resin total_tins*cost_soldering_of_resin',
   `cost_mate_commission` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Cost for mate comission per quintal',
   `exp_mate_commission` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Expentiture on mate comission  total_turnout*cost_mate_commission',
+  `cost_transportation_initial_25` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Cost for transportation for initial 25 KM',
+  `cost_transportation_per_km` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Cost for transportation per km after 25 KM',
+  `dist_transportation` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Distance for transportation',
+  `exp_transportation` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Expenditure on transportation if < 25  cost_transportation_initial_25  else 25-dist_transportation*cost_transportation_per_km + cost_transportation_intial_25 ',
   `season_year` date NOT NULL,
   `status_cd` varchar(5) DEFAULT 'A',
   `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -762,6 +766,7 @@ CREATE TABLE IF NOT EXISTS `m_contractor` (
 CREATE TABLE IF NOT EXISTS `t_tender_form_resin` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `division_code` varchar (50) NOT NULL,
+  `unit_code` varchar (50) NOT NULL,
   `tender_form_no` varchar (50) NOT NULL,
   `tender_notice_no` varchar (50) NOT NULL,
   `tender_date` date NOT NULL,
@@ -770,6 +775,7 @@ CREATE TABLE IF NOT EXISTS `t_tender_form_resin` (
   `blazes_received` int NOT NULL,
   `yield_fixed` float(10,3)  NOT NULL DEFAULT '0',
   `tender_slab` int NOT NULL,
+  `total_turnout` float(10,3)  NOT NULL DEFAULT '0',
   `zone_code` varchar (50) NOT NULL,
   `cost_extr` float (10,2)  NOT NULL DEFAULT '0',
   `cost_carriage_mule_rsd` float (10,2)  NOT NULL DEFAULT '0' COMMENT  'Cost for mule carriage per quintal',
@@ -795,6 +801,105 @@ CREATE TABLE IF NOT EXISTS `t_tender_form_resin` (
   `updated_by` varchar(50) DEFAULT NULL,
    PRIMARY KEY (`id`)
   ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  
+  
+ 
+ -- --Lot Progress Table-------------------------------------
+CREATE TABLE IF NOT EXISTS `t_work_progress_for_lot` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `division_code` varchar (50) NOT NULL,
+  `unit_code` varchar (50) NOT NULL,
+  `lot_no` varchar (100) NOT NULL,
+  `blazes_received` int NOT NULL COMMENT  'Total blazes for the lot.',
+  `total_blazes_tapped` int  NOT NULL DEFAULT '0' COMMENT  'Blazes tapped in the lot',
+  `number_of_mazdoor` int NOT NULL DEFAULT '0' COMMENT  'Total mazdoors for the lot.',
+  `total_mazdoor_engaged` int NOT NULL DEFAULT '0' COMMENT  'Mazdoors engaged for tapping the lot',
+  `total_turnout` float(10,3)  NOT NULL DEFAULT '0'COMMENT  'Total turnout expected from Lot',
+  `total_resin_tins_tapped`  int NOT NULL DEFAULT '0' COMMENT  'Number of tins collected from Lot',
+  `total_resin_tapped` float(10,3)  NOT NULL DEFAULT '0' COMMENT  'Turnout/Resin weight collected from Lot',
+  `total_resin_tins_carriaged`  int NOT NULL DEFAULT '0' COMMENT  'Number of tins Carried to RSD for Lot',
+  `total_resin_carriaged` float(10,3)  NOT NULL DEFAULT '0' COMMENT  'Turnout/Resin weight Carried to RSD for Lot',
+  `total_resin_tins_transported`  int NOT NULL DEFAULT '0' COMMENT  'Number of tins transported to Facroty from RSD for Lot',
+  `total_resin_transported` float(10,3)  NOT NULL DEFAULT '0' COMMENT  'Turnout/Resin weighttransported to Facroty from RSD for Lot',
+  `season_year` date NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A'  COMMENT  'A Active R rejected D deleted I Inactive C Completed.',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+   
+  -- --Monthly Resin Collection  Table-------------------------------------
+CREATE TABLE IF NOT EXISTS `t_monthly_resin_collection` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `work_progress_for_lot_id` bigint(20) unsigned NOT NULL,
+  `division_code` varchar (50) NOT NULL,
+  `lot_no` varchar (50) NOT NULL,
+  `blazes_tapped` int NOT NULL DEFAULT '0' COMMENT  'Blazes tapped this month',
+  `mazdoor_engaged` int NOT NULL DEFAULT '0' COMMENT  'Number of Mazdoors applied this month',
+  `resin_tins_tapped`  int NOT NULL DEFAULT '0' COMMENT  'Number of tins collected this month',
+  `resin_tapped` float(10,3)  NOT NULL DEFAULT '0' COMMENT  'Turnout/Resin weight collected this month',
+  `contractor_code` varchar (50) NOT NULL COMMENT  'Contractor for collection',
+  `progress_dt` date NOT NULL COMMENT  'Progress for the month of',
+  `season_year` date NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  
+   -- --Monthly Carriage Table-------------------------------------
+CREATE TABLE IF NOT EXISTS `t_monthly_resin_carriage` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `work_progress_for_lot_id` bigint(20) unsigned NOT NULL,
+  `division_code` varchar (50) NOT NULL,
+  `lot_no` varchar (50) NOT NULL,
+  `resin_tins_carriaged`  int NOT NULL DEFAULT '0' COMMENT  'Number of tins collected this month',
+  `resin_carriaged` float(10,3)  NOT NULL DEFAULT '0' COMMENT  'Turnout weight collected this month',
+  `resin_carriage_mule`  int NOT NULL DEFAULT '0' COMMENT  'Number of tins carried by mule',
+  `dist_carriage_mule`  float(10,1) NOT NULL DEFAULT '0' COMMENT  'Tins carried by mule to a distance',
+  `resin_carriage_manual`  int NOT NULL DEFAULT '0' COMMENT  'Number of tins carried by manual',
+  `dist_carriage_manual`  float(10,1) NOT NULL DEFAULT '0' COMMENT  'Tins carried by manual to a distance',
+  `resin_carriage_tractor`  int NOT NULL DEFAULT '0' COMMENT  'Number of tins carried by tractor',
+  `dist_carriage_tractor`  float(10,1) NOT NULL DEFAULT '0' COMMENT  'Tins carried by tractor to a distance',
+  `resin_carriage_other`  int NOT NULL DEFAULT '0' COMMENT  'Number of tins carried by other',
+  `dist_carriage_other`  float(10,1) NOT NULL DEFAULT '0' COMMENT  'Tins carried by other to a distance',
+  `contractor_code` varchar (50) NOT NULL COMMENT  'Contractor for carriage',
+  `progress_dt` date NOT NULL COMMENT  'Progress for the month of',
+  `season_year` date NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  
+     -- --Monthly Carriage Table-------------------------------------
+CREATE TABLE IF NOT EXISTS `t_monthly_resin_transport` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `work_progress_for_lot_id` bigint(20) unsigned NOT NULL,
+  `division_code` varchar (50) NOT NULL,
+  `lot_no` varchar (50) NOT NULL,
+  `resin_tins_transported`  int NOT NULL DEFAULT '0' COMMENT  'Number of tins collected this month',
+  `resin_transported` float(10,3)  NOT NULL DEFAULT '0' COMMENT  'Turnout weight collected this month',
+  `vehicle_number` varchar (50) NOT NULL COMMENT  'Vehical Number used for transport',
+  `vehicle_type` varchar (50) NOT NULL COMMENT  'Vehical type used for transport, truck, tempoo, pickup',
+  `driver_name` varchar (100) NOT NULL COMMENT  'Driver Name',
+  `challan_number` varchar (50) NOT NULL COMMENT  'Challan Number used for transport',
+  `progress_dt` date NOT NULL COMMENT  'Progress for the month of',
+  `season_year` date NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  
 
 
 -- -------------------ALTER Statements if data is there----------------------------------------------------
@@ -824,3 +929,13 @@ CHANGE  `cost_tpt_tins_to_forest`  `cost_tpt_tins_to_forest` FLOAT( 10, 2 ) NOT 
 
 -- --------t_expenditure_on_work--------
 ALTER TABLE  `t_expenditure_on_work` CHANGE  `exp_extr_turnout`  `exp_extr_turnout` FLOAT( 10, 2 ) NOT NULL DEFAULT  '0.000' COMMENT  'Expenditure calcualted for extraction (totalturnout*cost_extr).'
+
+ALTER TABLE  `t_expenditure_on_work` ADD  `cost_transportation_initial_25` FLOAT( 10, 2 ) NOT NULL DEFAULT  '0' COMMENT  'Cost for transportation for initial 25 KM' AFTER  `exp_mate_commission` ,
+ADD  `cost_transportation_per_km` FLOAT( 10, 2 ) NOT NULL DEFAULT  '0' COMMENT  'Cost for transportation per km after 25 KM' AFTER  `cost_transportation_initial_25` ,
+ADD  `dist_transportation` FLOAT( 10, 2 ) NOT NULL DEFAULT  '0' COMMENT  'Distance for transportation' AFTER  `cost_transportation_per_km` ,
+ADD  `exp_transportation` FLOAT( 10, 2 ) NOT NULL DEFAULT  '0' COMMENT  'Expenditure on transportation if < 25  cost_transportation_initial_25  else 25-dist_transportation*cost_transportation_per_km + cost_transportation_intial_25' AFTER  `dist_transportation`
+
+
+-- ALTER TABLE  `t_tender_form_resin` ADD  `negotiated_rate` FLOAT( 10, 2 ) NOT NULL DEFAULT  '0' COMMENT  'Negotiated Rate' AFTER  `rate_offered`
+ALTER TABLE  `t_tender_form_resin` ADD  `negotiated_rate` FLOAT( 10, 2 ) NULL COMMENT  'Negotiated Rate' AFTER  `rate_offered`
+

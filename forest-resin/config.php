@@ -53,9 +53,14 @@
 		{
 			$_SESSION['filter']=TRUE;
 			//Header("Location: home.php");
-			$_SESSION['filter-lot']=$_POST['filter-lot']; 
-			$_SESSION['filter-season']=$_POST['filter-season'];
-			$_SESSION['filter-division']=$_POST['filter-division'];
+			$_SESSION['filter-lot']=$_POST['lot_no']; 
+			$_SESSION['filter-season']=$_POST['season_year'];
+			$_SESSION['filter-division']=$_SESSION['division'];
+			
+			if($_SESSION['filter-lot']=="" && $_SESSION['filter-season']=="")
+			{
+				$_SESSION['filter']=FALSE;
+			}
 		}
 		
 		// report actions
@@ -97,8 +102,32 @@
 		}else if($_POST['action']=="Set Upset Price")
 		{
 			$action="setRateCalculatedForLot";
+		}else if($_POST['action']=="Save Upset Price")
+		{
+			$action="setExpCostRateCalculatedForLot";
 		}
 		
+		
+		//work-progress-lot.php
+		if($_POST['action']=="Show Progress")
+		{
+			$action="workProgressForLot";
+		}else if($_POST['action']=="Save Tapping")
+		{
+			$action="setTappingForLot";
+		}else if($_POST['action']=="Save Carriage")
+		{
+			$action="setCarriageForLot";
+		}else if($_POST['action']=="Save Transport")
+		{
+			$action="setTransportForLot";
+		}else if($_POST['action']=="Mark Complete")
+		{
+			$action="markComplete";
+		}else if($_POST['action']=="Re-Open")
+		{
+			$action="reOpen";
+		}
 		
 		//page specific actions
 		//proposed-rate-blazes.php
@@ -110,7 +139,11 @@
 			$action="setRateForLot";
 		}
 		
-		
+		//tender-form-details.php
+		if($_POST['action']=="Negotiate")
+		{
+			$action="negotiate";
+		}
 		
 		
 	}

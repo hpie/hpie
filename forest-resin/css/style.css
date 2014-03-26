@@ -154,6 +154,11 @@ input.submit:hover { background: inherit; color: #006699; text-decoration: under
 	width: 100px;
 }
 
+.textboxSmall{
+	border:0px;
+	width: 100px;
+}
+
 .editImgBut{
 	background:url(../images/edit.png) no-repeat;
 	background-position:center;
@@ -546,3 +551,10 @@ input.submit:hover { background: inherit; color: #006699; text-decoration: under
 #left p, #right p, #middle p {
     margin: 1px 1px;
 	}
+	
+	
+.tenderPara
+{
+	margin: 10px;
+	font-size: small;
+}	

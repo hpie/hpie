@@ -10,7 +10,7 @@ session_start();
 	 if($_GET['get']=='lotForests')
 	 {
 	 	$lotNo=$_GET['lotNo'];
-	  	$lotForests = $db->get_results("SELECT fr.forest_code, fr.forest_name FROM m_lot lt, m_forest fr WHERE lt.forest_code=fr.forest_code AND lt.lot_no='".$lotNo."'",ARRAY_A);
+	  	$lotForests = $db->get_results("SELECT fr.forest_code, fr.forest_name FROM m_lot lt, m_forest fr WHERE lt.forest_code=fr.forest_code AND lt.lot_no='".$lotNo."' AND fr.status_cd='A'",ARRAY_A);
 	  	$selectList.='<option value="">Select</option>';
 	    foreach ( $lotForests as $forest )
         {
@@ -272,6 +272,419 @@ session_start();
 		$details.='<tr>';
 		$details.='<td>Lips cost at </td>';
 		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_lips" type="text" name="cost_lips" value="'.$comCalArray['cost_lips'].'"/> per 100 </td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_lips" type="text" name="exp_lips" value="'.$comCalArray['exp_lips'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Wire nails 5cm </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_wire_nails_5cm" type="text" name="qty_wire_nails_5cm" value="'.$comCalArray['qty_wire_nails_5cm'].'" data-required="true" data-error-message="Please enter qunatity for nails" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_wire_nails_5cm, exp_wire_nails_5cm)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_wire_nails_5cm" type="text" name="cost_wire_nails_5cm" value="'.$comCalArray['cost_wire_nails_5cm'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_wire_nails_5cm" type="text" name="exp_wire_nails_5cm" value="'.$comCalArray['exp_wire_nails_5cm'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Wire nails 2cm </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_wire_nails_2cm" type="text" name="qty_wire_nails_2cm" value="'.$comCalArray['qty_wire_nails_2cm'].'" data-required="true" data-error-message="Please enter qunatity for nails" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_wire_nails_2cm, exp_wire_nails_2cm)"/>';
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_wire_nails_2cm" type="text" name="cost_wire_nails_2cm" value="'.$comCalArray['cost_wire_nails_2cm'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_wire_nails_2cm" type="text" name="exp_wire_nails_2cm" value="'.$comCalArray['exp_wire_nails_2cm'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Solder </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_solder" type="text" name="qty_solder" value="'.$comCalArray['qty_solder'].'" data-required="true" data-error-message="Please enter qunatity for solder" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_solder, exp_solder)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_solder" type="text" name="cost_solder" value="'.$comCalArray['cost_solder'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_solder" type="text" name="exp_solder" value="'.$comCalArray['exp_solder'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Naushadar </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_naushader" type="text" name="qty_naushader" value="'.$comCalArray['qty_naushader'].'" data-required="true" data-error-message="Please enter qunatity for naushadar" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_naushader, exp_naushader)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_naushader" type="text" name="cost_naushader" value="'.$comCalArray['cost_naushader'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_naushader" type="text" name="exp_naushader" value="'.$comCalArray['exp_naushader'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Charcoal </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_charcoal" type="text" name="qty_charcoal" value="'.$comCalArray['qty_charcoal'].'" data-required="true" data-error-message="Please enter qunatity for charcoal" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_charcoal, exp_charcoal)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_charcoal" type="text" name="cost_charcoal" value="'.$comCalArray['cost_charcoal'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_charcoal" type="text" name="exp_charcoal" value="'.$comCalArray['exp_charcoal'].'"/> </td>';
+		$details.='<tr>';
+		
+		// new addition
+		$details.='<tr>';
+		$details.='<td>Blower </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_blower" type="text" name="qty_blower" value="'.$comCalArray['qty_blower'].'" data-required="true" data-error-message="Please enter qunatity for blower" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_blower, exp_blower)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_blower" type="text" name="cost_blower" value="'.$comCalArray['cost_blower'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_blower" type="text" name="exp_blower" value="'.$comCalArray['exp_blower'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Solder Iron </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_solder_iron" type="text" name="qty_solder_iron" value="'.$comCalArray['qty_solder_iron'].'" data-required="true" data-error-message="Please enter qunatity for solder iron" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_solder_iron, exp_solder_iron)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_solder_iron" type="text" name="cost_solder_iron" value="'.$comCalArray['cost_solder_iron'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_solder_iron" type="text" name="exp_solder_iron" value="'.$comCalArray['exp_solder_iron'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Paint </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_paint" type="text" name="qty_paint" value="'.$comCalArray['qty_paint'].'" data-required="true" data-error-message="Please enter qunatity for paint" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_paint, exp_paint)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_paint" type="text" name="cost_paint" value="'.$comCalArray['cost_paint'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_paint" type="text" name="exp_paint" value="'.$comCalArray['exp_paint'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Cylinder 50ml </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_cylinder_50ml" type="text" name="qty_cylinder_50ml" value="'.$comCalArray['qty_cylinder_50ml'].'" data-required="true" data-error-message="Please enter qunatity for cylinder 50ml" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_cylinder_50ml, exp_cylinder_50ml)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_cylinder_50ml" type="text" name="cost_cylinder_50ml" value="'.$comCalArray['cost_cylinder_50ml'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_cylinder_50ml" type="text" name="exp_cylinder_50ml" value="'.$comCalArray['exp_cylinder_50ml'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Cylinder 500ml </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_cylinder_500ml" type="text" name="qty_cylinder_500ml" value="'.$comCalArray['qty_cylinder_500ml'].'" data-required="true" data-error-message="Please enter qunatity for cylinder 500ml" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_cylinder_500ml, exp_cylinder_500ml)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_cylinder_500ml" type="text" name="cost_cylinder_500ml" value="'.$comCalArray['cost_cylinder_500ml'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_cylinder_500ml" type="text" name="exp_cylinder_500ml" value="'.$comCalArray['exp_cylinder_500ml'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Beaker 500ml </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_beaker_500ml" type="text" name="qty_beaker_500ml" value="'.$comCalArray['qty_beaker_500ml'].'" data-required="true" data-error-message="Please enter qunatity for beaker 500ml" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_beaker_500ml, exp_beaker_500ml)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_beaker_500ml" type="text" name="cost_beaker_500ml" value="'.$comCalArray['cost_beaker_500ml'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_beaker_500ml" type="text" name="exp_beaker_500ml" value="'.$comCalArray['exp_beaker_500ml'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Beaker 1000ml </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_beaker_1000ml" type="text" name="qty_beaker_1000ml" value="'.$comCalArray['qty_beaker_1000ml'].'" data-required="true" data-error-message="Please enter qunatity for beaker 1000ml" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_beaker_1000ml, exp_beaker_1000ml)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_beaker_1000ml" type="text" name="cost_beaker_1000ml" value="'.$comCalArray['cost_beaker_1000ml'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_beaker_1000ml" type="text" name="exp_beaker_1000ml" value="'.$comCalArray['exp_beaker_1000ml'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Funnel </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_funnel" type="text" name="qty_funnel" value="'.$comCalArray['qty_funnel'].'" data-required="true" data-error-message="Please enter qunatity for funnel" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_funnel, exp_funnel)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_funnel" type="text" name="cost_funnel" value="'.$comCalArray['cost_funnel'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_funnel" type="text" name="exp_funnel" value="'.$comCalArray['exp_funnel'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Other </td>';
+			$details.='<td>';
+			$details.='needed <input class="textbox" id="qty_other" type="text" name="qty_other" value="'.$comCalArray['qty_other'].'" data-required="true" data-error-message="Please enter qunatity for other" data-type="number" data-type-number-message="Only number is allowed" onblur="calculateAmount(this, cost_other, exp_other)"/>'; 
+			$details.=' at Rs<input class="lblText" readonly="readonly" id="cost_other" type="text" name="cost_other" value="'.$comCalArray['cost_other'].'"/>';
+			$details.='</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_other" type="text" name="exp_other" value="'.$comCalArray['exp_other'].'"/> </td>';
+		$details.='<tr>';
+		//
+		
+		$details.='<tr>';
+		$details.='<td>Sharpening Material cost </td>';
+		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_tool_sharpen" type="text" name="cost_tool_sharpen" value="'.$comCalArray['cost_tool_sharpen'].'"/></td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_tool_sharpen" type="text" name="exp_tool_sharpen" value="'.$comCalArray['exp_tool_sharpen'].'"/> </td>';
+		$details.='<tr>';
+		
+	 	echo $details;
+	 }
+	 
+	 
+ if($_GET['get']=='calExpenditureAndCostDetails')
+	 {
+	 	//$rowId=$_GET['rowId'];
+	 	$rowId=1;
+	 	
+	 	$zoneCode=$_GET['zoneCode'];
+	 	$totalBlazes=$_GET['totalBlazes'];
+	 	$yieldFixed=$_GET['yieldFixed'];
+	 	//$turnout=$_GET['turnout'];
+	 	$totalTurnout=$_GET['totalTurnout'];
+	 	$turnout=$totalTurnout;
+	 	$distanceToRsd=$_GET['distanceToRsd'];
+	 	//$distTransportation=$_GET['distTransportation'];
+	 	$seasonYear=$_GET['seasonYear'];
+	 	
+	 	$numberOfMazdoor=$_GET['numberOfMazdoor'];
+	 	//$enteredMazdoors=$_GET['enteredMazdoors'];
+	 	$enteredMazdoors=$numberOfMazdoor;
+	 	
+	 	$eowCalArray=array();
+	 	$comCalArray=array();
+	 	
+	 	$details='<tr><td>Expenditure Type</td> <td>Details</td> <td>Amount</td> </tr>';
+	 	
+	 	if($rowId>0)
+	 	{
+	 		$rcalId=$_GET['rcalId'];
+	 		$forestCode="";
+	 		$eowCode=$_GET['eowCode'];
+	 		$eowCalArray=$common->getExpenditureOnWork($rcalId, $forestCode, $eowCode);
+	 		
+	 		if($eowCalArray['zone_code']!=$zoneCode)
+	 		{
+	 			$eowArray = $common->getCalculatedExpenditureOnWork($totalBlazes, $yieldFixed, $turnout, $totalTurnout, $zoneCode, $distanceToRsd, $seasonYear);
+	 			$eowCalArray = array_merge($eowCalArray, $eowArray); 	
+	 		}
+	 		
+	 	}else
+	 	{
+	 		$eowCalArray = $common->getCalculatedExpenditureOnWork($totalBlazes, $yieldFixed, $turnout, $totalTurnout, $zoneCode, $distanceToRsd, $seasonYear);	
+	 	}
+	 	
+	 	if($rowId>0)
+	 	{
+	 		$rcalId=$_GET['rcalId'];
+	 		$forestCode="";
+	 		$comCode=$_GET['comCode'];
+	 		$comCalArray=$common->getCostOfMaretial($rcalId, $forestCode, $comCode);
+	 		
+	 		if($comCalArray['number_of_mazdoor']!=$enteredMazdoors)
+	 		{
+	 			$details.='<tr><td colspan="3">No of Mazdoor has changed from '.$comCalArray['number_of_mazdoor'].' to '.$enteredMazdoors.'. Re-calculation required.</td></tr>';
+	 			$comArray = $common->getCalculatedCostOfMaretial($totalBlazes, $numberOfMazdoor, $seasonYear);
+	 			$comCalArray = array_merge($comCalArray, $comArray); 
+	 		}
+	 		
+	 	}else
+	 	{
+	 		$comCalArray = $common->getCalculatedCostOfMaretial($totalBlazes, $numberOfMazdoor, $seasonYear);	
+	 	}
+	 	
+		
+		
+		$details.='<tr>';
+		$details.='<td>Crop setting at </td>';
+		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_crop_setting" type="text" name="cost_crop_setting" value="'.$eowCalArray['cost_crop_setting'].'"/> </td>';
+		$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_crop_setting" type="text" name="exp_crop_setting" value="'.$eowCalArray['exp_crop_setting'].'"/> </td>';
+		$details.='<tr>';
+		
+		if($eowCalArray['zone_code']=="c")
+		{
+			$details.='<tr>';
+			$details.='<td>Extraction of Rasin </td>';
+			$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_extr" type="text" name="cost_extr" value="'.$eowCalArray['cost_extr'].'"/> </td>';
+			$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_extr_turnout" type="text" name="exp_extr_turnout" value="'.$eowCalArray['exp_extr_turnout'].'"/> </td>';
+			$details.='<tr>';	
+		}else if($eowCalArray['zone_code']=="h")
+		{
+			$details.='<tr>';
+			$details.='<td>Extraction of Rasin </td>';
+			$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_extr" type="text" name="cost_extr" value="'.$eowCalArray['cost_extr'].'"/> </td>';
+			$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_extr_turnout" type="text" name="exp_extr_turnout" value="'.$eowCalArray['exp_extr_turnout'].'"/> </td>';
+			$details.='<tr>';
+		}else if($eowCalArray['zone_code']=="mh")
+		{
+			$details.='<tr>';
+			$details.='<td>Extraction of Rasin </td>';
+			$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_extr" type="text" name="cost_extr" value="'.$eowCalArray['cost_extr'].'"/> </td>';
+			$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_extr_turnout" type="text" name="exp_extr_turnout" value="'.$eowCalArray['exp_extr_turnout'].'"/> </td>';
+			$details.='<tr>';
+		}else if($eowCalArray['zone_code']=="mhs")
+		{
+			$details.='<tr>';
+			$details.='<td>Extraction of Rasin </td>';
+			$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_extr" type="text" name="cost_extr" value="'.$eowCalArray['cost_extr'].'"/> </td>';
+			$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_extr_turnout" type="text" name="exp_extr_turnout" value="'.$eowCalArray['exp_extr_turnout'].'"/> </td>';
+			$details.='<tr>';
+		}
+		
+		$details.='<tr>';
+		$details.='<td>Carriage of Empty Tins </td>';
+			$details.='<td>';
+			$details.='<input class="lblTextSmall" readonly="readonly" id="total_tins" type="text" name="total_tins" value="'.$eowCalArray['total_tins'].'"/>'; 
+			$details.=' to a distance of <input class="lblTextSmall" readonly="readonly" id="distance_to_rsd" type="text" name="distance_to_rsd" value="'.$eowCalArray['distance_to_rsd'].'"/>km' ;
+			$details.=' at Rs.<input class="lblTextSmall" readonly="readonly" id="cost_tpt_tins_to_forest" type="text" name="cost_tpt_tins_to_forest" value="'.$eowCalArray['cost_tpt_tins_to_forest'].'"/> per km.';
+			$details.='</td>';
+		$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_tpt_tins_to_forest" type="text" name="exp_tpt_tins_to_forest" value="'.$eowCalArray['exp_tpt_tins_to_forest'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Soldering of Tins </td>';
+		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_soldering_of_resin" type="text" name="cost_soldering_of_resin" value="'.$eowCalArray['cost_soldering_of_resin'].'"/> </td>';
+		$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_soldering_of_resin" type="text" name="exp_soldering_of_resin" value="'.$eowCalArray['exp_soldering_of_resin'].'"/> </td>';
+		$details.='<tr>';
+		
+		
+		$details.='<tr>';
+		$details.='<td>Carriage of Resin (Mules)</td>';
+			$details.='<td>';
+			$details.='<input class="lblTextSmall" readonly="readonly" id="turnout_carriage_mule_rsd" type="text" name="turnout_carriage_mule_rsd" value="'.$eowCalArray['turnout_carriage_mule_rsd'].'" onclick="makeSmallTextEditable(this,\' \')"/>qtl'; 
+			$details.=' to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_mule_rsd" type="text" name="dist_carriage_mule_rsd" value="'.$eowCalArray['dist_carriage_mule_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
+			$details.=' at Rs.<input class="lblTextSmall" readonly="readonly" id="cost_carriage_mule_rsd" type="text" name="cost_carriage_mule_rsd" value="'.$eowCalArray['cost_carriage_mule_rsd'].'"/>per km.';
+			$details.=' | <input id="apply_carriage_mule_rsd" type="checkbox" name="apply_carriage_mule_rsd" value="1" onclick="calculateCarriageExp(this)"/> is applied. ';
+			$details.='</td>';
+		$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_carriage_mule_rsd" type="text" name="exp_carriage_mule_rsd" value="'.$eowCalArray['exp_carriage_mule_rsd'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Carriage of Resin (Manual)</td>';
+			$details.='<td>';
+			$details.='<input class="lblTextSmall" readonly="readonly" id="turnout_carriage_manual_rsd" type="text" name="turnout_carriage_manual_rsd" value="'.$eowCalArray['turnout_carriage_manual_rsd'].'" onclick="makeSmallTextEditable(this,\' \')"/>qtl'; 
+			$details.=' to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_manual_rsd" type="text" name="dist_carriage_manual_rsd" value="'.$eowCalArray['dist_carriage_manual_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
+			$details.=' at Rs.<input class="lblTextSmall" readonly="readonly" id="cost_carriage_manual_rsd" type="text" name="cost_carriage_manual_rsd" value="'.$eowCalArray['cost_carriage_manual_rsd'].'"/>per km.';
+			$details.=' | <input id="apply_carriage_manual_rsd" type="checkbox" name="apply_carriage_manual_rsd" value="1" onclick="calculateCarriageExp(this)"/> is applied. ';
+			$details.='</td>';
+		$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_carriage_manual_rsd" type="text" name="exp_carriage_manual_rsd" value="'.$eowCalArray['exp_carriage_manual_rsd'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Carriage of Resin (Tractor)</td>';
+			$details.='<td>';
+			$details.='<input class="lblTextSmall" readonly="readonly" id="turnout_carriage_tractor_rsd" type="text" name="turnout_carriage_tractor_rsd" value="'.$eowCalArray['turnout_carriage_tractor_rsd'].'" onclick="makeSmallTextEditable(this,\' \')"/>qtl'; 
+			$details.=' to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_tractor_rsd" type="text" name="dist_carriage_tractor_rsd" value="'.$eowCalArray['dist_carriage_tractor_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
+			$details.=' at Rs.<input class="lblTextSmall" readonly="readonly" id="cost_carriage_tractor_rsd" type="text" name="cost_carriage_tractor_rsd" value="'.$eowCalArray['cost_carriage_mule_rsd'].'"/>per km.';
+			$details.=' | <input id="apply_carriage_tractor_rsd" type="checkbox" name="apply_carriage_tractor_rsd" value="1" onclick="calculateCarriageExp(this)"/> is applied. ';
+			$details.='</td>';
+		$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_carriage_tractor_rsd" type="text" name="exp_carriage_tractor_rsd" value="'.$eowCalArray['exp_carriage_tractor_rsd'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Carriage of Resin (Other)</td>';
+			$details.='<td>';
+			$details.='<input class="lblTextSmall" readonly="readonly" id="turnout_carriage_other_rsd" type="text" name="turnout_carriage_other_rsd" value="'.$eowCalArray['turnout_carriage_other_rsd'].'" onclick="makeSmallTextEditable(this,\' \')"/>qtl'; 
+			$details.=' to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_other_rsd" type="text" name="dist_carriage_other_rsd" value="'.$eowCalArray['dist_carriage_other_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
+			$details.=' at Rs.<input class="lblTextSmall" readonly="readonly" id="cost_carriage_other_rsd" type="text" name="cost_carriage_other_rsd" value="'.$eowCalArray['cost_carriage_manual_rsd'].'"/>per km.';
+			$details.=' | <input id="apply_carriage_other_rsd" type="checkbox" name="apply_carriage_other_rsd" value="1" onclick="calculateCarriageExp(this)"/> is applied. ';
+			$details.='</td>';
+		$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_carriage_other_rsd" type="text" name="exp_carriage_other_rsd" value="'.$eowCalArray['exp_carriage_other_rsd'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Transportation</td>';
+			$details.='<td>';
+			$details.='<input class="lblTextSmall" readonly="readonly" id="dist_transportation" type="text" name="dist_transportation" value="'.$eowCalArray['dist_transportation'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="calculateTransportExp(this)"/>KM'; 
+			$details.=' at the rate of Rs. <input class="lblTextSmall" readonly="readonly" id="cost_transportation_initial_25" type="text" name="cost_transportation_initial_25" value="'.$eowCalArray['cost_transportation_initial_25'].'"/> for initial 25 KM and ';
+			$details.=' at Rs.<input class="lblTextSmall" readonly="readonly" id="cost_transportation_per_km" type="text" name="cost_transportation_per_km" value="'.$eowCalArray['cost_transportation_per_km'].'"/>per km there after.';
+			//$details.=' | <input id="apply_transport" type="checkbox" name="apply_transportation" value="1" onclick="calculateTransportExp(this)"/> is applied. ';
+			$details.='</td>';
+		$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_transportation" type="text" name="exp_transportation" value="'.$eowCalArray['exp_transportation'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Loadin Resin (Other)</td>';
+			$details.='<td>';
+			$details.='<input class="lblTextSmall" readonly="readonly" id="turnout_carriage_other_rsd" type="text" name="turnout_carriage_other_rsd" value="'.$eowCalArray['turnout_carriage_other_rsd'].'" onclick="makeSmallTextEditable(this,\' \')"/>qtl'; 
+			$details.=' to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_other_rsd" type="text" name="dist_carriage_other_rsd" value="'.$eowCalArray['dist_carriage_other_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
+			$details.=' at Rs.<input class="lblTextSmall" readonly="readonly" id="cost_carriage_other_rsd" type="text" name="cost_carriage_other_rsd" value="'.$eowCalArray['cost_carriage_manual_rsd'].'"/>per km.';
+			$details.=' | <input id="apply_carriage_other_rsd" type="checkbox" name="apply_carriage_other_rsd" value="1" onclick="calculateCarriageExp(this)"/> is applied. ';
+			$details.='</td>';
+		$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_carriage_other_rsd" type="text" name="exp_carriage_other_rsd" value="'.$eowCalArray['exp_carriage_other_rsd'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Unloading of Resin (Other)</td>';
+			$details.='<td>';
+			$details.='<input class="lblTextSmall" readonly="readonly" id="turnout_carriage_other_rsd" type="text" name="turnout_carriage_other_rsd" value="'.$eowCalArray['turnout_carriage_other_rsd'].'" onclick="makeSmallTextEditable(this,\' \')"/>qtl'; 
+			$details.=' to a distance of <input class="lblTextSmall" readonly="readonly" id="dist_carriage_other_rsd" type="text" name="dist_carriage_other_rsd" value="'.$eowCalArray['dist_carriage_other_rsd'].'" onclick="makeSmallTextEditable(this,\' \')" onblur="validateCarriageDistance(this)"/>km';
+			$details.=' at Rs.<input class="lblTextSmall" readonly="readonly" id="cost_carriage_other_rsd" type="text" name="cost_carriage_other_rsd" value="'.$eowCalArray['cost_carriage_manual_rsd'].'"/>per km.';
+			$details.=' | <input id="apply_carriage_other_rsd" type="checkbox" name="apply_carriage_other_rsd" value="1" onclick="calculateCarriageExp(this)"/> is applied. ';
+			$details.='</td>';
+		$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_carriage_other_rsd" type="text" name="exp_carriage_other_rsd" value="'.$eowCalArray['exp_carriage_other_rsd'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Mate commission </td>';
+		$details.='<td>at Rs.<input class="lblText" readonly="readonly" id="cost_mate_commission" type="text" name="cost_mate_commission" value="'.$eowCalArray['cost_mate_commission'].'"/> </td>';
+		$details.='<td><input class="lblTextSmall" readonly="readonly" id="exp_mate_commission" type="text" name="exp_mate_commission" value="'.$eowCalArray['exp_mate_commission'].'"/> </td>';
+		$details.='<tr>';
+		
+		
+		$details.='<tr>';
+		$details.='<td colspan="3">';
+		$details.='<input type="hidden" id="cost_tpt_tins_to_rsd" name="cost_tpt_drums_to_forest" value=""/>';
+		$details.='<input type="hidden" id="exp_tpt_tins_to_rsd" name="exp_tpt_drums_to_forest" value=""/>';
+		$details.='<input type="hidden" id="cost_tpt_tins_to_rsd" name="cost_tpt_tins_to_rsd" value=""/>';
+		$details.='<input type="hidden" id="exp_tpt_tins_to_rsd" name="exp_tpt_tins_to_rsd" value=""/>';
+		$details.='<input type="hidden" id="cost_tpt_tins_to_rsd" name="cost_tpt_drums_to_rsd" value=""/>';
+		$details.='<input type="hidden" id="exp_tpt_tins_to_rsd" name="exp_tpt_drums_to_rsd" value=""/>';
+		$details.='</td>';
+		$details.='<tr>';
+		
+		
+		// for Cost 
+		$details.='<tr><td colspan="5">&nbsp;</td></tr>';
+		$details.='<tr><td colspan="4">Cost Details</td></tr>';
+		
+		$details.='<tr><td>Expenditure Type</td> <td>Details</td> <td>Amount</td> </tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Blaze frame cost at </td>';
+		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_blaze_frame" type="text" name="cost_blaze_frame" value="'.$comCalArray['cost_blaze_frame'].'" /> </td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_blaze_frame" type="text" name="exp_blaze_frame" value="'.$comCalArray['exp_blaze_frame'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Bark shaver cost at </td>';
+		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_bark_shaver" type="text" name="cost_bark_shaver" value="'.$comCalArray['cost_bark_shaver'].'" /> </td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_bark_shaver" type="text" name="exp_bark_shaver" value="'.$comCalArray['exp_bark_shaver'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Groove cutter cost at </td>';
+		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_groove_cutter" type="text" name="cost_groove_cutter" value="'.$comCalArray['cost_groove_cutter'].'" /> </td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_groove_cutter" type="text" name="exp_groove_cutter" value="'.$comCalArray['exp_groove_cutter'].'"/> </td>';
+		$details.='<tr>';
+		
+		
+		$details.='<tr>';
+		$details.='<td>Freshning knife cost at </td>';
+		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_freshning_knife" type="text" name="cost_freshning_knife" value="'.$comCalArray['cost_freshning_knife'].'" /> </td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_freshning_knife" type="text" name="exp_freshning_knife" value="'.$comCalArray['exp_freshning_knife'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Spray bottle cost at </td>';
+		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_spray_bottle" type="text" name="cost_spray_bottle" value="'.$comCalArray['cost_spray_bottle'].'" /> </td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp__spray_bottle" type="text" name="exp__spray_bottle" value="'.$comCalArray['exp__spray_bottle'].'"/> </td>';
+		$details.='<tr>';
+		
+		
+		$details.='<tr>';
+		$details.='<td>Hammer cum nail puller cost at </td>';
+		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_hammer_nailpuller" type="text" name="cost_hammer_nailpuller" value="'.$comCalArray['cost_hammer_nailpuller'].'" /> </td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_hammer_nailpuller" type="text" name="exp_hammer_nailpuller" value="'.$comCalArray['exp_hammer_nailpuller'].'"/> </td>';
+		$details.='<tr>';
+		
+		
+		$details.='<tr>';
+		$details.='<td>Pot scrapper cost at </td>';
+		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_pot_scrapper" type="text" name="cost_pot_scrapper" value="'.$comCalArray['cost_pot_scrapper'].'" /> </td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_pot_scrapper" type="text" name="exp_pot_scrapper" value="'.$comCalArray['exp_pot_scrapper'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Pots cost at </td>';
+		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_pots" type="text" name="cost_pots" value="'.$comCalArray['cost_pots'].'" data-required="true" /> for '. ceil(($comCalArray['blazes_received']/2)).' pots</td>';
+		$details.='<td><input class="lblText" readonly="readonly" id="exp_pots" type="text" name="exp_pots" value="'.$comCalArray['exp_pots'].'"/> </td>';
+		$details.='<tr>';
+		
+		$details.='<tr>';
+		$details.='<td>Lips cost at </td>';
+		$details.='<td>Rs.<input class="lblText" readonly="readonly" id="cost_lips" type="text" name="cost_lips" value="'.$comCalArray['cost_lips'].'" /> per 100 </td>';
 		$details.='<td><input class="lblText" readonly="readonly" id="exp_lips" type="text" name="exp_lips" value="'.$comCalArray['exp_lips'].'"/> </td>';
 		$details.='<tr>';
 		
