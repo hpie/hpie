@@ -203,7 +203,12 @@
 			  		}else
                 	{
                 		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Forest Ranges</h1> <table> <tr> <td>Range Code</td> <td>Range Name</td> <td>DFO</td> <td>Status</td> <td>Action</td></tr>"); 
-                		$ranges = $db->get_results("SELECT * FROM m_range WHERE division_code='".$_SESSION['division']."' ORDER BY range_name" ,ARRAY_A);
+                		if($_SESSION['role']=="sysadmin")
+                		{
+                			$ranges = $db->get_results("SELECT * FROM m_range WHERE division_code='".$_SESSION['division']."' ORDER BY range_name" ,ARRAY_A);
+                		}else{
+                			$ranges = $db->get_results("SELECT * FROM m_range WHERE division_code='".$_SESSION['division']."' AND status_cd<>'D' ORDER BY range_name" ,ARRAY_A);
+                		}
 	
 				         foreach ( $ranges as $range )
 				         { 

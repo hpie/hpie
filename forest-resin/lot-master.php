@@ -145,7 +145,7 @@
 								<label for="lot_desc">Lot Description:</label>
 								<input class="textbox"  id="lot_desc" type="text" name="lot_desc" data-required="true" data-error-message="Lot description is required" />
 								<label for="forest_code">Forest:</label>
-								<select multiple id="forest_code" name="forest_code[]" data-required="true" data-error-message="Forest is required">
+								<select multiple id="forest_code" name="forest_code[]" data-required="true" data-error-message="Forest is required" style="width:500px; height:300px;">
 								 <?php 
 								  $forests = $db->get_results("SELECT f.forest_code, f.forest_name, f.range_code FROM m_forest f,  m_range r WHERE f.range_code=r.range_code AND r.division_code='".$_SESSION['division']."' AND f.status_cd='A'",ARRAY_A);
 			 
@@ -214,7 +214,12 @@
 			  		}else
                 	{
                 		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Lots</h1> <table> <tr> <td>Lot No</td> <td>Lot Description</td> <td>Forest</td> <td>Status</td> <td>Action</td></tr>"); 
-                		$lots = $db->get_results("SELECT * FROM m_lot WHERE division_code='".$_SESSION['division']."' GROUP BY lot_no" ,ARRAY_A);
+                		if($_SESSION['role']=="sysadmin")
+                		{
+                			$lots = $db->get_results("SELECT * FROM m_lot WHERE division_code='".$_SESSION['division']."' GROUP BY lot_no" ,ARRAY_A);
+                		}else{
+                			$lots = $db->get_results("SELECT * FROM m_lot WHERE division_code='".$_SESSION['division']."' AND status_cd<>'D' GROUP BY lot_no" ,ARRAY_A);
+                		}
 
                 		
 				         foreach ( $lots as $lot )

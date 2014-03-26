@@ -77,14 +77,14 @@
 			     <?php
 			     	if($action=="report")
 			     	{
-			     		$reportData = $db->get_results("SELECT unit_code, lot_no, forest_code, sum(blazes_received) as total_blazes_received, proposed_yield, approved_yield, season_year from t_proposed_yield_form_blazes WHERE season_year='".$_POST['season_year']."' GROUP BY lot_no",ARRAY_A);
+			     		$reportData = $db->get_results("SELECT unit_code, lot_no, forest_code, sum(blazes_received) as total_blazes_received, proposed_yield, approved_yield, season_year from t_proposed_yield_form_blazes WHERE season_year='".$_POST['season_year']."' AND division_code='".$_SESSION['division']."' GROUP BY lot_no",ARRAY_A);
 			     		$index=1; 
 			     		$total=0;
 			     		//$_POST['season_year'] 
 			            
 			     		echo("<div class='CSSTableGenerator'>");
 			     		echo("<h2>Himachal Pradesh State Forest Development Corporation Limited</h2>");
-			            echo("<h2>Forest Working Devision ".$_SESSION['division']." </h2>");
+			            echo("<h2>Forest Working Division ".$_SESSION['division']." </h2>");
 			     		echo("<h1>Statement Showing The Detail of Proposed Resin Extraction Yield Per Section of Resin Lots for Season ".$_POST['season_year']."</h1>"); 
 			            echo("<table class='reportTable'> <tr class='headRow'> <td>Sr. No.</td> <td>Name of Unit</td> <td>Lot No</td> <td>No of Blazes</td>");
 			            $common->getLastThreeSeasonYearCols($_POST['season_year']); 

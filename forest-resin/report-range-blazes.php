@@ -77,14 +77,14 @@
 			     <?php
 			     	if($action=="report")
 			     	{
-			     		$reportData = $db->get_results("SELECT range_code, sum(blazes_received) as total_blazes_received, season_year from t_blazes_for_tapping WHERE season_year='".$_POST['season_year']."' GROUP BY range_code",ARRAY_A);
+			     		$reportData = $db->get_results("SELECT range_code, sum(blazes_received) as total_blazes_received, season_year from t_blazes_for_tapping WHERE season_year='".$_POST['season_year']."' AND division_code='".$_SESSION['division']."' AND status_cd<>'D' GROUP BY range_code",ARRAY_A);
 			     		$index=1; 
 			     		$total=0;
 			     		//$_POST['season_year'] 
 			            
 			     		echo("<div class='CSSTableGenerator'>");
 			     		echo("<h2>Himachal Pradesh State Forest Development Corporation Limited</h2>");
-			            echo("<h2>Forest Working Devision ".$_SESSION['division']." </h2>");
+			            echo("<h2>Forest Working Division ".$_SESSION['division']." </h2>");
 			     		echo("<h1>Range Wise Detail of Resin Blazes Taken Over from Forest Department for Extraction During Season ".$_POST['season_year']."</h1>"); 
 			            echo("<table class='reportTable'> <tr class='headRow'> <td>Sr. No.</td> <td>Range</td> <td>No of Blazes</td> <td>Taking Over Date</td></tr>");
 			            foreach ($reportData as $data )

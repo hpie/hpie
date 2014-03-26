@@ -174,7 +174,12 @@
 			  		}else
                 	{
                 		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Forest DFOs</h1> <table> <tr> <td>DFO Code</td> <td>DFO Name</td> <td>DFO</td> <td>Status</td> <td>Action</td></tr>"); 
-                		$dfos = $db->get_results("SELECT * FROM m_dfo WHERE division_code='".$_SESSION['division']."' ORDER BY dfo_name" ,ARRAY_A);
+                		if($_SESSION['role']=="sysadmin")
+                		{
+                			$dfos = $db->get_results("SELECT * FROM m_dfo WHERE division_code='".$_SESSION['division']."' ORDER BY dfo_name" ,ARRAY_A);
+                		} else{
+                			$dfos = $db->get_results("SELECT * FROM m_dfo WHERE division_code='".$_SESSION['division']."' AND status_cd<>'D' ORDER BY dfo_name" ,ARRAY_A);
+                		}
 	
 				         foreach ( $dfos as $dfo )
 				         { 

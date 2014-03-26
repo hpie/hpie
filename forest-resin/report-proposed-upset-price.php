@@ -77,14 +77,14 @@
 			     <?php
 			     	if($action=="report")
 			     	{
-			     		$reportData = $db->get_results("SELECT unit_code, lot_no, blazes_received, approved_yield, total_turnout, total_expenditure, rate_calculated, proposed_rate, approved_rate, season_year from  t_proposed_price_for_lot WHERE season_year='".$_POST['season_year']."'",ARRAY_A);
+			     		$reportData = $db->get_results("SELECT unit_code, lot_no, blazes_received, approved_yield, total_turnout, total_expenditure, rate_calculated, proposed_rate, approved_rate, season_year from  t_proposed_price_for_lot WHERE season_year='".$_POST['season_year']."' AND division_code='".$_SESSION['division']."'",ARRAY_A);
 			     		$index=1; 
 			     		$total=0;
 			     		//$_POST['season_year'] 
 			            
 			     		echo("<div class='CSSTableGenerator'>");
 			     		echo("<h2>Himachal Pradesh State Forest Development Corporation Limited</h2>");
-			            echo("<h2>Forest Working Devision ".$_SESSION['division']." </h2>");
+			            echo("<h2>Forest Working Division ".$_SESSION['division']." </h2>");
 			     		echo("<h1>Statement Showing The Detail of Proposed Upset Price of Resin Lots for Season ".$_POST['season_year']."</h1>"); 
 			            echo("<table class='reportTable'> <tr class='headRow'> <td>Sr. No.</td> <td>Lot No</td> <td>No of Blazes</td> <td>Yield Fixed</td> ");
 			            echo("<td>Total Out Turn(Qtl)</td> <td>Total Expenditure of Lot(Rs)</td> <td>Rate per qtl.</td> <td>Rate proposed by DM</td> <td>Rate approved by Director</td></tr>");

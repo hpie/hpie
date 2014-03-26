@@ -354,8 +354,7 @@
 			  		}else
                 	{
                 		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Blazes Received</h1> <table> <tr> <td>Range</td> <td>Unit (DFO)</td> <td>Lot No</td> <td>Forest</td> <td>No of Blazes</td> <td>Season</td> <td>Status</td> <td>Action</td></tr>"); 
-                		$tappings = $db->get_results("SELECT * FROM t_blazes_for_tapping WHERE division_code='".$_SESSION['division']."' ORDER BY season_year, created_dt, lot_no, range_code  ",ARRAY_A);
-
+                		$tappings = $db->get_results("SELECT * FROM t_blazes_for_tapping WHERE division_code='".$_SESSION['division']."' AND status_cd<>'D' ORDER BY season_year, created_dt, lot_no, range_code  ",ARRAY_A);
                 		
 				         foreach ( $tappings as $tapping )
 				         { 

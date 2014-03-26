@@ -241,7 +241,12 @@
 			  		}else
                 	{
                 		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Forests</h1> <table> <tr> <td>Forest Code</td> <td>Forest Name</td> <td>Range</td> <td>RSD</td> <td>RSD Distnace</td><td>Status</td> <td>Action</td></tr>"); 
-                		$forests = $db->get_results("SELECT f.id, f.forest_code, f.forest_name, f.range_code, f.forest_rsd_code, f.forest_rsd_distance, f.status_cd FROM m_forest f,  m_range r WHERE f.range_code=r.range_code AND r.division_code='".$_SESSION['division']."' ORDER BY f.forest_name" ,ARRAY_A);
+                		if($_SESSION['role']=="sysadmin")
+                		{
+                			$forests = $db->get_results("SELECT f.id, f.forest_code, f.forest_name, f.range_code, f.forest_rsd_code, f.forest_rsd_distance, f.status_cd FROM m_forest f,  m_range r WHERE f.range_code=r.range_code AND r.division_code='".$_SESSION['division']."' ORDER BY f.forest_name" ,ARRAY_A);
+                		}else{
+                			$forests = $db->get_results("SELECT f.id, f.forest_code, f.forest_name, f.range_code, f.forest_rsd_code, f.forest_rsd_distance, f.status_cd FROM m_forest f,  m_range r WHERE f.range_code=r.range_code AND r.division_code='".$_SESSION['division']."' AND f.status_cd<>'D' ORDER BY f.forest_name" ,ARRAY_A);
+                		}
 	
 				         foreach ( $forests as $forest )
 				         { 
