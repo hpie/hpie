@@ -237,10 +237,68 @@
 				<?php 
 			  		}else
                 	{
+                ?>
+                	<br />
+                 <?php
+                 	$filterSeasonYear="";
+                 	if($_SESSION['filter']==TRUE)
+                 	{
+                 		$filterLot=$_SESSION['filter-lot'];
+                 		$filterSeasonYear=$_SESSION['filter-season'];
+                 	}
+                 ?>
+                	<form action="receive-blazes.php" method="post" name="blazesForm" id="blazesForm" data-validate="parsley"> 
+						<table class="donotprint" border='1'> 
+							<tr> 
+								<td>Select Lot No. : &nbsp; 
+									<select id="lot_no" name="lot_no" data-required="true" data-error-message="Lot Number is required">
+										<option value=''>Select</option>
+										 <?php 
+										  $lots = $db->get_results("SELECT lot_no, lot_desc FROM m_lot WHERE division_code='".$_SESSION['division']."' AND status_cd='A' GROUP BY lot_no"  ,ARRAY_A);
+					 
+								            foreach ( $lots as $lot )
+								            {
+								            	if($lot['lot_no']==$filterLot)
+								            	{
+								            		echo ("<option value='".$lot['lot_no']."' selected='selected'>".$lot['lot_no']."(".$lot['lot_desc'].")</option>");
+								            	}else
+								            	{
+								            		echo ("<option value='".$lot['lot_no']."'>".$lot['lot_no']."(".$lot['lot_desc'].")</option>");
+								            	}
+								            	
+								            }
+										 ?>
+									</select> &nbsp; 
+									for Year: &nbsp;<?php $common->getSeasonYearList($filterSeasonYear,''); ?> &nbsp; 
+									<input class="submit" id="submit" type="submit" name="action" value="Filter"/>
+									<input name="submitted" type="hidden" id="submitted" value="1" />
+								</td> 
+							</tr> 
+						</table>
+					</form>	
+       
+                	<?php
                 		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Blazes Received</h1>");
                 		 
                 		echo("<table> <tr> <td>Range</td> <td>Unit (DFO)</td> <td>Lot No</td> <td>Forest</td> <td>No of Blazes</td> <td>Season</td> <td>Status</td> <td>Action</td></tr>"); 
-                		$tappings = $db->get_results("SELECT * FROM t_blazes_for_tapping WHERE division_code='".$_SESSION['division']."' ORDER BY season_year, lot_no, range_code",ARRAY_A);
+                		$tappings="";
+                		if($_SESSION['filter']==TRUE)
+                		{
+                			if($_SESSION['role']=="sysadmin")
+                			{
+                				$tappings = $db->get_results("SELECT * FROM t_blazes_for_tapping WHERE division_code='".$_SESSION['division']."' AND lot_no='".$_SESSION['filter-lot']."' AND season_year='".$_SESSION['filter-season']."' ORDER BY season_year, lot_no, range_code" ,ARRAY_A);
+                			}else{
+                				$tappings = $db->get_results("SELECT * FROM t_blazes_for_tapping WHERE division_code='".$_SESSION['division']."' AND lot_no='".$_SESSION['filter-lot']."' AND season_year='".$_SESSION['filter-season']."' AND status_cd<>'D' ORDER BY season_year, lot_no, range_code" ,ARRAY_A);
+                			} 
+                		}else
+                		{
+                			if($_SESSION['role']=="sysadmin")
+                			{
+                				$tappings = $db->get_results("SELECT * FROM t_blazes_for_tapping WHERE division_code='".$_SESSION['division']."' ORDER BY season_year, lot_no, range_code",ARRAY_A);
+                			}else{
+                				$tappings = $db->get_results("SELECT * FROM t_blazes_for_tapping WHERE division_code='".$_SESSION['division']."' AND status_cd<>'D' ORDER BY season_year, lot_no, range_code",ARRAY_A);
+                			}
+                		}
 
                 		
 				         foreach ( $tappings as $tapping )
@@ -288,9 +346,10 @@
 									
 									echo("<input class='actionTxtBut' id='propyield' type='submit' name='action' value='Proposed Yield' title='Enter/View Proposed yield' onClick='setFormAction(\"blazesActionForm_".$tapping['id']."\",\"proposed-yield-blazes.php\")' /> &nbsp;");
 									
-									echo("<input class='actionTxtBut' id='upsertprice' type='submit' name='action' value='Upset Price' title='Enter/View/Calculate Upsert Price' onClick='setFormAction(\"blazesActionForm_".$tapping['id']."\",\"rate-calculation-lot.php\")' /> &nbsp;");
+									//echo("<input class='actionTxtBut' id='upsertprice' type='submit' name='action' value='Upset Price' title='Enter/View/Calculate Upsert Price' onClick='setFormAction(\"blazesActionForm_".$tapping['id']."\",\"rate-calculation-lot.php\")' /> &nbsp;");
+									echo("<input class='actionTxtBut' id='upsertprice' type='submit' name='action' value='Upset Price' title='Enter/View/Calculate Upsert Price' onClick='setFormAction(\"blazesActionForm_".$tapping['id']."\",\"rate-calculation-lot-bylot.php\")' /> &nbsp;");
 									
-									echo("<input class='actionTxtBut' id='upsertprice' type='submit' name='action' value='Proposed Rate' title='Enter/View Proposed rate' onClick='setFormAction(\"blazesActionForm_".$tapping['id']."\",\"proposed-rate-blazes.php\")' />");
+									echo("<input class='actionTxtBut' id='proposedrate' type='submit' name='action' value='Proposed Rate' title='Enter/View Proposed rate' onClick='setFormAction(\"blazesActionForm_".$tapping['id']."\",\"proposed-rate-blazes.php\")' />");
 							 
 			         	 		}// else status
 							?>
