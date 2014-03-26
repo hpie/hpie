@@ -88,7 +88,7 @@
 			            $range="";
 			            $unit="";
 			            $lot="";
-			            $reportData = $db->get_results("SELECT range_code, unit_code, lot_no, forest_code, blazes_received, season_year from t_blazes_for_tapping WHERE season_year='".$_POST['season_year']."'",ARRAY_A);
+			            $reportData = $db->get_results("SELECT range_code, unit_code, lot_no, forest_code, blazes_received, season_year from t_blazes_for_tapping WHERE season_year='".$_POST['season_year']."' AND division_code='".$_SESSION['division']."' AND status_cd<>'D' ",ARRAY_A);
 			            foreach ($reportData as $data )
 			            {
 			            	

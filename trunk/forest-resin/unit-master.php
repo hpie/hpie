@@ -173,7 +173,12 @@
 			  		}else
                 	{
                 		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Units</h1> <table> <tr> <td>Unit Code</td> <td>Unit Name</td> <td>Status</td> <td>Action</td></tr>"); 
-                		$units = $db->get_results("SELECT * FROM m_unit WHERE division_code='".$_SESSION['division']."' ORDER BY unit_name" ,ARRAY_A);
+                		if($_SESSION['role']=="sysadmin")
+                		{
+                			$units = $db->get_results("SELECT * FROM m_unit WHERE division_code='".$_SESSION['division']."' ORDER BY unit_name" ,ARRAY_A);
+                		}else{
+                			$units = $db->get_results("SELECT * FROM m_unit WHERE division_code='".$_SESSION['division']."' AND status_cd<>'D' ORDER BY unit_name" ,ARRAY_A);
+                		}
 	
 				         foreach ( $units as $unit )
 				         { 

@@ -19,7 +19,7 @@
 			Header("Location: contractor-master.php");
 		}else if($action=="save")
 		{
-			$db->query("INSERT INTO m_contractor (id, division_code, contractor_code, contractor_fname, contractor_lname, contractor_ffname, contractor_flname, contractor_gender, contractor_address, contractor_po, contractor_teh, contractor_distt, contractor_pin, contractor_phone, contractor_mobile, contractor_class, contractor_valid_dt, created_by) VALUES (NULL, '".$_POST['division_code']."', '".$_POST['contractor_code']."', '".$_POST['contractor_fname']."', '".$_POST['contractor_lname']."', '".$_POST['contractor_ffname']."', '".$_POST['contractor_flname']."', '".$_POST['contractor_gender']."', '".$_POST['contractor_address']."', '".$_POST['contractor_po']."', '".$_POST['contractor_teh']."', '".$_POST['contractor_distt']."', '".$_POST['contractor_pin']."', '".$_POST['contractor_phone']."', '".$_POST['contractor_mobile']."', '".$_POST['contractor_class']."', '".$_POST['contractor_valid_dt']."', '".$_POST['created_by']."')");
+			$db->query("INSERT INTO m_contractor (id, division_code, contractor_code, contractor_fname, contractor_lname, contractor_ffname, contractor_flname, contractor_gender, contractor_address, contractor_po, contractor_teh, contractor_distt, contractor_pin, contractor_phone, contractor_mobile, contractor_class, contractor_valid_dt, created_by) VALUES (NULL, '".$_SESSION['division']."', '".$_POST['contractor_code']."', '".$_POST['contractor_fname']."', '".$_POST['contractor_lname']."', '".$_POST['contractor_ffname']."', '".$_POST['contractor_flname']."', '".$_POST['contractor_gender']."', '".$_POST['contractor_address']."', '".$_POST['contractor_po']."', '".$_POST['contractor_teh']."', '".$_POST['contractor_distt']."', '".$_POST['contractor_pin']."', '".$_POST['contractor_phone']."', '".$_POST['contractor_mobile']."', '".$_POST['contractor_class']."', '".$_POST['contractor_valid_dt']."', '".$_POST['created_by']."')");
 			//$db->debug();
 			if($db->rows_affected>0)
 			{ 
@@ -249,7 +249,12 @@
 			  		}else
                 	{
                 		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Contractors</h1> <table> <tr> <td>Reg No</td> <td>First Name</td> <td>Last Name</td> <td>Class</td> <td>Valid Till</td> <td>Phone</td><td>Status</td> <td>Action</td></tr>"); 
-                		$contractors = $db->get_results("SELECT * FROM m_contractor WHERE division_code='".$_SESSION['division']."' ORDER BY contractor_fname, contractor_lname, contractor_class" ,ARRAY_A);
+                		if($_SESSION['role']=="sysadmin")
+                		{
+                			$contractors = $db->get_results("SELECT * FROM m_contractor WHERE division_code='".$_SESSION['division']."' ORDER BY contractor_fname, contractor_lname, contractor_class" ,ARRAY_A);
+                		}else{
+                			$contractors = $db->get_results("SELECT * FROM m_contractor WHERE division_code='".$_SESSION['division']."' AND status_cd<>'D' ORDER BY contractor_fname, contractor_lname, contractor_class" ,ARRAY_A);
+                		}
 	
 				         foreach ( $contractors as $contractor )
 				         { 

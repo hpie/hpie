@@ -184,7 +184,12 @@
 			  		}else
                 	{
                 		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Forest RSD</h1> <table> <tr> <td>Forest RSD Code</td> <td>Forest RSD Name</td> <td>Status</td> <td>Action</td></tr>"); 
-                		$forestRsds = $db->get_results("SELECT fr.id, fr.forest_rsd_code, fr.forest_rsd_name, fr.status_cd FROM m_forest_rsd fr WHERE fr.division_code='".$_SESSION['division']."' ORDER BY fr.forest_rsd_name" ,ARRAY_A);
+                		if($_SESSION['role']=="sysadmin")
+                		{
+                			$forestRsds = $db->get_results("SELECT fr.id, fr.forest_rsd_code, fr.forest_rsd_name, fr.status_cd FROM m_forest_rsd fr WHERE fr.division_code='".$_SESSION['division']."' ORDER BY fr.forest_rsd_name" ,ARRAY_A);
+                		}else{
+                			$forestRsds = $db->get_results("SELECT fr.id, fr.forest_rsd_code, fr.forest_rsd_name, fr.status_cd FROM m_forest_rsd fr WHERE fr.division_code='".$_SESSION['division']."' AND fr.status_cd<>'D' ORDER BY fr.forest_rsd_name" ,ARRAY_A);
+                		}
 	
 				         foreach ( $forestRsds as $forestRsd )
 				         { 
