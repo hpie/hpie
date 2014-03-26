@@ -117,7 +117,7 @@
                         
                      </div>
                  </h1>
-       
+                 
                 <br />
                 <?php
                 	if($action=="create")
@@ -188,8 +188,38 @@
 				<?php 
 			  		}else
                 	{
-                		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Schedule Rates Master</h1> <form> <span> </span> <table> <tr> <td>Rate Code</td> <td>Rate Name</td> <td>Rate Description</td> <td>Current Rate</td> <td>Status</td> <td>Action</td></tr>"); 
-                		$srates = $db->get_results("SELECT * FROM m_schedule_rate WHERE division_code='".$_SESSION['division']."' ORDER BY srate_name" ,ARRAY_A);
+                	?>
+                	<br />
+                 <?php
+                 	$filterSeasonYear="";
+                 	if($_SESSION['filter']==TRUE)
+                 	{
+                 		$filterSeasonYear=$_SESSION['filter-season'];
+                 	}
+                 ?>
+                	<form action="srate-master.php" method="post" name="blazesReportForm" id="blazesReportForm"> 
+						<table class="donotprint" border='1'> 
+							<tr> 
+								<td>Select Season/Year of Report: &nbsp; 
+									<?php $common->getSeasonYearList($filterSeasonYear,''); ?> &nbsp; 
+									<input class="submit" id="submit" type="submit" name="action" value="Filter"/>
+									<input name="submitted" type="hidden" id="submitted" value="1" />
+								</td> 
+							</tr> 
+						</table>
+					</form>	
+       
+                	<?php 	
+                		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Schedule Rates Master</h1> <form> <span> </span> <table> <tr> <td>Rate Code</td> <td>Rate Name</td> <td>Rate Description</td> <td>Current Rate</td> <td>Status</td> <td>Season</td> <td>Action</td></tr>"); 
+                		$srates="";
+                		if($_SESSION['filter']==TRUE)
+                		{
+                			$srates = $db->get_results("SELECT * FROM m_schedule_rate WHERE division_code='".$_SESSION['filter-division']."' AND season_year='".$_SESSION['filter-season']."' ORDER BY srate_name" ,ARRAY_A);
+                		}else
+                		{
+                			$srates = $db->get_results("SELECT * FROM m_schedule_rate WHERE division_code='".$_SESSION['division']."' ORDER BY season_year, srate_name" ,ARRAY_A);	
+                		}
+                		
 	
 				         foreach ( $srates as $srate )
 				         { 
@@ -197,11 +227,12 @@
 			         	 	echo(" <td>".$srate['srate_code']."</td> <td>".$srate['srate_name']."</td>");
 				         	echo(" <td>".$srate['srate_desc']."</td> <td>".$srate['srate']."</td>");
 				         	echo("<td>".$srate['status_cd']."</td>");
+				         	echo("<td>".date('Y', strtotime($srate['season_year']))."</td>");
 				         	
 				         	echo(" <td>");
 				         	
 			     ?>
-			     			<form style="margin:0px; border:0px; background-color:inherit;" action="srate-master.php" method="post" id="rangeActionForm">
+			     			<form style="margin:0px; border:0px; background-color:inherit;" action="srate-master.php" method="post" id="srateActionForm">
 							<!-- Create row specific actions -->
 			     			<?php 
 								if($srate['status_cd']=="D")
@@ -217,7 +248,7 @@
 			         	 		
 				         	 		echo("<input class='editImgBut' id='editlot' type='submit' name='action' value='Edit' title='Edit this record'/> &nbsp;");
 									
-									echo("<input class='deleteImgBut' id='deletelot' type='submit' name='action' value='Delete' title='Mark this record as deleted' />");
+									//echo("<input class='deleteImgBut' id='deletelot' type='submit' name='action' value='Delete' title='Mark this record as deleted' />");
 							 
 			         	 		}// else status
 							?>

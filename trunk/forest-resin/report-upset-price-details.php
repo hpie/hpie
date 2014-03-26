@@ -174,6 +174,8 @@
 				     			}else
 				     			{
 				     				$eowArray  =  $common->getExpenditureOnWork($eow['rate_calculation_for_lot_id'], $eow['forest_code'], $eow['eow_code']);
+				     				$eowArray['blazes_received']=$reportData['total_blazes'];
+				     				$eowArray['exp_crop_setting']=round((($reportData['total_blazes']*$eowArray['cost_crop_setting'])/1000),2);
 				     				break;	
 				     			}	
 			            	}
@@ -182,7 +184,7 @@
 			            		$index=1;
 			            	}
 			            	$eowArray['distance_to_rsd']=$eowArray['distance_to_rsd']/$index;
-			            	echo("<br />");
+			            	//echo("<br />");
 				     		echo("<div class='divTable'>");
 				     		echo("<div class='divRow'> <span class='divCellLeft'></span> <span class='divCellLeft'><b>1. Expenditure on Work </b></span> <span class='divCellLeft'></span></div>");
 				     		echo("<div class='divRow'> <span class='divCellLeft'></span> <span class='divCellLeft'></span> <span class='divCellLeft'>Amount</span> </div>" );
@@ -194,9 +196,10 @@
 							echo("<div class='divRow'> <span class='divCellLeft'>VI)</span> <span class='divCellLeft'>Carriage of  <b>".$eowArray['turnout_carriage_manual_rsd']."</b> qtls of extracted resin by Manual from forest to RSD over a distance of <b>".$eowArray['dist_carriage_manual_rsd']."</b> km @Rs. <b>".$eowArray['cost_carriage_manual_rsd']."</b> per km </span> <span class='divCellRightBorder'>".$eowArray['exp_carriage_manual_rsd']."</span> </div>" );
 							echo("<div class='divRow'> <span class='divCellLeft'>VII)</span> <span class='divCellLeft'>Carriage of  <b>".$eowArray['turnout_carriage_tractor_rsd']."</b> qtls of extracted resin by Tractor from forest to RSD over a distance of <b>".$eowArray['dist_carriage_tractor_rsd']."</b> km @Rs. <b>".$eowArray['cost_carriage_tractor_rsd']."</b> per km </span> <span class='divCellRightBorder'>".$eowArray['exp_carriage_tractor_rsd']."</span> </div>" );
 							echo("<div class='divRow'> <span class='divCellLeft'>VIII)</span> <span class='divCellLeft'>Carriage of  <b>".$eowArray['turnout_carriage_other_rsd']."</b> qtls of extracted resin by other means from forest to RSD over a distance of <b>".$eowArray['dist_carriage_other_rsd']."</b> km @Rs. <b>".$eowArray['cost_carriage_other_rsd']."</b> per km </span> <span class='divCellRightBorder'>".$eowArray['exp_carriage_other_rsd']."</span> </div>" );
-							echo("<div class='divRow'> <span class='divCellLeft'>IX)</span> <span class='divCellLeft'>Mate comission @ Rs <b>".$eowArray['cost_mate_commission']."</b> per qtl for <b>".$eowArray['turnout']."</b> qtls extraced resin </span> <span class='divCellRightBorder'>".$eowArray['exp_mate_commission']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeftBorder'>Total(I to IX):</span> <span class='divCellRightBorder'>".$reportData['total_eow']."</span></div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
+							echo("<div class='divRow'> <span class='divCellLeft'>IX)</span> <span class='divCellLeft'>Transportation to Distance of   <b>".$eowArray['dist_transportation']."</b> km of extracted resin @ Rs. <b>".$eowArray['cost_transportation_initial_25']."</b> for initial 25 km and @Rs. <b>".$eowArray['cost_transportation_per_km']."</b> per km there after </span> <span class='divCellRightBorder'>".$eowArray['exp_transportation']."</span> </div>" );
+							echo("<div class='divRow'> <span class='divCellLeft'>X)</span> <span class='divCellLeft'>Mate comission @ Rs <b>".$eowArray['cost_mate_commission']."</b> per qtl for <b>".$eowArray['turnout']."</b> qtls extraced resin </span> <span class='divCellRightBorder'>".$eowArray['exp_mate_commission']."</span> </div>" );
+				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeftBorder'>Total(I to X):</span> <span class='divCellRightBorder'>".$reportData['total_eow']."</span></div>");
+				     		//echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
 				     		
 				     		
 			     			foreach ($comData as $com )
@@ -208,9 +211,10 @@
 				     				if(empty($comArray))
 				     				{
 				     					$comArray = $comCurrent;	
-				     					
+				     					//print_r($comCurrent);
 				     				}else 
 				     				{
+				     					$comArray['blazes_received']+=$comCurrent['blazes_received'];
 				     					$comArray['exp_blaze_frame']+=$comCurrent['exp_blaze_frame'];
 				     					$comArray['exp_bark_shaver']+=$comCurrent['exp_bark_shaver'];
 				     					$comArray['exp_groove_cutter']+=$comCurrent['exp_groove_cutter'];
@@ -287,7 +291,6 @@
 				     		echo("<div class='divRow'> <span class='divCellLeft'>XIV)</span> <span class='divCellLeft'>Charcoal <b>".$comArray['qty_charcoal']."</b> kg. @Rs. <b>".$comArray['cost_charcoal']."</b> per kg </span> <span class='divCellRightBorder'>".$comArray['exp_charcoal']."</span> </div>" );
 				     		echo("<div class='divRow'> <span class='divCellLeft'>XV)</span> <span class='divCellLeft'>Material for sharping of tool @Rs. <b>".$comArray['cost_tool_sharpen']."</b> per Mazdoor </span> <span class='divCellRightBorder'>".$comArray['exp_tool_sharpen']."</span> </div>" );
 				     		
-				     		
 				     		echo("<div class='divRow'> <span class='divCellLeft'>XVI)</span> <span class='divCellLeft'>Blower <b>".$comArray['qty_blower']."</b> @Rs. <b>".$comArray['cost_blower']."</b>.  per depot </span> <span class='divCellRightBorder'>".$comArray['exp_blower']."</span> </div>" );
 				     		echo("<div class='divRow'> <span class='divCellLeft'>XVII)</span> <span class='divCellLeft'>Solder Iron<b>".$comArray['qty_solder_iron']."</b> @Rs. <b>".$comArray['cost_solder_iron']."</b> per depot </span> <span class='divCellRightBorder'>".$comArray['exp_solder_iron']."</span> </div>" );
 				     		echo("<div class='divRow'> <span class='divCellLeft'>XVII)</span> <span class='divCellLeft'>Paint <b>".$comArray['qty_paint']."</b> lts. @Rs. <b>".$comArray['cost_paint']."</b> per depot </span> <span class='divCellRightBorder'>".$comArray['exp_paint']."</span> </div>" );
@@ -299,14 +302,12 @@
 				     		echo("<div class='divRow'> <span class='divCellLeft'>XXIV)</span> <span class='divCellLeft'>Other <b>".$comArray['qty_other']."</b> @Rs. <b>".$comArray['cost_other']."</b> per depot </span> <span class='divCellRightBorder'>".$comArray['exp_other']."</span> </div>" );
 				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeftBorder'>Total(I to XXIV):</span> <span class='divCellRightBorder'>".$reportData['total_com']."</span></div>");
 				     		
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
+				     		//echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
 				     		
 				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeftBorder'>Total Expenditure(1+2):</span> <span class='divCellRightBorder'>".$reportData['total_expenditure']."</span></div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
+				     		//echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
 				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeftBorder'>Rate per Qtl:</span> <span class='divCellRightBorder'>".$reportData['rate_calculated']."</span></div>");
 				     		
-							echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
 				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
 				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
 				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");				     		
@@ -321,7 +322,6 @@
 				 ?>
 				 
 				 	 <div>
-              			<br /><br />
               			<center>
               			<table class="signTable">
               				
@@ -338,9 +338,9 @@
               			</table>
               			</center>		
               		</div>
-              		 -->
+              		 
               		<div class="donotprint">
-              			<br /><br />
+              			<br />
               			<form action="report-upset-price-details.php" method="post" name="reportForm" id="reportForm">
 							<table class="donotprint" width="100%">
 								<tr>

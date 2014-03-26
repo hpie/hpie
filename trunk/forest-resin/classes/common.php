@@ -100,6 +100,37 @@ class common
 		
 	}
 	
+	function getContractorList($contractor_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		global $db;
+		$contractors = $db->get_results("SELECT * FROM m_contractor WHERE division_code='".$this->division."' AND status_cd='A' ORDER BY contractor_fname" ,ARRAY_A);
+		//$saesonList = array("Peter"=>"35","Ben"=>"37","Joe"=>"43");
+		
+		$selectList='<select id="contractor_code" name="contractor_code" '.$callJs.' data-required="true" data-error-message="Contractor is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+	 		foreach ( $contractors as $contractor )
+			{
+				if($contractor['contractor_code']==$contractor_code)
+	        	{
+	        		$selectList.='<option value="'.$contractor['contractor_code'].'">'.$contractor['contractor_fname'].', '.$contractor['contractor_lname'].' ['.$contractor['contractor_code'].'] </option>';
+	        	}else 
+	        	{
+	        		$selectList.='<option value="'.$contractor['contractor_code'].'">'.$contractor['contractor_fname'].', '.$contractor['contractor_lname'].' ['.$contractor['contractor_code'].'] </option>';	
+	        	}
+				
+			} 
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}
+	
 	function getSeasonYearList($season_year, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -326,7 +357,15 @@ class common
 	function getExpenditureOnWork($rcal_id, $forest_code, $eow_code)
 	{
 		global $db;
-		$eow = $db->get_row("SELECT * FROM t_expenditure_on_work where rate_calculation_for_lot_id='".$rcal_id."' AND forest_code='".$forest_code."' AND eow_code='".$eow_code."'",ARRAY_A);
+		$eow=null;
+		if($forest_code=="")
+		{
+			$eow = $db->get_row("SELECT * FROM t_expenditure_on_work where rate_calculation_for_lot_id='".$rcal_id."' AND eow_code='".$eow_code."'",ARRAY_A);	
+		}else
+		{
+			$eow = $db->get_row("SELECT * FROM t_expenditure_on_work where rate_calculation_for_lot_id='".$rcal_id."' AND forest_code='".$forest_code."' AND eow_code='".$eow_code."'",ARRAY_A);
+		}
+		
 		$eowArray=array();
 		if(isset($eow))
         {
@@ -378,6 +417,10 @@ class common
 			$eowArray['exp_soldering_of_resin']="";
 			$eowArray['cost_mate_commission']="";
 			$eowArray['exp_mate_commission']="";
+			$eowArray['cost_transportation_initial_25']="";
+			$eowArray['cost_transportation_per_km']="";
+			$eowArray['dist_transportation']="";
+			$eowArray['exp_transportation']="";
 			$eowArray['season_year']="";
 			$eowArray['status_cd']="A";
 			//$eowArray['created_dt']="";
@@ -393,7 +436,15 @@ class common
 	function getCostOfMaretial($rcal_id, $forest_code, $com_code)
 	{
 		global $db;
-		$com = $db->get_row("SELECT * FROM t_cost_of_material where rate_calculation_for_lot_id='".$rcal_id."' AND forest_code='".$forest_code."' AND com_code='".$com_code."'",ARRAY_A);
+		$com = null;
+		if($forest_code=="")
+		{
+			$com = $db->get_row("SELECT * FROM t_cost_of_material where rate_calculation_for_lot_id='".$rcal_id."' AND com_code='".$com_code."'",ARRAY_A);
+		}else
+		{
+			$com = $db->get_row("SELECT * FROM t_cost_of_material where rate_calculation_for_lot_id='".$rcal_id."' AND forest_code='".$forest_code."' AND com_code='".$com_code."'",ARRAY_A);	
+		}
+		
 		$comArray=array();
 		if(isset($com))
         {
@@ -486,7 +537,7 @@ class common
 	{
 		//$rcal_id, $forest_code, $eow_code
 	    //get schedule rates
-	    
+	    //$dist_transportation=0;
 		$scheduleRate=$this->getAllScheduleRates($season_year);
 		$eowCalArray=array();
 		
@@ -499,33 +550,34 @@ class common
 		$eowCalArray['exp_crop_setting']=round((($total_blazes*$scheduleRate['csps-1000'])/1000),2);
 		
 				
-		if($eowCalArray['zone_code']=="c")
+	if($eowCalArray['zone_code']=="c")
 		{
-			if($total_turnout<21)
+			//if($total_turnout<21)
+			if($yield_fixed<21) 
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-c-20'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-c-20']);
-			}else if($total_turnout<26)
+			}else if($yield_fixed<26)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-c-25'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-c-25']);
-			}else if($total_turnout<31)
+			}else if($yield_fixed<31)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-c-30'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-c-30']);
-			}else if($total_turnout<36)
+			}else if($yield_fixed<36)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-c-35'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-c-35']);
-			}else if($total_turnout<41)
+			}else if($yield_fixed<41)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-c-40'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-c-40']);
-			}else if($total_turnout<46)
+			}else if($yield_fixed<46)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-c-45'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-c-45']);
-			}else if($total_turnout>45)
+			}else if($yield_fixed>45)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-c-50'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-c-50']);
@@ -533,97 +585,97 @@ class common
 			
 		}else if($eowCalArray['zone_code']=="h")
 		{
-			if($total_turnout<21)
+			if($yield_fixed<21)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-h-20'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-h-20']);
-			}else if($total_turnout<26)
+			}else if($yield_fixed<26)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-h-25'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-h-25']);
-			}else if($total_turnout<31)
+			}else if($yield_fixed<31)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-h-30'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-h-30']);
-			}else if($total_turnout<36)
+			}else if($yield_fixed<36)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-h-35'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-h-35']);
-			}else if($total_turnout<41)
+			}else if($yield_fixed<41)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-h-40'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-h-40']);
-			}else if($total_turnout<46)
+			}else if($yield_fixed<46)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-h-45'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-h-45']);
-			}else if($total_turnout>45)
+			}else if($yield_fixed>45)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-h-50'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-h-50']);
 			}
 		}else if($eowCalArray['zone_code']=="mh")
 		{
-			if($total_turnout<21)
+			if($yield_fixed<21)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mh-20'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mh-20']);
-			}else if($total_turnout<26)
+			}else if($yield_fixed<26)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mh-25'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mh-25']);
-			}else if($total_turnout<31)
+			}else if($yield_fixed<31)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mh-30'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mh-30']);
-			}else if($total_turnout<36)
+			}else if($yield_fixed<36)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mh-35'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mh-35']);
-			}else if($total_turnout<41)
+			}else if($yield_fixed<41)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mh-40'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mh-40']);
-			}else if($total_turnout<46)
+			}else if($yield_fixed<46)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mh-45'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mh-45']);
-			}else if($total_turnout>45)
+			}else if($yield_fixed>45)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mh-50'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mh-50']);
 			}
 		}else if($eowCalArray['zone_code']=="mhs")
 		{
-			if($total_turnout<21)
+			if($yield_fixed<21)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mhs-20'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mhs-20']);
-			}else if($total_turnout<26)
+			}else if($yield_fixed<26)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mhs-25'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mhs-25']);
-			}else if($total_turnout<31)
+			}else if($yield_fixed<31)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mhs-30'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mhs-30']);
-			}else if($total_turnout<36)
+			}else if($yield_fixed<36)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mhs-35'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mhs-35']);
-			}else if($total_turnout<41)
+			}else if($yield_fixed<41)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mhs-40'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mhs-40']);
-			}else if($total_turnout<43)
+			}else if($yield_fixed<43)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mhs-42'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mhs-42']);
-			}else if($total_turnout<46)
+			}else if($yield_fixed<46)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mhs-45'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mhs-45']);
-			}else if($total_turnout>45)
+			}else if($yield_fixed>45)
 			{
 				$eowCalArray['cost_extr']=$scheduleRate['yps-mhs-50'];
 				$eowCalArray['exp_extr_turnout']=($turnout*$scheduleRate['yps-mhs-50']);
@@ -671,6 +723,21 @@ class common
 			$eowCalArray['exp_mate_commission']=0;
 		}
 		
+		$eowCalArray['cost_transportation_initial_25']=$scheduleRate['tpt-25'];
+		$eowCalArray['cost_transportation_per_km']=$scheduleRate['tpt-r-1'];
+		$eowCalArray['dist_transportation']="0";
+		if($eowCalArray['dist_transportation']>25) //  
+		{
+			$eowCalArray['exp_transportation']=round(((($eowCalArray['dist_transportation']-25)*$eowCalArray['cost_transportation_per_km'])+$eowCalArray['cost_transportation_initial_25'])*$turnout,2);
+		}else
+		{
+			$eowCalArray['exp_transportation']=round($eowCalArray['cost_transportation_initial_25']*$turnout,2);
+			if($eowCalArray['dist_transportation']<=0)
+			{
+				$eowCalArray['exp_transportation']="0";	
+			}				
+		}
+			
 		$eowCalArray['season_year']=$season_year;
 		return $eowCalArray;
 	}
@@ -704,51 +771,60 @@ class common
 		$comCalArray['exp_lips']=round((($comCalArray['blazes_received']*$comCalArray['cost_lips'])),2);
 		$comCalArray['cost_wire_nails_5cm']=$scheduleRate['cwrnls-5-1'];
 		$comCalArray['qty_wire_nails_5cm']="0";
-		$comCalArray['exp_wire_nails_5cm']="";
+		$comCalArray['exp_wire_nails_5cm']="0";
 		$comCalArray['cost_wire_nails_2cm']=$scheduleRate['cwrnls-2-1'];
 		$comCalArray['qty_wire_nails_2cm']="0";
-		$comCalArray['exp_wire_nails_2cm']="";
+		$comCalArray['exp_wire_nails_2cm']="0";
 		$comCalArray['cost_solder']=$scheduleRate['csldr-1'];
 		$comCalArray['qty_solder']="0";
-		$comCalArray['exp_solder']="";
+		$comCalArray['exp_solder']="0";
 		$comCalArray['cost_naushader']=$scheduleRate['cnudr-1'];
 		$comCalArray['qty_naushader']="0";
-		$comCalArray['exp_naushader']="";
+		$comCalArray['exp_naushader']="0";
 		$comCalArray['cost_charcoal']=$scheduleRate['cchcl-1'];
 		$comCalArray['qty_charcoal']="0";
-		$comCalArray['exp_charcoal']="";
+		$comCalArray['exp_charcoal']="0";
 		$comCalArray['cost_tool_sharpen']=$scheduleRate['cshpn-1'];
 		$comCalArray['cost_blower']=$scheduleRate['cblowr-1'];
 		$comCalArray['qty_blower']="0";
-		$comCalArray['exp_blower']="";
+		$comCalArray['exp_blower']="0";
 		$comCalArray['cost_solder_iron']=$scheduleRate['csldriron-1'];
 		$comCalArray['qty_solder_iron']="0";
-		$comCalArray['exp_solder_iron']="";
+		$comCalArray['exp_solder_iron']="0";
 		$comCalArray['cost_paint']=$scheduleRate['cpaint-1'];
 		$comCalArray['qty_paint']="0";
-		$comCalArray['exp_paint']="";
+		$comCalArray['exp_paint']="0";
 		$comCalArray['cost_cylinder_50ml']=$scheduleRate['cmcyl-50'];
 		$comCalArray['qty_cylinder_50ml']="0";
-		$comCalArray['exp_cylinder_50ml']="";
+		$comCalArray['exp_cylinder_50ml']="0";
 		$comCalArray['cost_cylinder_500ml']=$scheduleRate['cmcyl-500'];
 		$comCalArray['qty_cylinder_500ml']="0";
-		$comCalArray['exp_cylinder_500ml']="";
+		$comCalArray['exp_cylinder_500ml']="0";
 		$comCalArray['cost_beaker_500ml']=$scheduleRate['cbeaker-500'];
 		$comCalArray['qty_beaker_500ml']="0";
-		$comCalArray['exp_beaker_500ml']="";
+		$comCalArray['exp_beaker_500ml']="0";
 		$comCalArray['cost_beaker_1000ml']=$scheduleRate['cbeaker-1000'];
 		$comCalArray['qty_beaker_1000ml']="0";
-		$comCalArray['exp_beaker_1000ml']="";
+		$comCalArray['exp_beaker_1000ml']="0";
 		$comCalArray['cost_funnel']=$scheduleRate['cfunnel-1'];
 		$comCalArray['qty_funnel']="0";
-		$comCalArray['exp_funnel']="";
+		$comCalArray['exp_funnel']="0";
 		$comCalArray['cost_other']=$scheduleRate['cother-1'];
 		$comCalArray['qty_other']="0";
-		$comCalArray['exp_other']="";
+		$comCalArray['exp_other']="0";
 		$comCalArray['exp_tool_sharpen']=round(($comCalArray['number_of_mazdoor']*$comCalArray['cost_tool_sharpen']),2);
 		
 		return $comCalArray;
 	}	
+	
+	
+	function getBlazesToBeTapped($wprog_id, $lot_no)
+	{
+		global $db;
+		$blazes_tapped = $db->get_row("SELECT sum(blazes_tapped) as blazes_tapped FROM  t_monthly_resin_collection WHERE work_progress_for_lot_id='".$wprog_id."' AND lot_no='".$lot_no."'" ,ARRAY_A);
+		
+		return $blazes_tapped['blazes_tapped'];
+	}
 		
 	
 }
