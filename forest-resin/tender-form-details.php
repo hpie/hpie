@@ -1,4 +1,4 @@
-<?php
+   <?php
 	session_start();
 	//include config
 	include "config.php";
@@ -7,17 +7,80 @@
 	$reportSeason="";
 	$zoneCode="";
 	$emMode="";	
+	
 	if(isset($_POST['submitted']))
 	{
-		if($action=="report")
+		if($action=="update")
+		{
+			$db->query("UPDATE t_tender_form_resin SET unit_code='".$_POST['unit_code']."', tender_form_no='".$_POST['tender_form_no']."', tender_notice_no='".$_POST['tender_notice_no']."', tender_date='".$_POST['tender_date']."', tender_value='".$_POST['tender_value']."', lot_no='".$_POST['lot_no']."', blazes_received='".$_POST['blazes_received']."', yield_fixed='".$_POST['yield_fixed']."', tender_slab='".$_POST['tender_slab']."', total_turnout='".$_POST['total_turnout']."', zone_code='".$_POST['zone_code']."', cost_extr='".$_POST['cost_extr']."', cost_carriage_mule_rsd='".$_POST['cost_carriage_mule_rsd']."', cost_carriage_manual_rsd='".$_POST['cost_carriage_manual_rsd']."', cost_carriage_tractor_rsd='".$_POST['cost_carriage_tractor_rsd']."', cost_carriage_other_rsd='".$_POST['cost_carriage_other_rsd']."', cost_crop_setting='".$_POST['cost_crop_setting']."', total_com='".$_POST['total_com']."', cost_tool='".$_POST['cost_tool']."', contractor_code='".$_POST['contractor_code']."', contractor_class='".$_POST['contractor_class']."', contractor_valid_dt='".$_POST['contractor_valid_dt']."', rate_offered='".$_POST['rate_offered']."', negotiated_rate='".$_POST['negotiated_rate']."', em_mode='".$_POST['em_mode']."', em_desc='".$_POST['em_desc']."', em_date='".$_POST['em_date']."', em_deposited='".$_POST['em_deposited']."', season_year='".$_POST['season_year']."', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
+			//$db->debug();
+			if($db->rows_affected>0)
+			{ 
+				$_SESSION['msg']="Tender Form Details Successfully Updated.";
+			}else
+			{
+				$_SESSION['msg']="Problem updating tender form details. Please try again.";
+			}
+			Header("Location: tender-form-details.php");
+		}else if($action=="save")
+		{
+			$db->query("INSERT INTO t_tender_form_resin (id, division_code, unit_code, tender_form_no, tender_notice_no, tender_date, tender_value, lot_no, blazes_received, yield_fixed, tender_slab, total_turnout, zone_code, cost_extr, cost_carriage_mule_rsd, cost_carriage_manual_rsd, cost_carriage_tractor_rsd, cost_carriage_other_rsd, cost_crop_setting, total_com, cost_tool, contractor_code, contractor_class, contractor_valid_dt, rate_offered, em_mode, em_desc, em_date, em_deposited, season_year, created_by) VALUES (NULL, '".$_SESSION['division']."', '".$_POST['unit_code']."', '".$_POST['tender_form_no']."', '".$_POST['tender_notice_no']."', '".$_POST['tender_date']."', '".$_POST['tender_value']."', '".$_POST['lot_no']."', '".$_POST['blazes_received']."', '".$_POST['yield_fixed']."', '".$_POST['tender_slab']."', '".$_POST['total_turnout']."', '".$_POST['zone_code']."', '".$_POST['cost_extr']."', '".$_POST['cost_carriage_mule_rsd']."', '".$_POST['cost_carriage_manual_rsd']."', '".$_POST['cost_carriage_tractor_rsd']."', '".$_POST['cost_carriage_other_rsd']."', '".$_POST['cost_crop_setting']."', '".$_POST['total_com']."',  '".$_POST['cost_tool']."','".$_POST['contractor_code']."', '".$_POST['contractor_class']."', '".$_POST['contractor_valid_dt']."', '".$_POST['rate_offered']."', '".$_POST['em_mode']."', '".$_POST['em_desc']."', '".$_POST['em_date']."', '".$_POST['em_deposited']."', '".$_POST['season_year']."', '".$_POST['created_by']."')");
+			//$db->debug();
+			if($db->rows_affected>0)
+			{ 
+				$_SESSION['msg']="Tender Form No [".$_POST['tender_form_no']."] Successfully Created.";
+			}else
+			{
+				$_SESSION['msg']="Problem creating tender form details. Please try again.";
+			}
+			Header("Location: tender-form-details.php");
+		}else if($action=="status")
+		{
+			$status="";
+			if($_POST['status_cd'] =="A")
+			{
+				$db->query("UPDATE t_tender_form_resin SET status_cd='I', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
+				$status="Inactive";
+			}else if($_POST['status_cd'] =="I")
+			{
+				$db->query("UPDATE t_tender_form_resin SET status_cd='A', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
+				$status="Active";
+			}
+			//$db->debug();
+			if($db->rows_affected>0)
+			{ 
+				$_SESSION['msg']="Tender Form No [".$_POST['tender_form_no']."] is now set to ".$status.".";
+			}else
+			{
+				$_SESSION['msg']="Problem updating tender form details. Please try again.";
+			}
+			Header("Location: tender-form-details.php");
+		}else if($action=="delete")
+		{
+			$db->query("UPDATE t_tender_form_resin SET status_cd='D', updated_by='".$_POST['updated_by']."', updated_dt=now() WHERE id='".$_POST['rowid']."'");
+			$status="deleted";
+			//$db->debug();
+			if($db->rows_affected>0)
+			{ 
+				$_SESSION['msg']="Tender Form No [".$_POST['tender_form_no']."] is now marked as ".$status.".";
+			}else
+			{
+				$_SESSION['msg']="Problem updating tender form details. Please try again.";
+			}
+			Header("Location: tender-form-details.php");
+		}else if($action=="report")
 		{
 			$action="report";
 		}
-		$reportLot=$_POST['lot_no'];
-		$reportSeason=$_POST['season_year'];
-		//$db->debug();
+		
+		$reportLot=$_SESSION['filter-lot'];
+		$reportSeason=$_SESSION['filter-season'];
+		
+		
+				//$db->debug();
 		
 	}// if submitted
+	
 
 ?>
 
@@ -78,6 +141,8 @@
 						<legend><font size=5 color=#72A545>Crate Tender Entry</font></legend><br />
 							<p style="color:#CC0000"><?php echo $error; ?></p>
 							<div style="margin:10px; 0px; 0px; 0px;">
+								<label for="con_phone">Unit:</label>
+								<?php $common->getUnitList(""); ?>
 								<label for="con_phone">Season Year:</label>
 								<?php $common->getSeasonYearList($reportSeason,''); ?>
 								<label for="con_no">Tender From No:</label>
@@ -87,7 +152,7 @@
 								<label for="con_lname">Tender Date:</label>
 								<input class="textbox"  id="tender_date" type="text" name="tender_date" data-required="true" data-error-message="Tender Date is required" />
 								<label for="con_ffname">Form Cost:</label>
-								<input class="textbox"  id="tender_value" type="text" name="tender_value" data-required="true" data-error-message="Tender Form Cost is required" value="100"/>
+								<input class="textbox"  id="tender_value" type="text" name="tender_value" data-required="true" data-error-message="Tender Form Cost is required"  data-type="number" data-type-number-message="Only number is allowed" value="100"/>
 								
 								<label for="con_llname">Lot No:</label>
 								<select id="lot_no" name="lot_no" data-required="true" data-error-message="Lot Number is required" onchange="loadLotDetailsForTender(this);">
@@ -115,21 +180,11 @@
 								<div id="tender_exp_zone_div"></div>
 								
 								<label for="con_llname">Contractor Code:</label>
-								<select id="contractor_code" name="contractor_code" data-required="true" data-error-message="Contractor is required" onchange="loadDetailsForContractor(this);">
-									<option value=''>Select</option>
-									 <?php 
-									  $contractors = $db->get_results("SELECT * FROM m_contractor WHERE division_code='".$_SESSION['division']."' AND status_cd='A' ORDER BY contractor_fname"  ,ARRAY_A);
-				 
-							            foreach ( $contractors as $contractor )
-							            {
-							            	echo ("<option value='".$contractor['contractor_code']."'>".$contractor['contractor_fname'].", ".$contractor['contractor_lname']." [".$contractor['contractor_code']."] </option>");
-							            }
-									 ?>
-								</select>
+								<?php $common->getContractorList("","loadDetailsForContractor"); ?>
 								<div id="tender_contractor_info_div"></div>
 								
 								<label for="con_add">Rate Offered:</label>
-								<input class="textbox" id="rate_offered" name="rate_offered" data-required="true" data-error-message="Rate Offered is required" />
+								<input class="textbox" id="rate_offered" name="rate_offered" data-required="true" data-error-message="Rate Offered is required" data-type="number" data-type-number-message="Only number is allowed"/>
 								<label for="con_po">EMD Mode:</label>
 								<?php $common->getPaymentModeList($emMode,"setEmDesc"); ?>
 								<label for="con_teh">EMD Draft No:</label>
@@ -137,7 +192,7 @@
 								<label for="con_distt">EMD Date:</label>
 								<input class="textbox" id="em_date" type="text" name="em_date" data-required="true" data-error-message="EMD Date is required"/>
 								<label for="con_pin">Ernest Money Deposited:</label>
-								Rs.<input class="textbox" id="em_deposited" type="text" name="em_deposited"  data-required="true" data-error-message="EMD is required"/>
+								Rs.<input class="textbox" id="em_deposited" type="text" name="em_deposited"  data-required="true" data-error-message="EMD is required" data-type="number" data-type-number-message="Only number is allowed"/>
 								
 													
 								<input name="created_by" type="hidden" id="created_by" value="<?php echo($_SESSION['userid'])?>" />
@@ -151,17 +206,24 @@
 				  	</form>
 				  	<script>
 				  	$j(function() {
-				  		$j( "#contractor_valid_dt" ).datepicker(
+				  		$j( "#em_date" ).datepicker(
 				                 	{ dateFormat: 'yy-mm-dd', 
 					                   showAnim: 'slide', 
 					                   yearRange: '2000:2025' 
 					                });
 					  });
-					</script>
+				  	$j(function() {
+				  		$j( "#tender_date" ).datepicker(
+				                 	{ dateFormat: 'yy-mm-dd', 
+					                   showAnim: 'slide', 
+					                   yearRange: '2000:2025' 
+					                });
+					  });
+				  	</script>
 			  	<?php 
 			  		}else if($action=="edit")
                 	{
-                		$contractor = $db->get_row("SELECT * FROM m_contractor WHERE id='".$_POST['rowid']."'",ARRAY_A);
+                		$tenderFormResin = $db->get_row("SELECT * FROM t_tender_form_resin WHERE id='".$_POST['rowid']."'",ARRAY_A);
                 		                	
               	?>
               		<br />
@@ -170,41 +232,135 @@
 						<legend><font size=5 color=#72A545>Update Tender Enrty</font></legend><br />
 							<p style="color:#CC0000"><?php echo $error; ?></p>
 							<div style="margin:10px; 0px; 0px; 0px;">
+								<label for="con_phone">Unit:</label>
+								<?php $common->getUnitList($tenderFormResin['unit_code']); ?>
+								<label for="con_phone">Season Year:</label>
+								<input class="lblText" readonly="readonly" id="season_year" type="text" name="season_year" data-required="true" data-error-message="Season Year is required" value="<?php echo($tenderFormResin['season_year']);?>"/>  <?php // $common->getSeasonYearList($tenderFormResin['season_year'],''); ?>
+								<label for="con_no">Tender From No:</label>
+								<input class="lblText" readonly="readonly" id="tender_form_no" type="text" name="tender_form_no" data-required="true" data-error-message="Form No is required" value="<?php echo($tenderFormResin['tender_form_no']);?>"/>
+								<label for="con_fname">Notice No:</label>
+								<input class="lblText" readonly="readonly" id="tender_notice_no" type="text" name="tender_notice_no" data-required="true" data-error-message="Notice No is required" value="<?php echo($tenderFormResin['tender_notice_no']);?>"/>
+								<label for="con_lname">Tender Date:</label>
+								<input class="lblText" readonly="readonly" id="tender_date" type="text" name="tender_date" data-required="true" data-error-message="Tender Date is required" value="<?php echo($tenderFormResin['tender_date']);?>"/>
+								<label for="con_ffname">Form Cost:</label>
+								<input class="lblText" readonly="readonly" id="tender_value" type="text" name="tender_value" data-required="true" data-error-message="Tender Form Cost is required"  data-type="number" data-type-number-message="Only number is allowed" value="<?php echo($tenderFormResin['tender_value']);?>"/>
 								
-								<label for="con_no">Contractor reg No:</label>
-								<input  class="lblText" readonly="readonly" id="contractor_code" type="text" name="contractor_code" data-required="true" data-error-message="Reg No is required" value="<?php echo($contractor['contractor_code']);?>"/>
-								<label for="con_fname">First Name:</label>
-								<input class="textbox"  id="contractor_fname" type="text" name="contractor_fname" data-required="true" data-error-message="First Name is required" value="<?php echo($contractor['contractor_fname']);?>"/>
-								<label for="con_lname">Last Name:</label>
-								<input class="textbox"  id="contractor_lname" type="text" name="contractor_lname" data-required="true" data-error-message="Last Name is required" value="<?php echo($contractor['contractor_lname']);?>"/>
-								<label for="con_ffname">Father&apos;s First Name:</label>
-								<input class="textbox"  id="contractor_ffname" type="text" name="contractor_ffname" data-required="true" data-error-message="Father's First Name is required" value="<?php echo($contractor['contractor_ffname']);?>"/>
-								<label for="con_llname">Father&apos;s Last Name:</label>
-								<input class="textbox"  id="contractor_flname" type="text" name="contractor_flname" data-required="true" data-error-message="Father's Last Name is required" value="<?php echo($contractor['contractor_flname']);?>"/>
-								<label for="con_gen">Contractor Gender:</label>
-								<input class="textbox" id="contractor_gender" type="text" name="contractor_gender" data-required="true" data-error-message="Gender is required" value="<?php echo($contractor['contractor_gender']);?>"/>
+								<label for="con_llname">Lot No:</label>
+								<input class="lblText" readonly="readonly" id="lot_no" type="text" name="lot_no" data-required="true" data-error-message="Lot No is required"  value="<?php echo($tenderFormResin['lot_no']);?>"/>
+								<div id="tender_lot_info_div">
+									<table> 
+										<tr>
+									 		<td>
+									 			<label for="con_gen">Number of Blazes:</label>
+												<input class="lblText" readonly="readonly" id="blazes_received" type="text" name="blazes_received" data-required="true" data-error-message="Total Blazes is required" value="<?php echo($tenderFormResin['blazes_received']);?>"/>
+											</td>
+											<td>
+												<label for="con_gen">Yield:</label>
+												<input class="lblText" readonly="readonly" id="yield_fixed" type="text" name="yield_fixed" data-required="true" data-error-message="Yield Fixed is required" value="<?php echo($tenderFormResin['yield_fixed']);?>"/>
+											</td>
+											</tr>
+											<tr>
+											<td>
+												<label for="con_gen">Trunout:</label>
+												<input class="lblText" readonly="readonly" id="total_turnout" type="text" name="total_turnout" data-required="true" data-error-message="Turnout is required" value="<?php echo($tenderFormResin['total_turnout']);?>"/>
+											</td>
+											<td>
+											<label for="con_gen">Cost of Material:</label>
+											<input class="lblText" readonly="readonly" id="total_com" type="text" name="total_com" data-required="true" data-error-message="Cost of Material is required" value="<?php echo($tenderFormResin['total_com']);?>"/>
+											</td>
+											<td>
+											<label for="con_gen">Tool Charges:</label>
+											<input class="lblText" readonly="readonly" id="cost_tool" type="text" name="cost_tool" data-required="true" data-error-message="Cost of Material is required" value="<?php echo($tenderFormResin['cost_tool']);?>"/>
+											</td>
+										</tr> 
+									</table>
+								</div>
 								
-								<label for="con_add">Contractor Address:</label>
-								<textarea class="textbox" id="contractor_address" name="contractor_address" data-required="true" data-error-message="Address is required"><?php echo($contractor['contractor_address']);?></textarea>
-								<label for="con_po">Post Office:</label>
-								<input class="textbox" id="contractor_po" type="text" name="contractor_po" data-required="true" data-error-message="Post Office is required" value="<?php echo($contractor['contractor_po']);?>"/>
-								<label for="con_teh">Tehsil:</label>
-								<input class="textbox" id="contractor_teh" type="text" name="contractor_teh" data-required="true" data-error-message="Tehsil is required" value="<?php echo($contractor['contractor_teh']);?>"/>
-								<label for="con_distt">District:</label>
-								<input class="textbox" id="contractor_distt" type="text" name="contractor_distt" data-required="true" data-error-message="District is required" value="<?php echo($contractor['contractor_distt']);?>"/>
-								<label for="con_pin">Pin:</label>
-								<input class="textbox" id="contractor_pin" type="text" name="contractor_pin" value="<?php echo($contractor['contractor_pin']);?>"/>
-								<label for="con_phone">Phone:</label>
-								<input class="textbox" id="contractor_phone" type="text" name="contractor_phone" value="<?php echo($contractor['contractor_phone']);?>"/>
-								<label for="con_phone">Mobile:</label>
-								<input class="textbox" id="contractor_mobile" type="text" name="contractor_mobile" value="<?php echo($contractor['contractor_mobile']);?>"/>
+								<label for="con_gen">Zone:</label>
+								<input class="lblText" readonly="readonly" id="zone_code" type="text" name="zone_code" data-required="true" data-error-message="Zone is required"  value="<?php echo($tenderFormResin['zone_code']);?>"/>
 								
-								<label for="con_class">Class:</label>
-								<input class="textbox" id="contractor_class" type="text" name="contractor_class" data-required="true" data-error-message="Class is required" value="<?php echo($contractor['contractor_class']);?>"/>
-								<label for="con_phone">Valid Till:</label>
-								<input class="textbox" id="contractor_valid_dt" type="text" name="contractor_valid_dt" data-required="true" data-error-message="Valid date is required" value="<?php echo($contractor['contractor_valid_dt']);?>"/>
+								<div id="tender_exp_zone_div">
+									<table> 
+										<tr>
+								 			<td>
+								 				<label for="con_gen">Slab:</label>
+												<input class="lblText" readonly="readonly" id="tender_slab" type="text" name="tender_slab" data-required="true" data-error-message="Slab is required" value="<?php echo($tenderFormResin['tender_slab']);?>"/>
+											</td>
+											<td>
+												<label for="con_gen">Cost Extraction:</label>
+												<input class="lblText" readonly="readonly" id="cost_extr" type="text" name="cost_extr" data-required="true" data-error-message="Cost Extraction is required" value="<?php echo($tenderFormResin['cost_extr']);?>"/>
+											</td>
+										</tr>
+									
+										<tr>
+											<td colspan="2">
+												<label for="con_gen">Carriage Charges from Forest to RSD</label>
+											</td>
+										</tr>
+									
+										<tr>
+											<td>
+												<label for="con_gen">Mule:</label>
+												<input class="lblText" readonly="readonly" id="cost_carriage_mule_rsd" type="text" name="cost_carriage_mule_rsd" data-required="true" data-error-message="Cost Mule Carriage is required" value="<?php echo($tenderFormResin['cost_carriage_mule_rsd']);?>"/>
+											</td>
+											<td>
+												<label for="con_gen">Manual:</label>
+												<input class="lblText" readonly="readonly" id="cost_carriage_manual_rsd" type="text" name="cost_carriage_manual_rsd" data-required="true" data-error-message="Cost Manual Carriage is required"  value="<?php echo($tenderFormResin['cost_carriage_manual_rsd']);?>"/>
+											</td>
+										</tr>
+									
+										<tr>
+											<td>
+												<label for="con_gen">Tractor:</label>
+												<input class="lblText" readonly="readonly" id="cost_carriage_tractor_rsd" type="text" name="cost_carriage_tractor_rsd" data-required="true" data-error-message="Cost Tractor Carriage is required"  value="<?php echo($tenderFormResin['cost_carriage_tractor_rsd']);?>""/>
+											</td>
+											<td>
+												<label for="con_gen">Other:</label>
+												<input class="lblText" readonly="readonly" id="cost_carriage_other_rsd" type="text" name="cost_carriage_other_rsd" data-required="true" data-error-message="Cost Other Carriage is required"  value="<?php echo($tenderFormResin['cost_carriage_other_rsd']);?>""/>
+											</td>
+										</tr>
+									
+										<tr>
+											<td>
+												<label for="con_gen">Crop Setting:</label>
+												<input class="lblText" readonly="readonly" id="cost_crop_setting" type="text" name="cost_crop_setting" data-required="true" data-error-message="Cost Crop setting required"  value="<?php echo($tenderFormResin['cost_crop_setting']);?>""/>
+											</td>
+										</tr> 
+									</table>
+								</div>
 								
-								<input name="rowid" type="hidden" value="<?php echo($contractor['id']);?>"/>
+								<label for="con_llname">Contractor Code:</label>
+								<input class="lblText" readonly="readonly"  id="contractor_code" type="text" name="contractor_code" data-required="true" data-error-message="Contractor Code"  value="<?php echo($tenderFormResin['contractor_code']);?>"/>
+
+								<div id="tender_contractor_info_div">
+									<table> 
+										<tr>
+									 		<td>
+									 			<label for="con_gen">Contractor Class:</label>
+												<input class="lblText" readonly="readonly" id="contractor_class" type="text" name="contractor_class" data-required="true" data-error-message="Total Blazes is required" value="<?php echo($tenderFormResin['contractor_class']);?>"/>
+											</td>
+											<td>
+									 			<label for="con_gen">Contractor Valid Date:</label>
+												<input class="lblText" readonly="readonly" id="contractor_valid_dt" type="text" name="contractor_valid_dt" data-error-message="Total Blazes is required" value="<?php echo($tenderFormResin['contractor_valid_dt']);?>"/>
+											</td>
+										</tr>
+									</table>
+								</div>
+								
+								<label for="con_add">Rate Offered:</label>
+								<input class="textbox" id="rate_offered" name="rate_offered" data-required="true" data-error-message="Rate Offered is required"  data-type="number" data-type-number-message="Only number is allowed" value="<?php echo($tenderFormResin['rate_offered']);?>"/>
+								<input type="hidden" id="negotiated_rate" name="negotiated_rate" value="0.0"/>
+								<label for="con_po">EMD Mode:</label>
+								<input class="lblText" readonly="readonly"  id="em_mode" type="text" name="em_mode" data-required="true" data-error-message="Payment mode is required" value="<?php echo($tenderFormResin['em_mode']);?>"/> <?php //$common->getPaymentModeList($emMode,"setEmDesc"); ?>
+								<label for="con_teh">EMD Draft No:</label>
+								<input class="textbox" id="em_desc" type="text" name="em_desc" data-required="true" data-error-message="Draft No is required" value="<?php echo($tenderFormResin['em_desc']);?>"/>
+								<label for="con_distt">EMD Date:</label>
+								<input class="textbox" id="em_date" type="text" name="em_date" data-required="true" data-error-message="EMD Date is required"  value="<?php echo($tenderFormResin['em_date']);?>"/>
+								<label for="con_pin">Ernest Money Deposited:</label>
+								Rs.<input class="textbox" id="em_deposited" type="text" name="em_deposited"  data-required="true" data-error-message="EMD is required" data-type="number" data-type-number-message="Only number is allowed" value="<?php echo($tenderFormResin['em_deposited']);?>"/>
+
+								
+								<input name="rowid" type="hidden" value="<?php echo($tenderFormResin['id']);?>"/>
 								<input name="updated_by" type="hidden" id="updated_by" value="<?php echo($_SESSION['userid']);?>" />
 								
 								<br /><br />
@@ -213,238 +369,279 @@
 								
 							</div>
 						</fieldset>
-				  	</form>	
+				  	</form>
 				  	<script>
 				  	$j(function() {
-				  		$j( "#contractor_valid_dt" ).datepicker(
-			                 	{ dateFormat: 'yy-mm-dd', 
+				  		$j( "#em_date" ).datepicker(
+				                 	{ dateFormat: 'yy-mm-dd', 
 					                   showAnim: 'slide', 
 					                   yearRange: '2000:2025' 
 					                });
 					  });
-					</script>		  
+				  	</script>  
 				<?php 
 			  		}else if($action=="report")
 			     	{
-			     		$reportData = $db->get_row("SELECT id, unit_code, lot_no, total_blazes, avg_yield_fixed, total_turnout, eow_code, com_code, total_eow, total_com, total_expenditure, rate_calculated, season_year, fwd from  t_rate_calculation_for_lot WHERE lot_no='".$_POST['lot_no']."' AND season_year='".$_POST['season_year']."'",ARRAY_A);
+			     		$reportData = $db->get_row("SELECT * from t_tender_form_resin WHERE id='".$_POST['rowid']."'",ARRAY_A);
 			     		if(isset($reportData))
 			     		{
-			     			$eowData = $db->get_results("SELECT * from t_expenditure_on_work WHERE rate_calculation_for_lot_id='".$reportData['id']."'",ARRAY_A);
-			     			$comData = $db->get_results("SELECT * from t_cost_of_material WHERE rate_calculation_for_lot_id='".$reportData['id']."'",ARRAY_A);
-
-			     			$index=0; 
-				     		$total=0;
-				     		$eowArray=array();
-				     		$comArray=array();
-				     		
-				     		//$_POST['season_year'] 
+			     			//$_POST['season_year'] 
+				            $contractor = $db->get_row("SELECT * from m_contractor WHERE contractor_code='".$reportData['contractor_code']."'",ARRAY_A);
 				            
 				     		echo("<div class='CSSTableGenerator'>");
 				     		echo("<h2>Himachal Pradesh State Forest Development Corporation Limited</h2>");
 				            echo("<h2>Forest Working Division ".$_SESSION['division']." </h2>");
-				     		echo("<h1>Tender Form for Resin Extraction & Carriage Work from Forests to Road Side Depot</h1>");
+				     		echo("<h1>Tender Form for Resin Extraction & Carriage Work from Forests to Road Side Depots </h1>");
 				     		
 				     		// ".$_POST['lot_no']." for Season ".$_POST['season_year'].
 				     		echo("<div class='divTable'>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>Unit</span> <span class='divCellLeftBorder'>".$common->getUnitList("")."</span> <span class='divCellLeft'>Name of FWD</span> <span class='divCellLeftBorder'>".$_SESSION['division']."</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellRight'>Value Rs. 100</span></div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>Tender From Number</span> <span class='divCellLeft'>....................</span> </div> ");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>Notice No.</span> <span class='divCellLeft'>....................</span> </div> ");
-				     		foreach ($eowData as $eow )
-			            	{
-				     			echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeftBorder'>".$common->getNameForCode($eow['forest_code'], "forest_code", "forest_name", "m_forest")."</span> <span class='divCellLeftBorder'>".$common->getNameForCode($common->getNameForCode($eow['forest_code'], "forest_code", "forest_rsd_code", "m_forest"), "forest_rsd_code", "forest_rsd_name", "m_forest_rsd")."</span> <span class='divCellLeftBorder'>".$eow['zone_code']."</span> <span class='divCellRightBorder'>".$eow['blazes_received']."</span> </div>");
-			            	}
-			            	echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'><b>Total</b></span> <span class='divCellRightBorder'>".$reportData['total_blazes']."</span> </div> ");
-			            	echo("<div class='divRow'> <span class='divCellLeft'>4.</span> <span class='divCellLeft'>Yield Per Section</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellRightBorder'>".$reportData['avg_yield_fixed']." qtls</span> </div> ");
-			            	echo("<div class='divRow'> <span class='divCellLeft'>5.</span> <span class='divCellLeft'>Total Out Turn</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellRightBorder'>".$reportData['total_turnout']." qtls</span> </div> ");
-				     		echo("</div>");
-							
-				     		foreach ($eowData as $eow )
-			            	{
-				     			$index++;
-			            		if($reportData['fwd']==1)
-				     			{
-				     				$eowCurrent = $common->getExpenditureOnWork($eow['rate_calculation_for_lot_id'], $eow['forest_code'], $eow['eow_code']);
-				     				if(empty($eowArray))
-				     				{
-				     					$eowArray = $eowCurrent;	
-				     					
-				     				}else 
-				     				{
-				     					$eowArray['blazes_received']+=$eowCurrent['blazes_received'];
-				     					$eowArray['exp_crop_setting']+=$eowCurrent['exp_crop_setting'];
-				     					$eowArray['turnout']=$reportData['total_turnout'];
-				     					$eowArray['exp_extr_turnout']+=$eowCurrent['exp_extr_turnout'];
-				     					$eowArray['total_tins']+=$eowCurrent['total_tins'];
-				     					$eowArray['distance_to_rsd']+=$eowCurrent['distance_to_rsd'];  // need to be average
-				     					$eowArray['exp_tpt_tins_to_forest']+=$eowCurrent['exp_tpt_tins_to_forest'];
-				     					$eowArray['exp_soldering_of_resin']+=$eowCurrent['exp_soldering_of_resin'];
-				     					
-				     					$eowArray['turnout_carriage_mule_rsd']+=$eowCurrent['turnout_carriage_mule_rsd'];
-				     					$eowArray['dist_carriage_mule_rsd']=$eowCurrent['dist_carriage_mule_rsd'];   // no need ot sum it up should always by equal to rsd distance as its a manual entry
-				     					$eowArray['exp_carriage_mule_rsd']+=$eowCurrent['exp_carriage_mule_rsd'];
-				     					
-				     					$eowArray['turnout_carriage_manual_rsd']+=$eowCurrent['turnout_carriage_manual_rsd'];
-				     					$eowArray['dist_carriage_manual_rsd']=$eowCurrent['dist_carriage_manual_rsd'];  // no need ot sum it up should always by equal to rsd distance as its a manual entry
-				     					$eowArray['exp_carriage_manual_rsd']+=$eowCurrent['exp_carriage_manual_rsd'];
-				     					
-				     					$eowArray['turnout_carriage_tractor_rsd']+=$eowCurrent['turnout_carriage_tractor_rsd'];
-				     					$eowArray['dist_carriage_tractor_rsd']=$eowCurrent['dist_carriage_tractor_rsd'];  // no need ot sum it up should always by equal to rsd distance as its a manual entry
-				     					$eowArray['exp_carriage_tractor_rsd']+=$eowCurrent['exp_carriage_tractor_rsd'];
-				     					
-				     					$eowArray['turnout_carriage_other_rsd']+=$eowCurrent['turnout_carriage_other_rsd'];
-				     					$eowArray['dist_carriage_other_rsd']=$eowCurrent['dist_carriage_other_rsd'];  // no need ot sum it up should always by equal to rsd distance as its a manual entry
-				     					$eowArray['exp_carriage_other_rsd']+=$eowCurrent['exp_carriage_other_rsd'];
-				     					
-				     					$eowArray['exp_mate_commission']+=$eowCurrent['exp_mate_commission'];
-				     				}
-				     					
-				     			}else
-				     			{
-				     				$eowArray  =  $common->getExpenditureOnWork($eow['rate_calculation_for_lot_id'], $eow['forest_code'], $eow['eow_code']);
-				     				break;	
-				     			}	
-			            	}
-			            	if($index==0)
-			            	{
-			            		$index=1;
-			            	}
-			            	$eowArray['distance_to_rsd']=$eowArray['distance_to_rsd']/$index;
+				     		echo("<div class='divRow'> <span class='divCellLeft'>Lot Number</span> <span class='divCellLeft'><b>".$reportData['lot_no']."</b></span> </div> ");
+				     		echo("<div class='divRow'> <span class='divCellLeft'>Unit</span> <span class='divCellLeft'><b>".$common->getNameForCode($reportData['unit_code'], "unit_code", "unit_name", "m_unit")."</b></span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>Name of FWD</span> <span class='divCellLeft'><b>".$_SESSION['division']."</b></span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellRightBorder'>Value Rs. 100</span></div>");
+				     		echo("<div class='divRow'> <span class='divCellLeft'>Tender From Number</span> <span class='divCellLeft'><b>".$reportData['tender_form_no']."</b></span> <span class='divCellLeft'>&nbsp;</span></div> ");
+				     		echo("<div class='divRow'> <span class='divCellLeft'>Notice No.</span> <span class='divCellLeft'><b>".$reportData['tender_notice_no']."</b></span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>Dated</span> <span class='divCellLeft'><b>".$reportData['tender_date']."</b></span></div> ");
+				     		echo("<div class='divRow'> <span class='divCellLeft'>Approx. Resin Blazes</span> <span class='divCellLeft'><b>".$reportData['blazes_received']."</b></span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>Yield Fixed per section</span> <span class='divCellRight'><b>".$reportData['yield_fixed']."</b> Qtls</span> </div> ");
+			            	echo("</div>");
+											     		
 			            	echo("<br />");
-				     		echo("<div class='divTable'>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'></span> <span class='divCellLeft'><b>1. Expenditure on Work </b></span> <span class='divCellLeft'></span></div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'></span> <span class='divCellLeft'></span> <span class='divCellLeft'>Amount</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>I)</span> <span class='divCellLeft'>Setting up of crop through rill method on <b>".$eowArray['blazes_received']."</b> resin blazes @Rs. <b>".$eowArray['cost_crop_setting']."</b> per section </span> <span class='divCellRightBorder'>".$eowArray['exp_crop_setting']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>II)</span> <span class='divCellLeft'>Extraction of <b>".$eowArray['turnout']."</b> qtls of resin @Rs. <b>".$eowArray['cost_extr']."</b> per qtl </span> <span class='divCellRightBorder'>".$eowArray['exp_extr_turnout']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>III)</span> <span class='divCellLeft'>Carriage of <b>".$eowArray['total_tins']."</b> No. of empty tins from RSD to Forest over a distnace of <b>".$eowArray['distance_to_rsd']."</b> km @Rs. <b>".$eowArray['cost_tpt_tins_to_forest']."</b> per 100 tins </span> <span class='divCellRightBorder'>".$eowArray['exp_tpt_tins_to_forest']."</span> </div>" );
-							echo("<div class='divRow'> <span class='divCellLeft'>IV)</span> <span class='divCellLeft'>Soldering of <b>".$eowArray['total_tins']."</b> No. of resin filled tins @Rs. <b>".$eowArray['cost_soldering_of_resin']."</b> per tin </span> <span class='divCellRightBorder'>".$eowArray['exp_soldering_of_resin']."</span> </div>" );
-							echo("<div class='divRow'> <span class='divCellLeft'>V)</span> <span class='divCellLeft'>Carriage of  <b>".$eowArray['turnout_carriage_mule_rsd']."</b> qtls of extracted resin by Mules from forest to RSD over a distance of <b>".$eowArray['dist_carriage_mule_rsd']."</b> km @Rs. <b>".$eowArray['cost_carriage_mule_rsd']."</b> per km </span> <span class='divCellRightBorder'>".$eowArray['exp_carriage_mule_rsd']."</span> </div>" );
-							echo("<div class='divRow'> <span class='divCellLeft'>VI)</span> <span class='divCellLeft'>Carriage of  <b>".$eowArray['turnout_carriage_manual_rsd']."</b> qtls of extracted resin by Manual from forest to RSD over a distance of <b>".$eowArray['dist_carriage_manual_rsd']."</b> km @Rs. <b>".$eowArray['cost_carriage_manual_rsd']."</b> per km </span> <span class='divCellRightBorder'>".$eowArray['exp_carriage_manual_rsd']."</span> </div>" );
-							echo("<div class='divRow'> <span class='divCellLeft'>VII)</span> <span class='divCellLeft'>Carriage of  <b>".$eowArray['turnout_carriage_tractor_rsd']."</b> qtls of extracted resin by Tractor from forest to RSD over a distance of <b>".$eowArray['dist_carriage_tractor_rsd']."</b> km @Rs. <b>".$eowArray['cost_carriage_tractor_rsd']."</b> per km </span> <span class='divCellRightBorder'>".$eowArray['exp_carriage_tractor_rsd']."</span> </div>" );
-							echo("<div class='divRow'> <span class='divCellLeft'>VIII)</span> <span class='divCellLeft'>Carriage of  <b>".$eowArray['turnout_carriage_other_rsd']."</b> qtls of extracted resin by other means from forest to RSD over a distance of <b>".$eowArray['dist_carriage_other_rsd']."</b> km @Rs. <b>".$eowArray['cost_carriage_other_rsd']."</b> per km </span> <span class='divCellRightBorder'>".$eowArray['exp_carriage_other_rsd']."</span> </div>" );
-							echo("<div class='divRow'> <span class='divCellLeft'>IX)</span> <span class='divCellLeft'>Mate comission @ Rs <b>".$eowArray['cost_mate_commission']."</b> per qtl for <b>".$eowArray['turnout']."</b> qtls extraced resin </span> <span class='divCellRightBorder'>".$eowArray['exp_mate_commission']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeftBorder'>Total(I to IX):</span> <span class='divCellRightBorder'>".$reportData['total_eow']."</span></div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
+			            	echo("<div> <h2>Schedule Rate of the Corporation in Respect of Resin Extraction and Carriage upto Road Side Depots are as under</h2> </div>");
+			            	echo("<div class='divTable'>");
+				     		echo("<div class='divRow'> <span class='divCellLeft'>Slab</span> <span class='divCellLeft'>Zone</span> <span class='divCellLeft'>Rate per Qtl</span></div> ");
+				     		echo("<div class='divRow'> <span class='divCellLeft'>".$reportData['tender_slab']."</span> <span class='divCellLeft'>".$reportData['zone_code']."</span> <span class='divCellLeft'>".$reportData['cost_extr']."</span></div> ");
+				     		echo("</div>");
 				     		
-				     		
-			     			foreach ($comData as $com )
-			            	{
-				     			$index++;
-			            		if($reportData['fwd']==1)
-				     			{
-				     				$comCurrent = $common->getCostOfMaretial($com['rate_calculation_for_lot_id'], $com['forest_code'], $com['com_code']);
-				     				if(empty($comArray))
-				     				{
-				     					$comArray = $comCurrent;	
-				     					
-				     				}else 
-				     				{
-				     					$comArray['exp_blaze_frame']+=$comCurrent['exp_blaze_frame'];
-				     					$comArray['exp_bark_shaver']+=$comCurrent['exp_bark_shaver'];
-				     					$comArray['exp_groove_cutter']+=$comCurrent['exp_groove_cutter'];
-				     					$comArray['exp_freshning_knife']+=$comCurrent['exp_freshning_knife'];
-				     					$comArray['exp__spray_bottle']+=$comCurrent['exp__spray_bottle'];
-				     					$comArray['exp_hammer_nailpuller']+=$comCurrent['exp_hammer_nailpuller'];
-				     					$comArray['exp_pot_scrapper']+=$comCurrent['exp_pot_scrapper'];
-				     					
-				     					$comArray['qty_wire_nails_5cm']+=$comCurrent['qty_wire_nails_5cm'];
-				     					$comArray['exp_wire_nails_5cm']+=$comCurrent['exp_wire_nails_5cm'];
-				     					
-				     					$comArray['qty_wire_nails_2cm']+=$comCurrent['qty_wire_nails_2cm'];
-				     					$comArray['exp_wire_nails_2cm']+=$comCurrent['exp_wire_nails_2cm'];
-				     					
-				     					$comArray['qty_solder']+=$comCurrent['qty_solder'];
-				     					$comArray['exp_solder']+=$comCurrent['exp_solder'];
-				     					
-				     					$comArray['qty_naushader']+=$comCurrent['qty_naushader'];
-				     					$comArray['exp_naushader']+=$comCurrent['exp_naushader'];
-				     					
-				     					$comArray['qty_charcoal']+=$comCurrent['qty_charcoal'];
-				     					$comArray['exp_charcoal']+=$comCurrent['exp_charcoal'];
-				     					
-				     					$comArray['qty_blower']+=$comCurrent['qty_blower'];
-				     					$comArray['exp_blower']+=$comCurrent['exp_blower'];
-				     					
-				     					$comArray['qty_solder_iron']+=$comCurrent['qty_solder_iron'];
-				     					$comArray['exp_solder_iron']+=$comCurrent['exp_solder_iron'];
-				     					
-				     					$comArray['qty_paint']+=$comCurrent['qty_paint'];
-				     					$comArray['exp_paint']+=$comCurrent['exp_paint'];
-				     					
-				     					$comArray['qty_cylinder_50ml']+=$comCurrent['qty_cylinder_50ml'];
-				     					$comArray['exp_cylinder_50ml']+=$comCurrent['exp_cylinder_50ml'];
-				     					
-				     					$comArray['qty_cylinder_500ml']+=$comCurrent['qty_cylinder_500ml'];
-				     					$comArray['exp_cylinder_500ml']+=$comCurrent['exp_cylinder_500ml'];
-				     					
-				     					$comArray['qty_beaker_500ml']+=$comCurrent['qty_beaker_500ml'];
-				     					$comArray['exp_beaker_500ml']+=$comCurrent['exp_beaker_500ml'];
-				     					
-				     					$comArray['qty_beaker_1000ml']+=$comCurrent['qty_beaker_1000ml'];
-				     					$comArray['exp_beaker_1000ml']+=$comCurrent['exp_beaker_1000ml'];
-				     					
-				     					$comArray['qty_funnel']+=$comCurrent['qty_funnel'];
-				     					$comArray['exp_funnel']+=$comCurrent['exp_funnel'];
-				     					
-				     					$comArray['qty_other']+=$comCurrent['qty_other'];
-				     					$comArray['exp_other']+=$comCurrent['exp_other'];
-				     				}
-				     					
-				     			}else
-				     			{
-				     				$comArray  =  $common->getCostOfMaretial($com['rate_calculation_for_lot_id'], $com['forest_code'], $com['com_code']);
-				     				break;	
-				     			}	
-			            	}
-				     		
-				     		echo("<div class='divRow'> <span class='divCellLeft'></span> <span class='divCellLeft'><b>2. Cost of Material </b></span> <span class='divCellLeft'></span></div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>I)</span> <span class='divCellLeft'>Blaze frames <b>".$comArray['number_of_mazdoor']."</b> No. @Rs. <b>".$comArray['cost_blaze_frame']."</b> </span> <span class='divCellRightBorder'>".round($comArray['exp_blaze_frame'],1)."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>II)</span> <span class='divCellLeft'>Bark Shaver <b>".$comArray['number_of_mazdoor']."</b> No. @Rs. <b>".$comArray['cost_bark_shaver']."</b> </span> <span class='divCellRightBorder'>".round($comArray['exp_bark_shaver'],1)."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>III)</span> <span class='divCellLeft'>Center Groove Cutter <b>".$comArray['number_of_mazdoor']."</b> No. @Rs. <b>".$comArray['cost_groove_cutter']."</b> </span> <span class='divCellRightBorder'>".round($comArray['exp_groove_cutter'],1)."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>IV)</span> <span class='divCellLeft'>Freshening Knives <b>".$comArray['number_of_mazdoor']."</b> No. @Rs. <b>".$comArray['cost_freshning_knife']."</b> </span> <span class='divCellRightBorder'>".round($comArray['exp_freshning_knife'],1)."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>V)</span> <span class='divCellLeft'>Spray Bottles <b>".$comArray['number_of_mazdoor']."</b> No. @Rs. <b>".$comArray['cost_spray_bottle']."</b> </span> <span class='divCellRightBorder'>".round($comArray['exp__spray_bottle'],1)."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>VI)</span> <span class='divCellLeft'>Hammer-cum-Nail Pullers <b>".$comArray['number_of_mazdoor']."</b> No. @Rs. <b>".$comArray['cost_hammer_nailpuller']."</b> </span> <span class='divCellRightBorder'>".round($comArray['exp_hammer_nailpuller'],1)."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>VII)</span> <span class='divCellLeft'>Pot Scrapers <b>".$comArray['number_of_mazdoor']."</b> No. @Rs. <b>".$comArray['cost_pot_scrapper']."</b> </span> <span class='divCellRightBorder'>".round($comArray['exp_pot_scrapper'],1)."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>VIII)</span> <span class='divCellLeft'>Pots  50% <b>".ceil($comArray['blazes_received']/2)."</b> No. @Rs. <b>".$comArray['cost_pots']."</b> </span> <span class='divCellRightBorder'>".$comArray['exp_pots']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>IX)</span> <span class='divCellLeft'>Lips 100% <b>".$comArray['blazes_received']."</b> No. @Rs. <b>".$comArray['cost_lips']."</b> </span> <span class='divCellRightBorder'>".$comArray['exp_lips']."</span> </div>" );
-				     		
-				     		echo("<div class='divRow'> <span class='divCellLeft'>X)</span> <span class='divCellLeft'>Wire nails (5cm) <b>".$comArray['qty_wire_nails_5cm']."</b> kg. @Rs. <b>".$comArray['cost_wire_nails_5cm']."</b> per kg </span> <span class='divCellRightBorder'>".$comArray['exp_wire_nails_5cm']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XI)</span> <span class='divCellLeft'>Wire nails (2cm) <b>".$comArray['qty_wire_nails_2cm']."</b> kg. @Rs. <b>".$comArray['cost_wire_nails_2cm']."</b> per kg </span> <span class='divCellRightBorder'>".$comArray['exp_wire_nails_2cm']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XII)</span> <span class='divCellLeft'>Solder <b>".$comArray['qty_solder']."</b> kg. @Rs. <b>".$comArray['cost_solder']."</b> per kg </span> <span class='divCellRightBorder'>".$comArray['exp_solder']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XIII)</span> <span class='divCellLeft'>Naushadar <b>".$comArray['qty_naushader']."</b> kg. @Rs. <b>".$comArray['cost_naushader']."</b> per kg </span> <span class='divCellRightBorder'>".$comArray['exp_naushader']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XIV)</span> <span class='divCellLeft'>Charcoal <b>".$comArray['qty_charcoal']."</b> kg. @Rs. <b>".$comArray['cost_charcoal']."</b> per kg </span> <span class='divCellRightBorder'>".$comArray['exp_charcoal']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XV)</span> <span class='divCellLeft'>Material for sharping of tool @Rs. <b>".$comArray['cost_tool_sharpen']."</b> per Mazdoor </span> <span class='divCellRightBorder'>".$comArray['exp_tool_sharpen']."</span> </div>" );
-				     		
-				     		
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XVI)</span> <span class='divCellLeft'>Blower <b>".$comArray['qty_blower']."</b> @Rs. <b>".$comArray['cost_blower']."</b>.  per depot </span> <span class='divCellRightBorder'>".$comArray['exp_blower']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XVII)</span> <span class='divCellLeft'>Solder Iron<b>".$comArray['qty_solder_iron']."</b> @Rs. <b>".$comArray['cost_solder_iron']."</b> per depot </span> <span class='divCellRightBorder'>".$comArray['exp_solder_iron']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XVII)</span> <span class='divCellLeft'>Paint <b>".$comArray['qty_paint']."</b> lts. @Rs. <b>".$comArray['cost_paint']."</b> per depot </span> <span class='divCellRightBorder'>".$comArray['exp_paint']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XIX)</span> <span class='divCellLeft'>Cylinder 50ml <b>".$comArray['qty_cylinder_50ml']."</b> @Rs. <b>".$comArray['cost_cylinder_50ml']."</b> per depot </span> <span class='divCellRightBorder'>".$comArray['exp_cylinder_50ml']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XX)</span> <span class='divCellLeft'>Cylinder 500ml <b>".$comArray['qty_cylinder_500ml']."</b> @Rs. <b>".$comArray['cost_cylinder_500ml']."</b> per depot </span> <span class='divCellRightBorder'>".$comArray['exp_cylinder_500ml']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XXI)</span> <span class='divCellLeft'>Beaker 500ml <b>".$comArray['qty_beaker_500ml']."</b> @Rs. <b>".$comArray['cost_beaker_500ml']."</b> per depot </span> <span class='divCellRightBorder'>".$comArray['exp_beaker_500ml']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XXII)</span> <span class='divCellLeft'>Beaker 1000ml <b>".$comArray['qty_beaker_1000ml']."</b> @Rs. <b>".$comArray['cost_beaker_1000ml']."</b> per depot </span> <span class='divCellRightBorder'>".$comArray['exp_beaker_1000ml']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XXIII)</span> <span class='divCellLeft'>Funnel <b>".$comArray['qty_funnel']."</b> @Rs. <b>".$comArray['cost_funnel']."</b> per depot </span> <span class='divCellRightBorder'>".$comArray['exp_funnel']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>XXIV)</span> <span class='divCellLeft'>Other <b>".$comArray['qty_other']."</b> @Rs. <b>".$comArray['cost_other']."</b> per depot </span> <span class='divCellRightBorder'>".$comArray['exp_other']."</span> </div>" );
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeftBorder'>Total(I to XXIV):</span> <span class='divCellRightBorder'>".$reportData['total_com']."</span></div>");
-				     		
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
-				     		
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeftBorder'>Total Expenditure(1+2):</span> <span class='divCellRightBorder'>".$reportData['total_expenditure']."</span></div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeftBorder'>Rate per Qtl:</span> <span class='divCellRightBorder'>".$reportData['rate_calculated']."</span></div>");
-				     		
-							echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");
-				     		echo("<div class='divRow'> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span> <span class='divCellLeft'>&nbsp;</span></div>");				     		
+				     		echo("<div> <h2>Carriages from Forest to Road Side Depots</h2> </div>");
+			            	echo("<div class='divTable'>");
+				     		echo("<div class='divRow'> <span class='divCellLeft'>Mode</span> <span class='divCellLeft'>Mule</span> <span class='divCellLeft'>Manual</span> <span class='divCellLeft'>Tractor</span> <span class='divCellLeft'>Other</span></div> ");
+				     		echo("<div class='divRow'> <span class='divCellLeft'>Rate per Qtl</span> <span class='divCellRight'><b>".$reportData['cost_carriage_mule_rsd']."</b></span> <span class='divCellRight'><b>".$reportData['cost_carriage_manual_rsd']."</b></span> <span class='divCellRight'><b>".$reportData['cost_carriage_tractor_rsd']."</b></span> <span class='divCellRight'><b>".$reportData['cost_carriage_other_rsd']."</b></span></div> ");
+				     		echo("<div class='divRow'> <span class='divCellLeft'>Crop Setting Charges</span> <span class='divCellRight'><b>".$reportData['cost_crop_setting']."</b></span> </div> ");
+				     		echo("<div class='divRow'> <span class='divCellLeft'>Crop Setting Material/Tool Charges</span> <span class='divCellRight'><b>".$reportData['cost_tool']."</b></span> </div> ");
 				     		echo("</div>");
 								
-							echo(" </div>");
+							echo("<br />");
+			            	echo("<div>");
+				     		echo("<pre>");
+				     		echo("<p class='tenderPara'>");
+				     		echo("I, ".$contractor['contractor_fname']." ".$contractor['contractor_lname']." S/o Sh.".$contractor['contractor_ffname']." ".$contractor['contractor_flname']." Village ".$contractor['contractor_address']." P.O. ".$contractor['contractor_po']." Tehsil ".$contractor['contractor_teh']." Distt. ".$contractor['contractor_distt']." (H.P.) <br />");
+				     		echo("registered Labour Supply Mate(s)/Contractor(s) in Forest Working Division ".$reportData['division_code']." <br />");
+				     		echo("under <b> regusteration No. ".$reportData['contractor_code']."</b> in <b>class ".$reportData['contractor_class']." renewed upto ".$reportData['contractor_valid_dt']."</b> quote my/our rates <br />");
+				     		echo("for various operations pretaning to resin <b>lot No. ".$reportData['lot_no']."</b> FWD ".$reportData['division_code']." <br />");
+				     		echo("I/we have studied/understand the tender conditions and schedule of rates carefully and accept the same  <br />");
+				     		echo("without any reservation. <br />"); 
+				     		echo("I/we agree to do resing extraction work and carriage from forest to Road Side Depots at the folowing rate.  <br />");
+				     		echo("I/we tender(s) the following rate in respect of <b>lot No. ".$reportData['lot_no']."</b> FWD.".$reportData['division_code']."<br />");
+				     		echo("Rate offered per quintal of net pure resin including carriage upto Raod Side Depot(s) <b>Rs. ".$reportData['rate_offered']."</b> <br />");
+				     		echo("I/we also furnish herewith the EMD in <b>".$reportData['em_mode']."</b> Draft No <b>".$reportData['em_desc']." dated ".$reportData['em_date']."</b> <br />");
+				     		echo("duely pledged in the name of Devisional Manager ".$reportData['division_code']."  for <b>Rs. ".$reportData['em_deposited']."</b> <br />");
+				     		echo("<br />"); echo("<br />");
+				     		echo("Signature of the tenderer <br />");
+				     		echo("I, ".$contractor['contractor_fname']." ".$contractor['contractor_lname']." S/o Sh.".$contractor['contractor_ffname']." ".$contractor['contractor_flname']." Village ".$contractor['contractor_address']." P.O. ".$contractor['contractor_po']." Tehsil ".$contractor['contractor_teh']." Distt. ".$contractor['contractor_distt']."  (H.P.)");
+				     		echo("<br />"); echo("<br />");
+				     		echo("<br />"); echo("<br />");
+				     		echo("Tender form scrutinized by <br />");
+				     		echo("Name and Designation of the officer/official"); 
+				     		echo("<br />"); echo("<br />");
+				     		echo("Tender accepted for consideration / rejected due to reason <br />");
+				     		echo("<br />"); echo("<br />");
+				     		echo("Divisional Manager <br />");
+				     		echo("FWD ".$reportData['division_code']." <br />");
+				     		
+				     		echo("<br />"); echo("<br />");
+				     		echo("EMD in the shape of FDR or cash for Rs. ________ refunded to Sh. ________ received EMD back <br />");
+				     		
+				     		echo("<br />"); echo("<br />");
+				     		echo("<br />"); echo("<br />");
+				     		echo("Signature of the tenderer &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Name of the officer/official");
+				     		
+				     		echo("<br />"); echo("<br />");
+				     		echo("<br />"); echo("<br />");
+				     		echo("Opened by Committee <br />");
+				     		echo("<br />"); echo("<br />");
+				     		echo("Member &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Member &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; Chairman <br />");
+				     		echo("<br />"); echo("<br />");
+				     		echo("<br />"); echo("<br />");
+				     		echo("</p>");
+				     		echo("</pre>");
+				     		echo("</div>");
+				     		
+				     		
+				     		echo(" </div>");
+				     		
+				     		echo('<div class="donotprint">');
+              				echo('<br /><br />');
+              				echo('<form action="tender-form-details.php" method="post" name="reportForm" id="reportForm">');
+							echo('<table class="donotprint" width="100%">');
+								echo('<tr>');
+									echo('<td align="left"> <input class="submit" id="cancel" type="submit" name="action" value="Cancel" /> <input name="submitted" type="hidden" id="submitted" value="1" /></td>');
+									echo('<td align="right"> <img src="./images/button-print.png" alt="Print" onclick="javascript:window.print();" /> </td> ');
+								echo('</tr>');
+								echo('</table>');	
+							echo('</form>');		
+              				echo('</div>');
 			     		
 			     		}// if reportData
 			     		
 			     		
-			     	}else
+			     	}else if($action=="negotiate")
+                	{
+                		$tenderFormResin = $db->get_row("SELECT * FROM t_tender_form_resin WHERE id='".$_POST['rowid']."'",ARRAY_A);
+                		                	
+              	?>
+              		<br />
+              		<form action="tender-form-details.php" method="post" id="forestForm" data-validate="parsley">
+						<fieldset>
+						<legend><font size=5 color=#72A545>Update Tender Enrty</font></legend><br />
+							<p style="color:#CC0000"><?php echo $error; ?></p>
+							<div style="margin:10px; 0px; 0px; 0px;">
+								<label for="con_phone">Unit:</label>
+								<?php $common->getUnitList($tenderFormResin['unit_code']); ?>
+								<label for="con_phone">Season Year:</label>
+								<input class="lblText" readonly="readonly" id="season_year" type="text" name="season_year" data-required="true" data-error-message="Season Year is required" value="<?php echo($tenderFormResin['season_year']);?>"/>  <?php // $common->getSeasonYearList($tenderFormResin['season_year'],''); ?>
+								<label for="con_no">Tender From No:</label>
+								<input class="lblText" readonly="readonly" id="tender_form_no" type="text" name="tender_form_no" data-required="true" data-error-message="Form No is required" value="<?php echo($tenderFormResin['tender_form_no']);?>"/>
+								<label for="con_fname">Notice No:</label>
+								<input class="lblText" readonly="readonly" id="tender_notice_no" type="text" name="tender_notice_no" data-required="true" data-error-message="Notice No is required" value="<?php echo($tenderFormResin['tender_notice_no']);?>"/>
+								<label for="con_lname">Tender Date:</label>
+								<input class="lblText" readonly="readonly" id="tender_date" type="text" name="tender_date" data-required="true" data-error-message="Tender Date is required" value="<?php echo($tenderFormResin['tender_date']);?>"/>
+								<label for="con_ffname">Form Cost:</label>
+								<input class="lblText" readonly="readonly" id="tender_value" type="text" name="tender_value" data-required="true" data-error-message="Tender Form Cost is required"  data-type="number" data-type-number-message="Only number is allowed" value="<?php echo($tenderFormResin['tender_value']);?>"/>
+								
+								<label for="con_llname">Lot No:</label>
+								<input class="lblText" readonly="readonly" id="lot_no" type="text" name="lot_no" data-required="true" data-error-message="Lot No is required"  value="<?php echo($tenderFormResin['lot_no']);?>"/>
+								<div id="tender_lot_info_div">
+									<table> 
+										<tr>
+									 		<td>
+									 			<label for="con_gen">Number of Blazes:</label>
+												<input class="lblText" readonly="readonly" id="blazes_received" type="text" name="blazes_received" data-required="true" data-error-message="Total Blazes is required" value="<?php echo($tenderFormResin['blazes_received']);?>"/>
+											</td>
+											<td>
+												<label for="con_gen">Yield:</label>
+												<input class="lblText" readonly="readonly" id="yield_fixed" type="text" name="yield_fixed" data-required="true" data-error-message="Yield Fixed is required" value="<?php echo($tenderFormResin['yield_fixed']);?>"/>
+											</td>
+											</tr>
+											<tr>
+											<td>
+												<label for="con_gen">Trunout:</label>
+												<input class="lblText" readonly="readonly" id="total_turnout" type="text" name="total_turnout" data-required="true" data-error-message="Turnout is required" value="<?php echo($tenderFormResin['total_turnout']);?>"/>
+											</td>
+											<td>
+											<label for="con_gen">Cost of Material:</label>
+											<input class="lblText" readonly="readonly" id="total_com" type="text" name="total_com" data-required="true" data-error-message="Cost of Material is required" value="<?php echo($tenderFormResin['total_com']);?>"/>
+											</td>
+											<td>
+											<label for="con_gen">Tool Charges:</label>
+											<input class="lblText" readonly="readonly" id="cost_tool" type="text" name="cost_tool" data-required="true" data-error-message="Cost of Material is required" value="<?php echo($tenderFormResin['cost_tool']);?>"/>
+											</td>
+										</tr> 
+									</table>
+								</div>
+								
+								<label for="con_gen">Zone:</label>
+								<input class="lblText" readonly="readonly" id="zone_code" type="text" name="zone_code" data-required="true" data-error-message="Zone is required"  value="<?php echo($tenderFormResin['zone_code']);?>"/>
+								
+								<div id="tender_exp_zone_div">
+									<table> 
+										<tr>
+								 			<td>
+								 				<label for="con_gen">Slab:</label>
+												<input class="lblText" readonly="readonly" id="tender_slab" type="text" name="tender_slab" data-required="true" data-error-message="Slab is required" value="<?php echo($tenderFormResin['tender_slab']);?>"/>
+											</td>
+											<td>
+												<label for="con_gen">Cost Extraction:</label>
+												<input class="lblText" readonly="readonly" id="cost_extr" type="text" name="cost_extr" data-required="true" data-error-message="Cost Extraction is required" value="<?php echo($tenderFormResin['cost_extr']);?>"/>
+											</td>
+										</tr>
+									
+										<tr>
+											<td colspan="2">
+												<label for="con_gen">Carriage Charges from Forest to RSD</label>
+											</td>
+										</tr>
+									
+										<tr>
+											<td>
+												<label for="con_gen">Mule:</label>
+												<input class="lblText" readonly="readonly" id="cost_carriage_mule_rsd" type="text" name="cost_carriage_mule_rsd" data-required="true" data-error-message="Cost Mule Carriage is required" value="<?php echo($tenderFormResin['cost_carriage_mule_rsd']);?>"/>
+											</td>
+											<td>
+												<label for="con_gen">Manual:</label>
+												<input class="lblText" readonly="readonly" id="cost_carriage_manual_rsd" type="text" name="cost_carriage_manual_rsd" data-required="true" data-error-message="Cost Manual Carriage is required"  value="<?php echo($tenderFormResin['cost_carriage_manual_rsd']);?>"/>
+											</td>
+										</tr>
+									
+										<tr>
+											<td>
+												<label for="con_gen">Tractor:</label>
+												<input class="lblText" readonly="readonly" id="cost_carriage_tractor_rsd" type="text" name="cost_carriage_tractor_rsd" data-required="true" data-error-message="Cost Tractor Carriage is required"  value="<?php echo($tenderFormResin['cost_carriage_tractor_rsd']);?>""/>
+											</td>
+											<td>
+												<label for="con_gen">Other:</label>
+												<input class="lblText" readonly="readonly" id="cost_carriage_other_rsd" type="text" name="cost_carriage_other_rsd" data-required="true" data-error-message="Cost Other Carriage is required"  value="<?php echo($tenderFormResin['cost_carriage_other_rsd']);?>""/>
+											</td>
+										</tr>
+									
+										<tr>
+											<td>
+												<label for="con_gen">Crop Setting:</label>
+												<input class="lblText" readonly="readonly" id="cost_crop_setting" type="text" name="cost_crop_setting" data-required="true" data-error-message="Cost Crop setting required"  value="<?php echo($tenderFormResin['cost_crop_setting']);?>""/>
+											</td>
+										</tr> 
+									</table>
+								</div>
+								
+								<label for="con_llname">Contractor Code:</label>
+								<input class="lblText" readonly="readonly"  id="contractor_code" type="text" name="contractor_code" data-required="true" data-error-message="Contractor Code"  value="<?php echo($tenderFormResin['contractor_code']);?>"/>
+
+								<div id="tender_contractor_info_div">
+									<table> 
+										<tr>
+									 		<td>
+									 			<label for="con_gen">Contractor Class:</label>
+												<input class="lblText" readonly="readonly" id="contractor_class" type="text" name="contractor_class" data-required="true" data-error-message="Total Blazes is required" value="<?php echo($tenderFormResin['contractor_class']);?>"/>
+											</td>
+											<td>
+									 			<label for="con_gen">Contractor Valid Date:</label>
+												<input class="lblText" readonly="readonly" id="contractor_valid_dt" type="text" name="contractor_valid_dt" data-error-message="Total Blazes is required" value="<?php echo($tenderFormResin['contractor_valid_dt']);?>"/>
+											</td>
+										</tr>
+									</table>
+								</div>
+								
+								<label for="con_add">Rate Offered:</label>
+								<input class="lblText" readonly="readonly" id="rate_offered" name="rate_offered" data-required="true" data-error-message="Rate Offered is required"  data-type="number" data-type-number-message="Only number is allowed" value="<?php echo($tenderFormResin['rate_offered']);?>"/>
+								<label for="con_add">Negotiated Rate:</label>
+								<input class="textbox" id="negotiated_rate" name="negotiated_rate" data-required="true" data-error-message="Negotiated Rate is required"  data-type="number" data-type-number-message="Only number is allowed" value="<?php echo($tenderFormResin['negotiated_rate']);?>"/>
+								<label for="con_po">EMD Mode:</label>
+								<input class="lblText" readonly="readonly"  id="em_mode" type="text" name="em_mode" data-required="true" data-error-message="Payment mode is required" value="<?php echo($tenderFormResin['em_mode']);?>"/> <?php //$common->getPaymentModeList($emMode,"setEmDesc"); ?>
+								<label for="con_teh">EMD Draft No:</label>
+								<input class="lblText" readonly="readonly" id="em_desc" type="text" name="em_desc" data-required="true" data-error-message="Draft No is required" value="<?php echo($tenderFormResin['em_desc']);?>"/>
+								<label for="con_distt">EMD Date:</label>
+								<input class="lblText" readonly="readonly" id="em_date" type="text" name="em_date" data-required="true" data-error-message="EMD Date is required"  value="<?php echo($tenderFormResin['em_date']);?>"/>
+								<label for="con_pin">Ernest Money Deposited:</label>
+								Rs.<input class="lblText" readonly="readonly" id="em_deposited" type="text" name="em_deposited"  data-required="true" data-error-message="EMD is required" data-type="number" data-type-number-message="Only number is allowed" value="<?php echo($tenderFormResin['em_deposited']);?>"/>
+
+								
+								<input name="rowid" type="hidden" value="<?php echo($tenderFormResin['id']);?>"/>
+								<input name="updated_by" type="hidden" id="updated_by" value="<?php echo($_SESSION['userid']);?>" />
+								
+								<br /><br />
+								<input class="submit" id="updatelot" type="submit" name="action" value="Update"/>
+								<input name="submitted" type="hidden" id="submitted" value="1" />
+								
+							</div>
+						</fieldset>
+				  	</form>
+				  	<script>
+				  	$j(function() {
+				  		$j( "#em_date" ).datepicker(
+				                 	{ dateFormat: 'yy-mm-dd', 
+					                   showAnim: 'slide', 
+					                   yearRange: '2000:2025' 
+					                });
+					  });
+				  	</script>  
+				<?php 
+			  		}else
                 	{
                 ?>
                       <form action="tender-form-details.php" method="post" name="tenderReportForm" id="tenderReportForm"> 
@@ -471,15 +668,27 @@
 											</select> &nbsp; 
 											for Year: &nbsp; 
 											<?php $common->getSeasonYearList($reportSeason,''); ?> &nbsp;
-											<input class="submit" id="submit" type="submit" name="action" value="Show Report"/>
+											<input class="submit" id="submit" type="submit" name="action" value="Filter"/>
 											<input name="submitted" type="hidden" id="submitted" value="1" />
 										</td> 
 									</tr> 
 								</table>
 							</form>
 				<?php 					
-                		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Tenders</h1> <table> <tr> <td>Froms No</td> <td>Noice No</td> <td>Contractor</td> <td>Lot No</td> <td>Valid Till</td> <td>Rate Offered</td><td>EMD</td> <td>Status</td></tr>"); 
-                		$tenders= $db->get_results("SELECT * FROM t_tender_form_resin WHERE division_code='".$_SESSION['division']."' ORDER BY tender_date, tender_form_no" ,ARRAY_A);
+                		echo("<br /> <div class='CSSTableGenerator'> <h1>Manage Tenders</h1> <table> <tr> <td>Form No</td> <td>Notice No</td> <td>Contractor</td> <td>Lot No</td> <td>Valid Till</td> <td>Rate Offered</td><td>EMD</td> <td>Status</td> <td>Action</td></tr>"); 
+						$sqlQuery = "SELECT * FROM t_tender_form_resin WHERE division_code='".$_SESSION['division']."' ORDER BY tender_date, tender_form_no"; 
+                		if($reportLot!="")
+                		{
+                			$sqlQuery = "SELECT * FROM t_tender_form_resin WHERE division_code='".$_SESSION['division']."' AND lot_no='".$reportLot."' ORDER BY tender_date, tender_form_no";
+                		}elseif ($reportSeason!="")
+                		{
+                			$sqlQuery = "SELECT * FROM t_tender_form_resin WHERE division_code='".$_SESSION['division']."' AND season_year='".$reportSeason."' ORDER BY tender_date, tender_form_no";
+                		}elseif ($reportSeason!="")
+                		{
+                			$sqlQuery = "SELECT * FROM t_tender_form_resin WHERE division_code='".$_SESSION['division']."' AND lot_no='".$reportLot."' AND season_year='".$reportSeason."' ORDER BY tender_date, tender_form_no";
+                		}
+                			
+                		$tenders= $db->get_results($sqlQuery,ARRAY_A);
 	
 				         foreach ( $tenders as $tender )
 				         { 
@@ -498,7 +707,7 @@
 			     ?>
 					     	
 				
-			     			<form style="margin:0px; border:0px; background-color:inherit;" action="tender-form-details.php" method="post" id="contactorActionForm">
+			     			<form style="margin:0px; border:0px; background-color:inherit;" action="tender-form-details.php" method="post" id="tenderActionForm_<?php echo($tender['id']);?>" name="tenderActionForm_<?php echo($tender['id']);?>">
 							<!-- Create row specific actions -->
 			     			<?php 
 								if($tender['status_cd']=="D")
@@ -514,7 +723,11 @@
 			         	 		
 				         	 		echo("<input class='editImgBut' id='editlot' type='submit' name='action' value='Edit' title='Edit this record'/> &nbsp;");
 									
-									echo("<input class='deleteImgBut' id='deletelot' type='submit' name='action' value='Delete' title='Mark this record as deleted' />");
+									echo("<input class='deleteImgBut' id='deletelot' type='submit' name='action' value='Delete' title='Mark this record as deleted' />  &nbsp;");
+									
+									echo("<input class='actionTxtBut' id='editTender' type='submit' name='action' value='Negotiate' title='Add Negotiated Price' />   &nbsp;");
+									
+									echo("<input class='actionTxtBut' id='viewReport' type='submit' name='action' value='Show Report' title='View Complete Tender Details' onClick='setFormAction(\"tenderActionForm_".$tender['id']."\",\"tender-form-details.php\")' />");
 							 
 			         	 		}// else status
 							?>
