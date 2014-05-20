@@ -1,0 +1,83 @@
+CREATE TABLE IF NOT EXISTS `m_absemce` (
+  `ABSENCE_CODE` varchar(50) NOT NULL COMMENT 'Absence Code with not spl chars and underscore only hyphens allowed',
+  `ABSENCE_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the absence code',
+  `ABSENCE_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the absece code',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL,
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NOT NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ABSENCE_CODE`),
+  UNIQUE KEY `ABSENCE_NAME` (`ABSENCE_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS `m_work_schedule` (
+  `WS_CODE` varchar(50) NOT NULL COMMENT 'Work Schedule Code with not spl chars and underscore only hyphens allowed',
+  `WS_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Work Schedule',
+  `WS_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Work Schedule',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL,
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NOT NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`WS_CODE`),
+  UNIQUE KEY `WS_NAME` (`WS_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `m_challenge_group` (
+  `CG_CODE` varchar(50) NOT NULL COMMENT 'Challenge Group Code with not spl chars and underscore only hyphens allowed',
+  `CG_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Group ',
+  `CG_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the WChallenge Group ',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL,
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NOT NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`CG_CODE`),
+  UNIQUE KEY `CG_NAME` (`CG_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `m_challenge_type` (
+  `CT_CODE` varchar(50) NOT NULL COMMENT 'Challenge Type Code with not spl chars and underscore only hyphens allowed',
+  `CT_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Type',
+  `CT_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Challenge Type',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL,
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NOT NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`CT_CODE`),
+  UNIQUE KEY `CT_NAME` (`CT_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `m_contract_type` (
+  `CT_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
+  `CT_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Type',
+  `CT_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Challenge Type',
+  `CT_FIXED` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL,
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NOT NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`CT_CODE`),
+  UNIQUE KEY `CT_NAME` (`CT_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `m_notice_period` (
+  `NP_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
+  `NP_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Type',
+  `NP_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Challenge Type',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL,
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NOT NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`NP_CODE`),
+  UNIQUE KEY `NP_NAME` (`NP_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
