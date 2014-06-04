@@ -382,6 +382,14 @@ if(isset($_POST['submitted']))
 									echo("<input class='actionTxtBut' id='personalID' type='submit' name='action' value='personalID' title='Enter/View Personal ID' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"personal-id.php\")' /> &nbsp;");
 									
 									echo("<input class='actionTxtBut' id='workSchdule' type='submit' name='action' value='workSchdule' title='Enter/View Work Schdule' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"planned-work-schedule.php\")' /> &nbsp;");
+									
+									echo("<input class='actionTxtBut' id='communication' type='submit' name='action' value='communication' title='Enter/View Communication details' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"communication.php\")' /> &nbsp;");
+									
+									echo("<input class='actionTxtBut' id='contract' type='submit' name='action' value='contract' title='Enter/View Contract details' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"contract.php\")' /> &nbsp;");
+									
+									echo("<input class='actionTxtBut' id='absences' type='submit' name='action' value='absences' title='Enter/View Absences details' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"absences.php\")' /> &nbsp;");
+									
+									echo("<input class='actionTxtBut' id='leave' type='submit' name='action' value='leave' title='Enter/View Leave details' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"leave.php\")' /> &nbsp;");
 																		
 			         	 		}// else status
 							?>
