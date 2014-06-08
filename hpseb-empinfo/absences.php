@@ -41,7 +41,7 @@ if(isset($_POST['submitted']))
 			echo($_SESSION['msg']);
 		}else
 		{
-			$_SESSION['msg']="Problem creating employee address. Please try again.";
+			$_SESSION['msg']="Problem creating employee details. Please try again.";
 			echo($_SESSION['msg']);
 		}
 		// Removed Header receive-blazes.php
@@ -133,8 +133,8 @@ if(isset($_POST['submitted']))
 	<ul>
         <li>
             <label for="ABSENCE_CODE">ABSENCE CODE:</label>
-           <select id="ABSENCE_CODE" name="ABSENCE_CODE"
-            data-validation-help="Please enter absence code" 
+           <id="ABSENCE_CODE" name="ABSENCE_CODE"
+           data-validation-help="Please enter absence code" 
             data-validation="required" 
             data-validation-error-msg="Absence code is required"/>
                 <option value="01">Earned Leave</option>
@@ -199,7 +199,7 @@ if(isset($_POST['submitted']))
         	<label for="ABSENCE_END_DT">ABSENCE END DT:</label>
             <input type="text" 
             size="14" 
-            id="ADDRESS_END_DT" name="ABSENCE_END_DT"
+            id="ABSENCE_END_DT" name="ABSENCE_END_DT"
             data-validation-help="Please enter End date" 
             data-validation-error-msg="End date is required"/>
 		</li>
@@ -279,7 +279,7 @@ if(isset($_POST['submitted']))
             id="ABSENCE_BEGIN_DT" name="ABSENCE_BEGIN_DT"
             data-validation-help="Please enter Start date" 
             data-validation-error-msg="Start date is required"
-            value="<?php echo($address['ABSENCE_BEGIN_DT']);?>"/>
+            value="<?php echo($absences['ABSENCE_BEGIN_DT']);?>"/>
 		</li>
 		<li>
         	<label for="ABSENCE_END_DT">ABSENCE END DT:</label>
@@ -288,7 +288,7 @@ if(isset($_POST['submitted']))
             id="ABSENCE_END_DT" name="ABSENCE_END_DT"
             data-validation-help="Please enter End date" 
             data-validation-error-msg="End date is required"
-            value="<?php echo($address['ADDRESS_END_DT']);?>"/>
+            value="<?php echo($absences['ABSENCE_END_DT']);?>"/>
             </li>
 		</ul>
 	
