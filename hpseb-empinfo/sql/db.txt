@@ -81,3 +81,29 @@ CREATE TABLE IF NOT EXISTS `m_notice_period` (
   UNIQUE KEY `NP_NAME` (`NP_NAME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+CREATE TABLE IF NOT EXISTS `m_user` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_fname` varchar(100) NOT NULL,
+  `user_lname` varchar(100) NOT NULL,
+  `user_id` varchar(100) NOT NULL,
+  `user_pass` varchar(100) NOT NULL,
+  `user_email` varchar(100) NOT NULL,
+  `role_code` varchar(50) NOT NULL,
+  `user_desc` varchar(500) NOT NULL,
+  `status_cd` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(50) DEFAULT NULL,
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `m_user`
+--
+
+INSERT INTO `m_user` (`id`, `user_fname`, `user_lname`, `user_id`, `user_pass`, `user_email`, `role_code`, `user_desc`, `status_cd`, `created_dt`, `created_by`, `updated_dt`, `updated_by`) VALUES
+(null, 'System', 'Admin', 'sysadmin', '5f4dcc3b5aa765d61d8327deb882cf99', 'sysadmin@hpseb.com.com', 'sysadmin', '', 'A', '2013-11-22 08:12:18', NULL, '0000-00-00 00:00:00', NULL);

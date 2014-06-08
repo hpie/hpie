@@ -597,3 +597,81 @@ div.uploader input {
   bottom: 0;
   float: right;
 }
+
+
+/* image buttons */
+.editImgBut{
+	background:url(../images/edit.png) no-repeat;
+	background-position:center;
+	font-size:0;
+	width:20px;
+    height:20px;
+     
+    
+}
+.editImgBut:hover{
+	border-color: #ff0000;
+	width:22px;
+    height:22px;
+}
+
+.deleteImgBut{
+	background:url(../images/delete.png) no-repeat;
+	background-position:center;
+	font-size:0;
+	width:20px;
+    height:20px;
+    
+	}
+.deleteImgBut:hover{
+	border-color: #ff0000;
+	width:22px;
+    height:22px;
+	}
+
+.statusAImgBut{
+	background:url(../images/available.png) no-repeat;
+	background-position:center;
+	font-size:0;
+	width:20px;
+    height:20px;
+  	}
+.statusAImgBut:hover{
+	border-color: #ff0000;
+	width:22px;
+    height:22px;
+	}
+
+.statusIImgBut{
+	background:url(../images/removed.png) no-repeat;
+	background-position:center;
+	font-size:0;
+	width:20px;
+    height:20px;
+	}
+.statusIImgBut:hover{
+	border-color: #ff0000;
+	width:22px;
+    height:22px;
+	}
+	
+.statusDImgBut{
+	background:url(../images/deleted.png) no-repeat;
+	background-position:center;
+	font-size:0;
+	width:20px;
+    height:20px;
+	}
+.statusDImgBut:hover{
+	border-color: #ff0000;
+	width:22px;
+    height:22px;
+	}
+
+	.actionTxtBut{
+	vertical-align:bottom;
+	font-size:8;
+	}
+.actionTxtBut:hover{
+	border-color: #ff0000;
+	}	
