@@ -205,45 +205,7 @@ if(isset($_POST['submitted']))
 		</li>
         <li>
             <label for="ADDRESS_REGION_CODE">ADDRESS REGION CODE:</label>
-            <select id="ADDRESS_REGION_CODE" name="ADDRESS_REGION_CODE"
-             data-validation-help="Please enter Region code" 
-            data-validation="required" 
-            data-validation-error-msg="Region code is required"/>
-            <option value="01">Andra Pradesh</option>
-			<option value="02">Arunachal Pradesh</option>
-			<option value="03">Assam</option>
-			<option value="04">Bihar</option>
-			<option value="05">Goa</option>
-			<option value="06">Gujarat</option>
-			<option value="07">Haryana</option>
-			<option value="08">Himachal Pradesh</option>
-			<option value="09">Jammu und Kashmir</option>
-			<option value="10">Karnataka</option>
-			<option value="11">Kerala</option>
-			<option value="12">Madhya Pradesh</option>
-			<option value="13">Maharashtra</option>
-			<option value="14">Manipur</option>
-			<option value="15">Megalaya</option>
-			<option value="16">Mizoram</option>
-			<option value="17">Nagaland</option>
-			<option value="18">Orissa</option>
-			<option value="19">Punjab</option>
-			<option value="20">Rajasthan</option>
-			<option value="21">Sikkim</option>
-			<option value="22">Tamil Nadu</option>
-			<option value="23">Tripura</option>
-			<option value="24">Uttar Pradesh</option>
-			<option value="25">West Bengal</option>
-			<option value="26">Andaman und Nico.In.</option>
-			<option value="27">Chandigarh</option>
-			<option value="28">Dadra und Nagar Hav.</option>
-			<option value="29">Daman und Diu</option>
-			<option value="30">Delhi</option>
-			<option value="31">Lakshadweep</option>
-			<option value="32">Pondicherry</option>
-			<option value="33">Chhaattisgarh</option>
-			<option value="34">Jharkhand</option>
-			<option value="35">Uttaranchal</option>  </select>
+            <?php echo($common->getRegionList("")); ?>
         </li>
 		<li>
         	<label for="ADDRESS_COUNTRY_CODE">ADDRESS COUNTRY CODE:</label>
@@ -316,8 +278,10 @@ if(isset($_POST['submitted']))
 	<ul>
         <li>
             <label for="ADDRESS_TYPE_CODE">ADDRESS TYPE CODE:</label>
-            <id="ADDRESS_TYPE_CODE" name="ADDRESS_TYPE_CODE" />
-             <?php echo($common->getAddressType($address['ADDRESS_TYPE_CODE'])); ?>
+            <id="ADDRESS_TYPE_CODE" name="ADDRESS_TYPE_CODE" data-validation-help="Please enter Address type code" 
+            data-validation="required" 
+            data-validation-error-msg="Address type code is required"/>
+            <?php echo($common->getAddressType($address['ADDRESS_TYPE_CODE'])); ?>
         </li>
         <li>
         	<label for="ADDRESS_CARE_OF">ADDRESS CARE OF:</label>
