@@ -213,7 +213,7 @@ if(isset($_POST['submitted']))
 
 		<p>
 			<button type="submit" class="action" name="action" value="Save">Save</button>
-			<button type="reset" class="right">Reset</button>
+			<button type="reset" class="right" onclick="javascript:history.back();">Reset</button>
 			<input name="created_by" type="hidden" id="created_by" value="<?php echo($_SESSION['userid'])?>" />
 			<input name="submitted" type="hidden" id="submitted" value="1" />
 		</p>
@@ -222,13 +222,34 @@ if(isset($_POST['submitted']))
 	<footer> </footer>
 	<script>
 
+	// date control script
+  		$(function() {
+	  		$( "#EMP_BIRTH_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+  		
+  		$(function() {
+	  		$( "#EMP_BEGIN_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+
+  		$(function() {
+	  		$( "#EMP_END_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+	  
 	 $.validate({
 	   
 	 });
 	
 	 // Restrict presentation length
 	 $('#presentation').restrictLength( $('#pres-max-length') );
-
 	</script>
 <?php
 	}else if($action=="edit")
@@ -316,7 +337,7 @@ if(isset($_POST['submitted']))
 
 		<p>
 			<button type="submit" class="action" name="action" value="Update">Update</button>
-			<button type="reset" class="right">Reset</button>
+			<button type="reset" class="right" onclick="javascript:history.back();">Reset</button>
 			<input name="rowid" type="hidden" id="ROW_ID" value="<?php echo($employee['ROW_ID']);?>" />
 			<input name="modified_by" type="hidden" id="modified_by" value="<?php echo($_SESSION['userid'])?>" />
 			<input name="submitted" type="hidden" id="submitted" value="1" />
@@ -332,6 +353,28 @@ if(isset($_POST['submitted']))
 	 // Restrict presentation length
 	 $('#presentation').restrictLength( $('#pres-max-length') );
 
+	// date control script
+		$(function() {
+	  		$( "#EMP_BIRTH_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+		
+		$(function() {
+	  		$( "#EMP_BEGIN_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+
+		$(function() {
+	  		$( "#EMP_END_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+		  
 	</script>
 
 <?php
