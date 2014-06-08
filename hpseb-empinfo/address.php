@@ -227,7 +227,7 @@ if(isset($_POST['submitted']))
         	<label for="ADDRESS_BEGIN_DT">ADDRESS BEGIN DT:</label>
             <input type="text" 
             size="14" 
-            id="ADDRESS_BEGIN_NO" name="ADDRESS_BEGIN_DT"
+            id="ADDRESS_BEGIN_DT" name="ADDRESS_BEGIN_DT"
             data-validation-help="Please enter START DATE" 
             data-validation-error-msg="Telephone Number is required"/>
 		</li>
@@ -243,7 +243,7 @@ if(isset($_POST['submitted']))
 	
 		<p>
 			<button type="submit" class="action" name="action" value="Save">Save</button>
-			<button type="reset" class="right">Reset</button>
+			<button type="submit" class="right" name="action" value="Cancel">Cancel</button>
 			<input name="created_by" type="hidden" id="created_by" value="<?php echo($_SESSION['userid'])?>" />
 			<input name="empid" type="hidden" value="<?php echo($_POST['empid']);?>" />
 			<input name="submitted" type="hidden" id="submitted" value="1" />
@@ -255,7 +255,23 @@ if(isset($_POST['submitted']))
 </footer>
 
 <script>
- 
+
+	//date control script
+	$(function() {
+			$( "#ADDRESS_BEGIN_DT" ).datepicker(
+	             	{ dateFormat: 'yy-mm-dd', 
+	                   showAnim: 'slide' 
+	                });
+	  });
+	
+	$(function() {
+			$( "#ADDRESS_END_DT" ).datepicker(
+	             	{ dateFormat: 'yy-mm-dd', 
+	                   showAnim: 'slide' 
+	                });
+	  });
+  
+	  
   $.validate({
     
   });
@@ -368,7 +384,7 @@ if(isset($_POST['submitted']))
         	<label for="ADDRESS_BEGIN_DT">ADDRESS BEGIN DT:</label>
             <input type="text" 
             size="14" 
-            id="ADDRESS_BEGIN_NO" name="ADDRESS_BEGIN_DT"
+            id="ADDRESS_BEGIN_DT" name="ADDRESS_BEGIN_DT"
             value="<?php echo($address['ADDRESS_BEGIN_DT']);?>"
             data-validation-help="Please enter address begin date" 
             data-validation="required" 
@@ -387,12 +403,38 @@ if(isset($_POST['submitted']))
 		</ul>	
 		<p>
 			<button type="submit" class="action" name="action" value="Update">Update</button>
-			<button type="reset" class="right">Reset</button>
+			<button type="submit" class="right" name="action" value="Cancel">Cancel</button>
 			<input name="rowid" type="hidden" id="ROW_ID" value="<?php echo($address['ROW_ID']);?>" />
 			<input name="modified_by" type="hidden" id="modified_by" value="<?php echo($_SESSION['userid'])?>" />
+			<input name="empid" type="hidden" value="<?php echo($_POST['empid']);?>" />
 			<input name="submitted" type="hidden" id="submitted" value="1" />
 		</p>
 </form>
+	<script>
+
+	 $.validate({
+	   
+	 });
+	
+	 // Restrict presentation length
+	 $('#presentation').restrictLength( $('#pres-max-length') );
+
+	// date control script
+		$(function() {
+	  		$( "#ADDRESS_BEGIN_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+
+		$(function() {
+	  		$( "#ADDRESS_END_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+		  
+	</script>
 </article>		
 <?php
 	}else

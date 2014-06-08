@@ -25,7 +25,7 @@
         <!-- post starts here -->				            
             <div class="post">
             
-            	<h3>
+            	<h5>
                 	<div style="float:left; padding:0px 0px 0px 5px;"><?php echo($pageTitle);?> <?php echo($_SESSION['fname']);?>. <font size="1">You are currently working in <?php echo($_SESSION['division']);?> division.</font> </div>
 					<div style="float:right;"><font size=2>
                     	<?php 
@@ -34,7 +34,7 @@
 						?>
                        </font> 
                      </div>
-                 </h3>
+                 </h5>
        
                 <br />
 				<p>&nbsp;</p>

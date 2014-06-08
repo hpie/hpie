@@ -49,7 +49,11 @@
 		}else if($_POST['action']=="Cancel")
 		{
 			$action="cancel";
-			Header("Location: index.php");
+			Header("Location: employee.php");
+		}else if($_POST['action']=="Home")
+		{
+			$action="home";
+			Header("Location: home.php");
 		}else if($_POST['action']=="Filter")
 		{
 			$_SESSION['filter']=TRUE;
