@@ -390,6 +390,8 @@ if(isset($_POST['submitted']))
 									echo("<input class='actionTxtBut' id='absences' type='submit' name='action' value='absences' title='Enter/View Absences details' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"absences.php\")' /> &nbsp;");
 									
 									echo("<input class='actionTxtBut' id='leave' type='submit' name='action' value='leave' title='Enter/View Leave details' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"leave.php\")' /> &nbsp;");
+									
+									echo("<input class='actionTxtBut' id='challenge' type='submit' name='action' value='challenge' title='Enter/View Challenge details' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"challenge.php\")' /> &nbsp;");
 																		
 			         	 		}// else status
 							?>
