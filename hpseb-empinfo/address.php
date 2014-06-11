@@ -20,7 +20,7 @@ if(isset($_POST['submitted']))
 		ADDRESS_PHONE_NO= '".$_POST['ADDRESS_PHONE_NO']."',
 		ADDRESS_BEGIN_DT= '".$_POST['ADDRESS_BEGIN_DT']."',
 		ADDRESS_END_DT= '".$_POST['ADDRESS_END_DT']."',
-		STATUS= '".$_POST['status']."',
+		STATUS= '".$_POST['status_cd']."',
 		MODIFIED_BY= '".$_POST['modified_by']."',
 		MODIFIED_DATE==now()
 		WHERE ROW_ID='".$_POST['rowid']."'");
@@ -36,11 +36,29 @@ if(isset($_POST['submitted']))
 		}
 		//Header("Location: receive-blazes.php");
 	}else if($action=="save")
-	{
+	{ 
+		// check for dates
+		$beginDT = $_POST['ADDRESS_BEGIN_DT'];
+		$endDT = $_POST['ADDRESS_END_DT'];
+		if($beginDT=="" || $endDT=="")
+		{
+			$employee = $db->get_row("SELECT * FROM employee WHERE ROW_ID='".$_POST['empid']."'"  ,ARRAY_A);
+			
+			if($beginDT=="")
+			{
+				$beginDT = $employee['EMP_BEGIN_DT'];	
+			}
+			if($endDT=="")
+			{
+				$endDT = $employee['EMP_END_DT'];	
+			}
+		}// end if check dates
+		
+		
 		$db->query("INSERT INTO employee_address_details
 		(  EMPLOYEE_ROW_ID, ADDRESS_TYPE_CODE,ADDRESS_CARE_OF,ADDRESS_LINE_1,ADDRESS_LINE_2,ADDRESS_POSTAL_CODE,ADDRESS_CITY, ADDRESS_DISTRICT, ADDRESS_REGION_CODE, ADDRESS_COUNTRY_CODE, ADDRESS_PHONE_NO, ADDRESS_BEGIN_DT, ADDRESS_END_DT, STATUS, CREATED_BY) 
 		 VALUES ( '".$_POST['empid']."','".$_POST['ADDRESS_TYPE_CODE']."', '".$_POST['ADDRESS_CARE_OF']."', '".$_POST['ADDRESS_LINE_1']."', '".$_POST['ADDRESS_LINE_2']."', '".$_POST['ADDRESS_POSTAL_CODE']."', '".$_POST['ADDRESS_CITY']."', '".$_POST['ADDRESS_DISTRICT']."',
-		 '".$_POST['ADDRESS_REGION_CODE']."', '".$_POST['ADDRESS_COUNTRY_CODE']."', '".$_POST['ADDRESS_PHONE_NO']."', '".$_POST['ADDRESS_BEGIN_DT']."', '".$_POST['ADDRESS_END_DT']."', '1','".$_POST['created_by']."')");		
+		 '".$_POST['ADDRESS_REGION_CODE']."', '".$_POST['ADDRESS_COUNTRY_CODE']."', '".$_POST['ADDRESS_PHONE_NO']."', '".$beginDT."', '".$endDT."', '1','".$_POST['created_by']."')");		
 		//$db->debug();
 		if($db->rows_affected>0)
 		{
@@ -55,22 +73,22 @@ if(isset($_POST['submitted']))
 	}else if($action=="Status")
 	{
 		$status="";
-		if($_POST['status'] =="0")
+		if($_POST['status_cd'] =="0")
 		{
 			$db->query("UPDATE employee_address_details SET
-			STATUS= '".$_POST['status']."',
+			STATUS= '".$_POST['status_cd']."',
 			MODIFIED_BY= '".$_POST['modified_by']."',
 			MODIFIED_DATE==now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
-			$status="Inactive";
-		}else if($_POST['status'] =="1")
+			$status="0";
+		}else if($_POST['status_cd'] =="1")
 		{
 			$db->query("UPDATE employee_address_details SET
-			STATUS= '".$_POST['status']."',
+			STATUS= '".$_POST['status_cd']."',
 			MODIFIED_BY= '".$_POST['modified_by']."',
 			MODIFIED_DATE==now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
-			$status="Active";
+			$status="1";
 		}
 		//$db->debug();
 		if($db->rows_affected>0)
@@ -86,12 +104,12 @@ if(isset($_POST['submitted']))
 	}else if($action=="delete")
 	{
 		$db->query("UPDATE employee_address_details SET
-			STATUS= '".$_POST['status']."',
+			STATUS= '".$_POST['status_cd']."',
 			MODIFIED_BY= '".$_POST['modified_by']."',
 			MODIFIED_DATE==now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
 
-		$status="deleted";
+		$status="-1";
 		//$db->debug();
 		if($db->rows_affected>0)
 		{
@@ -140,15 +158,7 @@ if(isset($_POST['submitted']))
 	<ul>
         <li>
             <label for="ADDRESS_TYPE_CODE">ADDRESS TYPE CODE:</label>
-           <select id="ADDRESS_TYPE_CODE" name="ADDRESS_TYPE_CODE"
-            data-validation-help="Please enter Region code" 
-            data-validation="required" 
-            data-validation-error-msg="Region code is required"/>
-                <option value="1">Permanent Residence</option>
-				<option value="3">Present Residence</option>
-				<option value="5">Mailing address</option>
-				<option value="Z1">Address on Deputation</option>             
-            </select>
+            <?php echo($common->getAddressType("")); ?>
         </li>
         <li>
         	<label for="ADDRESS_CARE_OF">ADDRESS CARE OF:</label>
@@ -156,13 +166,12 @@ if(isset($_POST['submitted']))
             size="40" 
             id="ADDRESS_CARE_OF" name="ADDRESS_CARE_OF"
             data-validation-help="Please enter C/O" 
-            data-validation="required" 
             data-validation-error-msg="C/O is required"/>
         </li>
 		<li>
         	<label for="ADDRESS_LINE_1">ADDRESS LINE 1:</label>
             <input type="text" 
-            size="40" id="ADDRESS_LINE_1" name="ADDRESS_LINE_1"
+            size="60" id="ADDRESS_LINE_1" name="ADDRESS_LINE_1"
             data-validation-help="Please enter Address line 1" 
             data-validation="required" 
             data-validation-error-msg="Address line 1 is required"/>
@@ -209,13 +218,8 @@ if(isset($_POST['submitted']))
         </li>
 		<li>
         	<label for="ADDRESS_COUNTRY_CODE">ADDRESS COUNTRY CODE:</label>
-            <input type="text" 
-            size="3" id="ADDRESS_COUNTRY_CODE" name="ADDRESS_COUNTRY_CODE"
-            value="IN" 
-            data-validation-help="Please enter Country" 
-            data-validation-error-msg="Country is required"/>
-		</li>
-		<li>
+            <?php echo($common->getCountryCodeList("")); ?>
+        <li>
         	<label for="ADDRESS_PHONE_NO">ADDRESS PHONE NO:</label>
             <input type="text" 
             size="14" 
@@ -226,7 +230,7 @@ if(isset($_POST['submitted']))
 		<li>
         	<label for="ADDRESS_BEGIN_DT">ADDRESS BEGIN DT:</label>
             <input type="text" 
-            size="14" 
+            size="10" 
             id="ADDRESS_BEGIN_DT" name="ADDRESS_BEGIN_DT"
             data-validation-help="Please enter START DATE" 
             data-validation-error-msg="Telephone Number is required"/>
@@ -234,7 +238,7 @@ if(isset($_POST['submitted']))
 		<li>
         	<label for="ADDRESS_END_DT">ADDRESS END DT:</label>
             <input type="text" 
-            size="14" 
+            size="10" 
             id="ADDRESS_END_DT" name="ADDRESS_END_DT"
             data-validation-help="Please enter START DATE" 
             data-validation-error-msg="Telephone Number is required"/>
@@ -294,9 +298,6 @@ if(isset($_POST['submitted']))
 	<ul>
         <li>
             <label for="ADDRESS_TYPE_CODE">ADDRESS TYPE CODE:</label>
-            <id="ADDRESS_TYPE_CODE" name="ADDRESS_TYPE_CODE" data-validation-help="Please enter Address type code" 
-            data-validation="required" 
-            data-validation-error-msg="Address type code is required"/>
             <?php echo($common->getAddressType($address['ADDRESS_TYPE_CODE'])); ?>
         </li>
         <li>
@@ -305,7 +306,6 @@ if(isset($_POST['submitted']))
             size="40" 
             id="ADDRESS_CARE_OF" name="ADDRESS_CARE_OF" value="<?php echo($address['ADDRESS_CARE_OF']);?>" 
             data-validation-help="Please enter address c/o" 
-            data-validation="required" 
             data-validation-error-msg="Address c/o is required"/>
         </li>
 		<li>
@@ -362,13 +362,7 @@ if(isset($_POST['submitted']))
          </li>
 		<li>
         	<label for="ADDRESS_COUNTRY_CODE">ADDRESS COUNTRY CODE:</label>
-            <input type="text" 
-            size="3" id="ADDRESS_COUNTRY_CODE" name="ADDRESS_COUNTRY_CODE" 
-            value="<?php echo($address['ADDRESS_COUNTRY_CODE']);?>"
-            value="IN" 
-            data-validation-help="Please enter address country code" 
-            data-validation="required" 
-            data-validation-error-msg="Address country code is required"/>
+             <?php echo($common->getCountryCodeList($address['ADDRESS_COUNTRY_CODE'])); ?>
         </li>
 		<li>
         	<label for="ADDRESS_PHONE_NO">ADDRESS PHONE NO:</label>
@@ -383,7 +377,7 @@ if(isset($_POST['submitted']))
 		<li>
         	<label for="ADDRESS_BEGIN_DT">ADDRESS BEGIN DT:</label>
             <input type="text" 
-            size="14" 
+            size="10" 
             id="ADDRESS_BEGIN_DT" name="ADDRESS_BEGIN_DT"
             value="<?php echo($address['ADDRESS_BEGIN_DT']);?>"
             data-validation-help="Please enter address begin date" 
@@ -393,7 +387,7 @@ if(isset($_POST['submitted']))
 		<li>
         	<label for="ADDRESS_END_DT">ADDRESS END DT:</label>
             <input type="text" 
-            size="14" 
+            size="10" 
             id="ADDRESS_END_DT" name="ADDRESS_END_DT"
             value="<?php echo($address['ADDRESS_END_DT']);?>"
             data-validation-help="Please enter address end date" 
@@ -453,7 +447,7 @@ if(isset($_POST['submitted']))
 			
 		           	foreach ( $employee_addresses as $employee_address )
 		           	{
-		         		echo("<td>".$employee_address['ADDRESS_TYPE_CODE'] ."</td> <td>".$employee_address['ADDRESS_LINE_1']."</td> <td>".$employee_address['ADDRESS_LINE_2']."</td> <td>".$employee_address['ADDRESS_LINE_2']."</td>  <td>".$employee_address['STATUS']."</td> ");
+		         		echo("<tr><td>".$employee_address['ADDRESS_TYPE_CODE'] ."</td> <td>".$employee_address['ADDRESS_LINE_1']."</td> <td>".$employee_address['ADDRESS_LINE_2']."</td> <td>".$employee_address['ADDRESS_LINE_2']."</td>  <td>".$employee_address['STATUS']."</td> ");
 		         		
 		         ?>	
 		         	<td>
@@ -483,12 +477,12 @@ if(isset($_POST['submitted']))
 			         	 		}// else status
 							?>
 							<!-- End row specific actions -->	
-								<input name="status" type="hidden" value="<?php echo($employee_address['STATUS']);?>" />
+								<input name="status_cd" type="hidden" value="<?php echo($employee_address['STATUS']);?>" />
 								<input name="rowid" type="hidden" value="<?php echo($employee_address['ROW_ID']);?>" />
 								<input name="empid" type="hidden" value="<?php echo($employee_address['EMPLOYEE_ROW_ID']);?>" />
 								<input name="submitted" type="hidden" id="submitted" value="1"/>
 					</form>
-					</td>
+					</td> </tr>
 			     <?php  	
 		           }
 				?>
