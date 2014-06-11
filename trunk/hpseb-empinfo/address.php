@@ -19,8 +19,7 @@ if(isset($_POST['submitted']))
 		ADDRESS_COUNTRY_CODE= '".$_POST['ADDRESS_COUNTRY_CODE']."',
 		ADDRESS_PHONE_NO= '".$_POST['ADDRESS_PHONE_NO']."',
 		ADDRESS_BEGIN_DT= '".$_POST['ADDRESS_BEGIN_DT']."',
-		ADDRESS_END_DT= '".$_POST['ADDRESS_END_DT']."',
-		STATUS= '".$_POST['status_cd']."',
+		ADDRESS_END_DT= '".$_POST['ADDRESS_END_DT']."'
 		MODIFIED_BY= '".$_POST['modified_by']."',
 		MODIFIED_DATE==now()
 		WHERE ROW_ID='".$_POST['rowid']."'");
@@ -70,25 +69,25 @@ if(isset($_POST['submitted']))
 			echo($_SESSION['msg']);
 		}
 		// Removed Header receive-blazes.php
-	}else if($action=="Status")
+	}else if($action=="status")
 	{
 		$status="";
 		if($_POST['status_cd'] =="0")
 		{
 			$db->query("UPDATE employee_address_details SET
-			STATUS= '".$_POST['status_cd']."',
+			STATUS= '1',
 			MODIFIED_BY= '".$_POST['modified_by']."',
-			MODIFIED_DATE==now()
+			MODIFIED_DATE=now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
-			$status="0";
+			$status="1";
 		}else if($_POST['status_cd'] =="1")
 		{
 			$db->query("UPDATE employee_address_details SET
-			STATUS= '".$_POST['status_cd']."',
+			STATUS= '0',
 			MODIFIED_BY= '".$_POST['modified_by']."',
-			MODIFIED_DATE==now()
+			MODIFIED_DATE=now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
-			$status="1";
+			$status="0";
 		}
 		//$db->debug();
 		if($db->rows_affected>0)
@@ -106,7 +105,7 @@ if(isset($_POST['submitted']))
 		$db->query("UPDATE employee_address_details SET
 			STATUS= '".$_POST['status_cd']."',
 			MODIFIED_BY= '".$_POST['modified_by']."',
-			MODIFIED_DATE==now()
+			MODIFIED_DATE=now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
 
 		$status="-1";
@@ -480,6 +479,7 @@ if(isset($_POST['submitted']))
 								<input name="status_cd" type="hidden" value="<?php echo($employee_address['STATUS']);?>" />
 								<input name="rowid" type="hidden" value="<?php echo($employee_address['ROW_ID']);?>" />
 								<input name="empid" type="hidden" value="<?php echo($employee_address['EMPLOYEE_ROW_ID']);?>" />
+								<input name="modified_by" type="hidden" id="modified_by" value="<?php echo($_SESSION['userid'])?>" />
 								<input name="submitted" type="hidden" id="submitted" value="1"/>
 					</form>
 					</td> </tr>
