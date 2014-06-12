@@ -12,9 +12,8 @@ if(isset($_POST['submitted']))
 		WORKSCHEDULE_TIME_STATUS= '".$_POST['WORKSCHEDULE_TIME_STATUS']."',
 		WORKSCHEDULE_BEGIN_DT= '".$_POST['WORKSCHEDULE_BEGIN_DT']."',
 		WORKSCHEDULE_END_DT= '".$_POST['WORKSCHEDULE_END_DT']."',
-		STATUS= '".$_POST['status']."',
 		MODIFIED_BY= '".$_POST['modified_by']."',
-		MODIFIED_DATE==now()
+		MODIFIED_DATE=now()
 		WHERE ROW_ID='".$_POST['rowid']."'");
 		//$db->debug();
 		if($db->rows_affected>0)
@@ -29,6 +28,23 @@ if(isset($_POST['submitted']))
 		//Header("Location: receive-blazes.php");
 	}else if($action=="save")
 	{
+		// check for dates
+		$beginDT = $_POST['WORKSCHEDULE_BEGIN_DT'];
+		$endDT = $_POST['WORKSCHEDULE_END_DT'];
+		if($beginDT=="" || $endDT=="")
+		{
+			$employee = $db->get_row("SELECT * FROM employee WHERE ROW_ID='".$_POST['empid']."'"  ,ARRAY_A);
+			
+			if($beginDT=="")
+			{
+				$beginDT = $employee['EMP_BEGIN_DT'];	
+			}
+			if($endDT=="")
+			{
+				$endDT = $employee['EMP_END_DT'];	
+			}
+		}// end if check dates
+		
 		$db->query("INSERT INTO employee_workschedule_details
 		(  EMPLOYEE_ROW_ID, WORKSCHEDULE_RULE_CODE,WORKSCHEDULE_TIME_STATUS,WORKSCHEDULE_BEGIN_DT,WORKSCHEDULE_END_DT, STATUS, CREATED_BY) 
 		 VALUES ( '".$_POST['empid']."','".$_POST['WORKSCHEDULE_RULE_CODE']."', '".$_POST['WORKSCHEDULE_TIME_STATUS']."', '".$_POST['WORKSCHEDULE_BEGIN_DT']."', '".$_POST['WORKSCHEDULE_END_DT']."', 
@@ -50,19 +66,19 @@ if(isset($_POST['submitted']))
 		if($_POST['status'] =="0")
 		{
 			$db->query("UPDATE employee_workschedule_details SET
-			STATUS= '".$_POST['status']."',
+			STATUS= '1',
 			MODIFIED_BY= '".$_POST['modified_by']."',
-			MODIFIED_DATE==now()
+			MODIFIED_DATE=now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
-			$status="Inactive";
+			$status="1";
 		}else if($_POST['status'] =="1")
 		{
 			$db->query("UPDATE employee_workschedule_details SET
-			STATUS= '".$_POST['status']."',
+			STATUS= '0',
 			MODIFIED_BY= '".$_POST['modified_by']."',
-			MODIFIED_DATE==now()
+			MODIFIED_DATE=now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
-			$status="Active";
+			$status="0";
 		}
 		//$db->debug();
 		if($db->rows_affected>0)
@@ -78,12 +94,12 @@ if(isset($_POST['submitted']))
 	}else if($action=="delete")
 	{
 		$db->query("UPDATE employee_workschedule_details SET
-			STATUS= '".$_POST['status']."',
+			STATUS= '-1',
 			MODIFIED_BY= '".$_POST['modified_by']."',
 			MODIFIED_DATE==now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
 
-		$status="deleted";
+		$status="-1";
 		//$db->debug();
 		if($db->rows_affected>0)
 		{
@@ -132,65 +148,29 @@ if(isset($_POST['submitted']))
 	<ul>
         <li>
             <label for="WORKSCHEDULE_RULE_CODE">WORKING RULE:</label>
-           <select id="WORKSCHEDULE_RULE_CODE" name="WORKSCHEDULE_RULE_CODE"
-             data-validation-help="Please enter Working Rule" 
-         	 data-validation="required" 
-            data-validation-error-msg="Working Rule is required"/>
-            <option value="HPNORM">HPSEB Normal Shift</option>
-			<option value="HPWSRDF">HP Female Daily Wage</option>
-			<option value="HPWSRDM">HP Male Daily Wage</option>
-			<option value="HPWSRF">HP Female Regular Wrk Chg</option>
-			<option value="HPWSRM">HP Male Regular Wrk Chrge</option>
-			<option value="HPWSRPT">HP Part-Time employees</option>
-			<option value="WSRCF">HP Female Contractual</option>
-			<option value="WSRCM">HP Male Contractual</option>
-			<option value="WSRFES">HPSEB Fri Evening Shift</option>
-			<option value="WSRFMS">HPSEB Fri Morning Shift</option>
-			<option value="WSRFNS">HPSEB Fri night Shift</option>
-			<option value="WSRMAS">HPSEB Mon Evening Shift</option>
-			<option value="WSRMMS">HPSEB Mon Morning Shift</option>
-			<option value="WSRMNS">HPSEB Mon night Shift</option>
-			<option value="WSRSAES">HPSEB Sat Evening Shift</option>
-			<option value="WSRSAMS">HPSEB Sat Morning Shift</option>
-			<option value="WSRSANS">HPSEB Sat night Shift</option>
-			<option value="WSRSUES">HPSEB Sun Evening Shift</option>
-			<option value="WSRSUMS">HPSEB Sun Morning Shift</option>
-			<option value="WSRSUNS">HPSEB Sun night Shift</option>
-			<option value="WSRTES">HPSEB Tue Evening Shift</option>
-			<option value="WSRTHM">HPSEB Thur Morning Shift</option>
-			<option value="WSRTHNS">HPSEB Thur night Shift</option>
-			<option value="WSRTHS">HPSEB Thur Evening Shift</option>
-			<option value="WSRTMS">HPSEB Tue Morning Shift</option>
-			<option value="WSRTNS">HPSEB Tue night Shift</option>
-			<option value="WSRWES">HPSEB Wed Evening Shift</option>
-			<option value="WSRWMS">HPSEB Wed Morning Shift</option>
-			<option value="WSRWNS">HPSEB Wed night Shift</option>             
-            </select>
+            <?php echo($common->getScheduleCode(""));?>
         </li>
         <li>
         	<label for="WORKSCHEDULE_TIME_STATUS">SCHEDULE STATUS:</label>
             <input type="text" 
-            size="40" 
+            size="1" 
             id="WORKSCHEDULE_TIME_STATUS" name="WORKSCHEDULE_TIME_STATUS"
             data-validation-help="Please enter Working time status" 
-            data-validation="required" 
             data-validation-error-msg="Working time status is required"/>
         </li>
 		<li>
         	<label for="WORKSCHEDULE_BEGIN_DT">SCHEDULE BEGIN DATE:</label>
             <input type="text" 
-            size="40" id="WORKSCHEDULE_BEGIN_DT" name="WORKSCHEDULE_BEGIN_DT"
+            size="10" id="WORKSCHEDULE_BEGIN_DT" name="WORKSCHEDULE_BEGIN_DT"
              data-validation-help="Please enter Schedule beging date" 
-            data-validation="required" 
-            data-validation-error-msg="Schedule beging date is required"/>
+             data-validation-error-msg="Schedule begin date is required"/>
         </li>
 		<li>
         	<label for="WORKSCHEDULE_END_DT">SCHEDULE END DATE:</label>
             <input type="text" 
-            size="40" 
+            size="10" 
             id="WORKSCHEDULE_END_DT"  name="WORKSCHEDULE_END_DT"
             data-validation-help="Please enter Schedule end date" 
-            data-validation="required" 
             data-validation-error-msg="Schedule end date is required"/>
         </li>
 		</ul>
@@ -209,7 +189,23 @@ if(isset($_POST['submitted']))
 </footer>
 
 <script>
- 
+
+	//date control script
+	$(function() {
+			$( "#WORKSCHEDULE_BEGIN_DT" ).datepicker(
+	             	{ dateFormat: 'yy-mm-dd', 
+	                   showAnim: 'slide' 
+	                });
+	  });
+	
+	$(function() {
+			$( "#WORKSCHEDULE_END_DT" ).datepicker(
+	             	{ dateFormat: 'yy-mm-dd', 
+	                   showAnim: 'slide' 
+	                });
+	  });
+  
+	  
   $.validate({
     
   });
@@ -232,16 +228,12 @@ if(isset($_POST['submitted']))
 	<ul>
         <li>
             <label for="WORKSCHEDULE_RULE_CODE">WORKING RULE:</label>
-           <id="WORKSCHEDULE_RULE_CODE" name="WORKSCHEDULE_RULE_CODE"
-             data-validation-help="Please enter Working Rule" 
-         	 data-validation="required" 
-            data-validation-error-msg="Working Rule is required"/>
             <?php echo($common->getScheduleCode($workschedule['WORKSCHEDULE_RULE_CODE'])); ?>
          </li>
         <li>
         	<label for="WORKSCHEDULE_TIME_STATUS">SCHEDULE STATUS:</label>
             <input type="text" 
-            size="40" 
+            size="1" 
             id="WORKSCHEDULE_TIME_STATUS" name="WORKSCHEDULE_TIME_STATUS"
             value="<?php echo($workschedule['WORKSCHEDULE_TIME_STATUS']);?>"
             data-validation-help="Please enter Working time status" 
@@ -251,7 +243,7 @@ if(isset($_POST['submitted']))
 		<li>
         	<label for="WORKSCHEDULE_BEGIN_DT">SCHEDULE BEGIN DATE:</label>
             <input type="text" 
-            size="40" id="WORKSCHEDULE_BEGIN_DT" name="WORKSCHEDULE_BEGIN_DT"
+            size="10" id="WORKSCHEDULE_BEGIN_DT" name="WORKSCHEDULE_BEGIN_DT"
             value="<?php echo($workschedule['WORKSCHEDULE_BEGIN_DT']);?>"
              data-validation-help="Please enter Schedule beging date" 
             data-validation="required" 
@@ -260,7 +252,7 @@ if(isset($_POST['submitted']))
 		<li>
         	<label for="WORKSCHEDULE_END_DT">SCHEDULE END DATE:</label>
             <input type="text" 
-            size="40" 
+            size="10" 
             id="WORKSCHEDULE_END_DT"  name="WORKSCHEDULE_END_DT"
             value="<?php echo($workschedule['WORKSCHEDULE_END_DT']);?>"
             data-validation-help="Please enter Schedule end date" 
@@ -276,6 +268,33 @@ if(isset($_POST['submitted']))
 			<input name="submitted" type="hidden" id="submitted" value="1" />
 		</p>
 </form>
+
+	<script>
+
+	 $.validate({
+	   
+	 });
+	
+	 // Restrict presentation length
+	 $('#presentation').restrictLength( $('#pres-max-length') );
+
+	// date control script
+		$(function() {
+	  		$( "#ADDRESS_BEGIN_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+
+		$(function() {
+	  		$( "#ADDRESS_END_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+		  
+	</script>
+
 </article>		
 <?php
 	}else
@@ -324,6 +343,7 @@ if(isset($_POST['submitted']))
 								<input name="status" type="hidden" value="<?php echo($employee_workschdule['STATUS']);?>" />
 								<input name="rowid" type="hidden" value="<?php echo($employee_workschdule['ROW_ID']);?>" />
 								<input name="empid" type="hidden" value="<?php echo($employee_workschdule['EMPLOYEE_ROW_ID']);?>" />
+								<input name="modified_by" type="hidden" id="modified_by" value="<?php echo($_SESSION['userid'])?>" />
 								<input name="submitted" type="hidden" id="submitted" value="1"/>
 					</form>
 					</td>
