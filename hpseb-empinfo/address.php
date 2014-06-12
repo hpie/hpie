@@ -19,9 +19,9 @@ if(isset($_POST['submitted']))
 		ADDRESS_COUNTRY_CODE= '".$_POST['ADDRESS_COUNTRY_CODE']."',
 		ADDRESS_PHONE_NO= '".$_POST['ADDRESS_PHONE_NO']."',
 		ADDRESS_BEGIN_DT= '".$_POST['ADDRESS_BEGIN_DT']."',
-		ADDRESS_END_DT= '".$_POST['ADDRESS_END_DT']."'
+		ADDRESS_END_DT= '".$_POST['ADDRESS_END_DT']."',
 		MODIFIED_BY= '".$_POST['modified_by']."',
-		MODIFIED_DATE==now()
+		MODIFIED_DATE=now()
 		WHERE ROW_ID='".$_POST['rowid']."'");
 		//$db->debug();
 		if($db->rows_affected>0)
@@ -33,7 +33,7 @@ if(isset($_POST['submitted']))
 			$_SESSION['msg']="Problem updating Employee details. Please try again.";
 			echo($_SESSION['msg']);
 		}
-		//Header("Location: receive-blazes.php");
+	
 	}else if($action=="save")
 	{ 
 		// check for dates
@@ -68,8 +68,8 @@ if(isset($_POST['submitted']))
 			$_SESSION['msg']="Problem creating employee address. Please try again.";
 			echo($_SESSION['msg']);
 		}
-		// Removed Header receive-blazes.php
-	}else if($action=="status")
+
+	}else if($action=="Status")
 	{
 		$status="";
 		if($_POST['status_cd'] =="0")
@@ -217,7 +217,8 @@ if(isset($_POST['submitted']))
         </li>
 		<li>
         	<label for="ADDRESS_COUNTRY_CODE">ADDRESS COUNTRY CODE:</label>
-            <?php echo($common->getCountryCodeList("")); ?>
+            <?php echo($common->getCddressCountryCodeList("")); ?>
+        </li>    
         <li>
         	<label for="ADDRESS_PHONE_NO">ADDRESS PHONE NO:</label>
             <input type="text" 
@@ -361,7 +362,7 @@ if(isset($_POST['submitted']))
          </li>
 		<li>
         	<label for="ADDRESS_COUNTRY_CODE">ADDRESS COUNTRY CODE:</label>
-             <?php echo($common->getCountryCodeList($address['ADDRESS_COUNTRY_CODE'])); ?>
+             <?php echo($common->getCddressCountryCodeList($address['ADDRESS_COUNTRY_CODE'])); ?>
         </li>
 		<li>
         	<label for="ADDRESS_PHONE_NO">ADDRESS PHONE NO:</label>
@@ -479,7 +480,6 @@ if(isset($_POST['submitted']))
 								<input name="status_cd" type="hidden" value="<?php echo($employee_address['STATUS']);?>" />
 								<input name="rowid" type="hidden" value="<?php echo($employee_address['ROW_ID']);?>" />
 								<input name="empid" type="hidden" value="<?php echo($employee_address['EMPLOYEE_ROW_ID']);?>" />
-								<input name="modified_by" type="hidden" id="modified_by" value="<?php echo($_SESSION['userid'])?>" />
 								<input name="submitted" type="hidden" id="submitted" value="1"/>
 					</form>
 					</td> </tr>
