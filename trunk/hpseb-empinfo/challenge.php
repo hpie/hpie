@@ -14,9 +14,8 @@ if(isset($_POST['submitted']))
 		CHALLENGE_CREDITED= '".$_POST['CHALLENGE_CREDITED']."',
 		CHALLENGE_BEGIN_DT= '".$_POST['CHALLENGE_BEGIN_DT']."',
 		CHALLENGE_END_DT= '".$_POST['CHALLENGE_END_DT']."',
-		STATUS= '".$_POST['status']."',
 		MODIFIED_BY= '".$_POST['modified_by']."',
-		MODIFIED_DATE==now()
+		MODIFIED_DATE=now()
 		WHERE ROW_ID='".$_POST['rowid']."'");
 		//$db->debug();
 		if($db->rows_affected>0)
@@ -28,12 +27,30 @@ if(isset($_POST['submitted']))
 			$_SESSION['msg']="Problem updating Employee details. Please try again.";
 			echo($_SESSION['msg']);
 		}
-		//Header("Location: receive-blazes.php");
+
 	}else if($action=="save")
 	{
+		
+		// check for dates
+		$beginDT = $_POST['CHALLENGE_BEGIN_DT'];
+		$endDT = $_POST['CHALLENGE_END_DT'];
+		if($beginDT=="" || $endDT=="")
+		{
+			$employee = $db->get_row("SELECT * FROM employee WHERE ROW_ID='".$_POST['empid']."'"  ,ARRAY_A);
+			
+			if($beginDT=="")
+			{
+				$beginDT = $employee['EMP_BEGIN_DT'];	
+			}
+			if($endDT=="")
+			{
+				$endDT = $employee['EMP_END_DT'];	
+			}
+		}// end if check dates
+		
 		$db->query("INSERT INTO employee_challenge_details
 		(  EMPLOYEE_ROW_ID, CHALLENGE_GROUP_CODE,CHALLENGE_GROUP_TYPE,DIGREE_OF_CHALLENGE,CHALLENGE_CREDITED,CHALLENGE_BEGIN_DT,CHALLENGE_END_DT, STATUS, CREATED_BY) 
-		 VALUES ( '".$_POST['empid']."','".$_POST['CHALLENGE_GROUP_CODE']."', '".$_POST['CHALLENGE_GROUP_TYPE']."', '".$_POST['DIGREE_OF_CHALLENGE']."', '".$_POST['CHALLENGE_BEGIN_DT']."', '".$_POST['CHALLENGE_END_DT']."', '1','".$_POST['created_by']."')");		
+		 VALUES ( '".$_POST['empid']."','".$_POST['CHALLENGE_GROUP_CODE']."', '".$_POST['CHALLENGE_GROUP_TYPE']."', '".$_POST['DIGREE_OF_CHALLENGE']."',  '".$_POST['CHALLENGE_CREDITED']."', '".$_POST['CHALLENGE_BEGIN_DT']."', '".$_POST['CHALLENGE_END_DT']."', '1','".$_POST['created_by']."')");		
 		//$db->debug();
 		if($db->rows_affected>0)
 		{
@@ -44,26 +61,26 @@ if(isset($_POST['submitted']))
 			$_SESSION['msg']="Problem creating employee details. Please try again.";
 			echo($_SESSION['msg']);
 		}
-		// Removed Header receive-blazes.php
+
 	}else if($action=="Status")
 	{
 		$status="";
 		if($_POST['status'] =="0")
 		{
 			$db->query("UPDATE employee_challenge_details SET
-			STATUS= '".$_POST['status']."',
+			STATUS= '1',
 			MODIFIED_BY= '".$_POST['modified_by']."',
-			MODIFIED_DATE==now()
+			MODIFIED_DATE=now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
-			$status="Inactive";
+			$status="1";
 		}else if($_POST['status'] =="1")
 		{
 			$db->query("UPDATE employee_challenge_details SET
-			STATUS= '".$_POST['status']."',
+			STATUS= '0',
 			MODIFIED_BY= '".$_POST['modified_by']."',
-			MODIFIED_DATE==now()
+			MODIFIED_DATE=now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
-			$status="Active";
+			$status="0";
 		}
 		//$db->debug();
 		if($db->rows_affected>0)
@@ -79,12 +96,12 @@ if(isset($_POST['submitted']))
 	}else if($action=="delete")
 	{
 		$db->query("UPDATE employee_challenge_details SET
-			STATUS= '".$_POST['status']."',
+			STATUS= '-1',
 			MODIFIED_BY= '".$_POST['modified_by']."',
 			MODIFIED_DATE==now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
 
-		$status="deleted";
+		$status="-1";
 		//$db->debug();
 		if($db->rows_affected>0)
 		{
@@ -133,31 +150,16 @@ if(isset($_POST['submitted']))
 	<ul>
         <li>
             <label for="CHALLENGE_GROUP_CODE">CHALLENGE GROUP CODE:</label>
-           <select id="CHALLENGE_GROUP_CODE" name="CHALLENGE_GROUP_CODE"
-            data-validation-help="Please enter challenge code" 
-            data-validation="required" 
-            data-validation-error-msg="Challenge code is required"/>
-                <option value="Z1">Recruited on Merit</option>
-				<option value="Z2">DisabilityinService</option>				         
-            </select>
+            <?php echo($common->getChallengeCodeList("")); ?>
         </li>
         <li>
         	<label for="CHALLENGE_GROUP_TYPE">CHALLENGE GROUP TYPE:</label>
-            <select id="CHALLENGE_GROUP_TYPE" name="CHALLENGE_GROUP_TYPE"
-            data-validation="required"
-            data-validation-help="Please enter challenge group type" 
-            data-validation-error-msg="Challenge group type is required"/>
-                <option value="Z1">Visual Impairment</option>
-				<option value="Z2">Hearing Impairment</option>
-				<option value="Z3">Speech Impairment</option>
-				<option value="Z4">PhysicallyChallenged</option>
-				<option value="Z5">Others</option>					         
-            </select>
+             <?php echo($common->getChallengeGroupList("")); ?>
         </li>
 		<li>
         	<label for="DIGREE_OF_CHALLENGE">DIGREE OF CHALLENGE:</label>
             <input type="text" 
-            size="40" id="DIGREE_OF_CHALLENGE" name="DIGREE_OF_CHALLENGE"
+            size="3" id="DIGREE_OF_CHALLENGE" name="DIGREE_OF_CHALLENGE"
             data-validation-help="Please enter degree challenge" 
             data-validation="required" 
             data-validation-error-msg="Degree of challenge is required"/>
@@ -165,7 +167,7 @@ if(isset($_POST['submitted']))
 		<li>
         	<label for="CHALLENGE_CREDITED">CHALLENGE CREDITED:</label>
             <input type="text" 
-            size="40" 
+            size="3" 
             id="CHALLENGE_CREDITED"  name="CHALLENGE_CREDITED"
             data-validation-help="Please enter challenge credited" 
             data-validation="required" 
@@ -203,7 +205,23 @@ if(isset($_POST['submitted']))
 </footer>
 
 <script>
- 
+
+	//date control script
+	$(function() {
+			$( "#CHALLENGE_BEGIN_DT" ).datepicker(
+	             	{ dateFormat: 'yy-mm-dd', 
+	                   showAnim: 'slide' 
+	                });
+	  });
+	
+	$(function() {
+			$( "#CHALLENGE_END_DT" ).datepicker(
+	             	{ dateFormat: 'yy-mm-dd', 
+	                   showAnim: 'slide' 
+	                });
+	  });
+  
+	  
   $.validate({
     
   });
@@ -226,8 +244,7 @@ if(isset($_POST['submitted']))
 	<ul>
 	<li>
 		   <label for="CHALLENGE_GROUP_CODE">CHALLENGE GROUP CODE:</label>
-           <id="CHALLENGE_GROUP_CODE" name="CHALLENGE_GROUP_CODE" name="CHALLENGE_GROUP_CODE">
-            <?php echo($common->getChallengeCodeList($challenges['CHALLENGE_GROUP_CODE'])); ?>
+           <?php echo($common->getChallengeCodeList($challenges['CHALLENGE_GROUP_CODE'])); ?>
         </li>
         <li>
         	<label for="CHALLENGE_GROUP_TYPE">CHALLENGE GROUP TYPE:</label>
@@ -237,7 +254,7 @@ if(isset($_POST['submitted']))
 		<li>
         	<label for="DIGREE_OF_CHALLENGE">DIGREE OF CHALLENGE:</label>
             <input type="text" 
-            size="40" id="DIGREE_OF_CHALLENGE" name="DIGREE_OF_CHALLENGE"
+            size="3" id="DIGREE_OF_CHALLENGE" name="DIGREE_OF_CHALLENGE"
             data-validation-help="Please enter challenge end time" 
             data-validation="required" 
             data-validation-error-msg="Challenge end time is required"/>
@@ -246,7 +263,7 @@ if(isset($_POST['submitted']))
 		<li>
         	<label for="CHALLENGE_CREDITED">CHALLENGE CREDITED:</label>
             <input type="text" 
-            size="40" 
+            size="3" 
             id="CHALLENGE_CREDITED"  name="CHALLENGE_CREDITED"
             data-validation-help="Please enter challenge hours" 
             data-validation="required" 
@@ -270,7 +287,7 @@ if(isset($_POST['submitted']))
             data-validation-help="Please enter End date" 
             data-validation-error-msg="End date is required"
             value="<?php echo($challenges['CHALLENGE_END_DT']);?>"/>
-            </li>
+          </li>
 		</ul>
 	
 		<p>
@@ -281,7 +298,35 @@ if(isset($_POST['submitted']))
 			<input name="submitted" type="hidden" id="submitted" value="1" />
 		</p>
 </form>
-</article>		
+</article>	
+
+	<script>
+
+	 $.validate({
+	   
+	 });
+	
+	 // Restrict presentation length
+	 $('#presentation').restrictLength( $('#pres-max-length') );
+
+	// date control script
+		$(function() {
+	  		$( "#CHALLENGE_BEGIN_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+
+		$(function() {
+	  		$( "#CHALLENGE_END_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+		  
+	</script>
+
+	
 <?php
 	}else
 	{
@@ -289,17 +334,15 @@ if(isset($_POST['submitted']))
 	<div class="CSSTableGenerator" >
 	<table>
 			<tr>
-				<td>Challenge Code</td> <td>Challenge Start Time</td> <td>Challenge End Time</td> <td>Status</td> <td>Actions</td> 
+				<td>Challenge Code</td> <td>Challenge Type</td> <td>Degree of Challenge</td> <td>Status</td> <td>Actions</td> 
 			</tr>	
 			<?php 
- 					//$employees_address = $db->get_results("SELECT * FROM e.EMP_FIRST_NAME,e.EMP_LAST_NAME, e.ROW_ID, ead.*  FROM employee e, employee_challenge_details ead
- 					 //WHERE ead.EMPLOYEE_ROW_ID = '".$_POST['rowid']."' ORDER BY e.EMP_FIRST_NAME, e.EMP_LAST_NAME"  ,ARRAY_A);
-					
+ 										
 					$employee_challenges = $db->get_results("SELECT * FROM employee_challenge_details WHERE EMPLOYEE_ROW_ID='".$_POST['empid']."'"  ,ARRAY_A);
 			
 		           	foreach ( $employee_challenges as $employee_challenge )
 		           	{
-		         		echo("<td>".$employee_challenge['CHALLENGE_GROUP_CODE'] ."</td> <td>".$employee_challenge['CHALLENGE_GROUP_TYPE']."</td> <td>".$employee_challenge['DIGREE_OF_CHALLENGE']."</td> <td>".$employee_challenge['STATUS']."</td> ");
+		         		echo("<tr><td>".$employee_challenge['CHALLENGE_GROUP_CODE'] ."</td> <td>".$employee_challenge['CHALLENGE_GROUP_TYPE']."</td> <td>".$employee_challenge['DIGREE_OF_CHALLENGE']."</td> <td>".$employee_challenge['STATUS']."</td> ");
 		         		
 		         ?>	
 		         	<td>
@@ -331,9 +374,10 @@ if(isset($_POST['submitted']))
 								<input name="status" type="hidden" value="<?php echo($employee_challenge['STATUS']);?>" />
 								<input name="rowid" type="hidden" value="<?php echo($employee_challenge['ROW_ID']);?>" />
 								<input name="empid" type="hidden" value="<?php echo($employee_challenge['EMPLOYEE_ROW_ID']);?>" />
+								<input name="modified_by" type="hidden" id="modified_by" value="<?php echo($_SESSION['userid'])?>" />
 								<input name="submitted" type="hidden" id="submitted" value="1"/>
 					</form>
-					</td>
+					</td></tr>
 			     <?php  	
 		           }
 				?>
