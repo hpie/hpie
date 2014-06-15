@@ -192,7 +192,7 @@ if(isset($_POST['submitted']))
         </li>
 		<li>
         	<label for="EDUCATION_CERTIFICATE_CODE">EDUCATION CERTIFICATE CODE:</label>
-       		 <select id="EDUCATION_CERTIFICATE_CODE" name="EDUCATION_CERTIFICATE_CODE" 
+       		 <select id="EDUCATION_CERTIFICATE_CODE" name="EDUCATION_CERTIFICATE_CODE" />
        		<option value=''>Select</option>
             </select>
         </li>
@@ -347,7 +347,7 @@ if(isset($_POST['submitted']))
             value=<?php echo($common->getCountryCodeList($education['EDUCATION_COUNTRY_CODE']));?>
         </li>
 		 	<label for="EDUCATION_CERTIFICATE_CODE">EDUCATION CERTIFICATE CODE</label>
-		 	<select id="EDUCATION_CERTIFICATE_CODE" name="EDUCATION_CERTIFICATE_CODE" 
+		 	<select id="EDUCATION_CERTIFICATE_CODE" name="EDUCATION_CERTIFICATE_CODE"  />
 		 	value=loadCertificates($education['EDUCATION_CERTIFICATE_CODE']);
        		<option value=''>Select</option>
             </select>
@@ -378,7 +378,7 @@ if(isset($_POST['submitted']))
         </li>
         <li>
         	<label for="EDUCATION_COURSE_BRANCH_CODE">EDUCATION COURSE BRANCH CODE:</label>
-           	<select id="EDUCATION_COURSE_BRANCH_CODE" name="EDUCATION_COURSE_BRANCH_CODE" 
+           	<select id="EDUCATION_COURSE_BRANCH_CODE" name="EDUCATION_COURSE_BRANCH_CODE" />
 		 	value=loadBranch($education['EDUCATION_COURSE_BRANCH_CODE']);
        		<option value=''>Select</option>
             </select>
