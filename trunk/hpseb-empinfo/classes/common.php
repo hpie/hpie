@@ -368,38 +368,6 @@ function getEthinicCode($ethinic_code, $javascript="")
 	
 
 //ethinic.php ethinic code	
-function getEthinicCode($ethinic_code, $javascript="")
-	{
-		if(isset($javascript) && $javascript != ""){
-			$callJs = ' onchange="'.$javascript.'(this);" ';
-		}else{
-			$callJs= "";
-		}
-		
-		$ethinicList = array("Z1"=>"GEN", 
-							  "Z2"=>"SC", 
-							  "Z3"=>"ST", 
-							  "Z4"=>"OBC"
-						);
-		$selectList='<select id="EMP_ETHINIC_CODE" name="EMP_ETHINIC_CODE" '.$callJs.' data-validation-help="Please enter ethinic code" data-validation="required" data-validation-error-msg="Ethnic contract code is required">'; 
-        
-		$selectList.='<option value="">Select</option>';
-		
-		foreach($ethinicList as $ethinic_c=>$ethinic_v)
-		{
-			if($ethinic_c==$ethinic_code)
-	        {	
-	     	   $selectList.='<option value="'.$ethinic_c.'" selected="selected">' . $ethinic_v . '</option>';
-	        }else
-	        {
-	        	$selectList.='<option value="'. $ethinic_c .'">' . $ethinic_v . '</option>';
-	        }
-		}
-    	$selectList.="</select>";
-		
-		echo $selectList;
-	}
-	
 	
 //contract.php contract notice period	
 	function getContractERNoticePeriodlList($contractERNoticePeriod_code, $javascript="")
@@ -433,6 +401,7 @@ function getEthinicCode($ethinic_code, $javascript="")
 		
 		echo $selectList;
 	}
+
 function getContractEENoticePeriodlList($contractEENoticePeriod_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -993,7 +962,7 @@ function getContractUnitCodeList($contractUnit_code, $javascript="")
 		echo $selectList;
 	}
 
-function getCddressCountryCodeList($addressCountry_code, $javascript="")
+function getAddressCountryCodeList($addressCountry_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
 			$callJs = ' onchange="'.$javascript.'(this);" ';
@@ -1312,25 +1281,6 @@ function getCddressCountryCodeList($addressCountry_code, $javascript="")
 		echo $selectList;
 	}
 	
-//To check the credit challenge between 0 - 100
 
-function maximCheck($num)
-{
-    if ($num > 0 && $num < 100)
-    {
-         return TRUE;
-
-    }
-    else
-    {
-        $this->form_validation->set_message(
-                        'DIGREE_OF_CHALLENGE',
-                        'The %s field must be in 1 to 100'
-                    );
-        return FALSE;
-    }
-}
-
-	
 }
 ?>
