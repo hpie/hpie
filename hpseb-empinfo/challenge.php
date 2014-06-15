@@ -158,20 +158,25 @@ if(isset($_POST['submitted']))
         </li>
 		<li>
         	<label for="DIGREE_OF_CHALLENGE">DIGREE OF CHALLENGE:</label>
-            <input type="text" 
-            size="3" id="DIGREE_OF_CHALLENGE" name="DIGREE_OF_CHALLENGE"
-            data-validation-help="Please enter degree challenge" 
-            data-validation="required" 
-            data-validation-error-msg="Degree of challenge is required"/>
+           <select>
+                   <script>
+                           for(i=0; i<=100; i++)
+                           {
+                               document.write("<option value="+i+">"+i+"</option>");
+                           }
+                   </script>
+           </select>
         </li>
 		<li>
         	<label for="CHALLENGE_CREDITED">CHALLENGE CREDITED:</label>
-            <input type="text" 
-            size="3" 
-            id="CHALLENGE_CREDITED"  name="CHALLENGE_CREDITED"
-            data-validation-help="Please enter challenge credited" 
-            data-validation="required" 
-            data-validation-error-msg="Challenge credited is required"/>
+            <select>
+                   <script>
+                           for(i=0; i<=100; i++)
+                           {
+                               document.write("<option value="+i+">"+i+"</option>");
+                           }
+                   </script>
+           </select>
         </li>
 		<li>
         	<label for="CHALLENGE_BEGIN_DT">CHALLENGE BEGIN DT:</label>
@@ -253,21 +258,25 @@ if(isset($_POST['submitted']))
         </li>
 		<li>
         	<label for="DIGREE_OF_CHALLENGE">DIGREE OF CHALLENGE:</label>
-            <input type="text" 
-            size="3" id="DIGREE_OF_CHALLENGE" name="DIGREE_OF_CHALLENGE"
-            data-validation-help="Please enter challenge end time" 
-            data-validation="required" 
-            data-validation-error-msg="Challenge end time is required"/>
+           <select>
+                   <script>
+                           for(i=0; i<=100; i++)
+                           {
+                               document.write("<option value="+i+">"+i+"</option>");
+                           }
+                   </script>
+           </select>
             value="<?php echo($challenges['DIGREE_OF_CHALLENGE']);?>"/>
         </li>
 		<li>
-        	<label for="CHALLENGE_CREDITED">CHALLENGE CREDITED:</label>
-            <input type="text" 
-            size="3" 
-            id="CHALLENGE_CREDITED"  name="CHALLENGE_CREDITED"
-            data-validation-help="Please enter challenge hours" 
-            data-validation="required" 
-            data-validation-error-msg="Challenge hours is required"/>
+        	<select>
+                   <script>
+                           for(i=0; i<=100; i++)
+                           {
+                               document.write("<option value="+i+">"+i+"</option>");
+                           }
+                   </script>
+           </select>
             value="<?php echo($challenges['CHALLENGE_CREDITED']);?>"/>
         </li>
         <li>
