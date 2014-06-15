@@ -157,7 +157,7 @@ if(isset($_POST['submitted']))
              <?php echo($common->getChallengeGroupList("")); ?>
         </li>
 		<li>
-        	<label for="DIGREE_OF_CHALLENGE">DIGREE OF CHALLENGE:</label>
+        	<label for="DIGREE_OF_CHALLENGE">DEGREE OF CHALLENGE:</label>
            <select>
                    <script>
                            for(i=0; i<=100; i++)
@@ -269,8 +269,9 @@ if(isset($_POST['submitted']))
             value="<?php echo($challenges['DIGREE_OF_CHALLENGE']);?>"/>
         </li>
 		<li>
+			<label for="CHALLENGE_CREDITED">CHALLENGE CREDITED:</label>
         	<select>
-                   <script>
+        	      <script>
                            for(i=0; i<=100; i++)
                            {
                                document.write("<option value="+i+">"+i+"</option>");
