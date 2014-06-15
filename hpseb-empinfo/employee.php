@@ -73,7 +73,7 @@ if(isset($_POST['submitted']))
 		//$db->debug();
 		if($db->rows_affected>0)
 		{
-			$_SESSION['msg']="Employee [".$_POST['FIRST_NAME']."] is now set to ".$status.".";
+			$_SESSION['msg']="Employee is now set to ".$status.".";
 			echo($_SESSION['msg']);
 		}else
 		{
@@ -84,7 +84,7 @@ if(isset($_POST['submitted']))
 	}else if($action=="delete")
 	{
 		$db->query("UPDATE employee SET
-		STATUS= '".$_POST['status']."',
+		STATUS= '-1',
 		MODIFIED_BY= '".$_POST['modified_by']."',
 		MODIFIED_DATE=now()
 		WHERE ROW_ID='".$_POST['rowid']."'");
@@ -93,7 +93,7 @@ if(isset($_POST['submitted']))
 		//$db->debug();
 		if($db->rows_affected>0)
 		{
-			$_SESSION['msg']="Employee [".$_POST['FIRST_NAME']."] is now marked as ".$status.".";
+			$_SESSION['msg']="Employee is now marked as ".$status.".";
 			echo($_SESSION['msg']);
 		}else
 		{
@@ -162,14 +162,12 @@ if(isset($_POST['submitted']))
 				<input type="text"
 				size="40" id="EMP_GPF_NO" name="EMP_GPF_NO"
 				data-validation-help="Please enter GPF No"
-				data-validation="required"
 				data-validation-error-msg="GFP No is required" />
 			</li>
 			<li><label for="EMP_CPS_NO">CPS NO:</label> 
 				<input type="text"
 				size="40" id="EMP_CPS_NO" name="EMP_CPS_NO" 
 				data-validation-help="Please enter CPS No"
-				data-validation="required"
 				data-validation-error-msg="CPS No is required" />
 			</li>
 			<li><label for="EMP_GENDER">GENDER:</label> 
@@ -286,14 +284,12 @@ if(isset($_POST['submitted']))
 				<input type="text"
 				size="40" id="EMP_GPF_NO" name="EMP_GPF_NO" value="<?php echo($employee['EMP_GPF_NO']);?>"
 				data-validation-help="Please enter GPF No"
-				data-validation="required"
 				data-validation-error-msg="GFP No is required" />
 			</li>
 			<li><label for="EMP_CPS_NO">CPS NO:</label> 
 				<input type="text"
 				size="40" id="EMP_CPS_NO" name="EMP_CPS_NO" value="<?php echo($employee['EMP_CPS_NO']);?>"
 				data-validation-help="Please enter CPS No"
-				data-validation="required"
 				data-validation-error-msg="CPS No is required" />
 			</li>
 			<li><label for="EMP_GENDER">GENDER:</label> 
@@ -435,6 +431,8 @@ if(isset($_POST['submitted']))
 									echo("<input class='actionTxtBut' id='leave' type='submit' name='action' value='leave' title='Enter/View Leave details' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"leave.php\")' /> &nbsp;");
 									
 									echo("<input class='actionTxtBut' id='challenge' type='submit' name='action' value='challenge' title='Enter/View Challenge details' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"challenge.php\")' /> &nbsp;");
+									
+									echo("<input class='actionTxtBut' id='education' type='submit' name='action' value='education' title='Enter/View Challenge details' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"education.php\")' /> &nbsp;");
 																		
 			         	 		}// else status
 							?>
