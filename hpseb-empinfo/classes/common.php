@@ -1,7 +1,19 @@
 <?php
 class common
 {
+
+	var $myVar;
+	function getMyVariable()
+	{
+		return $myVar;
+	}
 	
+	function setMyVariable($varValue)
+	{
+		$myVar = $varValue;
+	}
+	
+// address.php Address code	
 	function getAddressType($adress_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -33,7 +45,8 @@ class common
 		echo $selectList;
 	}
 	
-	
+// address.php Region code
+//	
 	function getRegionList($region_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -96,7 +109,7 @@ class common
 		
 		echo $selectList;
 	}
-		
+//personal-id.php Personal ID type		
 	function getIdentificationType($identification_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -129,7 +142,7 @@ class common
 		
 		echo $selectList;
 	}
-	
+//planned-work-schedule.php work schedule code	
 	function getScheduleCode($schedule_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -186,6 +199,7 @@ class common
 		echo $selectList;
 	}
 	
+//communication.php Type of communication	
 	function getCommunicationType($communication_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -217,6 +231,7 @@ class common
 		echo $selectList;
 	}
 	
+//appraisal.php appraisal code	
 	function getAppraisalCode($appraisal_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -248,7 +263,7 @@ class common
 		
 		echo $selectList;
 	}
-	
+//appraisal.php promotion code	
 	function getAppraisaPromotionlCode($appraisaPromotion_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -262,7 +277,7 @@ class common
 										"3"=>"Good", 
 										"4"=>"Very Good", 
 										"5"=>"Outstanding");
-		$selectList='<select id="APPRAISAL_SCALE_CODE" name="APPRAISAL_SCALE_CODE" '.$callJs.' data-validation-help="Please enter Appraisal code" data-validation="required" data-validation-error-msg="Appraisal code is required">'; 
+		$selectList='<select id="APPRAISAL_SCALE_CODE" name="APPRAISAL_SCALE_CODE" '.$callJs.' data-validation-help="Please enter Appraisal scale code" data-validation="required" data-validation-error-msg="Appraisal scale code is required">'; 
         
 		$selectList.='<option value="">Select</option>';
 		
@@ -280,7 +295,8 @@ class common
 		
 		echo $selectList;
 	}
-	
+
+//contract.php contract type code	
 	function getContractType($contract_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -316,7 +332,9 @@ class common
 		echo $selectList;
 	}
 
-	function getContractNoticePeriodlList($contractNoticePeriod_code, $javascript="")
+	
+//ethinic.php ethinic code	
+function getEthinicCode($ethinic_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
 			$callJs = ' onchange="'.$javascript.'(this);" ';
@@ -324,29 +342,130 @@ class common
 			$callJs= "";
 		}
 		
-		$contractNoticePeriodList = array("13"=>"3 months", 
-										  "Z1"=>"7 days", 
-										  "Z2"=>"15 days", 
-										  "03"=>"1 month", 
-										  "04"=>"2 months");
-		$selectList='<select id="CONTRACT_EE_NOTICE_PERIOD_CODE" name="CONTRACT_EE_NOTICE_PERIOD_CODE" '.$callJs.' data-validation-help="Please enter Contract code" data-validation="required" data-validation-error-msg="Contract code is required">'; 
+		$ethinicList = array("Z1"=>"GEN", 
+							  "Z2"=>"SC", 
+							  "Z3"=>"ST", 
+							  "Z4"=>"OBC"
+						);
+		$selectList='<select id="EMP_ETHINIC_CODE" name="EMP_ETHINIC_CODE" '.$callJs.' data-validation-help="Please enter ethinic code" data-validation="required" data-validation-error-msg="Ethnic contract code is required">'; 
         
 		$selectList.='<option value="">Select</option>';
 		
-		foreach($contractNoticePeriodList as $contractNoticePeriod_c=>$contractNoticePeriod_v)
+		foreach($ethinicList as $ethinic_c=>$ethinic_v)
 		{
-			if($contractNoticePeriod_c==$contractNoticePeriod_code)
+			if($ethinic_c==$ethinic_code)
 	        {	
-	     	   $selectList.='<option value="'.$contractNoticePeriod_c.'" selected="selected">' . $contractNoticePeriod_v . '</option>';
+	     	   $selectList.='<option value="'.$ethinic_c.'" selected="selected">' . $ethinic_v . '</option>';
 	        }else
 	        {
-	        	$selectList.='<option value="'. $contractNoticePeriod_c .'">' . $contractNoticePeriod_v . '</option>';
+	        	$selectList.='<option value="'. $ethinic_c .'">' . $ethinic_v . '</option>';
 	        }
 		}
     	$selectList.="</select>";
 		
 		echo $selectList;
 	}
+	
+
+//ethinic.php ethinic code	
+function getEthinicCode($ethinic_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		$ethinicList = array("Z1"=>"GEN", 
+							  "Z2"=>"SC", 
+							  "Z3"=>"ST", 
+							  "Z4"=>"OBC"
+						);
+		$selectList='<select id="EMP_ETHINIC_CODE" name="EMP_ETHINIC_CODE" '.$callJs.' data-validation-help="Please enter ethinic code" data-validation="required" data-validation-error-msg="Ethnic contract code is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+		
+		foreach($ethinicList as $ethinic_c=>$ethinic_v)
+		{
+			if($ethinic_c==$ethinic_code)
+	        {	
+	     	   $selectList.='<option value="'.$ethinic_c.'" selected="selected">' . $ethinic_v . '</option>';
+	        }else
+	        {
+	        	$selectList.='<option value="'. $ethinic_c .'">' . $ethinic_v . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}
+	
+	
+//contract.php contract notice period	
+	function getContractERNoticePeriodlList($contractERNoticePeriod_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		$contractERNoticePeriodList = array("13"=>"3 months", 
+										  "Z1"=>"7 days", 
+										  "Z2"=>"15 days", 
+										  "03"=>"1 month", 
+										  "04"=>"2 months");
+		$selectList='<select id="CONTRACT_ER_NOTICE_PERIOD_CODE" name="CONTRACT_ER_NOTICE_PERIOD_CODE" '.$callJs.' data-validation-help="Please enter Contract EE notice period code code" data-validation="required" data-validation-error-msg="Contract EE notice period code is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+		
+		foreach($contractERNoticePeriodList as $contractERNoticePeriod_c=>$contractERNoticePeriod_v)
+		{
+			if($contractERNoticePeriod_c==$contractERNoticePeriod_code)
+	        {	
+	     	   $selectList.='<option value="'.$contractERNoticePeriod_c.'" selected="selected">' . $contractERNoticePeriod_v . '</option>';
+	        }else
+	        {
+	        	$selectList.='<option value="'. $contractERNoticePeriod_c .'">' . $contractERNoticePeriod_v . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}
+function getContractEENoticePeriodlList($contractEENoticePeriod_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		$contractEENoticePeriodList = array("13"=>"3 months", 
+										  "Z1"=>"7 days", 
+										  "Z2"=>"15 days", 
+										  "03"=>"1 month", 
+										  "04"=>"2 months");
+		$selectList='<select id="CONTRACT_EE_NOTICE_PERIOD_CODE" name="CONTRACT_EE_NOTICE_PERIOD_CODE" '.$callJs.' data-validation-help="Please enter Contract EE notice period code code" data-validation="required" data-validation-error-msg="Contract EE notice period code is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+		
+		foreach($contractEENoticePeriodList as $contractEENoticePeriod_c=>$contractEENoticePeriod_v)
+		{
+			if($contractEENoticePeriod_c==$contractEENoticePeriod_code)
+	        {	
+	     	   $selectList.='<option value="'.$contractEENoticePeriod_c.'" selected="selected">' . $contractEENoticePeriod_v . '</option>';
+	        }else
+	        {
+	        	$selectList.='<option value="'. $contractEENoticePeriod_c .'">' . $contractEENoticePeriod_v . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}
+		
+//absences.php absence code 	
 	function getAbsenceCodeList($absence_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -395,7 +514,9 @@ class common
 		echo $selectList;
 	}
 	
-	function getLeaveCodeList($leave_code, $javascript="")
+	
+	//	leave.php leave codes
+	function getMilitaryCodeList($military_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
 			$callJs = ' onchange="'.$javascript.'(this);" ';
@@ -403,25 +524,20 @@ class common
 			$callJs= "";
 		}
 		
-		$leaveCodeList = array("01"=>"Earned Leave Quota", 
-								"02"=>"Casual Leave Quota", 
-								"03"=>"Half Pay Leave Quota", 
-								"04"=>"Restricted  Quota", 
-								"05"=>"EL from Previous Employer", 
-								"06"=>"Study Leave Quota", 
-								"07"=>"Special Casual Leave");
+		$militaryCodeList = array("90"=>"Ex-Serviceman" 
+								);
 		$selectList='<select id="LEAVE_CODE" name="LEAVE_CODE" '.$callJs.' data-validation-help="Please enter leave code" data-validation="required" data-validation-error-msg="Leave code is required">'; 
         
 		$selectList.='<option value="">Select</option>';
 		
-		foreach($leaveCodeList as $leave_c=>$leave_v)
+		foreach($militaryCodeList as $military_c=>$military_v)
 		{
-			if($leave_c==$leave_code)
+			if($military_c==$military_code)
 	        {	
-	     	   $selectList.='<option value="'.$leave_c.'" selected="selected">' . $leave_v . '</option>';
+	     	   $selectList.='<option value="'.$military_c.'" selected="selected">' . $military_v . '</option>';
 	        }else
 	        {
-	        	$selectList.='<option value="'. $leave_c .'">' . $leave_v . '</option>';
+	        	$selectList.='<option value="'. $military_c .'">' . $military_v . '</option>';
 	        }
 		}
     	$selectList.="</select>";
@@ -429,6 +545,7 @@ class common
 		echo $selectList;
 	}
 	
+//additional-personal-details.php military code	
     function getMilitaryCodeList($military_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -464,6 +581,7 @@ class common
 		echo $selectList;
 	}
 
+//challenge.php challenge code	
 	function getChallengeCodeList($challenge_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -474,7 +592,7 @@ class common
 		
 		$challengeCodeList = array("Z1"=>"Recruited on Merit", 
 								   "Z2"=>"DisabilityinService"	);
-		$selectList='<select id="CHALLENGE_GROUP_CODE" name="CHALLENGE_GROUP_CODE" '.$callJs.' data-validation-help="Please enter Military code" data-validation="required" data-validation-error-msg="Military code is required">'; 
+		$selectList='<select id="CHALLENGE_GROUP_CODE" name="CHALLENGE_GROUP_CODE" '.$callJs.' data-validation-help="Please enter Challenge group code" data-validation="required" data-validation-error-msg="Challenge group code is required">'; 
         
 		$selectList.='<option value="">Select</option>';
 		
@@ -493,6 +611,7 @@ class common
 		echo $selectList;
 	}
 
+//challenge.php challenge group list	
 	function getChallengeGroupList($challengeGroup_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -506,25 +625,27 @@ class common
 									"Z3"=>"Speech Impairment", 
 									"Z4"=>"PhysicallyChallenged",  
 									"Z5"=>"Others");
-		$selectList='<select id="CHALLENGE_GROUP_TYPE" name="CHALLENGE_GROUP_TYPE" '.$callJs.' data-validation-help="Please enter Military code" data-validation="required" data-validation-error-msg="Military code is required">'; 
+		$selectList='<select id="CHALLENGE_GROUP_TYPE" name="CHALLENGE_GROUP_TYPE" '.$callJs.' data-validation-help="Please enter Challenge group code" data-validation="required" data-validation-error-msg="Challenge group is required">'; 
         
 		$selectList.='<option value="">Select</option>';
 		
 		foreach($challengeGroupList as $challenge_c=>$challenge_v)
 		{
-			if($challengeGroup_c==$challengeGroup_code)
+			if($challenge_c==$challengeGroup_code)
 	        {	
-	     	   $selectList.='<option value="'.$challengeGroup_c.'" selected="selected">' . $challengeGroup_v . '</option>';
+	     	   $selectList.='<option value="'.$challenge_c.'" selected="selected">' . $challenge_v . '</option>';
 	        }else
 	        {
-	        	$selectList.='<option value="'. $challengeGroup_c .'">' . $challengeGroup_v . '</option>';
+	        	$selectList.='<option value="'. $challenge_c .'">' . $challenge_v . '</option>';
 	        }
 		}
     	$selectList.="</select>";
 		
 		echo $selectList;
 	}
-function getdisciplineCodeList($discipline_code, $javascript="")
+	
+//disciplinary.php disciplinary code	
+function getDisciplineCodeList($discipline_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
 			$callJs = ' onchange="'.$javascript.'(this);" ';
@@ -573,8 +694,9 @@ function getdisciplineCodeList($discipline_code, $javascript="")
 		
 		echo $selectList;
 	}
-	
-function getactionSourceCodeList($actionSource_code, $javascript="")
+
+//disciplinary.php action source code
+function getActionSourceCodeList($actionSource_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
 			$callJs = ' onchange="'.$javascript.'(this);" ';
@@ -621,7 +743,8 @@ function getactionSourceCodeList($actionSource_code, $javascript="")
 		echo $selectList;
 	}
 	
-function getactionStatusCodeList($actionStatus_code, $javascript="")
+//disciplinary.php action status code	
+function getActionStatusCodeList($actionStatus_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
 			$callJs = ' onchange="'.$javascript.'(this);" ';
@@ -661,7 +784,8 @@ function getactionStatusCodeList($actionStatus_code, $javascript="")
 		echo $selectList;
 	}
 	
-function getactionOutcomeCodeList($actionOutcome_code, $javascript="")
+//	disciplinary.php action outcome code
+function getActionOutcomeCodeList($actionOutcome_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
 			$callJs = ' onchange="'.$javascript.'(this);" ';
@@ -707,8 +831,9 @@ function getactionOutcomeCodeList($actionOutcome_code, $javascript="")
 		
 		echo $selectList;
 	}
-	
-function getunitCodeList($actionOutcome_code, $javascript="")
+
+//	common unit for the period
+function getUnitCodeList($actionOutcome_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
 			$callJs = ' onchange="'.$javascript.'(this);" ';
@@ -722,7 +847,7 @@ function getunitCodeList($actionOutcome_code, $javascript="")
            "D"=>"Days"    );
 		
 		
-		$selectList='<select id="DECIPLINE_SENTENCE_PERIOD_UNIT" name="DECIPLINE_SENTENCE_PERIOD_UNIT" '.$callJs.' data-validation-help="Please enter actionOutcome code" data-validation="required" data-validation-error-msg="actionOutcome code is required">'; 
+		$selectList='<select id="DECIPLINE_SENTENCE_PERIOD_UNIT" name="DECIPLINE_SENTENCE_PERIOD_UNIT" '.$callJs.' data-validation-help="Please enter unit code" data-validation="required" data-validation-error-msg="Unit code is required">'; 
         
 		$selectList.='">""">Select</option>';
 		
@@ -740,7 +865,43 @@ function getunitCodeList($actionOutcome_code, $javascript="")
 		
 		echo $selectList;
 	}
+
+//contract.php
+
+function getContractUnitCodeList($contractUnit_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		$unitContractUnitCodeList = array(
+		   "Y"=>"Years",
+           "M"=>"Months",
+           "D"=>"Days"    );
+		
+		
+		$selectList='<select id="CONTRACT_PROBATION_UNITS" name="CONTRACT_PROBATION_UNITS" '.$callJs.' data-validation-help="Please enter unit code" data-validation="required" data-validation-error-msg="Unit code is required">'; 
+        
+		$selectList.='">""">Select</option>';
+		
+		foreach($unitContractUnitCodeList as $unit_c=>$unit_v)
+		{
+			if($unit_c==$contractUnit_code)
+	        {	
+	     	   $selectList.='<option value="'.$unit_c.'" selected="selected">' . $unit_v . '</option>';
+	        }else
+	        {
+	        	$selectList.='"=>""'. $unit_c .'">' . $unit_v . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}
 	
+//educaiton.php education code 	
 	function getEducationCodeList($education_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -779,7 +940,7 @@ function getunitCodeList($actionOutcome_code, $javascript="")
 						             "27"=>"Departmental Exam" );
 		
 		
-		$selectList='<select id="EDUCATION_ESTABLISHMENT_CODE" name="EDUCATION_ESTABLISHMENT_CODE" '.$callJs.' data-validation-help="Please enter actionOutcome code" data-validation="required" data-validation-error-msg="actionOutcome code is required">'; 
+		$selectList='<select id="EDUCATION_ESTABLISHMENT_CODE" name="EDUCATION_ESTABLISHMENT_CODE" '.$callJs.' data-validation-help="Please enter eduction establishment code" data-validation="required" data-validation-error-msg=" eduction establishment code is required">'; 
         
 		$selectList.='">""">Select</option>';
 		
@@ -797,7 +958,8 @@ function getunitCodeList($actionOutcome_code, $javascript="")
 		
 		echo $selectList;
 	}
-	
+
+//education.php country code list	
 	function getCountryCodeList($country_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -812,7 +974,7 @@ function getunitCodeList($actionOutcome_code, $javascript="")
 						             );
 		
 		
-		$selectList='<select id="EDUCATION_COUNTRY_CODE" name="EDUCATION_COUNTRY_CODE" '.$callJs.' data-validation-help="Please enter actionOutcome code" data-validation="required" data-validation-error-msg="actionOutcome code is required">'; 
+		$selectList='<select id="EDUCATION_COUNTRY_CODE" name="EDUCATION_COUNTRY_CODE" '.$callJs.' data-validation-help="Please enter country code" data-validation="required" data-validation-error-msg="Country code is required">'; 
         
 		$selectList.='">""">Select</option>';
 		
@@ -830,7 +992,39 @@ function getunitCodeList($actionOutcome_code, $javascript="")
 		
 		echo $selectList;
 	}
+
+function getCddressCountryCodeList($addressCountry_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		$addressCountryCodeList = array("IN"=>"India", 
+							 "NP"=>"Nepal" 
+							 );
+		$selectList='<select id="ADDRESS_COUNTRY_CODE" name="ADDRESS_COUNTRY_CODE" '.$callJs.' data-validation-help="Please enter Address country code" data-validation="required" data-validation-error-msg="Address country code is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+		
+		foreach($addressCountryCodeList as $addressCountry_c =>$addressCountry_v)
+		{
+			if($addressCountry_c==$addressCountry_code)
+	        {	
+	     	   $selectList.='<option value="'.$addressCountry_c.'" selected="selected">' . $addressCountry_v . '</option>';
+	        }else
+	        {
+	        	$selectList.='<option value="'. $addressCountry_c .'">' . $addressCountry_v . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}	
 	
+	
+//education.php certification code	
 	function getCertificateCodeList($certificate_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -911,7 +1105,7 @@ function getunitCodeList($actionOutcome_code, $javascript="")
 						             );
 		
 		
-		$selectList='<select id="EDUCATION_CERTIFICATE_CODE" name="EDUCATION_CERTIFICATE_CODE" '.$callJs.' data-validation-help="Please enter actionOutcome code" data-validation="required" data-validation-error-msg="actionOutcome code is required">'; 
+		$selectList='<select id="EDUCATION_CERTIFICATE_CODE" name="EDUCATION_CERTIFICATE_CODE" '.$callJs.' data-validation-help="Please enter education certificate code" data-validation="required" data-validation-error-msg="Education certificate code is required">'; 
         
 		$selectList.='">""">Select</option>';
 		
@@ -930,6 +1124,7 @@ function getunitCodeList($actionOutcome_code, $javascript="")
 		echo $selectList;
 	}
 
+//education.php education branch code	
 	function getBranchCodeList($branch_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -1098,7 +1293,7 @@ function getunitCodeList($actionOutcome_code, $javascript="")
 					             );
 		
 		
-		$selectList='<select id="EDUCATION_COURSE_BRANCH_CODE" name="EDUCATION_COURSE_BRANCH_CODE" '.$callJs.' data-validation-help="Please enter actionOutcome code" data-validation="required" data-validation-error-msg="actionOutcome code is required">'; 
+		$selectList='<select id="EDUCATION_COURSE_BRANCH_CODE" name="EDUCATION_COURSE_BRANCH_CODE" '.$callJs.' data-validation-help="Please enter education branch code" data-validation="required" data-validation-error-msg="Education branch code is required">'; 
         
 		$selectList.='">""">Select</option>';
 		
@@ -1116,6 +1311,26 @@ function getunitCodeList($actionOutcome_code, $javascript="")
 		
 		echo $selectList;
 	}
+	
+//To check the credit challenge between 0 - 100
+
+function maximCheck($num)
+{
+    if ($num > 0 && $num < 100)
+    {
+         return TRUE;
+
+    }
+    else
+    {
+        $this->form_validation->set_message(
+                        'DIGREE_OF_CHALLENGE',
+                        'The %s field must be in 1 to 100'
+                    );
+        return FALSE;
+    }
+}
+
 	
 }
 ?>
