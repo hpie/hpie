@@ -11,13 +11,13 @@ if(isset($_POST['submitted']))
 		CONTRACT_TYPE_CODE='".$_POST['CONTRACT_TYPE_CODE']."',
 		CONTRACT_PROBATION= '".$_POST['CONTRACT_PROBATION']."',
 		CONTRACT_PROBATION_UNITS= '".$_POST['CONTRACT_PROBATION_UNITS']."',
+		CONTRACT_ER_ERNOTICE_PERIOD_CODE= '".$_POST['CONTRACT_ER_ERNOTICE_PERIOD_CODE']."',
 		CONTRACT_EE_NOTICE_PERIOD_CODE= '".$_POST['CONTRACT_EE_NOTICE_PERIOD_CODE']."',
 		CONTRACT_WORK_PERMIT_DT= '".$_POST['CONTRACT_WORK_PERMIT_DT']."',
 		CONTRACT_BEGIN_DT= '".$_POST['CONTRACT_BEGIN_DT']."',
 		CONTRACT_END_DT= '".$_POST['CONTRACT_END_DT']."',
-		STATUS= '".$_POST['status']."',
 		MODIFIED_BY= '".$_POST['modified_by']."',
-		MODIFIED_DATE==now()
+		MODIFIED_DATE=now()
 		WHERE ROW_ID='".$_POST['rowid']."'");
 		//$db->debug();
 		if($db->rows_affected>0)
@@ -29,43 +29,61 @@ if(isset($_POST['submitted']))
 			$_SESSION['msg']="Problem updating Employee details. Please try again.";
 			echo($_SESSION['msg']);
 		}
-		//Header("Location: receive-blazes.php");
+	
 	}else if($action=="save")
-	{
+	{ 
+		// check for dates
+		$beginDT = $_POST['CONTRACT_BEGIN_DT'];
+		$endDT = $_POST['CONTRACT_END_DT'];
+		if($beginDT=="" || $endDT=="")
+		{
+			$employee = $db->get_row("SELECT * FROM employee WHERE ROW_ID='".$_POST['empid']."'"  ,ARRAY_A);
+			
+			if($beginDT=="")
+			{
+				$beginDT = $employee['EMP_BEGIN_DT'];	
+			}
+			if($endDT=="")
+			{
+				$endDT = $employee['EMP_END_DT'];	
+			}
+		}// end if check dates
+		
+		
 		$db->query("INSERT INTO employee_contract_details
-		(  EMPLOYEE_ROW_ID, CONTRACT_TYPE_CODE,CONTRACT_PROBATION,CONTRACT_PROBATION_UNITS,CONTRACT_EE_NOTICE_PERIOD_CODE,CONTRACT_WORK_PERMIT_DT,CONTRACT_BEGIN_DT, CONTRACT_END_DT, STATUS, CREATED_BY) 
-		 VALUES ( '".$_POST['empid']."','".$_POST['CONTRACT_TYPE_CODE']."', '".$_POST['CONTRACT_PROBATION']."', '".$_POST['CONTRACT_PROBATION_UNITS']."', '".$_POST['CONTRACT_EE_NOTICE_PERIOD_CODE']."', '".$_POST['CONTRACT_WORK_PERMIT_DT']."', '".$_POST['CONTRACT_BEGIN_DT']."', '".$_POST['CONTRACT_END_DT']."',
-		  '1','".$_POST['created_by']."')");		
+		(  EMPLOYEE_ROW_ID, CONTRACT_TYPE_CODE,CONTRACT_PROBATION,CONTRACT_PROBATION_UNITS,CONTRACT_ER_ERNOTICE_PERIOD_CODE,CONTRACT_EE_NOTICE_PERIOD_CODE,CONTRACT_WORK_PERMIT_DT, ADDRESS_DISTRICT, ADDRESS_REGION_CODE, ADDRESS_COUNTRY_CODE, ADDRESS_PHONE_NO, CONTRACT_BEGIN_DT, CONTRACT_END_DT, STATUS, CREATED_BY) 
+		 VALUES ( '".$_POST['empid']."','".$_POST['CONTRACT_TYPE_CODE']."', '".$_POST['CONTRACT_PROBATION']."', '".$_POST['CONTRACT_PROBATION_UNITS']."', '".$_POST['CONTRACT_ER_ERNOTICE_PERIOD_CODE']."', '".$_POST['CONTRACT_EE_NOTICE_PERIOD_CODE']."', '".$_POST['CONTRACT_WORK_PERMIT_DT']."', '".$_POST['ADDRESS_DISTRICT']."',
+		 '".$beginDT."', '".$endDT."', '1','".$_POST['created_by']."')");		
 		//$db->debug();
 		if($db->rows_affected>0)
 		{
-			$_SESSION['msg']="Employee Details Successfully Created.";
+			$_SESSION['msg']="Employee details Successfully Created.";
 			echo($_SESSION['msg']);
 		}else
 		{
-			$_SESSION['msg']="Problem creating employee Details. Please try again.";
+			$_SESSION['msg']="Problem creating employee details. Please try again.";
 			echo($_SESSION['msg']);
 		}
-		// Removed Header receive-blazes.php
+
 	}else if($action=="Status")
 	{
 		$status="";
-		if($_POST['status'] =="0")
+		if($_POST['status_cd'] =="0")
 		{
 			$db->query("UPDATE employee_contract_details SET
-			STATUS= '".$_POST['status']."',
+			STATUS= '1',
 			MODIFIED_BY= '".$_POST['modified_by']."',
-			MODIFIED_DATE==now()
+			MODIFIED_DATE=now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
-			$status="Inactive";
-		}else if($_POST['status'] =="1")
+			$status="1";
+		}else if($_POST['status_cd'] =="1")
 		{
 			$db->query("UPDATE employee_contract_details SET
-			STATUS= '".$_POST['status']."',
+			STATUS= '0',
 			MODIFIED_BY= '".$_POST['modified_by']."',
-			MODIFIED_DATE==now()
+			MODIFIED_DATE=now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
-			$status="Active";
+			$status="0";
 		}
 		//$db->debug();
 		if($db->rows_affected>0)
@@ -81,12 +99,12 @@ if(isset($_POST['submitted']))
 	}else if($action=="delete")
 	{
 		$db->query("UPDATE employee_contract_details SET
-			STATUS= '".$_POST['status']."',
+			STATUS= '".$_POST['status_cd']."',
 			MODIFIED_BY= '".$_POST['modified_by']."',
-			MODIFIED_DATE==now()
+			MODIFIED_DATE=now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
 
-		$status="deleted";
+		$status="-1";
 		//$db->debug();
 		if($db->rows_affected>0)
 		{
@@ -135,82 +153,57 @@ if(isset($_POST['submitted']))
 	<ul>
         <li>
             <label for="CONTRACT_TYPE_CODE">CONTRACT TYPE CODE:</label>
-           <select id="CONTRACT_TYPE_CODE" name="CONTRACT_TYPE_CODE"
-             data-validation-help="Please enter Contract code" 
-            data-validation="required" 
-            data-validation-error-msg="Contract code is required"/>
-                <option value="Z1">On Probation</option>
-				<option value="Z2">Confirmed</option>
-				<option value="Z3">Ext. of Probation</option>
-				<option value="Z4">Fixed term contract</option>
-				<option value="Z5">Ext. of Contract</option>   
-				<option value="Z6">Part-Time</option>   
-				<option value="Z7">Daily Wage contract</option>
-				<option value="Z8">Work Charge Contract</option>                
-            </select>
+            <?php echo($common->getContractType("")); ?>
         </li>
         <li>
         	<label for="CONTRACT_PROBATION">CONTRACT PROBATION:</label>
             <input type="text" 
-            size="40" 
+            size="2" 
             id="CONTRACT_PROBATION" name="CONTRACT_PROBATION"
-            data-validation-help="Please enter Contract Probation" 
-            data-validation="required" 
-            data-validation-error-msg="Contract Probation is required"/>
-         </li>
+            data-validation-help="Please enter Contract probation" 
+            data-validation-error-msg="Contract probation is required"/>
+        </li>
 		<li>
         	<label for="CONTRACT_PROBATION_UNITS">CONTRACT PROBATION UNITS:</label>
-            <input type="text" 
-            size="40" id="CONTRACT_PROBATION_UNITS" name="CONTRACT_PROBATION_UNITS"
-            data-validation-help="Please enter Contract Probation unit" 
-            data-validation="required" 
-            data-validation-error-msg="Contract Probation unit is required"/>
+            <?php echo($common->getContractUnitCodeList("")); ?>
         </li>
 		<li>
-        	<label for="CONTRACT_EE_NOTICE_PERIOD_CODE">CONTRACT NOTICE EE PERIOD CODE:</label>
-            <select id="CONTRACT_EE_NOTICE_PERIOD_CODE"  name="CONTRACT_EE_NOTICE_PERIOD_CODE"
-            data-validation-help="Please enter Contract notice period code" 
-            data-validation="required" 
-            data-validation-error-msg="Contract notice period code is required"/>
-            	<option value="13">3 months</option>  
-            	<option value="Z1">7 days</option>
-				<option value="Z2">15 days</option>
-				<option value="03">1 month</option>
-				<option value="04">2 months</option>
-			</select>
+        	<label for="CONTRACT_ER_ERNOTICE_PERIOD_CODE">CONTRACT ER ERNOTICE PERIOD CODE:</label>
+           <?php echo($common->getContractERNoticePeriodlList("")); ?>
         </li>
 		<li>
-        	<label for="CONTRACT_WORK_PERMIT_DT">CONTRACT WORK PERMIT DT:</label>
+			<label for="CONTRACT_EE_NOTICE_PERIOD_CODE">CONTRACT EE NOTICE PERIOD CODE:</label>
+           <?php echo($common->getContractEENoticePeriodlList("")); ?>
+        </li>
+		<li>
+        	<label for="CONTRACT_WORK_PERMIT_DT">CONTRACT_WORK_PERMIT_DT:</label>
             <input type="text" 
             size="10" 
             id="CONTRACT_WORK_PERMIT_DT" name="CONTRACT_WORK_PERMIT_DT"
-            data-validation-help="Please enter Contract work permit date" 
-            data-validation="required" 
-            data-validation-error-msg="Contract work permit date is required"/>
+            data-validation-help="Please work permit date" 
+            data-validation-error-msg="Work permit date is required"/>
         </li>
 		<li>
-        	<label for="CONTRACT_BEGIN_DT">CONTRACT BEGIN DT:</label>
+        	<label for="CONTRACT_BEGIN_DT">CONTRACT_BEGIN_DT:</label>
             <input type="text" 
-            size="40" 
+            size="10" 
             id="CONTRACT_BEGIN_DT" name="CONTRACT_BEGIN_DT"
-            data-validation-help="Please enter Contract begin date" 
-            data-validation="required" 
-            data-validation-error-msg="Contract begin date is required"/>
-        </li>
+            data-validation-help="Please enter START DATE" 
+            data-validation-error-msg="Telephone Number is required"/>
+		</li>
 		<li>
         	<label for="CONTRACT_END_DT">CONTRACT END DT:</label>
             <input type="text" 
-            size="40" 
+            size="10" 
             id="CONTRACT_END_DT" name="CONTRACT_END_DT"
-            data-validation-help="Please enter Contract end date" 
-            data-validation="required" 
-            data-validation-error-msg="Contract end date is required"/>
+            data-validation-help="Please enter end date" 
+            data-validation-error-msg="End date is required"/>
 		</li>
-       </ul>
+	</ul>
 	
 		<p>
 			<button type="submit" class="action" name="action" value="Save">Save</button>
-			<button type="reset" class="right">Reset</button>
+			<button type="submit" class="right" name="action" value="Cancel">Cancel</button>
 			<input name="created_by" type="hidden" id="created_by" value="<?php echo($_SESSION['userid'])?>" />
 			<input name="empid" type="hidden" value="<?php echo($_POST['empid']);?>" />
 			<input name="submitted" type="hidden" id="submitted" value="1" />
@@ -222,7 +215,30 @@ if(isset($_POST['submitted']))
 </footer>
 
 <script>
- 
+
+	//date control script
+	$(function() {
+			$( "#CONTRACT_WORK_PERMIT_DT" ).datepicker(
+	             	{ dateFormat: 'yy-mm-dd', 
+	                   showAnim: 'slide' 
+	                });
+	  });
+	
+	$(function() {
+			$( "#CONTRACT_BEGIN_DT" ).datepicker(
+	             	{ dateFormat: 'yy-mm-dd', 
+	                   showAnim: 'slide' 
+	                });
+	  });
+	
+	$(function() {
+			$( "#CONTRACT_END_DT" ).datepicker(
+	             	{ dateFormat: 'yy-mm-dd', 
+	                   showAnim: 'slide' 
+	                });
+	  });
+  
+	  
   $.validate({
     
   });
@@ -245,73 +261,97 @@ if(isset($_POST['submitted']))
 	<ul>
         <li>
             <label for="CONTRACT_TYPE_CODE">CONTRACT TYPE CODE:</label>
-           <id="CONTRACT_TYPE_CODE" name="CONTRACT_TYPE_CODE" />
-           <?php echo($common->getContractType($contract['CONTRACT_TYPE_CODE'])); ?>
-          </li>
+            <?php echo($common->getContractType($contract['CONTRACT_TYPE_CODE'])); ?>
+        </li>
         <li>
         	<label for="CONTRACT_PROBATION">CONTRACT PROBATION:</label>
             <input type="text" 
             size="40" 
-            id="CONTRACT_PROBATION" name="CONTRACT_PROBATION"
-            value="<?php echo($contract['CONTRACT_PROBATION']);?>"
-            data-validation-help="Please enter Contract Probation" 
-            data-validation="required" 
-            data-validation-error-msg="Contract Probation is required"/>
-         </li>
+            id="CONTRACT_PROBATION" name="CONTRACT_PROBATION" value="<?php echo($contract['CONTRACT_PROBATION']);?>" 
+            data-validation-help="Please enter contract probation" 
+            data-validation-error-msg="Contract probation is required"/>
+        </li>
 		<li>
         	<label for="CONTRACT_PROBATION_UNITS">CONTRACT PROBATION UNITS:</label>
-            <input type="text" 
-            size="40" id="CONTRACT_PROBATION_UNITS" name="CONTRACT_PROBATION_UNITS"
-            value="<?php echo($contract['CONTRACT_PROBATION_UNITS']);?>"
-            data-validation-help="Please enter Contract Probation unit" 
-            data-validation="required" 
-            data-validation-error-msg="Contract Probation unit is required"/>
+        	<?php echo($common->getContractUnitCodeList('CONTRACT_TYPE_CODE')); ?>
+        </li>
+		<li>
+        	<label for="CONTRACT_ER_ERNOTICE_PERIOD_CODE">CONTRACT ER ERNOTICE PERIOD CODE:</label>
+            <?php echo($common->getContractERNoticePeriodlList("CONTRACT_ER_ERNOTICE_PERIOD_CODE"));?>
         </li>
 		<li>
         	<label for="CONTRACT_EE_NOTICE_PERIOD_CODE">CONTRACT EE NOTICE PERIOD CODE:</label>
-            <id="CONTRACT_EE_NOTICE_PERIOD_CODE"  name="CONTRACT_EE_NOTICE_PERIOD_CODE" />
-           <?php echo($common->getContractNoticePeriodlList($contract['CONTRACT_EE_NOTICE_PERIOD_CODE'])); ?>
+            <?php echo($common->getContractEENoticePeriodlList("CONTRACT_ER_ERNOTICE_PERIOD_CODE"));?>
         </li>
 		<li>
         	<label for="CONTRACT_WORK_PERMIT_DT">CONTRACT WORK PERMIT DT:</label>
             <input type="text" 
             size="10" 
-            id="CONTRACT_WORK_PERMIT_DT" name="CONTRACT_WORK_PERMIT_DT"
+            id="CONTRACT_WORK_PERMIT_DT"  name="CONTRACT_WORK_PERMIT_DT" 
             value="<?php echo($contract['CONTRACT_WORK_PERMIT_DT']);?>"
-            data-validation-help="Please enter Contract work permit date" 
-            data-validation="required" 
-            data-validation-error-msg="Contract work permit date is required"/>
+            data-validation-help="Please enter work permit date" 
+            data-validation-error-msg="Work permit date is required"/>
         </li>
 		<li>
         	<label for="CONTRACT_BEGIN_DT">CONTRACT BEGIN DT:</label>
             <input type="text" 
-            size="40" 
+            size="10" 
             id="CONTRACT_BEGIN_DT" name="CONTRACT_BEGIN_DT"
-            value="<?php echo($contract['CONTRACT_BEGIN_DT']);?>"
-            data-validation-help="Please enter Contract begin date" 
-            data-validation="required" 
+            value="<?php echo($address['CONTRACT_BEGIN_DT']);?>"
+            data-validation-help="Please enter contract begin date" 
             data-validation-error-msg="Contract begin date is required"/>
-        </li>
+  		</li>
 		<li>
         	<label for="CONTRACT_END_DT">CONTRACT END DT:</label>
             <input type="text" 
-            size="40" 
+            size="10" 
             id="CONTRACT_END_DT" name="CONTRACT_END_DT"
-            value="<?php echo($contract['CONTRACT_END_DT']);?>"
-            data-validation-help="Please enter Contract end date" 
-            data-validation="required" 
+            value="<?php echo($address['CONTRACT_END_DT']);?>"
+            data-validation-help="Please enter contract end date" 
             data-validation-error-msg="Contract end date is required"/>
-		</li>
-       </ul>
-	
+         </li>
+		</ul>	
 		<p>
 			<button type="submit" class="action" name="action" value="Update">Update</button>
-			<button type="reset" class="right">Reset</button>
-			<input name="rowid" type="hidden" id="ROW_ID" value="<?php echo($contract['ROW_ID']);?>" />
+			<button type="submit" class="right" name="action" value="Cancel">Cancel</button>
+			<input name="rowid" type="hidden" id="ROW_ID" value="<?php echo($address['ROW_ID']);?>" />
 			<input name="modified_by" type="hidden" id="modified_by" value="<?php echo($_SESSION['userid'])?>" />
+			<input name="empid" type="hidden" value="<?php echo($_POST['empid']);?>" />
 			<input name="submitted" type="hidden" id="submitted" value="1" />
 		</p>
 </form>
+	<script>
+
+	 $.validate({
+	   
+	 });
+	
+	 // Restrict presentation length
+	 $('#presentation').restrictLength( $('#pres-max-length') );
+
+	// date control script
+		$(function() {
+	  		$( "#CONTRACT_WORK_PERMIT_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		});
+		
+		$(function() {
+	  		$( "#CONTRACT_BEGIN_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+
+		$(function() {
+	  		$( "#CONTRACT_END_DT" ).datepicker(
+	                 	{ dateFormat: 'yy-mm-dd', 
+		                   showAnim: 'slide' 
+		                });
+		  });
+		  
+	</script>
 </article>		
 <?php
 	}else
@@ -320,15 +360,15 @@ if(isset($_POST['submitted']))
 	<div class="CSSTableGenerator" >
 	<table>
 			<tr>
-				<td>Contract Code</td> <td>Contract Probotion</td> <td>Contract Work Permit date</td> <td>Status</td> <td>Actions</td> 
+				<td>Contract Type</td> <td>Contract Probotaion</td> <td>ER Notice Period</td> <td>EE Notice Period</td> <td>Status</td> <td>Actions</td> 
 			</tr>	
 			<?php 
- 							
+ 									
 					$employee_contracts = $db->get_results("SELECT * FROM employee_contract_details WHERE EMPLOYEE_ROW_ID='".$_POST['empid']."'"  ,ARRAY_A);
 			
 		           	foreach ( $employee_contracts as $employee_contract )
 		           	{
-		         		echo("<td>".$employee_contract['CONTRACT_TYPE_CODE'] ."</td> <td>".$employee_contract['CONTRACT_PROBATION']."</td> <td>".$employee_contract['CONTRACT_WORK_PERMIT_DT']."</td> <td>".$employee_contract['STATUS']."</td> ");
+		         		echo("<tr><td>".$employee_contract['CONTRACT_TYPE_CODE'] ."</td> <td>".$employee_contract['CONTRACT_PROBATION_UNITS']."".$employee_contract['CONTRACT_PROBATION']."</td> <td>".$employee_contract['CONTRACT_ER_ERNOTICE_PERIOD_CODE']."</td> <td>".$employee_contract['CONTRACT_ER_ERNOTICE_PERIOD_CODE']."</td>  <td>".$employee_contract['STATUS']."</td> ");
 		         		
 		         ?>	
 		         	<td>
@@ -352,17 +392,19 @@ if(isset($_POST['submitted']))
 									//}
 									
 								        echo("<input class='deleteImgBut' id='deletelot' type='submit' name='action' value='Delete' title='Mark this record as deleted'/> &nbsp;");
-									     						
+								        
+								        									     						
 												 
 			         	 		}// else status
 							?>
 							<!-- End row specific actions -->	
-								<input name="status" type="hidden" value="<?php echo($employee_contract['STATUS']);?>" />
+								<input name="status_cd" type="hidden" value="<?php echo($employee_contract['STATUS']);?>" />
 								<input name="rowid" type="hidden" value="<?php echo($employee_contract['ROW_ID']);?>" />
 								<input name="empid" type="hidden" value="<?php echo($employee_contract['EMPLOYEE_ROW_ID']);?>" />
+								<input name="modified_by" type="hidden" id="modified_by" value="<?php echo($_SESSION['userid'])?>" />
 								<input name="submitted" type="hidden" id="submitted" value="1"/>
 					</form>
-					</td>
+					</td> </tr>
 			     <?php  	
 		           }
 				?>
