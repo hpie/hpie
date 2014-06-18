@@ -1,11 +1,11 @@
 CREATE TABLE IF NOT EXISTS `m_absemce` (
   `ABSENCE_CODE` varchar(50) NOT NULL COMMENT 'Absence Code with not spl chars and underscore only hyphens allowed',
   `ABSENCE_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the absence code',
-  `ABSENCE_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the absece code',
+  `ABSENCE_DESCRIPTION` varchar(500) NULL COMMENT 'Detailed description about the absece code',
   `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
-  `CREATED_BY` varchar(50) NOT NULL,
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
   `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `MODIFIED_BY` varchar(50) NOT NULL,
+  `MODIFIED_BY` varchar(50) NULL,
   `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`ABSENCE_CODE`),
   UNIQUE KEY `ABSENCE_NAME` (`ABSENCE_NAME`)
@@ -16,11 +16,11 @@ CREATE TABLE IF NOT EXISTS `m_absemce` (
 CREATE TABLE IF NOT EXISTS `m_work_schedule` (
   `WS_CODE` varchar(50) NOT NULL COMMENT 'Work Schedule Code with not spl chars and underscore only hyphens allowed',
   `WS_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Work Schedule',
-  `WS_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Work Schedule',
+  `WS_DESCRIPTION` varchar(500) NULL COMMENT 'Detailed description about the Work Schedule',
   `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
-  `CREATED_BY` varchar(50) NOT NULL,
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
   `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `MODIFIED_BY` varchar(50) NOT NULL,
+  `MODIFIED_BY` varchar(50) NULL,
   `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`WS_CODE`),
   UNIQUE KEY `WS_NAME` (`WS_NAME`)
@@ -30,11 +30,11 @@ CREATE TABLE IF NOT EXISTS `m_work_schedule` (
 CREATE TABLE IF NOT EXISTS `m_challenge_group` (
   `CG_CODE` varchar(50) NOT NULL COMMENT 'Challenge Group Code with not spl chars and underscore only hyphens allowed',
   `CG_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Group ',
-  `CG_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the WChallenge Group ',
+  `CG_DESCRIPTION` varchar(500) NULL COMMENT 'Detailed description about the WChallenge Group ',
   `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
-  `CREATED_BY` varchar(50) NOT NULL,
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
   `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `MODIFIED_BY` varchar(50) NOT NULL,
+  `MODIFIED_BY` varchar(50) NULL,
   `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`CG_CODE`),
   UNIQUE KEY `CG_NAME` (`CG_NAME`)
@@ -43,11 +43,11 @@ CREATE TABLE IF NOT EXISTS `m_challenge_group` (
 CREATE TABLE IF NOT EXISTS `m_challenge_type` (
   `CT_CODE` varchar(50) NOT NULL COMMENT 'Challenge Type Code with not spl chars and underscore only hyphens allowed',
   `CT_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Type',
-  `CT_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Challenge Type',
+  `CT_DESCRIPTION` varchar(500) NULL COMMENT 'Detailed description about the Challenge Type',
   `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
-  `CREATED_BY` varchar(50) NOT NULL,
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
   `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `MODIFIED_BY` varchar(50) NOT NULL,
+  `MODIFIED_BY` varchar(50) NULL,
   `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`CT_CODE`),
   UNIQUE KEY `CT_NAME` (`CT_NAME`)
@@ -57,12 +57,12 @@ CREATE TABLE IF NOT EXISTS `m_challenge_type` (
 CREATE TABLE IF NOT EXISTS `m_contract_type` (
   `CT_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
   `CT_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Type',
-  `CT_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Challenge Type',
+  `CT_DESCRIPTION` varchar(500) NULL COMMENT 'Detailed description about the Challenge Type',
   `CT_FIXED` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
   `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
-  `CREATED_BY` varchar(50) NOT NULL,
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
   `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `MODIFIED_BY` varchar(50) NOT NULL,
+  `MODIFIED_BY` varchar(50) NULL,
   `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`CT_CODE`),
   UNIQUE KEY `CT_NAME` (`CT_NAME`)
@@ -71,39 +71,1364 @@ CREATE TABLE IF NOT EXISTS `m_contract_type` (
 CREATE TABLE IF NOT EXISTS `m_notice_period` (
   `NP_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
   `NP_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Type',
-  `NP_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Challenge Type',
+  `NP_DESCRIPTION` varchar(500) NULL COMMENT 'Detailed description about the Challenge Type',
   `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
-  `CREATED_BY` varchar(50) NOT NULL,
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
   `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `MODIFIED_BY` varchar(50) NOT NULL,
+  `MODIFIED_BY` varchar(50) NULL,
   `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`NP_CODE`),
   UNIQUE KEY `NP_NAME` (`NP_NAME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+-- ----- IGNORE THE ABOVE---
 
-CREATE TABLE IF NOT EXISTS `m_user` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_fname` varchar(100) NOT NULL,
-  `user_lname` varchar(100) NOT NULL,
-  `user_id` varchar(100) NOT NULL,
-  `user_pass` varchar(100) NOT NULL,
-  `user_email` varchar(100) NOT NULL,
-  `role_code` varchar(50) NOT NULL,
-  `user_desc` varchar(500) NOT NULL,
-  `status_cd` varchar(5) DEFAULT 'A',
-  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_by` varchar(50) DEFAULT NULL,
-  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_by` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `user_id` (`user_id`)
+CREATE TABLE IF NOT EXISTS `employee` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMP_FIRST_NAME` varchar(100) NOT NULL COMMENT 'Employee First Name',
+  `EMP_LAST_NAME` varchar(100) NOT NULL COMMENT 'Employee Last Name',
+  `EMP_PAN_NO` varchar(20) NOT NULL COMMENT 'Employee PAN No',
+  `EMP_GPF_NO` varchar(20) NOT NULL COMMENT 'Employee GPF No',
+  `EMP_CPS_NO` varchar(20) NOT NULL COMMENT 'Employee CPS No',
+  `EMP_GENDER` varcher(20) NOT NULL COMMENT 'Employee Gernder',
+  `EMP_BIRTH_DT` date NOT NULL COMMENT 'Employee Date of Birth',
+  `EMP_PERSONAL_NO` varchar(20) NULL COMMENT 'Employee Personal No',
+  `EMP_ETHINIC_CODE` varchar(20) NOT NULL COMMENT 'Employee Ethinic Origin',
+  `EMP_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date of Employment',
+  `EMP_END_DT` date NOT NULL DEFAULT '9999-12-31' COMMENT 'Employee End Date of Employment',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`),
+  UNIQUE KEY `EMP_PAN_NO` (`EMP_PAN_NO`),
+  UNIQUE KEY `EMP_GPF_NO` (`EMP_GPF_NO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `m_user`
---
 
-INSERT INTO `m_user` (`id`, `user_fname`, `user_lname`, `user_id`, `user_pass`, `user_email`, `role_code`, `user_desc`, `status_cd`, `created_dt`, `created_by`, `updated_dt`, `updated_by`) VALUES
-(null, 'System', 'Admin', 'sysadmin', '5f4dcc3b5aa765d61d8327deb882cf99', 'sysadmin@hpseb.com.com', 'sysadmin', '', 'A', '2013-11-22 08:12:18', NULL, '0000-00-00 00:00:00', NULL);
+CREATE TABLE IF NOT EXISTS `employee_challenge_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `CHALLENGE_GROUP_CODE` varchar(20) NOT NULL COMMENT 'Challenge Group Code with not spl chars and underscore only hyphens allowed',
+  `CHALLENGE_GROUP_TYPE` varchar(20) NOT NULL COMMENT 'Challenge Group Code with not spl chars and underscore only hyphens allowed',
+  `DIGREE_OF_CHALLENGE` int(3) NOT NULL DEFAULT '0' COMMENT 'Digree of Challenge',
+  `CHALLENGE_CREDITED` int(3) NOT NULL DEFAULT '0' COMMENT 'Challenge Credited',
+  `CHALLENGE_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date of Challenge',
+  `CHALLENGE_END_DT` date NOT NULL COMMENT 'Employee End Date of Challenge',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS `employee_address_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `ADDRESS_TYPE_CODE` varchar(20) NOT NULL COMMENT 'Address Type code with not spl chars and underscore only hyphens allowed',
+  `ADDRESS_CARE_OF` varchar(100) NOT NULL COMMENT 'Address Care Of ',
+  `ADDRESS_LINE_1` varchar(100) NOT NULL COMMENT 'Address line one',
+  `ADDRESS_LINE_2` varchar(100) NULL COMMENT 'Address line two',\
+  `ADDRESS_POSTAL_CODE` varchar(20) NULL COMMENT 'Address Postal Code',
+  `ADDRESS_CITY` varchar(20) NOT NULL COMMENT 'Address City',
+  `ADDRESS_DISTRICT` varchar(100) NULL COMMENT 'Address District',
+  `ADDRESS_REGION_CODE` varchar(20) NULL COMMENT 'Address Region Code',
+  `ADDRESS_COUNTRY_CODE` varchar(20) NULL COMMENT 'Address Country Code',
+  `ADDRESS_PHONE_NO` varchar(20) NULL COMMENT 'Address Telephone',
+  `ADDRESS_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date of Address',
+  `ADDRESS_END_DT` date NOT NULL COMMENT 'Employee End Date of Address',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `employee_workschedule_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `WORKSCHEDULE_RULE_CODE` varchar(20) NOT NULL COMMENT 'Work Shcedule Rule Code with not spl chars and underscore only hyphens allowed',
+  `WORKSCHEDULE_TIME_STATUS` varchar(20) NOT NULL COMMENT 'Work Shcedule Time Management Status ',
+  `WORKSCHEDULE_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date of Challenge',
+  `WORKSCHEDULE_END_DT` date NOT NULL COMMENT 'Employee End Date of Challenge',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `employee_contract_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `CONTRACT_TYPE_CODE` varchar(20) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
+  `CONTRACT_PROBATION` int(3) NOT NULL DEFAULT '0' COMMENT 'Probation duration of contract',
+  `CONTRACT_PROBATION_UNITS` varchar(20) NOT NULL COMMENT 'Probation duration units of measure',
+  `CONTRACT_ER_ERNOTICE_PERIOD_CODE` varchar(20) NOT NULL COMMENT 'Contract Notice Period ER',
+  `CONTRACT_EE_NOTICE_PERIOD_CODE` varchar(20) NOT NULL COMMENT 'Contract Notice Period EE',
+  `CONTRACT_WORK_PERMIT_DT` date NULL COMMENT 'Contract Work Permit Date ',
+  `CONTRACT_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date of Challenge',
+  `CONTRACT_END_DT` date NOT NULL COMMENT 'Employee End Date of Challenge',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `employee_family_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `FAMILY_RELATION_CODE` varchar(20) NOT NULL COMMENT 'Family Relation Type Code with no spl chars and underscore only hyphens allowed',
+  `FAMILY_FIRST_NAME` varchar(100) NOT NULL COMMENT 'Family First Name ',
+  `FAMILY_LAST_NAME` varchar(100) NOT NULL COMMENT 'Family Last Name ',
+  `FAMILY_NICK_NAME` varchar(100) NULL COMMENT 'Family Name at birth ',
+  `FAMILY_NAME_INITIALS` varchar(100) NULL COMMENT ' Name Initials ',
+  `FAMILY_GENDER` varchar(20) NOT NULL COMMENT 'Gender of the Family Member',
+  `FAMILY_BIRTH_DT` date NOT NULL COMMENT 'Family Member Date of Birth',
+  `FAMILY_BIRTHPLACE` varchar(100) NULL COMMENT 'Family Mamber Birth Place',
+  `FAMILY_BIRTH_COUNTRY` varchar(100) NULL COMMENT 'Family Mamber Country of Birth ',
+  `FAMILY_NATIONALITY` varchar(100) NULL COMMENT 'Family Mamber Nationlaity',
+  `FAMILY_COMMON_ORGANAZATION` varchar(20) NULL COMMENT 'Family Mamber Works in the Same Organazation',
+  `FAMILY_ID_TYPE` varchar(20) NULL COMMENT 'Family Mamber ID type',
+  `FAMILY_ID_NUMBER` varchar(20) NULL COMMENT 'Family Mamber ID name',
+  `FAMILY_ORGANAZATION_ADDRESS` varchar(100) NULL COMMENT 'Family Mamber Job Organation Address',
+  `FAMILY_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date of Family',
+  `FAMILY_END_DT` date NOT NULL COMMENT 'Employee End Date of Family',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `employee_education_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `EDUCATION_ESTABLISHMENT_CODE` varchar(20) NOT NULL COMMENT 'Education Establishment Code with not spl chars and underscore only hyphens allowed',
+  `EDUCATION_TRAINING_INSTITUTE` varchar(100) NULL COMMENT 'Educatoin Training Institute',
+  `EDUCATION_COURSE_LOCATION` varchar(100) NOT NULL COMMENT 'Education Course Location',
+  `EDUCATION_COUNTRY_CODE` varchar(20) NOT NULL COMMENT 'Education country code',
+  `EDUCATION_CERTIFICATE_CODE` varchar(20) NOT NULL COMMENT 'Education certificate code',
+  `EDUCATION_COURSE_DURATION` varchar(100) NOT NULL COMMENT 'Education Course Duration',
+  `EDUCATION_COURSE_DURATION_UNITS` varchar(100) NOT NULL COMMENT 'Education Course Duration units of measure',
+  `EDUCATION_COURSE_GRADE` varchar(100) NOT NULL COMMENT 'Education Course Grade',
+  `EDUCATION_COURSE_BRANCH_CODE` varchar(100) NOT NULL COMMENT 'Education Branch of Study',
+  `EDUCATION_INSTITUTE` varchar(100) NOT NULL COMMENT 'Education Institute',
+  `EDUCATION_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date of Education',
+  `EDUCATION_END_DT` date NOT NULL COMMENT 'Employee End Date of Education',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `employee_personal_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `EMP_ETHINIC_CODE` varchar(20) NOT NULL COMMENT 'Employee Ethinic Origin',  
+  `PERSONAL_MILITARY_CODE` varchar(20) NOT NULL COMMENT 'Military Status code of Employee',
+  `PERSONAL_DISABILITY_LEARNED_DT` varchar(20) NOT NULL COMMENT 'Disability Learned Date ',
+  `PERSONAL_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date for personal info',
+  `PERSONAL_END_DT` date NOT NULL COMMENT 'Employee End Date for personal info',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `employee_communication_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `COMMUNICATION_CODE` varchar(20) NOT NULL COMMENT 'Communication code of Employee',
+  `COMMUNICATION_DATA` varchar(20) NOT NULL COMMENT 'Communication Telephone / Email of Employee',
+  `COMMUNICATION_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date for personal info',
+  `COMMUNICATION_END_DT` date NOT NULL COMMENT 'Employee End Date for personal info',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `employee_identification_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `IDENTIFICATION_CODE` varchar(20) NOT NULL COMMENT 'Identification code of Employee',
+  `IDENTIFICATION_NUMBER` varchar(100) NOT NULL COMMENT 'Identification Number',
+  `IDENTIFICATION_PREV_NUMBER` varchar(100) NULL COMMENT 'Identification previonus number',
+  `IDENTIFICATION_ISSUING_AUTHIROTY` varchar(100) NULL COMMENT 'Identification Issing Authoirity',
+  `IDENTIFICATION_ISSUING_NUMBER` varchar(100) NULL COMMENT 'Identification Issuing Number',
+  `IDENTIFICATION_ISSUING_DT` varchar(100) NULL COMMENT 'Identification issue date',
+  `IDENTIFICATION_VALID_DT` varchar(100) NULL COMMENT 'Identification valid date',
+  `IDENTIFICATION_ISSUING_PLACE` varchar(100) NULL COMMENT 'Identification issuing Place',
+  `IDENTIFICATION_ISSUING_COUNTRY` varchar(100) NULL COMMENT 'Identification Issuing Country Code',
+  `IDENTIFICATION_COUNTRY_CODE` varchar(100) NULL COMMENT 'Identification Country Code',
+  `IDENTIFICATION_VERIFIED` varchar(20) NULL COMMENT 'Identification Verified',
+  `IDENTIFICATION_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date for personal info',
+  `IDENTIFICATION_END_DT` date NOT NULL COMMENT 'Employee End Date for personal info',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS `employee_absence_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `ABSENCE_CODE` varchar(20) NOT NULL COMMENT 'Absence code of Employee',
+  `ABSENCE_START_TIME` varchar(20) NULL COMMENT 'Absence stat time of Employee',
+  `ABSENCE_END_TIME` varchar(20) NULL COMMENT 'Absence end time of Employee',
+  `ABSENCE_HOURS` varchar(20) NULL COMMENT 'Absence hours of Employee',
+  `ABSENCE_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date for personal info',
+  `ABSENCE_END_DT` date NOT NULL COMMENT 'Employee End Date for personal info',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS `employee_absence_quota_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ABSENCE_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `ABSENCE_QUOTA_CODE` varchar(20) NOT NULL COMMENT 'Absence code of Employee',
+  `ABSENCE_DEDUCTION_FROM_DT` date NOT NULL COMMENT 'Employee Start Date for personal info',
+  `ABSENCE_DEDUCTION_TO_DT` date NOT NULL COMMENT 'Employee End Date for personal info',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE IF NOT EXISTS `employee_leave_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `LEAVE_CODE` varchar(20) NOT NULL COMMENT 'Leave code of Employee',
+  `LEAVE_START_TIME` varchar(20) NULL COMMENT 'Leave stat time of Employee',
+  `LEAVE_END_TIME` varchar(20) NULL COMMENT 'Leave end time of Employee',
+  `LEAVE_QUATA_CODE` varchar(20) NULL COMMENT 'Leave quate Code of Employee',
+  `LEAVE_FROM_DT` date NOT NULL COMMENT 'Leave Deduction from Date for Employee',
+  `LEAVE_TO_DT` date NOT NULL COMMENT 'Leave Deduction to Date for Employee',
+  `LEAVE_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date for personal info',
+  `LEAVE_END_DT` date NOT NULL COMMENT 'Employee End Date for personal info',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `employee_decipline_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `DECIPLINE_CASE_NO` varchar(20) NOT NULL COMMENT 'Case Number of Employee',
+  `DECIPLINE_ACTION_CODE` varchar(20) NULL COMMENT 'Disciplinary action code for Employee',
+  `DECIPLINE_ACTION_SOURCE_CODE` varchar(20) NULL COMMENT 'Source of Deciplinary Action for Employee',
+  `DECIPLINE_OFFENCE_DT` date NULL COMMENT 'Date of Deciplinary Action taken  for Employee',
+  `DECIPLINE_ACTION_STATUS_CODE` varchar(20) NULL COMMENT 'Status of Deciplinary Action for Employee',
+  `DECIPLINE_ACTION_OUTCOME_CODE` varchar(20) NULL COMMENT 'Outcome of Deciplinary Action for Employee',
+  `DECIPLINE_ACTION_FROM_DT` date NOT NULL COMMENT 'Action from Date for Employee',
+  `DECIPLINE_ACTION_TO_DT` date NOT NULL COMMENT 'Action to Date for Employee',
+  `DECIPLINE_SENTENCE_PENALTY` float (10,2) NOT NULL DEFAULT '0', NOT NULL COMMENT 'Disciplinary action pelanty for Employee',
+  `DECIPLINE_SENTENCE_PERIOD` varchar(20) NULL COMMENT 'Disciplinary action Period for Employee',
+  `DECIPLINE_SENTENCE_PERIOD_UNIT` varchar(20) NULL COMMENT 'Disciplinary action Unit for Employee',
+  `DECIPLINE_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date for personal info',
+  `DECIPLINE_END_DT` date NOT NULL COMMENT 'Employee End Date for personal info',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `employee_appraisal_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `APPRAISAL_SCALE_CODE` varchar(20) NOT NULL COMMENT 'Appraisal rating code for Employee',
+  `APPRAISAL_PROMOTION_CODE` varchar(20) NULL COMMENT 'Appraisal promotion fitness code for Employee',
+  `APPRAISAL_PERSONAL_NO` varchar(20) NULL COMMENT 'Appraisal promotion fitness code for Employee',
+  `APPRAISAL_REMARKS` varchar(255) NULL COMMENT 'Appraisal Remarks for Employee',
+  `APPRAISAL_ADVERSE_FLAG` varchar(20) NULL COMMENT 'Appraisal Adverse Remarks required for Employee',
+  `APPRAISAL_ADVERSE_REMARKS` varchar(255) NULL COMMENT 'Appraisal Arverse Remarks for Employee',
+  `APPRAISAL_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date for personal info',
+  `APPRAISAL_END_DT` date NOT NULL COMMENT 'Employee End Date for personal info',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `employee_actions_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `ACTION_CODE` varchar(20) NOT NULL COMMENT 'Historical Action code for Employee',
+  `ACTION_REASON_CODE` varchar(20) NOT NULL COMMENT 'Historical Action reason code for Employee',
+  `ACTION_AREA_CODE` varchar(20) NOT NULL COMMENT 'Historical Action ares code for Employee',
+  `ACTION_RESULT_GROUP_CODE` varchar(20) NOT NULL COMMENT 'Historical Action Result Group code for Employee',
+  `ACTION_RESULT_SUBGROUP_CODE` varchar(20) NOT NULL COMMENT 'Historical Action Result subgroup for Employee',
+  `ACTION_SUBAREA_CODE` varchar(20) NOT NULL COMMENT 'Historical Action sub area for Employee',
+  `ACTION_BASIC_PAY` varchar(20) NULL COMMENT 'Historical Action if pay was changed for Employee',
+  `ACTION_REMARKS` varchar(255) NULL COMMENT 'Historical Action Remarks for Employee',
+  `ACTION_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date for personal info',
+  `ACTION_END_DT` date NOT NULL COMMENT 'Employee End Date for personal info',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `employee_other_action_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `OTHER_ACTION_CODE` varchar(20) NOT NULL COMMENT 'Historical Action code for Employee',
+  `OTHER_ACTION_REASON_CODE` varchar(20) NOT NULL COMMENT 'Historical Action reason code for Employee',
+  `OTHER_ACTION_POSITION` varchar(20) NULL COMMENT 'Historical Action reason code for Employee',
+  `ACTION_AREA_CODE` varchar(20) NOT NULL COMMENT 'Historical Action ares code for Employee',
+  `OTHER_ACTION_EMPLOYEE_GROUP_CODE` varchar(20) NOT NULL COMMENT 'Historical Action Result Group code for Employee',
+  `OTHER_ACTION_EMPLOYEE_SUBGROUP_CODE` varchar(20) NOT NULL COMMENT 'Historical Action Result subgroup for Employee',
+  `OTHER_ACTION_SUBAREA_CODE` varchar(20) NOT NULL COMMENT 'Historical Action sub area for Employee',
+  `OTHER_ACTION_PAYROL:_AREA` varchar(20) NULL COMMENT 'Historical Action if pay was changed for Employee',
+  `OTHER_ACTION_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date for personal info',
+  `OTHER_ACTION_END_DT` date NOT NULL COMMENT 'Employee End Date for personal info',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `employee_pension_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `OTHER_ACTION_CODE` varchar(20) NOT NULL COMMENT 'Historical Action code for Employee',
+  `OTHER_ACTION_REASON_CODE` varchar(20) NOT NULL COMMENT 'Historical Action reason code for Employee',
+  `OTHER_ACTION_POSITION` varchar(20) NOT NULL COMMENT 'Historical Action reason code for Employee',
+  `ACTION_AREA_CODE` varchar(20) NOT NULL COMMENT 'Historical Action ares code for Employee',
+  `OTHER_ACTION_EMPLOYEE_GROUP_CODE` varchar(20) NOT NULL COMMENT 'Historical Action Result Group code for Employee',
+  `OTHER_ACTION_EMPLOYEE_SUBGROUP_CODE` varchar(20) NOT NULL COMMENT 'Historical Action Result subgroup for Employee',
+  `OTHER_ACTION_SUBAREA_CODE` varchar(20) NOT NULL COMMENT 'Historical Action sub area for Employee',
+  `OTHER_ACTION_PAYROL:_AREA` varchar(20) NULL COMMENT 'Historical Action if pay was changed for Employee',
+  `OTHER_ACTION_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date for personal info',
+  `OTHER_ACTION_END_DT` date NOT NULL COMMENT 'Employee End Date for personal info',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `employee_joining_details` (
+  `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
+  `OTHER_ACTION_CODE` varchar(20) NOT NULL COMMENT 'Historical Action code for Employee',
+  `OTHER_ACTION_REASON_CODE` varchar(20) NOT NULL COMMENT 'Historical Action reason code for Employee',
+  `OTHER_ACTION_POSITION` varchar(20) NOT NULL COMMENT 'Historical Action reason code for Employee',
+  `ACTION_AREA_CODE` varchar(20) NOT NULL COMMENT 'Historical Action ares code for Employee',
+  `OTHER_ACTION_EMPLOYEE_GROUP_CODE` varchar(20) NOT NULL COMMENT 'Historical Action Result Group code for Employee',
+  `OTHER_ACTION_EMPLOYEE_SUBGROUP_CODE` varchar(20) NOT NULL COMMENT 'Historical Action Result subgroup for Employee',
+  `OTHER_ACTION_SUBAREA_CODE` varchar(20) NOT NULL COMMENT 'Historical Action sub area for Employee',
+  `OTHER_ACTION_PAYROL:_AREA` varchar(20) NULL COMMENT 'Historical Action if pay was changed for Employee',
+  `OTHER_ACTION_BEGIN_DT` date NOT NULL COMMENT 'Employee Start Date for personal info',
+  `OTHER_ACTION_END_DT` date NOT NULL COMMENT 'Employee End Date for personal info',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ROW_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `m_personal_area` (
+  `PA_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
+  `PA_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Type',
+  `PA_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Challenge Type',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`PA_CODE`),
+  UNIQUE KEY `PA_NAME` (`PA_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `m_personal_area_subtype` (
+  `PAS_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
+  `PAS_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Type',
+  `PAS_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Challenge Type',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `PA_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`PAS_CODE`),
+  UNIQUE KEY `PAS_NAME` (`PAS_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `m_employee_group` (
+  `EG_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
+  `EG_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Type',
+  `EG_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Challenge Type',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`EG_CODE`),
+  UNIQUE KEY `EG_NAME` (`EG_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `m_employee_group_subtype` (
+  `EGS_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
+  `EGS_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Type',
+  `EGS_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Challenge Type',
+  `EG_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`EGS_CODE`),
+  UNIQUE KEY `EGS_NAME` (`EGS_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `m_employee_group_subgroup` (
+  `EG_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',  
+  `EGS_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`EGS_CODE`),
+  UNIQUE KEY `EGS_NAME` (`EGS_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS `m_employee_actions` (
+  `EA_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
+  `EA_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Type',
+  `EA_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Challenge Type',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`EA_CODE`),
+  UNIQUE KEY `EA_NAME` (`EA_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `m_employee_action_reason` (
+  `EAR_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
+  `EAR_NAME` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Challenge Type',
+  `EAR_DESCRIPTION` varchar(500) NOT NULL COMMENT 'Detailed description about the Challenge Type',
+  `EA_CODE` varchar(50) NOT NULL COMMENT 'Contract Type Code with not spl chars and underscore only hyphens allowed',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`EAR_CODE`),
+  UNIQUE KEY `EAR_NAME` (`EAR_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `m_employee_education_establishment` (
+  `QUALIFICATION_LEVEL` varchar(50) NOT NULL COMMENT 'Qualification Code with not spl chars and underscore only hyphens allowed',
+  `QUALIFICATION_DESC` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Qualification code',
+  `COURSE` varchar(20) NOT NULL COMMENT 'Detailed description about the Challenge Type',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`QUALIFICATION_LEVEL`),
+  UNIQUE KEY `QUALIFICATION_DESC` (`QUALIFICATION_DESC`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('1','Illiterate','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('2','Under Primary(< 5)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('3','Under Middle(5 to 7)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('4','Under Matric(8 to 9)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('5','Matric Pass(X pass)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('6','Prod Siksha','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('7','Prep','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('8','Plus One','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('9','Higher Second.(Pt-1)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('10','Senior Second.(12th)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('11','Graduation (T)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('12','Graduation (NT)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('13','Post Graduation (T)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('14','Post Graduation (NT)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('15','I.T.I','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('16','AMIE','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('17','Diploma (T)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('18','Diploma (NT)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('19','Certification','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('20','Doctorate','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('21','Professional Inter','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('22','Professional Final','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('23','Intra State Training','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('24','Inter State Training','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('25','Inhouse- HPSEB Training','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('26','Foreign Training','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('27','Departmental Exam','N','1');
+
+
+
+CREATE TABLE IF NOT EXISTS `m_employee_education_certificate` (
+  `CERTIFICATE_CODE` varchar(50) NOT NULL COMMENT 'Qualification Code with not spl chars and underscore only hyphens allowed',
+  `CERTIFICATE_DESC` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Qualification code',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`CERTIFICATE_CODE`),
+  UNIQUE KEY `CERTIFICATE_DESC` (`CERTIFICATE_DESC`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('0','Illiterate','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('1','II Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('2','III Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('3','IV Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('4','V Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('5','VI Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('6','VII Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('7','VIII Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('8','IX Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('9','I.C.S.E Board','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('10','C.B.S.E Board','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('11','State Board','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('12','Others','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('13','College/University','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('14','AMIE(Technical)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('15','B Tech','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('16','B Tech (H)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('17','BE','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('18','BE (H)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('19','B Arch','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('20','BSC Engg','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('21','BSC Engg (H)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('22','BS','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('23','B Com','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('24','B Ed','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('25','B Pharm','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('26','BA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('27','BA (H)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('28','BBA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('29','BSC','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('30','BSC (H)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('31','LLB','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('32','BIT','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('33','B Com ','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('34','B Com (H)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('35','M Tech','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('36','ME','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('37','MS','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('38','MSC Engg','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('39','MSC','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('40','M COM','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('41','M Pharmacy','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('42','M Phil','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('43','M PM&IR','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('44','M M S','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('45','MA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('46','MBA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('47','MCA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('48','PGDBA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('49','PGDCA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('50','PGDM','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('51','PGDIM','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('52','PGHRM','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('53','NTC','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('54','Graduate Diploma','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('55','PG Diploma','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('56','Graduate','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('57','Post Graduate','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('58','Certificate Course','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('59','Ph. D','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('60','CA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('61','CS','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('62','ICWA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('63','CFA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('64','Self Fin Cert.','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('65','Sponsored Cert.','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('66','Departmental Ex Passed','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('67','Departmental Ex Failed','1');
+
+
+
+
+CREATE TABLE IF NOT EXISTS `m_employee_education_code_certificate` (
+  `QUALIFICATION_LEVEL` varchar(50) NOT NULL COMMENT 'Qualification Code with not spl chars and underscore only hyphens allowed',
+  `CERTIFICATE_CODE` varchar(50) NOT NULL COMMENT 'Qualification Code with not spl chars and underscore only hyphens allowed',
+  `CERTIFICATE_DESC` varchar(100) NOT NULL COMMENT 'User Friendly Name Given to the Qualification code',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`QUALIFICATION_LEVEL`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('01','00','Illiterate','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('02','01','II Std','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('02','02','III Std','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('02','03','IV Std','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('03','04','V Std','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('03','05','VI Std','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('03','06','VII Std','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('04','07','VIII Std','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('04','08','IX Std','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('05','09','I.C.S.E Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('05','10','C.B.S.E Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('05','11','State Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('05','12','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('06','10','I.C.S.E Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('06','11','C.B.S.E Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('06','12','State Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('06','10','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('07','11','I.C.S.E Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('07','12','C.B.S.E Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('07','10','State Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('07','11','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('08','12','I.C.S.E Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('08','10','C.B.S.E Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('08','11','State Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('08','12','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('09','10','I.C.S.E Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('09','11','C.B.S.E Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('09','12','State Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('09','15','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('10','16','I.C.S.E Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('10','17','C.B.S.E Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('10','18','State Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('10','19','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('11','20','B Tech','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('11','21','B Tech (H)','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('11','22','BE','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('11','12','BE (H)','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('11','23','B Arch','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('11','24','BSC Engg','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('11','25','BSC Engg (H)','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('11','26','BS','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('11','27','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('12','28','B Com','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('12','29','B Ed','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('12','30','B Pharm','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('12','31','BA','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('12','32','BA (H)','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('12','33','BBA','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('12','34','BSC','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('12','12','BSC (H)','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('12','35','LLB','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('12','36','BIT','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('12','37','B Com ','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('12','38','B Com (H)','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('12','12','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('13','47','M Tech','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('13','49','ME','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('13','39','MS','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('13','40','MSC Engg','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('13','41','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('13','42','MCA','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('13','43','PGDCA','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('14','44','MSC','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('14','45','M COM','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('14','46','M Pharmacy','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('14','48','M Phil','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('14','50','M PM&IR','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('14','51','M M S','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('14','52','MA','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('14','12','MBA','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('14','53','PGDBA','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('14','12','PGDM','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('14','14','PGDIM','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('14','12','PGHRM','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('14','11','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('15','12','NTC','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('15','54','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('16','55','AMIE(Technical)','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('16','12','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('17','56','State Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('17','57','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('17','11','Graduate Diploma','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('17','12','PG Diploma','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('18','58','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('18','11','Graduate','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('18','12','Post Graduate','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('19','59','State Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('19','11','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('19','12','Certificate Course','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('20','60','State Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('20','61','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('20','62','Ph. D','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('21','63','State Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('21','11','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('21','12','CA','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('21','60','CS','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('21','61','ICWA','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('21','62','CFA','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('22','63','State Board','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('22','64','Others','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('22','64','CA','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('22','64','CS','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('22','64','ICWA','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('22','65','CFA','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('23','65','Self Fin Cert.','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('24','65','Self Fin Cert.','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('25','65','Self Fin Cert.','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('26','66','Self Fin Cert.','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('23','65','Sponsored Cert.','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('24','65','Sponsored Cert.','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('25','65','Sponsored Cert.','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('26','65','Sponsored Cert.','1');
+insert into m_employee_education_code_certificate(QUALIFICATION_LEVEL, CERTIFICATE_CODE,CERTIFICATE_DESC,STATUS) values('27','66','Departmental Cert','1');
+
+
+CREATE TABLE IF NOT EXISTS `m_employee_education_branch` (
+  `BRANCH_CODE` varchar(50) NOT NULL COMMENT 'Branch Code with not spl chars and underscore only hyphens allowed',
+  `BRANCH_DESCRIPTION` varchar(100) NOT NULL COMMENT 'Branch code description with not spl chars and underscore only hyphens allowed',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`BRANCH_CODE`),
+  UNIQUE KEY `BRANCH_DESCRIPTION` (`BRANCH_DESCRIPTION`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('0','Common Subjects','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('1','Science-Math','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('2','Science-Biology','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('3','Commerce-Accounts','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('4','Commerce-Economics','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('5','Arts','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('6','Electronics','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('7','Civil Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('8','Computer Science','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('9','Electrical Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('10','Electronics Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('11','Mechanical Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('12','Production Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('13','Aerodynamics','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('14','Aeronautical Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('15','Aerospace Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('16','Applied Mechanics','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('17','Applied Physics','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('18','Applied Science','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('19','Architecture','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('20','Automobile Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('21','Chemical Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('22','Civil & Structural Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('23','Computer Applications','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('24','Computer Programming','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('25','Computers & Communications','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('26','Digital Communications','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('27','Electrical','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('28','Electrical & Electronics','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('29','Electrical & Mech','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('30','Electronics & Communications','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('31','Electronics & Telecommunications','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('32','Engg Materials','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('33','Engineering Equpiments','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('34','Geology','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('35','Indl Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('36','Indl Eqpt Design','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('37','Industrial & Production Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('38','Information Technology','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('39','Instrumentation','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('40','Machine Tool Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('41','Manufacturing Tech','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('42','Material Mgt','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('43','Mechanical','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('44','Metallurgy','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('45','Quality Assuarance','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('46','Telecom Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('47','Welding Technology','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('48','Computer Aided Design','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('49','Machine Design','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('50','Manufacturing Management','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('51','Material Science','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('52','Production Management','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('53','Project Management','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('54','Software System','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('55','Electronics & Instrumentation','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('56','Others','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('57','Commerce','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('58','Pharmacy','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('59','Advertising & PR','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('60','Banking','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('61','Bio-Chemistry','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('62','Biology','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('63','Business Admn (Finance)','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('64','Business Admn (Marketing)','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('65','Business Admn (Personnel)','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('66','Business Finance','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('67','Communication','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('68','Economics','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('69','English','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('70','Finance','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('71','Finance & Costing','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('72','Foreign Trade','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('73','Hotel Management','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('74','Human Resource Mgt','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('75','Journalism & Mass Communication','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('76','Labour Laws','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('77','Law','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('78','Management','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('79','Marketing','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('80','Mathematics','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('81','Science','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('82','Social Science','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('83','Sociology','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('84','Statistics','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('85','Training & Devt','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('86','Accountancy','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('87','Defence Studies','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('88','Mass Communication','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('89','Operations Management','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('90','Personnel Mgt & Labour Law','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('91','Home Science','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('92','Public Relations','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('93','Engg Management','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('94','Fluid Mechanics','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('95','Marine Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('96','Tool Design','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('97','Computer Engg','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('98','Maintenance Management','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('99','Heavy Electrical Equipment','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('100','Electrical Communications','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('101','Electrical Machines','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('102','Hindi','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('103','Business Admn','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('104','Business Admn (HR)','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('105','Costing','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('106','Financial Management','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('107','Human Resource Devt','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('108','Indl Relations','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('109','Journalism','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('110','Operations','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('111','Personnel Management','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('112','Political Science','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('113','Taxation Law','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('114','Construction Management','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('115','Hospital Administration','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('116','Labour Law & Admn Law','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('117','Electrician','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('118','Automobile Mechanic','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('119','Fitter','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('120','Paint Technology','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('121','Mechanic','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('122','Technical School Certificate','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('123','Welding','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('124','Refrigeration & AC','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('125','Automation & Control','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('126','Indl Electronics','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('127','Factory Admn','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('128','Operations Research','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('129','Labour Laws & IR','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('130','ARC Welding','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('131','SAS Civil','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('132','SAS Supply','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('133','Secretarial','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('134','Shorthand - Higher','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('135','Typewriting - Higher','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('136','Wireman','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('137','Personnel Management & IR','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('138','Foreign Language','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('139','Automobile','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('140','Computer Hardware Maintenance','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('141','Driving','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('142','Electrical Systems','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('143','Fire & Safety','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('144','Telecom / Telex Operation','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('145','Human Resource','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('146','Accountancy/Law','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('147','Costing/Law','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('148','Corporate','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('149','Industrial Law','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('150','Civil and Mechanical','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('00151','Academic Education','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('00152','Managerial Training','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('00153','Technical Training','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('00154','Non Technical Training','1');
+insert into m_employee_education_branch(BRANCH_CODE,BRANCH_DESCRIPTION,STATUS) values('00155','Specialized Training','1');
+
+
+CREATE TABLE IF NOT EXISTS `m_employee_education_code_branch` (
+  `QUALIFICATION_LEVEL` varchar(50) NOT NULL COMMENT 'Qualification Code with not spl chars and underscore only hyphens allowed',
+  `BRANCH_CODE` varchar(50) NOT NULL COMMENT 'Branch Code with not spl chars and underscore only hyphens allowed',
+  `STATUS` int(1) NOT NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('1','0','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('1','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('2','0','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('2','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('3','0','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('3','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('4','0','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('4','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('5','0','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('5','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('6','0','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('6','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('7','0','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('7','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('8','0','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('8','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('9','1','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('9','2','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('9','3','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('9','4','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('9','5','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('9','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('10','1','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('10','2','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('10','3','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('10','4','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('10','5','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('10','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','7','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','8','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','9','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','10','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','11','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','12','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','13','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','14','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','15','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','16','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','17','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','18','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','19','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','20','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','21','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','22','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','23','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','24','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','25','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','26','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','27','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','28','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','29','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','30','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','31','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','32','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','33','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','150','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','34','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','35','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','36','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','37','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','38','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','39','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','40','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','41','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','42','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','43','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','44','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','45','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','46','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','47','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','48','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','49','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','50','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','51','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','52','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','53','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','54','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','55','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('11','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','5','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','8','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','23','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','38','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','42','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','52','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','53','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','57','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','58','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','59','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','60','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','61','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','62','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','63','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','64','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','65','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','66','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','67','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','68','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','69','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','70','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','71','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','72','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','73','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','74','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','75','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','76','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','77','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','78','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','79','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','80','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','81','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','82','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','83','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','84','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','85','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','86','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','87','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','88','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','89','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','90','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','91','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('12','92','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','7','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','8','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','9','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','10','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','11','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','12','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','13','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','14','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','20','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','21','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','23','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','24','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','27','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','28','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','29','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','31','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','32','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','33','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','37','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','38','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','39','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','40','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','41','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','42','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','43','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','44','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','45','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','46','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','47','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','48','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','49','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','50','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','52','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','93','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','94','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','95','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','96','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','97','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','98','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','99','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','100','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('13','101','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','5','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','6','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','8','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','23','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','38','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','42','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','53','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','57','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','58','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','59','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','62','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','63','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','64','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','66','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','67','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','68','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','70','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','71','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','72','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','73','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','74','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','75','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','76','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','77','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','78','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','79','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','80','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','81','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','82','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','85','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','86','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','87','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','88','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','89','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','98','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','102','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','103','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','104','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','105','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','106','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','107','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','108','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','109','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','110','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','111','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','112','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','113','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','114','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','115','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('14','116','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('15','6','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('15','39','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('15','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('15','117','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('15','118','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('15','119','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('15','120','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('15','121','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('15','122','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('15','123','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('15','124','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','7','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','8','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','9','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','10','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','11','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','12','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','14','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','16','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','18','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','19','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','20','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','22','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','27','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','28','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','29','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','30','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','33','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','36','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','37','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','38','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','40','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','42','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','43','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','45','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','46','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','47','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','48','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','50','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','96','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','98','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','125','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('16','126','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','7','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','8','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','9','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','10','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','11','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','12','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','14','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','16','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','18','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','19','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','20','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','22','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','27','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','28','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','29','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','30','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','33','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','36','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','37','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','38','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','40','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','42','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','43','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','45','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','46','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','47','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','48','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','50','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','96','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','98','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','125','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('17','126','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','5','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','8','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','23','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','38','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','42','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','59','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','60','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','62','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','63','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','64','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','65','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','66','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','70','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','73','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','74','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','75','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','77','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','78','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','85','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','108','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','110','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','127','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','128','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('18','129','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','23','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','45','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','52','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','73','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','77','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','78','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','115','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','123','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','130','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','131','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','132','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','133','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','134','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','135','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','136','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','137','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','138','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','139','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','140','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','141','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','142','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','143','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','144','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('19','145','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','5','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','7','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','8','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','10','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','11','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','12','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','19','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','20','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','21','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','22','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','23','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','29','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','30','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','36','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','37','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','38','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','40','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','42','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','46','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','59','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','60','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','66','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','68','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','70','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','73','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','74','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','75','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','76','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','77','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','78','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','81','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','103','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','106','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','108','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','110','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('20','114','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('21','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('21','60','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('21','77','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('21','86','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('21','105','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('21','133','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('21','146','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('21','147','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('21','148','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('21','149','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('22','56','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('22','60','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('22','77','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('22','86','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('22','105','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('22','133','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('22','146','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('22','147','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('22','148','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('22','149','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('23','00152','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('23','00153','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('23','00154','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('23','00155','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('24','00152','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('24','00153','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('24','00154','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('24','00155','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('25','00152','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('25','00153','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('25','00154','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('25','00155','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('26','00152','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('26','00153','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('26','00154','1');
+insert into m_employee_education_code_branch (QUALIFICATION_LEVEL,BRANCH_CODE,STATUS)values('26','00155','1');
+
+
