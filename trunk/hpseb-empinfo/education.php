@@ -16,9 +16,7 @@ if(isset($_POST['submitted']))
 		EDUCATION_COURSE_DURATION= '".$_POST['EDUCATION_COURSE_DURATION']."',
 		EDUCATION_COURSE_DURATION_UNITS= '".$_POST['EDUCATION_COURSE_DURATION_UNITS']."',
 		EDUCATION_COURSE_GRADE= '".$_POST['EDUCATION_COURSE_GRADE']."',
-		EDUCATION_COURSE_DURATION= '".$_POST['EDUCATION_COURSE_DURATION']."',
 		EDUCATION_COURSE_BRANCH_CODE= '".$_POST['EDUCATION_COURSE_BRANCH_CODE']."',
-		EDUCATION_COURSE_BRANCH_CODE_UNIT= '".$_POST['EDUCATION_COURSE_BRANCH_CODE_UNIT']."',
 		EDUCATION_INSTITUTE= '".$_POST['EDUCATION_INSTITUTE']."',
 		EDUCATION_BEGIN_DT= '".$_POST['EDUCATION_BEGIN_DT']."',
 		EDUCATION_END_DT= '".$_POST['EDUCATION_END_DT']."',
@@ -56,9 +54,9 @@ if(isset($_POST['submitted']))
 		}// end if check dates
 
 		$db->query("INSERT INTO employee_education_details
-		(  EMPLOYEE_ROW_ID, EDUCATION_ESTABLISHMENT_CODE,EDUCATION_TRAINING_INSTITUTE,EDUCATION_COURSE_LOCATION,EDUCATION_COUNTRY_CODE,EDUCATION_CERTIFICATE_CODE,EDUCATION_COURSE_DURATION, EDUCATION_COURSE_DURATION_UNITS, EDUCATION_COURSE_GRADE, EDUCATION_COURSE_DURATION, EDUCATION_COURSE_BRANCH_CODE, EDUCATION_COURSE_BRANCH_CODE_UNIT, EDUCATION_INSTITUTE, EDUCATION_BEGIN_DT, EDUCATION_END_DT STATUS, CREATED_BY) 
+		(  EMPLOYEE_ROW_ID, EDUCATION_ESTABLISHMENT_CODE,EDUCATION_TRAINING_INSTITUTE,EDUCATION_COURSE_LOCATION,EDUCATION_COUNTRY_CODE,EDUCATION_CERTIFICATE_CODE,EDUCATION_COURSE_DURATION, EDUCATION_COURSE_DURATION_UNITS, EDUCATION_COURSE_GRADE,  EDUCATION_COURSE_BRANCH_CODE,  EDUCATION_INSTITUTE, EDUCATION_BEGIN_DT, EDUCATION_END_DT, STATUS, CREATED_BY) 
 		 VALUES ( '".$_POST['empid']."','".$_POST['EDUCATION_ESTABLISHMENT_CODE']."', '".$_POST['EDUCATION_TRAINING_INSTITUTE']."', '".$_POST['EDUCATION_COURSE_LOCATION']."', '".$_POST['EDUCATION_COUNTRY_CODE']."', '".$_POST['EDUCATION_CERTIFICATE_CODE']."', '".$_POST['EDUCATION_COURSE_DURATION']."', '".$_POST['EDUCATION_COURSE_DURATION_UNITS']."',
-		 '".$_POST['EDUCATION_COURSE_GRADE']."', '".$_POST['EDUCATION_COURSE_DURATION']."', '".$_POST['EDUCATION_COURSE_BRANCH_CODE']."', '".$_POST['EDUCATION_COURSE_BRANCH_CODE_UNIT']."', '".$_POST['EDUCATION_INSTITUTE']."', '".$_POST['EDUCATION_BEGIN_DT']."','".$_POST['EDUCATION_END_DT']."', '1','".$_POST['created_by']."')");		
+		 '".$_POST['EDUCATION_COURSE_GRADE']."', '".$_POST['EDUCATION_COURSE_BRANCH_CODE']."', '".$_POST['EDUCATION_INSTITUTE']."', '".$_POST['EDUCATION_BEGIN_DT']."','".$_POST['EDUCATION_END_DT']."', '1','".$_POST['created_by']."')");		
 		//$db->debug();
 		if($db->rows_affected>0)
 		{
@@ -155,14 +153,14 @@ if(isset($_POST['submitted']))
 	<ul>
         <li>
            <label for="EDUCATION_ESTABLISHMENT_CODE">EDUCATION ESTABLISHMENT CODE:</label>
-          <select id="EDUCATION_ESTABLISHMENT_CODE" name="EDUCATION_ESTABLISHMENT_CODE" onchange="loadCertificates(this);loadCertificates(this);"  data-required="true" data-error-message="Group code is required">
+          <select id="EDUCATION_ESTABLISHMENT_CODE" name="EDUCATION_ESTABLISHMENT_CODE" onchange="loadCertificates(this);loadBranch(this);"  data-required="true" data-error-message="Education code is required">
 				<option value=''>Select</option>
 				 <?php 
 				  $eductionCodes = $db->get_results("SELECT QUALIFICATION_LEVEL, QUALIFICATION_DESC FROM m_employee_education_establishment WHERE STATUS='1' GROUP BY QUALIFICATION_LEVEL"  ,ARRAY_A);
 			
 			       foreach ( $eductionCodes as $eductionCode )
 						            {
-						            	echo ("<option value='".$groupCode['QUALIFICATION_LEVEL']."'>".$groupCode['QUALIFICATION_DESC']."</option>");
+						            	echo ("<option value='".$eductionCode['QUALIFICATION_LEVEL']."'>".$eductionCode['QUALIFICATION_DESC']."</option>");
 						            	
 						            }
 				 ?>
@@ -188,11 +186,11 @@ if(isset($_POST['submitted']))
         </li>
 		<li>
         	<label for="EDUCATION_COUNTRY_CODE">EDUCATION COUNTRY CODE:</label>
-			<?php echo($common->getCountryCodeList("")); ?>           
+			<?php echo($common->getEducationCountryCodeList("")); ?>         
         </li>
 		<li>
         	<label for="EDUCATION_CERTIFICATE_CODE">EDUCATION CERTIFICATE CODE:</label>
-       		 <select id="EDUCATION_CERTIFICATE_CODE" name="EDUCATION_CERTIFICATE_CODE" />
+       		<select id="EDUCATION_CERTIFICATE_CODE" name="EDUCATION_CERTIFICATE_CODE" />
        		<option value=''>Select</option>
             </select>
         </li>
@@ -220,16 +218,14 @@ if(isset($_POST['submitted']))
         </li>
         <li>
         	<label for="EDUCATION_COURSE_BRANCH_CODE">EDUCATION COURSE BRANCH CODE:</label>
-            <select 
-            id="EDUCATION_COURSE_BRANCH_CODE" name="EDUCATION_COURSE_BRANCH_CODE"
-            data-validation-help="Please enter education course branch code" 
-            data-validation-error-msg="Education course branch code is required"/>
-           	<option value=''>Select</option>
+            <select id="EDUCATION_COURSE_BRANCH_CODE" name="EDUCATION_COURSE_BRANCH_CODE" />
+       		<option value=''>Select</option>
             </select>
-		</li>
+        </li>
 		<li>
         	<label for="EDUCATION_INSTITUTE">EDUCATION INSTITUTE:</label>
-            <select id="EDUCATION_INSTITUTE" name="EDUCATION_INSTITUTE"
+            <input type="text"
+            size="80" id="EDUCATION_INSTITUTE" name="EDUCATION_INSTITUTE"
             data-validation-help="Please enter education institute" 
             data-validation-error-msg="Education institute is required"/>
         </li>
@@ -256,6 +252,7 @@ if(isset($_POST['submitted']))
 			<button type="reset" class="right">Reset</button>
 			<input name="created_by" type="hidden" id="created_by" value="<?php echo($_SESSION['userid'])?>" />
 			<input name="empid" type="hidden" value="<?php echo($_POST['empid']);?>" />
+			<input name="rowid" type="hidden" value="<?php echo($_POST['rowid']);?>" />
 			<input name="submitted" type="hidden" id="submitted" value="1" />
 		</p>
 </form>
@@ -305,17 +302,20 @@ if(isset($_POST['submitted']))
 	<ul>
         <li>
            <label for="EDUCATION_ESTABLISHMENT_CODE">EDUCATION ESTABLISHMENT CODE:</label>
-           <select id="EDUCATION_ESTABLISHMENT_CODE" name="EDUCATION_ESTABLISHMENT_CODE"
-            onchange="loadCertificates(this);loadCertificates(this);"  
+			<?php 
+			$eductionCodeRow = $db->get_row("SELECT QUALIFICATION_DESC FROM m_employee_education_establishment ede, employee_education_details eed  WHERE  eed.ROW_ID='".$_POST['rowid']."' and eed.EDUCATION_ESTABLISHMENT_CODE=ede.QUALIFICATION_LEVEL " ,ARRAY_A);
+			?>           
+            <select id="EDUCATION_ESTABLISHMENT_CODE" name="EDUCATION_ESTABLISHMENT_CODE"
+            onchange="loadCertificates(this);loadBranch(this);"  
             data-required="true" 
             data-error-message="Group code is required">
-				<option value=''>Select</option>
+            <option value=''><?php echo($eductionCodeRow['QUALIFICATION_DESC']); ?></option>
 				 <?php 
 				  $eductionCodes = $db->get_results("SELECT QUALIFICATION_LEVEL, QUALIFICATION_DESC FROM m_employee_education_establishment WHERE STATUS='1' GROUP BY QUALIFICATION_LEVEL"  ,ARRAY_A);
 			
 			       foreach ( $eductionCodes as $eductionCode )
 						            {
-						            	echo ("<option value='".$groupCode['QUALIFICATION_LEVEL']."'>".$groupCode['QUALIFICATION_DESC']."</option>");
+						            	echo ("<option value='".$eductionCode['QUALIFICATION_LEVEL']."'>".$eductionCode['QUALIFICATION_DESC']."</option>");
 						            	
 						            }
 				 ?>
@@ -343,14 +343,15 @@ if(isset($_POST['submitted']))
         </li>
 		<li>
         	<label for="EDUCATION_COUNTRY_CODE">EDUCATION COUNTRY CODE:</label>
-            <id="EDUCATION_COUNTRY_CODE"  name="EDUCATION_COUNTRY_CODE" />
-            value=<?php echo($common->getCountryCodeList($education['EDUCATION_COUNTRY_CODE']));?>
+           <?php echo($common->getEducationCountryCodeList($education['EDUCATION_COUNTRY_CODE'])); ?>
         </li>
+        <li>
 		 	<label for="EDUCATION_CERTIFICATE_CODE">EDUCATION CERTIFICATE CODE</label>
 		 	<select id="EDUCATION_CERTIFICATE_CODE" name="EDUCATION_CERTIFICATE_CODE"  />
-		 	value=loadCertificates($education['EDUCATION_CERTIFICATE_CODE']);
-       		<option value=''>Select</option>
+           	<?php $eductionCertificateRow = $db->get_row("SELECT CERTIFICATE_DESC FROM m_employee_education_certificate edb, employee_education_details eed  WHERE  eed.ROW_ID='".$_POST['rowid']."' and eed.EDUCATION_CERTIFICATE_CODE=edb.CERTIFICATE_CODE " ,ARRAY_A); ?>
+		 	<option value=''><?php echo($eductionCertificateRow['CERTIFICATE_DESC']); ?></option>
             </select>
+        </li>    
 		<li>
         	<label for="EDUCATION_COURSE_DURATION">EDUCATION COURSE DURATION:</label>
             <input type="text"
@@ -363,8 +364,7 @@ if(isset($_POST['submitted']))
         </li>
 		<li>
         	<label for="EDUCATION_COURSE_DURATION_UNITS">EDUCATION COURSE DURATION UNITS:</label>
-            <id="EDUCATION_COURSE_DURATION_UNITS" name="EDUCATION_COURSE_DURATION_UNITS" />
-           value=<?php echo($common->getunitCodeList($education['"EDUCATION_COURSE_DURATION_UNITS"']));?>
+           <?php echo($common->getEducationUnitCodeList($education['EDUCATION_COURSE_DURATION_UNITS'])); ?>
         </li>
         <li>
             <label for="EDUCATION_COURSE_GRADE">EDUCATION COURSE GRADE:</label>
@@ -373,19 +373,18 @@ if(isset($_POST['submitted']))
             id="EDUCATION_COURSE_GRADE" name="EDUCATION_COURSE_GRADE"
             value="<?php echo($education['EDUCATION_COURSE_LOCATION']);?>"
             data-validation-help="Please enter education course grade" 
-            data-validation="required" 
             data-validation-error-msg="Education course grade is required"/>
         </li>
         <li>
         	<label for="EDUCATION_COURSE_BRANCH_CODE">EDUCATION COURSE BRANCH CODE:</label>
            	<select id="EDUCATION_COURSE_BRANCH_CODE" name="EDUCATION_COURSE_BRANCH_CODE" />
-		 	value=loadBranch($education['EDUCATION_COURSE_BRANCH_CODE']);
-       		<option value=''>Select</option>
+           	<?php $eductionBranchRow = $db->get_row("SELECT BRANCH_DESCRIPTION FROM m_employee_education_branch edb, employee_education_details eed  WHERE  eed.ROW_ID='".$_POST['rowid']."' and eed.EDUCATION_COURSE_BRANCH_CODE=edb.BRANCH_CODE " ,ARRAY_A); ?>
+		 	<option value=''><?php echo($eductionBranchRow['BRANCH_DESCRIPTION']);?></option>
             </select>
         </li>
 		<li>
         	<label for="EDUCATION_INSTITUTE">EDUCATION INSTITUTE:</label>
-            <select id="EDUCATION_INSTITUTE" name="EDUCATION_INSTITUTE"
+            <input id="EDUCATION_INSTITUTE" name="EDUCATION_INSTITUTE"
             value="<?php echo($education['EDUCATION_INSTITUTE']);?>"
             data-validation-help="Please enter education institute" 
             data-validation-error-msg="Education institute is required"/>
@@ -412,7 +411,7 @@ if(isset($_POST['submitted']))
 		<p>
 			<button type="submit" class="action" name="action" value="Update">Update</button>
 			<button type="reset" class="right">Reset</button>
-			<input name="rowid" type="hidden" id="ROW_ID" value="<?php echo($address['ROW_ID']);?>" />
+			<input name="rowid" type="hidden" id="ROW_ID" value="<?php echo($education['ROW_ID']);?>" />
 			<input name="modified_by" type="hidden" id="modified_by" value="<?php echo($_SESSION['userid'])?>" />
 			<input name="submitted" type="hidden" id="submitted" value="1" />
 		</p>
