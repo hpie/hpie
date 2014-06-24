@@ -50,6 +50,51 @@
 	   $db->debug();
 	  
 	 }
+	 
+  if($_GET['get']=='reasonCode')
+	 {
+	 	$actionCode=$_GET['actionCode'];
+	  	$reasonCodes = $db->get_results("SELECT ea.EAR_CODE, ea.EAR_NAME FROM m_employee_action_reason ea, m_employee_actions_reasons ear WHERE ear.EAR_CODE=ea.EAR_CODE AND ea.EA_CODE='".$reasonCodes."'",ARRAY_A);
+	  	$selectList.='<option value="">Select</option>';
+	    foreach ( $reasonCodes as $reasonCode )
+        {
+ 	       $selectList.='<option value="'.$reasonCode['EAR_CODE'].'">'.$reasonCode['EAR_NAME'].'</option>';
+        }
+ 		
+	   echo $selectList;
+	   $db->debug();
+	  
+	 }
+	 
+  if($_GET['get']=='reasonCode')
+	 {
+	 	$actionCode=$_GET['actionCode'];
+	  	$reasonCodes = $db->get_results("SELECT ea.EAR_CODE, ea.EAR_NAME FROM m_employee_action_reason ea, m_employee_actions_reasons ear WHERE ear.EAR_CODE=ea.EAR_CODE AND ea.EA_CODE='".$reasonCodes."'",ARRAY_A);
+	  	$selectList.='<option value="">Select</option>';
+	    foreach ( $reasonCodes as $reasonCode )
+        {
+ 	       $selectList.='<option value="'.$reasonCode['EAR_CODE'].'">'.$reasonCode['EAR_NAME'].'</option>';
+        }
+ 		
+	   echo $selectList;
+	   $db->debug();
+	  
+	 }
+	 
+ if($_GET['get']=='subGroupCode')
+	 {
+	 	$groupCode=$_GET['groupCode'];
+	  	$subGroupCodes = $db->get_results("SELECT ea.EAR_CODE, ea.EAR_NAME FROM m_employee_action_reason ea, m_employee_actions_reasons ear WHERE ear.EAR_CODE=ea.EAR_CODE AND ea.EA_CODE='".$groupCode."'",ARRAY_A);
+	  	$selectList.='<option value="">Select</option>';
+	    foreach ( $subGroupCodes as $subGroupCode )
+        {
+ 	       $selectList.='<option value="'.$reasonCode['EAR_CODE'].'">'.$reasonCode['EAR_NAME'].'</option>';
+        }
+ 		
+	   echo $selectList;
+	   $db->debug();
+	  
+	 }
  }
 	 
   
