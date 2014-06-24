@@ -46,7 +46,7 @@ class common
 	}
 	
 // address.php Region code
-//	
+
 	function getRegionList($region_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -514,41 +514,6 @@ function getContractEENoticePeriodlList($contractEENoticePeriod_code, $javascrip
 		echo $selectList;
 	}
 	
-//additional-personal-details.php military code	
-    function getMilitaryCodeList($military_code, $javascript="")
-	{
-		if(isset($javascript) && $javascript != ""){
-			$callJs = ' onchange="'.$javascript.'(this);" ';
-		}else{
-			$callJs= "";
-		}
-		
-			$militaryCodeList = array(
-										"01"=>"Earned Leave Quota", 
-										"02"=>"Casual Leave Quota", 
-										"03"=>"Half Pay Leave Quota", 
-										"04"=>"Restricted  Quota", 
-										"05"=>"EL from Previous Employer", 
-										"06"=>"Study Leave Quota", 
-										"07"=>"Special Casual Leave");
-		$selectList='<select id="LEAVE_CODE" name="LEAVE_CODE" '.$callJs.' data-validation-help="Please enter Military code" data-validation="required" data-validation-error-msg="Military code is required">'; 
-        
-		$selectList.='<option value="">Select</option>';
-		
-		foreach($militaryCodeList as $military_c=>$military_v)
-		{
-			if($military_c==$military_code)
-	        {	
-	     	   $selectList.='<option value="'.$military_c.'" selected="selected">' . $military_v . '</option>';
-	        }else
-	        {
-	        	$selectList.='<option value="'. $military_c .'">' . $military_v . '</option>';
-	        }
-		}
-    	$selectList.="</select>";
-		
-		echo $selectList;
-	}
 
 //challenge.php challenge code	
 	function getChallengeCodeList($challenge_code, $javascript="")
@@ -835,6 +800,7 @@ function getUnitCodeList($actionOutcome_code, $javascript="")
 		echo $selectList;
 	}
 
+	
 //contract.php
 
 function getContractUnitCodeList($contractUnit_code, $javascript="")
@@ -929,7 +895,7 @@ function getContractUnitCodeList($contractUnit_code, $javascript="")
 	}
 
 //education.php country code list	
-	function getCountryCodeList($country_code, $javascript="")
+	function getEducationCountryCodeList($educationCountry_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
 			$callJs = ' onchange="'.$javascript.'(this);" ';
@@ -937,31 +903,61 @@ function getContractUnitCodeList($contractUnit_code, $javascript="")
 			$callJs= "";
 		}
 		
-		$countryCodeList = array(
-								   	 "IN"=>"India",
-						             "NP"=>"Nepal"
-						             );
-		
-		
+		$educationCountryCodeList = array("IN"=>"India", 
+							 "NP"=>"Nepal" 
+							 );
 		$selectList='<select id="EDUCATION_COUNTRY_CODE" name="EDUCATION_COUNTRY_CODE" '.$callJs.' data-validation-help="Please enter country code" data-validation="required" data-validation-error-msg="Country code is required">'; 
         
-		$selectList.='">""">Select</option>';
+		$selectList.='<option value="">Select</option>';
 		
-		foreach($countryCodeList as $country_c=>$country_v)
+		foreach($educationCountryCodeList as $educationCountry_c =>$educationCountry_v)
 		{
-			if($country_c==$country_code)
+			if($educationCountry_c==$educationCountry_code)
 	        {	
-	     	   $selectList.='<option value="'.$country_c.'" selected="selected">' . $country_v . '</option>';
+	     	   $selectList.='<option value="'.$educationCountry_c.'" selected="selected">' . $educationCountry_v . '</option>';
 	        }else
 	        {
-	        	$selectList.='"=>""'. $country_c .'">' . $country_v . '</option>';
+	        	$selectList.='<option value="'. $educationCountry_c .'">' . $educationCountry_v . '</option>';
 	        }
 		}
     	$selectList.="</select>";
 		
 		echo $selectList;
-	}
+	}	
 
+	
+//education.php country code list	
+	function getEducationUnitCodeList($educationUnit_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		$educationUnitCodeList = array("Y"=>"Years", 
+									   "M"=>"Months" ,
+									   "D"=>"Days" ,
+							 );
+		$selectList='<select id="EDUCATION_COURSE_DURATION_UNITS" name="EDUCATION_COURSE_DURATION_UNITS" '.$callJs.' data-validation-help="Please enter unit code" data-validation="required" data-validation-error-msg="Unit code is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+		
+		foreach($educationUnitCodeList as $educationUnit_c =>$educationUnit_v)
+		{
+			if($educationUnit_c==$educationUnit_code)
+	        {	
+	     	   $selectList.='<option value="'.$educationUnit_c.'" selected="selected">' . $educationUnit_v . '</option>';
+	        }else
+	        {
+	        	$selectList.='<option value="'. $educationUnit_c .'">' . $educationUnit_v . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}	
+	
 function getAddressCountryCodeList($addressCountry_code, $javascript="")
 	{
 		if(isset($javascript) && $javascript != ""){
@@ -1281,6 +1277,206 @@ function getAddressCountryCodeList($addressCountry_code, $javascript="")
 		echo $selectList;
 	}
 	
+function getGenderFamilyMemberList($gender_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		$genderFamilyMemberList = array("M"=>"Male", 
+										 "F"=>"Female" 
+							 );
+		$selectList='<select id="FAMILY_GENDER" name="FAMILY_GENDER" '.$callJs.' data-validation-help="Please enter family member gender" data-validation="required" data-validation-error-msg="Family member gender is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+		
+		foreach($genderFamilyMemberList as $gender_c =>$gender_v)
+		{
+			if($gender_c==$gender_code)
+	        {	
+	     	   $selectList.='<option value="'.$gender_c.'" selected="selected">' . $gender_v . '</option>';
+	        }else
+	        {
+	        	$selectList.='<option value="'. $gender_c .'">' . $gender_v . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}	
+	
+function getFamilyMemberCountryCodeList($country_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		$familyMemberCountryCodeList = array("M"=>"Male", 
+										 "F"=>"Female" 
+							 );
+		$selectList='<select id="FAMILY_GENDER" name="FAMILY_GENDER" '.$callJs.' data-validation-help="Please enter family member gender" data-validation="required" data-validation-error-msg="Family member gender is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+		
+		foreach($countryCodeList as $country_c =>$country_v)
+		{
+			if($country_c==$country_code)
+	        {	
+	     	   $selectList.='<option value="'.$country_c.'" selected="selected">' . $country_v . '</option>';
+	        }else
+	        {
+	        	$selectList.='<option value="'. $country_c .'">' . $country_v . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}	
 
+function getFamilyMemberCommonOrg($sameOrganization_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		$familyMemberCommonOrg = array("Y"=>"Yes", 
+										 "N"=>"No" 
+							 );
+		$selectList='<select id="FAMILY_COMMON_ORGANAZATION" name="FAMILY_COMMON_ORGANAZATION" '.$callJs.' data-validation-help="Please enter family member gender" data-validation="required" data-validation-error-msg="Family member gender is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+		
+		foreach($countryCodeList as $country_c =>$country_v)
+		{
+			if($country_c==$sameOrganization_code)
+	        {	
+	     	   $selectList.='<option value="'.$country_c.'" selected="selected">' . $country_v . '</option>';
+	        }else
+	        {
+	        	$selectList.='<option value="'. $country_c .'">' . $country_v . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}	
+
+	function getFamilyMemberCountry($familyCountry_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		$familyMemberCountry = array("IN"=>"India", 
+										 "NP"=>"Nepal" 
+							 );
+		$selectList='<select id="FAMILY_BIRTH_COUNTRY" name="FAMILY_BIRTH_COUNTRY" '.$callJs.' data-validation-help="Please enter family member birth country" data-validation="required" data-validation-error-msg="Family member birth country is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+		
+		foreach($familyMemberCountry as $country_c =>$country_v)
+		{
+			if($country_c==$familyCountry_code)
+	        {	
+	     	   $selectList.='<option value="'.$country_c.'" selected="selected">' . $country_v . '</option>';
+	        }else
+	        {
+	        	$selectList.='<option value="'. $country_c .'">' . $country_v . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}	
+
+	function getFamilyMemberCode($familyMember_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		$familyMemberCode = array("1"=>"Spouse", 
+								  "10"=>"Divorced spouse",
+								  "11"=>"Father",
+								  "12"=>"Mother",
+								  "Z1"=>"Son",
+								  "Z2"=>"Father",
+								  "Z3"=>"Sister",
+								  "Z4"=>"Brother",
+								  "Z5"=>"Father-in Law",
+								  "Z6"=>"Mother-in-Law",
+								  "Z7"=>"Sister-in-law",
+								  "Z8"=>"Brother-in-Law",
+								  "Z9"=>"Daughter-in-Law",
+								  "ZA"=>"Grand Mother",
+								  "ZB"=>"Grand Father",
+								  "ZB"=>"Grand Son",
+								  "ZB"=>"Grand Daughter",
+								  "ZB"=>"Neice",
+								  "ZB"=>"Nephew",
+								  "ZB"=>"Other Dependants"
+								  );
+		$selectList='<select id="FAMILY_RELATION_CODE" name="FAMILY_RELATION_CODE" '.$callJs.' data-validation-help="Please enter family member code" data-validation="required" data-validation-error-msg="Family member code is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+		
+		foreach($familyMemberCode as $familyMember_c =>$familyMember_v)
+		{
+			if($familyMember_c==$familyMember_code)
+	        {	
+	     	   $selectList.='<option value="'.$familyMember_c.'" selected="selected">' . $familyMember_v . '</option>';
+	        }else
+	        {
+	        	$selectList.='<option value="'. $familyMember_c .'">' . $familyMember_v . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}	
+	
+function getFamilyIDType($familyID_code, $javascript="")
+	{
+		if(isset($javascript) && $javascript != ""){
+			$callJs = ' onchange="'.$javascript.'(this);" ';
+		}else{
+			$callJs= "";
+		}
+		
+		$familyIDType = array("CPS"=>"CPS", 
+								"GPF"=>"GPF"  
+								);
+		$selectList='<select id="FAMILY_ID_TYPE" name="FAMILY_ID_TYPE" '.$callJs.' data-validation-help="Please enter family ID type" data-validation="required" data-validation-error-msg="Family ID type is required">'; 
+        
+		$selectList.='<option value="">Select</option>';
+		
+		foreach($familyIDType as $familyID_c =>$familyID_v)
+		{
+			if($familyID_c==$familyID_code)
+	        {	
+	     	   $selectList.='<option value="'.$familyID_c.'" selected="selected">' . $familyID_v . '</option>';
+	        }else
+	        {
+	        	$selectList.='<option value="'. $familyID_c .'">' . $familyID_v . '</option>';
+	        }
+		}
+    	$selectList.="</select>";
+		
+		echo $selectList;
+	}	
+	
+	
+	
+	
 }
 ?>
