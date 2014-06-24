@@ -435,6 +435,8 @@ if(isset($_POST['submitted']))
 									echo("<input class='actionTxtBut' id='education' type='submit' name='action' value='education' title='Enter/View Challenge details' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"education.php\")' /> &nbsp;");
 									
 									echo("<input class='actionTxtBut' id='familyDetails' type='submit' name='action' value='familyDetails' title='Enter/View Challenge details' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"family-details.php\")' /> &nbsp;");
+									
+									echo("<input class='actionTxtBut' id='actionDetails' type='submit' name='action' value='actionDetails' title='Enter/View Challenge details' onClick='setFormAction(\"employeeActionForm_".$employee['ROW_ID']."\",\"history-action.php\")' /> &nbsp;");
 																		
 			         	 		}// else status
 							?>

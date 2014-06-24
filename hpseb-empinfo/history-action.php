@@ -7,19 +7,22 @@ if(isset($_POST['submitted']))
 {
 	if($action=="update")
 	{
-		$db->query("UPDATE employee_pension_details SET
-		OTHER_ACTION_CODE='".$_POST['OTHER_ACTION_CODE']."',
-		OTHER_ACTION_REASON_CODE= '".$_POST['OTHER_ACTION_REASON_CODE']."',
-		OTHER_ACTION_POSITION= '".$_POST['OTHER_ACTION_POSITION']."',
+		$db->query("UPDATE employee_actions_details SET
+		ACTION_CODE='".$_POST['ACTION_CODE']."',
+		ACTION_REASON_CODE= '".$_POST['ACTION_REASON_CODE']."',
+		ACTION_HISTORY_OTHERS= '".$_POST['ACTION_HISTORY_OTHERS']."',
+		ACTION_POSITION= '".$_POST['ACTION_POSITION']."',
 		ACTION_AREA_CODE= '".$_POST['ACTION_AREA_CODE']."',
-		OTHER_ACTION_EMPLOYEE_GROUP_CODE= '".$_POST['OTHER_ACTION_EMPLOYEE_GROUP_CODE']."',
-		OTHER_ACTION_SUBAREA_CODE= '".$_POST['OTHER_ACTION_SUBAREA_CODE']."',
-		OTHER_ACTION_PAYROL:_AREA= '".$_POST['OTHER_ACTION_PAYROL:_AREA']."',
-		OTHER_ACTION_BEGIN_DT= '".$_POST['OTHER_ACTION_BEGIN_DT']."',
-		OTHER_ACTION_END_DT= '".$_POST['OTHER_ACTION_END_DT']."',
-		STATUS= '".$_POST['status']."',
+		ACTION_RESULT_GROUP_CODE= '".$_POST['ACTION_RESULT_GROUP_CODE']."',
+		ACTION_RESULT_SUBGROUP_CODE= '".$_POST['ACTION_RESULT_SUBGROUP_CODE']."',
+		ACTION_SUBAREA_CODE= '".$_POST['ACTION_SUBAREA_CODE']."',
+		ACTION_PAYROLL_AREA_CODE= '".$_POST['ACTION_PAYROLL_AREA_CODE']."',
+		ACTION_BASIC_PAY= '".$_POST['ACTION_BASIC_PAY']."',
+		ACTION_REMARKS= '".$_POST['ACTION_REMARKS']."',
+		ACTION_BEGIN_DT= '".$_POST['ACTION_BEGIN_DT']."',
+		ACTION_END_DT= '".$_POST['ACTION_END_DT']."',
 		MODIFIED_BY= '".$_POST['modified_by']."',
-		MODIFIED_DATE==now()
+		MODIFIED_DATE=now()
 		WHERE ROW_ID='".$_POST['rowid']."'");
 		//$db->debug();
 		if($db->rows_affected>0)
@@ -34,9 +37,9 @@ if(isset($_POST['submitted']))
 		//Header("Location: receive-blazes.php");
 	}else if($action=="save")
 	{
-		$db->query("INSERT INTO employee_pension_details
-		(  EMPLOYEE_ROW_ID, OTHER_ACTION_CODE,OTHER_ACTION_REASON_CODE,OTHER_ACTION_POSITION,ACTION_AREA_CODE,OTHER_ACTION_EMPLOYEE_GROUP_CODE,OTHER_ACTION_EMPLOYEE_SUBGROUP_CODE, OTHER_ACTION_SUBAREA_CODE, OTHER_ACTION_PAYROL:_AREA, OTHER_ACTION_BEGIN_DT, OTHER_ACTION_END_DT, STATUS, CREATED_BY) 
-		 VALUES ( '".$_POST['empid']."','".$_POST['OTHER_ACTION_CODE']."', '".$_POST['OTHER_ACTION_REASON_CODE']."', '".$_POST['OTHER_ACTION_POSITION']."', '".$_POST['OTHER_ACTION_EMPLOYEE_GROUP_CODE']."', '".$_POST['OTHER_ACTION_EMPLOYEE_SUBGROUP_CODE']."','".$_POST['OTHER_ACTION_SUBAREA_CODE']."','".$_POST['OTHER_ACTION_PAYROL:_AREA']."','".$_POST['OTHER_ACTION_BEGIN_DT']."','".$_POST['OTHER_ACTION_END_DT']."', '1','".$_POST['created_by']."')");		
+		$db->query("INSERT INTO employee_actions_details
+		(  EMPLOYEE_ROW_ID, ACTION_CODE,ACTION_REASON_CODE,ACTION_HISTORY_OTHERS,ACTION_POSITION,ACTION_AREA_CODE, ACTION_RESULT_GROUP_CODE, ACTION_RESULT_SUBGROUP_CODE, ACTION_SUBAREA_CODE, ACTION_PAYROLL_AREA_CODE, ACTION_BASIC_PAY, ACTION_REMARKS, ACTION_BEGIN_DT, ACTION_END_DT, STATUS, CREATED_BY) 
+		 VALUES ( '".$_POST['empid']."','".$_POST['ACTION_CODE']."', '".$_POST['ACTION_REASON_CODE']."', '".$_POST['ACTION_HISTORY_OTHERS']."', '".$_POST['ACTION_POSITION']."', '".$_POST['ACTION_AREA_CODE']."','".$_POST['ACTION_RESULT_GROUP_CODE']."','".$_POST['ACTION_RESULT_SUBGROUP_CODE']."','".$_POST['ACTION_SUBAREA_CODE']."','".$_POST['ACTION_PAYROLL_AREA_CODE']."', '".$_POST['ACTION_BASIC_PAY']."', '".$_POST['ACTION_REMARKS']."', '".$_POST['ACTION_BEGIN_DT']."', '".$_POST['ACTION_END_DT']."','1','".$_POST['created_by']."')");		
 		//$db->debug();
 		if($db->rows_affected>0)
 		{
@@ -53,20 +56,20 @@ if(isset($_POST['submitted']))
 		$status="";
 		if($_POST['status'] =="0")
 		{
-			$db->query("UPDATE employee_pension_details SET
-			STATUS= '".$_POST['status']."',
+			$db->query("UPDATE employee_actions_details SET
+			STATUS= '1',
 			MODIFIED_BY= '".$_POST['modified_by']."',
-			MODIFIED_DATE==now()
+			MODIFIED_DATE=now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
-			$status="Inactive";
+			$status="1";
 		}else if($_POST['status'] =="1")
 		{
-			$db->query("UPDATE employee_pension_details SET
-			STATUS= '".$_POST['status']."',
+			$db->query("UPDATE employee_actions_details SET
+			STATUS= '0',
 			MODIFIED_BY= '".$_POST['modified_by']."',
-			MODIFIED_DATE==now()
+			MODIFIED_DATE=now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
-			$status="Active";
+			$status="0";
 		}
 		//$db->debug();
 		if($db->rows_affected>0)
@@ -81,13 +84,13 @@ if(isset($_POST['submitted']))
 
 	}else if($action=="delete")
 	{
-		$db->query("UPDATE employee_pension_details SET
-			STATUS= '".$_POST['status']."',
+		$db->query("UPDATE employee_actions_details SET
+			STATUS= '-1',
 			MODIFIED_BY= '".$_POST['modified_by']."',
-			MODIFIED_DATE==now()
+			MODIFIED_DATE=now()
 			WHERE ROW_ID='".$_POST['rowid']."'");
 
-		$status="deleted";
+		$status="-1";
 		//$db->debug();
 		if($db->rows_affected>0)
 		{
@@ -131,95 +134,125 @@ if(isset($_POST['submitted']))
 	{
 ?>	
 <article>
-<h2>Employee Historic Action Information</h2>
+<h2>Employee Historical Action Information</h2>
 <form action="history-action.php" method="post" id="employeeHistoryActionForm">
 	<ul>
         <li>
-            <label for="OTHER_ACTION_CODE">OTHER ACTION CODE:</label>
-           <select id="OTHER_ACTION_CODE" name="OTHER_ACTION_CODE"
-            data-validation-help="Please enter action code" 
-            data-validation="required" 
-            data-validation-error-msg="Action code is required"/>
-                <option value="Z1">Recruited on Merit</option>
-				<option value="Z2">DisabilityinService</option>				         
-            </select>
+            <label for="ACTION_CODE">ACTION CODE:</label>
+             <select id="ACTION_CODE" name="ACTION_CODE" data-required="true" data-error-message="Action code is required" onchange=loadActionReasons(this);>
+				<option value=''>Select</option>
+				 <?php 
+				  $historyActionCodes = $db->get_results("SELECT EA_CODE, EA_NAME FROM m_employee_actions WHERE STATUS='1' GROUP BY EA_CODE",ARRAY_A);
+			
+			       foreach ( $historyActionCodes as $historyActionCode )
+						            {
+						            	echo ("<option value='".$historyActionCode['EA_CODE']."'>".$historyActionCode['EA_NAME']."</option>");
+						            	
+						            }
+				 ?>
+		     </select>		 
+		</li>
+        <li>
+        	<label for="ACTION_REASON_CODE">ACTION REASON CODE:</label>
+             <select id="ACTION_REASON_CODE" name="ACTION_REASON_CODE" />
+             <option value=''>Select</option>
+		     </select>
         </li>
         <li>
-        	<label for="OTHER_ACTION_REASON_CODE">OTHER_ACTION REASON CODE:</label>
-            < <input type="text" 
-            size="40" 
-            id="OTHER_ACTION_REASON_CODE" name="OTHER_ACTION_REASON_CODE"
-            data-validation="required"
-            data-validation-help="Please enter action reason code" 
-            data-validation-error-msg="Action reason code is required"/>
+        	<label for="ACTION_HISTORY_OTHERS">ACTION HISTORY OTHERS:</label>
+            	<input type="radio" name="ACTION_HISTORY_OTHERS" value="HISTORY" onclick="actionHistoryOthers(this)"/>YES
+            	<input type="radio" name="ACTION_HISTORY_OTHERS" value="OTHERS" onclick="actionHistoryOthers(this"/>NO
         </li>
-		<li>
-        	<label for="OTHER_ACTION_POSITION">OTHER ACTION POSITION:</label>
+       	<li  id="ACTION_POSITION_ROW" style="display:none;" >
+        	<label for="ACTION_POSITION">ACTION POSITION:</label>
             <input type="text" 
-            size="40" id="OTHER_ACTION_POSITION" name="OTHER_ACTION_POSITION"
+            size="10" 
+            id="ACTION_POSITION" name="ACTION_POSITION"
             data-validation-help="Please enter action position" 
-            data-validation="required" 
             data-validation-error-msg="Action position is required"/>
-        </li>
+		</li>
 		<li>
         	<label for="ACTION_AREA_CODE">ACTION AREA CODE:</label>
-            <input type="text" 
-            size="40" 
-            id="ACTION_AREA_CODE"  name="ACTION_AREA_CODE"
-            data-validation-help="Please enter action area code" 
-            data-validation="required" 
-            data-validation-error-msg="Action area code is required"/>
+             <select id="ACTION_AREA_CODE" name="ACTION_AREA_CODE" data-required="true" data-error-message="Action code is required" onchange=loadSubArea(this);>
+				<option value=''>Select</option>
+				 <?php 
+				  $personalAreaCodes = $db->get_results("SELECT PA_CODE, PA_NAME FROM m_personal_area WHERE STATUS='1' GROUP BY PA_CODE"  ,ARRAY_A);
+			
+			       foreach ( $personalAreaCodes as $personalAreaCode )
+						            {
+						            	echo ("<option value='".$personalAreaCode['PA_CODE']."'>".$personalAreaCode['PA_NAME']."</option>");
+						            	
+						            }
+				 ?>
+		     </select>
         </li>
 		<li>
-        	<label for="OTHER_ACTION_EMPLOYEE_GROUP_CODE">OTHER ACTION EMPLOYEE GROUP CODE:</label>
-            <select id="OTHER_ACTION_EMPLOYEE_GROUP_CODE" name="OTHER_ACTION_EMPLOYEE_GROUP_CODE"
-            data-validation-help="Please enter action group code" 
-            data-validation-error-msg="action group code is required"/>
-            	<option value="Z1">Recruited on Merit</option>
-				<option value="Z2">DisabilityinService</option>				         
+            <label for="ACTION_RESULT_GROUP_CODE">ACTION CODE:</label>
+             <select id="ACTION_RESULT_GROUP_CODE" name="ACTION_RESULT_GROUP_CODE" data-required="true" data-error-message="Action code is required" onchange=loadSubGroups(this);>
+				<option value=''>Select</option>
+				 <?php 
+				  $groupCodes = $db->get_results("SELECT EG_CODE, EG_NAME FROM m_employee_group WHERE STATUS='1' GROUP BY EG_CODE"  ,ARRAY_A);
+			
+			       foreach ( $groupCodes as $groupCode )
+						            {
+						            	echo ("<option value='".$groupCode['EG_CODE']."'>".$groupCode['EG_NAME']."</option>");
+						            	
+						            }
+				 ?>
+		     </select>		 
+		</li>
+		<li>
+        	<label for="ACTION_RESULT_SUBGROUP_CODE">OTHER ACTION PAYROL AREA:</label>
+            <select id="ACTION_RESULT_SUBGROUP_CODE" name="ACTION_RESULT_SUBGROUP_CODE" >
+            	<option value=''>Select</option>				         
             </select>
 		</li>
 		<li>
-        	<label for="OTHER_ACTION_EMPLOYEE_SUBGROUP_CODE">OTHER ACTION EMPLOYEE SUBGROUP CODE:</label>
-            <select id="OTHER_ACTION_EMPLOYEE_SUBGROUP_CODE" name="OTHER_ACTION_EMPLOYEE_SUBGROUP_CODE"
-            data-validation-help="Please enter action subgroup code" 
-            data-validation-error-msg="Action subgroup code is required"/>
-            	<option value="Z1">Recruited on Merit</option>
-				<option value="Z2">DisabilityinService</option>				         
+        	<label for="ACTION_RESULT_SUBAREA_CODE">OTHER ACTION PAYROL AREA:</label>
+            <select id="ACTION_RESULT_SUBAREA_CODE" name="ACTION_RESULT_SUBAREA_CODE" >
+            	<option value=''>Select</option>				         
             </select>
 		</li>
-		<li>
-        	<label for="OTHER_ACTION_SUBAREA_CODE">OTHER ACTION SUBAREA CODE:</label>
-            <select id="OTHER_ACTION_SUBAREA_CODE" name="OTHER_ACTION_SUBAREA_CODE"
-            data-validation-help="Please enter action subarea code" 
-            data-validation-error-msg="Action subarea code is required"/>
-            	<option value="Z1">Recruited on Merit</option>
-				<option value="Z2">DisabilityinService</option>				         
-            </select>
-		</li>
-		<li>
-        	<label for="OTHER_ACTION_PAYROL_AREA">OTHER ACTION PAYROL AREA:</label>
-            <select id="OTHER_ACTION_PAYROL_AREA" name="OTHER_ACTION_PAYROL_AREA"
-            data-validation-help="Please enter action payrol area" 
-            data-validation-error-msg="Action payrol area is required"/>
-            	<option value="Z1">Recruited on Merit</option>
-				<option value="Z2">DisabilityinService</option>				         
-            </select>
-		</li>
-		<li>
-        	<label for="OTHER_ACTION_BEGIN_DT">OTHER ACTION BEGIN DT:</label>
+		<li  id="ACTION_BASIC_PAY_ROW" style="display:none;" >
+        	<label for="ACTION_BASIC_PAY">ACTION_BASIC_PAY:</label>
             <input type="text" 
             size="40" 
-            id="OTHER_ACTION_BEGIN_DT"  name="OTHER_ACTION_BEGIN_DT"
+            id="ACTION_BASIC_PAY"  name="ACTION_BASIC_PAY"
+            data-validation-help="Please enter action begin date" 
+            data-validation="required" 
+            data-validation-error-msg="Action begin date is required"/>
+        </li>
+        <li id="ACTION_REMARKS_ROW" style="display:none;" >
+        	<label for="ACTION_REMARKS">ACTION_REMARKS:</label>
+            <input type="text" 
+            size="255" 
+            id="ACTION_REMARKS"  name="ACTION_REMARKS"
+            data-validation-help="Please enter action begin date" 
+            data-validation="required" 
+            data-validation-error-msg="Action begin date is required"/>
+        </li>
+        <li  id="ACTION_PAYROLL_AREA_ROW" style="display:none;" >
+        	<label for="ACTION_PAYROLL_AREA_CODE">ACTION POSITION:</label>
+            <input type="text" 
+            size="10" 
+            id="ACTION_PAYROLL_AREA_CODE" name="ACTION_PAYROLL_AREA_CODE"
+            data-validation-help="Please enter action position" 
+            data-validation-error-msg="Action position is required"/>
+		</li>
+		<li>
+        	<label for="ACTION_BEGIN_DT">OTHER ACTION BEGIN DT:</label>
+            <input type="text" 
+            size="40" 
+            id="ACTION_BEGIN_DT"  name="ACTION_BEGIN_DT"
             data-validation-help="Please enter action begin date" 
             data-validation="required" 
             data-validation-error-msg="Action begin date is required"/>
         </li>
         <li>
-        	<label for="OTHER_ACTION_END_DT">OTHER ACTION END DT:</label>
+        	<label for="ACTION_END_DT">OTHER ACTION END DT:</label>
             <input type="text" 
             size="40" 
-            id="OTHER_ACTION_END_DT"  name="OTHER_ACTION_END_DT"
+            id="ACTION_END_DT"  name="ACTION_END_DT"
             data-validation-help="Please enter action end date" 
             data-validation="required" 
             data-validation-error-msg="Action end date code is required"/>
@@ -254,120 +287,132 @@ if(isset($_POST['submitted']))
 	}else if($action=="edit")
 	{
 
-		$historyActionss = $db->get_row("SELECT * FROM employee_pension_details WHERE ROW_ID='".$_POST['rowid']."'"  ,ARRAY_A);
+		$historyActionss = $db->get_row("SELECT * FROM employee_actions_details WHERE ROW_ID='".$_POST['rowid']."'"  ,ARRAY_A);
 ?>
 
 <article>
-<h2>Employee Pensions Information</h2>
+<h2>Employee Action Information</h2>
 <form action="history-action.php" method="post" id="employeeHistoryActionForm">
 	<ul>
         <li>
-            <label for="OTHER_ACTION_CODE">OTHER ACTION CODE:</label>
-           <select id="OTHER_ACTION_CODE" name="OTHER_ACTION_CODE"
-            data-validation-help="Please enter action code" 
-            data-validation="required" 
-            data-validation-error-msg="Action code is required"/>
-                <option value="JG">Joining</option>
-                <option value="CN">Confirmation</option>
-                <option value="TR">Relieved on Transfer</option>
-                <option value="JT">Joining on Transfer</option>
-                <option value="PR">Relieved on Promotion</option>
-                <option value="JP">Joining on Grade Change</option>
-                <option value="EL">Change In Employment Level</option>
-                <option value="DP">Deputation-Out</option>
-                <option value="RT">Repatriation</option>
-                <option value="AC">Absconding</option>
-                <option value="RY">Return from Absconding</option>
-                <option value="SE">Separation</option>
-                <option value="TM">Termination</option>
-                <option value="RZ">Reinstatement on Termination</option>
-                <option value="SP">Suspension</option>
-                <option value="SR">Suspension Revocation</option>
-                <option value="RP">Reduction in Post/ Pay</option>
-                <option value="SL">Study Leave</option>
-                <option value="RL">Return from Study Leave</option>
-                <option value="IN">Increments</option>
-                <option value="PA">Change in Payroll Area</option>
-                <option value="CZ">Conversion Assign Action</option>
-                <option value="CV">Conversion Hire Action</option>                         
-            </select>
+            <label for="ACTION_CODE">ACTION CODE:</label>
+             <?php $historyActionCodeRow = $db->get_row("SELECT EA_NAME FROM m_employee_actions  WHERE STATUS='1' AND EA_CODE = '".$historyActionss['ACTION_CODE']."'");?>
+             <select id="ACTION_CODE" name="ACTION_CODE" data-required="true" data-error-message="Action code is required" onchange=loadActionReasons(this);>
+				<option value=''><?php echo($historyActionCodeRow['EA_NAME']); ?></option>
+				 <?php 
+				  $eductionCodes = $db->get_results("SELECT EA_CODE, EA_NAME FROM m_employee_actions WHERE STATUS='1' GROUP BY EA_CODE"  ,ARRAY_A);
+			
+			       foreach ( $historyActionCodes as $historyActionCode )
+						            {
+						            	echo ("<option value='".$historyActionCode['EA_CODE']."'>".$historyActionCode['EA_NAMEs']."</option>");
+						            	
+						            }
+				 ?>
+		     </select>		 
+		</li>
+        <li>
+        	<label for="ACTION_REASON_CODE">ACTION REASON CODE:</label>
+             <select id="ACTION_REASON_CODE" name="ACTION_REASON_CODE" />
+             <option value=''>Select</option>
+		     </select>
         </li>
         <li>
-        	<label for="OTHER_ACTION_REASON_CODE">OTHER_ACTION REASON CODE:</label>
-            < <input type="text" 
-            size="40" 
-            id="OTHER_ACTION_REASON_CODE" name="OTHER_ACTION_REASON_CODE"
-            data-validation="required"
-            data-validation-help="Please enter action reason code" 
-            data-validation-error-msg="Action reason code is required"/>
+        	<label for="ACTION_HISTORY_OTHERS">ACTION HISTORY OTHERS:</label>
+            	<input type="radio" name="ACTION_HISTORY_OTHERS" value="HISTORY" onclick="actionHistoryOthers(this)"/>YES
+            	<input type="radio" name="ACTION_HISTORY_OTHERS" value="OTHERS" onclick="actionHistoryOthers(this"/>NO
         </li>
-		<li>
-        	<label for="OTHER_ACTION_POSITION">OTHER ACTION POSITION:</label>
+       	<li  id="ACTION_POSITION_ROW" style="display:none;" >
+        	<label for="ACTION_POSITION">ACTION POSITION:</label>
             <input type="text" 
-            size="40" id="OTHER_ACTION_POSITION" name="OTHER_ACTION_POSITION"
+            size="10" 
+            id="ACTION_POSITION" name="ACTION_POSITION"
             data-validation-help="Please enter action position" 
-            data-validation="required" 
             data-validation-error-msg="Action position is required"/>
-        </li>
+		</li>
 		<li>
         	<label for="ACTION_AREA_CODE">ACTION AREA CODE:</label>
-            <input type="text" 
-            size="40" 
-            id="ACTION_AREA_CODE"  name="ACTION_AREA_CODE"
-            data-validation-help="Please enter action area code" 
-            data-validation="required" 
-            data-validation-error-msg="Action area code is required"/>
+             <?php $historyActionAreaRow = $db->get_row("SELECT EAR_NAME FROM m_employee_personal_area  WHERE STATUS='1' AND EAR_CODE = '".$historyActionss['ACTION_AREA_CODE']."'");?>
+             <select id="ACTION_AREA_CODE" name="ACTION_AREA_CODE" data-required="true" data-error-message="Action code is required" loadSubArea($historyActionss['ACTION_AREA_CODE'] );>
+				<option value=''><?php echo($historyActionAreaRow['$historyActionAreaRow']); ?></option>
+				 <?php 
+				  $personalAreaCodes = $db->get_results("SELECT PA_CODE, PA_NAME FROM m_personal_area WHERE STATUS='1' GROUP BY PA_CODE"  ,ARRAY_A);
+			
+			       foreach ( $personalAreaCodes as $personalAreaCode )
+						            {
+						            	echo ("<option value='".$personalAreaCode['PA_CODE']."'>".$personalAreaCode['PA_NAME']."</option>");
+						            	
+						            }
+				 ?>
+		     </select>
         </li>
 		<li>
-        	<label for="OTHER_ACTION_EMPLOYEE_GROUP_CODE">OTHER ACTION EMPLOYEE GROUP CODE:</label>
-            <select id="OTHER_ACTION_EMPLOYEE_GROUP_CODE" name="OTHER_ACTION_EMPLOYEE_GROUP_CODE"
-            data-validation-help="Please enter action group code" 
-            data-validation-error-msg="action group code is required"/>
-            	<option value="Z1">Recruited on Merit</option>
-				<option value="Z2">DisabilityinService</option>				         
+            <label for="ACTION_RESULT_GROUP_CODE">ACTION RESULT GROUP CODE:</label>
+             <?php $historyActionGroupRow = $db->get_row("SELECT EG_NAME FROM m_employee_group  WHERE STATUS='1' AND EG_CODE = '".$historyActionss['ACTION_RESULT_GROUP_CODE']."'");?> 
+             <select id="ACTION_RESULT_GROUP_CODE" name="ACTION_RESULT_GROUP_CODE" data-required="true" data-error-message="Action code is required" loadSubArea($historyActionss['ACTION_RESULT_GROUP_CODE'] );>
+				<option value=''><?php echo($historyActionGroupRow['EG_NAME']); ?></option>
+				 <?php 
+				  $groupCodes = $db->get_results("SELECT EG_CODE, EG_NAME FROM m_employee_group WHERE STATUS='1' GROUP BY EG_CODE"  ,ARRAY_A);
+			
+			       foreach ( $groupCodes as $groupCode )
+						            {
+						            	echo ("<option value='".$groupCode['EG_CODE']."'>".$groupCode['EG_NAME']."</option>");
+						            	
+						            }
+				 ?>
+		     </select>		 
+		</li>
+		<li>
+        	<label for="ACTION_RESULT_SUBGROUP_CODE">ACTION RESULT SUBGROUP CODE:</label>
+            <select id="ACTION_RESULT_SUBGROUP_CODE" name="ACTION_RESULT_SUBGROUP_CODE" >
+            	<option value=''><?php echo($historyActionss['ACTION_RESULT_SUBGROUP_CODE']); ?></option>			         
             </select>
 		</li>
 		<li>
-        	<label for="OTHER_ACTION_EMPLOYEE_SUBGROUP_CODE">OTHER ACTION EMPLOYEE SUBGROUP CODE:</label>
-            <select id="OTHER_ACTION_EMPLOYEE_SUBGROUP_CODE" name="OTHER_ACTION_EMPLOYEE_SUBGROUP_CODE"
-            data-validation-help="Please enter action subgroup code" 
-            data-validation-error-msg="Action subgroup code is required"/>
-            	<option value="Z1">Recruited on Merit</option>
-				<option value="Z2">DisabilityinService</option>				         
+        	<label for="ACTION_RESULT_SUBAREA_CODE">ACTION RESULT SUBAREA CODE:</label>
+            <select id="ACTION_RESULT_SUBAREA_CODE" name="ACTION_RESULT_SUBAREA_CODE" >
+            	<option value=''><?php echo($historyActionss['ACTION_RESULT_SUBAREA_CODE']); ?></option>				         
             </select>
 		</li>
-		<li>
-        	<label for="OTHER_ACTION_SUBAREA_CODE">OTHER ACTION SUBAREA CODE:</label>
-            <select id="OTHER_ACTION_SUBAREA_CODE" name="OTHER_ACTION_SUBAREA_CODE"
-            data-validation-help="Please enter action subarea code" 
-            data-validation-error-msg="Action subarea code is required"/>
-            	<option value="Z1">Recruited on Merit</option>
-				<option value="Z2">DisabilityinService</option>				         
-            </select>
-		</li>
-		<li>
-        	<label for="OTHER_ACTION_PAYROL_AREA">OTHER ACTION PAYROL AREA:</label>
-            <select id="OTHER_ACTION_PAYROL_AREA" name="OTHER_ACTION_PAYROL_AREA"
-            data-validation-help="Please enter action payrol area" 
-            data-validation-error-msg="Action payrol area is required"/>
-            	<option value="Z1">Recruited on Merit</option>
-				<option value="Z2">DisabilityinService</option>				         
-            </select>
-		</li>
-		<li>
-        	<label for="OTHER_ACTION_BEGIN_DT">OTHER ACTION BEGIN DT:</label>
+		<li  id="ACTION_BASIC_PAY_ROW" style="display:none;" >
+        	<label for="ACTION_BASIC_PAY">ACTION BASIC PAY:</label>
             <input type="text" 
             size="40" 
-            id="OTHER_ACTION_BEGIN_DT"  name="OTHER_ACTION_BEGIN_DT"
+            id="ACTION_BASIC_PAY"  name="ACTION_BASIC_PAY"
+            data-validation-help="Please enter action begin date" 
+            data-validation="required" 
+            data-validation-error-msg="Action basic pay is required"/>
+        </li>
+        <li id="ACTION_REMARKS_ROW" style="display:none;" >
+        	<label for="ACTION_REMARKS">ACTION REMARKS:</label>
+            <input type="text" 
+            size="255" 
+            id="ACTION_REMARKS"  name="ACTION_REMARKS"
+            data-validation-help="Please enter action begin date" 
+            data-validation="required" 
+            data-validation-error-msg="Action remarks is required"/>
+        </li>
+        <li  id="ACTION_PAYROLL_AREA_ROW" style="display:none;" >
+        	<input type="text" 
+            size="2" 
+            id="ACTION_PAYROLL_AREA"  name="ACTION_PAYROLL_AREA"
+            data-validation-help="Please enter action begin date" 
+            data-validation="required" 
+            data-validation-error-msg="Action pay roll area is required"/>
+		</li>
+		<li>
+        	<label for="ACTION_BEGIN_DT">ACTION BEGIN DT:</label>
+            <input type="text" 
+            size="10" 
+            id="ACTION_BEGIN_DT"  name="ACTION_BEGIN_DT"
             data-validation-help="Please enter action begin date" 
             data-validation="required" 
             data-validation-error-msg="Action begin date is required"/>
         </li>
         <li>
-        	<label for="OTHER_ACTION_END_DT">OTHER ACTION END DT:</label>
+        	<label for="ACTION_END_DT">ACTION END DT:</label>
             <input type="text" 
-            size="40" 
-            id="OTHER_ACTION_END_DT"  name="OTHER_ACTION_END_DT"
+            size="10" 
+            id="ACTION_END_DT"  name="ACTION_END_DT"
             data-validation-help="Please enter action end date" 
             data-validation="required" 
             data-validation-error-msg="Action end date code is required"/>
@@ -394,11 +439,11 @@ if(isset($_POST['submitted']))
 			</tr>	
 			<?php 
  								
-					$employee_historyActionss = $db->get_results("SELECT * FROM employee_pension_details WHERE EMPLOYEE_ROW_ID='".$_POST['empid']."'"  ,ARRAY_A);
+					$employee_historyActionss = $db->get_results("SELECT * FROM employee_actions_details WHERE EMPLOYEE_ROW_ID='".$_POST['empid']."'"  ,ARRAY_A);
 			
 		           	foreach ( $employee_historyActionss as $employee_historyActions )
 		           	{
-		         		echo("<td>".$employee_historyActions['OTHER_ACTION_CODE'] ."</td> <td>".$employee_historyActions['OTHER_ACTION_REASON_CODE']."</td> <td>".$employee_historyActions['OTHER_ACTION_POSITION']."</td> <td>".$employee_historyActions['STATUS']."</td> ");
+		         		echo("<td>".$employee_historyActions['ACTION_CODE'] ."</td> <td>".$employee_historyActions['ACTION_REASON_CODE']."</td> <td>".$employee_historyActions['ACTION_REASON_CODE']."</td> <td>".$employee_historyActions['STATUS']."</td> ");
 		         		
 		         ?>	
 		         	<td>
