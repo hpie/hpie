@@ -372,6 +372,106 @@ CREATE TABLE IF NOT EXISTS `employee_decipline_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE IF NOT EXISTS `m_offence_group` (
+  `OFFENCE_GROUP_CODE` varchar(50) NOT NULL COMMENT 'Offence group Code with not spl chars and underscore only hyphens allowed',
+  `OFFENCE_GROUP_NAME` varchar(100) NOT NULL COMMENT 'User Friendly description Given to the group code',
+  `STATUS` int(1) NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into m_offence_group(OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('001','Departmental ','1');
+insert into m_offence_group(OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('002','Criminal ','1');
+insert into m_offence_group(OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('003','Others','1');
+
+
+
+CREATE TABLE IF NOT EXISTS `m_offence_code_group` (
+  `OFFENCE_CODE` varchar(50) NOT NULL COMMENT 'Offence Code with not spl chars and underscore only hyphens allowed',  
+  `OFFENCE_GROUP_CODE` varchar(50) NOT NULL COMMENT 'Offence group Code with not spl chars and underscore only hyphens allowed',
+  `OFFENCE_CODE_SHORT_DESC` varchar(50) NOT NULL COMMENT 'offence Code short description with not spl chars and underscore only hyphens allowed',
+  `OFFENCE_CODE_DESC` varchar(100) NOT NULL COMMENT 'offence Code description not spl chars and underscore only hyphens allowed',
+  `STATUS` int(1) NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z001','001','ABSNT','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z002','001','IRG ATT','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z003','001','LATE','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z004','001','DISOB','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z005','001','ASSLT','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z006','001','MISAPP','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z007','001','BRIBE','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z008','001','FRAUD','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z009','001','THEFT','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z010','001','CHEAT ','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z011','001','NEG DUTY','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z012','001','DMG PROP','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z013','001','DRUNK','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z014','001','RIOT','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z015','001','GAMBLE','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z016','001','ABET','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z017','001','SLEEP','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z018','001','STRIKE','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z019','001','SAFETY','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z020','002','COURT','1');
+insert into m_offence_code_group(OFFENCE_CODE,OFFENCE_GROUP_CODE, OFFENCE_GROUP_NAME,status) values('Z021','003','OTH','1');
+
+
+CREATE TABLE IF NOT EXISTS `m_outcome_group` (
+  `OFFENCE_OUTGROUP_CODE` varchar(50) NOT NULL COMMENT 'Outcome group Code with not spl chars and underscore only hyphens allowed',
+  `OFFENCE_OUTGROUP_NAME` varchar(100) NOT NULL COMMENT 'User Friendly description Given to the Outcome group code',
+  `STATUS` int(1) NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+insert into m_outcome_group(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_NAME,status) values('001','Warning','1');
+insert into m_outcome_group(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_NAME,status) values('002','Suspension','1');
+insert into m_outcome_group(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_NAME,status) values('003','Minor Penalty','1');
+insert into m_outcome_group(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_NAME,status) values('004','Major Penalty','1');
+insert into m_outcome_group(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_NAME,status) values('005','Exonerated','1');
+insert into m_outcome_group(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_NAME,status) values('006','Criminal ','1');
+
+
+CREATE TABLE IF NOT EXISTS `m_outcome_final` (
+  `OFFENCE_OUTGROUP_CODE` varchar(50) NOT NULL COMMENT 'Outcome group Code with not spl chars and underscore only hyphens allowed',
+  `OFFENCE_OUTGROUP_FINAL_CODE` varchar(50) NOT NULL COMMENT 'Outcome final code with no spl chars and underscore only hyphens allowed',
+  `OFFENCE_OUTGROUP_FINAL_DESC` varchar(100) NOT NULL COMMENT 'User Friendly description Given to the final outcome code',
+  `STATUS` int(1) NULL DEFAULT '0' COMMENT 'Record Status set values for BLOCKED, ACTIVE, INACTIVE, SUSPENDED DELETED etc, use -ve values for negetive status.',
+  `CREATED_BY` varchar(50) NOT NULL DEFAULT 'system',
+  `CREATED_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFIED_BY` varchar(50) NULL,
+  `MODIFIED_DATE` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z01','001','Sentenced/Imprisonment','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z02','001','Written warning','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z03','002','Suspension','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z04','003','Minor Penalty-Censure','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z05','003','Minor Penalty-Withholding of Promotion','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z06','003','Minor Penalty-Recovery from pay','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z07','003','Minor Penalty-Reduction to Lower Pay Scale','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z08','003','Minor Penalty-Withholding Increment with Cumulative Effect','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z09','003','Minor Penalty-Withholding Increment without Cumulative Effect','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z10','004','Major Penalty-Reduction to Lower Time Scale','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z11','004','Major Penalty-Reduction to Lower Post','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z12','004','Major Penalty-Dismissal','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z13','004','Major Penalty-Removal','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z14','004','Major Penalty-Cumpulsory Retirement','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z15','005','Exonerated','1');
+insert into m_outcome_final(OFFENCE_OUTGROUP_CODE,OFFENCE_OUTGROUP_FINAL_CODE,OFFENCE_OUTGROUP_FINAL_DESC,status) values('Z16','006','Sentenced/Imprisonment','1');
+
+
 CREATE TABLE IF NOT EXISTS `employee_appraisal_details` (
   `ROW_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `EMPLOYEE_ROW_ID` bigint(20) unsigned NOT NULL COMMENT 'FK of the Employee Table',
@@ -2613,33 +2713,34 @@ CREATE TABLE IF NOT EXISTS `m_employee_education_establishment` (
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('1','Illiterate','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('2','Under Primary(< 5)','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('3','Under Middle(5 to 7)','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('4','Under Matric(8 to 9)','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('5','Matric Pass(X pass)','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('6','Prod Siksha','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('7','Prep','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('8','Plus One','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('9','Higher Second.(Pt-1)','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('10','Senior Second.(12th)','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('11','Graduation (T)','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('12','Graduation (NT)','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('13','Post Graduation (T)','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('14','Post Graduation (NT)','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('15','I.T.I','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('16','AMIE','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('17','Diploma (T)','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('18','Diploma (NT)','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('19','Certification','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('20','Doctorate','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('21','Professional Inter','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('22','Professional Final','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('23','Intra State Training','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('24','Inter State Training','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('25','Inhouse- HPSEB Training','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('26','Foreign Training','N','1');
-insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,STATUS) values('27','Departmental Exam','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('1','Illiterate','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('2','Under Primary(< 5)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('3','Under Middle(5 to 7)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('4','Under Matric(8 to 9)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('5','Matric Pass(X pass)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('6','Prod Siksha','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('7','Prep','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('8','Plus One','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('9','Higher Second.(Pt-1)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('10','Senior Second.(12th)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('11','Graduation (T)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('12','Graduation (NT)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('13','Post Graduation (T)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('14','Post Graduation (NT)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('15','I.T.I','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('16','AMIE','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('17','Diploma (T)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('18','Diploma (NT)','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('19','Certification','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('20','Doctorate','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('21','Professional Inter','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('22','Professional Final','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('23','Intra State Training','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('24','Inter State Training','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('25','Inhouse- HPSEB Training','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('26','Foreign Training','N','1');
+insert into m_employee_education_establishment(QUALIFICATION_LEVEL, QUALIFICATION_DESC, Course,status) values('27','Departmental Exam','N','1');
+
 
 
 
@@ -2654,76 +2755,74 @@ CREATE TABLE IF NOT EXISTS `m_employee_education_certificate` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('0','Illiterate','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('1','II Std','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('2','III Std','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('3','IV Std','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('4','V Std','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('5','VI Std','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('6','VII Std','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('7','VIII Std','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('8','IX Std','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('9','I.C.S.E Board','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('10','C.B.S.E Board','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('11','State Board','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('12','Others','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('13','College/University','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('14','AMIE(Technical)','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('15','B Tech','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('16','B Tech (H)','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('17','BE','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('18','BE (H)','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('19','B Arch','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('20','BSC Engg','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('21','BSC Engg (H)','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('22','BS','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('23','B Com','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('24','B Ed','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('25','B Pharm','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('26','BA','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('27','BA (H)','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('28','BBA','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('29','BSC','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('30','BSC (H)','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('31','LLB','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('32','BIT','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('33','B Com ','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('34','B Com (H)','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('35','M Tech','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('36','ME','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('37','MS','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('38','MSC Engg','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('39','MSC','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('40','M COM','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('41','M Pharmacy','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('42','M Phil','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('43','M PM&IR','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('44','M M S','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('45','MA','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('46','MBA','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('47','MCA','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('48','PGDBA','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('49','PGDCA','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('50','PGDM','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('51','PGDIM','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('52','PGHRM','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('53','NTC','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('54','Graduate Diploma','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('55','PG Diploma','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('56','Graduate','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('57','Post Graduate','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('58','Certificate Course','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('59','Ph. D','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('60','CA','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('61','CS','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('62','ICWA','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('63','CFA','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('64','Self Fin Cert.','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('65','Sponsored Cert.','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('66','Departmental Ex Passed','1');
-insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,STATUS) values('67','Departmental Ex Failed','1');
-
-
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('0','Illiterate','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('1','II Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('2','III Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('3','IV Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('4','V Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('5','VI Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('6','VII Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('7','VIII Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('8','IX Std','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('9','I.C.S.E Board','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('10','C.B.S.E Board','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('11','State Board','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('12','Others','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('13','College/University','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('14','AMIE(Technical)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('15','B Tech','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('16','B Tech (H)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('17','BE','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('18','BE (H)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('19','B Arch','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('20','BSC Engg','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('21','BSC Engg (H)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('22','BS','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('23','B Com','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('24','B Ed','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('25','B Pharm','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('26','BA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('27','BA (H)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('28','BBA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('29','BSC','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('30','BSC (H)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('31','LLB','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('32','BIT','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('33','B Com ','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('34','B Com (H)','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('35','M Tech','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('36','ME','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('37','MS','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('38','MSC Engg','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('39','MSC','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('40','M COM','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('41','M Pharmacy','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('42','M Phil','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('43','M PM&IR','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('44','M M S','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('45','MA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('46','MBA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('47','MCA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('48','PGDBA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('49','PGDCA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('50','PGDM','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('51','PGDIM','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('52','PGHRM','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('53','NTC','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('54','Graduate Diploma','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('55','PG Diploma','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('56','Graduate','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('57','Post Graduate','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('58','Certificate Course','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('59','Ph. D','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('60','CA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('61','CS','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('62','ICWA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('63','CFA','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('64','Self Fin Cert.','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('65','Sponsored Cert.','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('66','Departmental Ex Passed','1');
+insert into m_employee_education_certificate(CERTIFICATE_CODE, CERTIFICATE_DESC,status) values('67','Departmental Ex Failed','1');
 
 
 CREATE TABLE IF NOT EXISTS `m_employee_education_code_certificate` (
