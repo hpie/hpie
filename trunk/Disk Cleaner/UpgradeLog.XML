@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Junk Cleaner">
+</Property><Property Name="Solution File" Value="C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Junk Cleaner.sln">
+</Property><Property Name="Date" Value="June-12-10">
+</Property><Property Name="Time" Value="22:46:00 PM">
+</Property></Properties><Event ErrorLevel="0" Project="Junk Cleaner" Source="Junk Cleaner.csproj" Description="Project file successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Junk Cleaner.csproj">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Analyze.cs" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Analyze.cs">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Analyze.Designer.cs" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Analyze.Designer.cs">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Main.cs" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Main.cs">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Main.Designer.cs" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Main.Designer.cs">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Options.cs" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Options.cs">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Options.Designer.cs" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Options.Designer.cs">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Program.cs" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Program.cs">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Properties\AssemblyInfo.cs" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Properties\Resources.Designer.cs" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Properties\Resources.Designer.cs">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Properties\Settings.Designer.cs" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Properties\Settings.Designer.cs">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Properties\Settings.settings" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Properties\Settings.settings">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Analyze.resx" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Analyze.resx">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Main.resx" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Main.resx">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Properties\Resources.resx" Description="File successfully backed up as C:\Users\Nick\Documents\Visual Studio 2010\Projects\Little Disk Cleaner\Junk Cleaner\Backup\Properties\Resources.resx">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Junk Cleaner.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Junk Cleaner" Source="Junk Cleaner.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Junk Cleaner" Source="Junk Cleaner.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>
