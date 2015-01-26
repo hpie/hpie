@@ -181,7 +181,6 @@ if(isset($_POST['submitted']))
             size="40" 
             id="ADDRESS_LINE_2"  name="ADDRESS_LINE_2"
             data-validation-help="Please enter Address line 2" 
-            data-validation="required" 
             data-validation-error-msg="Address line 2 is required"/>
         </li>
 		<li>
@@ -217,7 +216,7 @@ if(isset($_POST['submitted']))
         </li>
 		<li>
         	<label for="ADDRESS_COUNTRY_CODE">ADDRESS COUNTRY CODE:</label>
-            <?php echo($common->getCddressCountryCodeList("")); ?>
+            <?php echo($common->getAddressCountryCodeList("")); ?>
         </li>    
         <li>
         	<label for="ADDRESS_PHONE_NO">ADDRESS PHONE NO:</label>
@@ -240,8 +239,8 @@ if(isset($_POST['submitted']))
             <input type="text" 
             size="10" 
             id="ADDRESS_END_DT" name="ADDRESS_END_DT"
-            data-validation-help="Please enter START DATE" 
-            data-validation-error-msg="Telephone Number is required"/>
+            data-validation-help="Please enter end date" 
+            data-validation-error-msg="End date is required"/>
 		</li>
 	</ul>
 	
@@ -304,14 +303,16 @@ if(isset($_POST['submitted']))
         	<label for="ADDRESS_CARE_OF">ADDRESS CARE OF:</label>
             <input type="text" 
             size="40" 
-            id="ADDRESS_CARE_OF" name="ADDRESS_CARE_OF" value="<?php echo($address['ADDRESS_CARE_OF']);?>" 
+            id="ADDRESS_CARE_OF" name="ADDRESS_CARE_OF" 
+            value="<?php echo($address['ADDRESS_CARE_OF']);?>" 
             data-validation-help="Please enter address c/o" 
             data-validation-error-msg="Address c/o is required"/>
         </li>
 		<li>
         	<label for="ADDRESS_LINE_1">ADDRESS LINE 1:</label>
             <input type="text" 
-            size="60" id="ADDRESS_LINE_1" name="ADDRESS_LINE_1" value="<?php echo($address['ADDRESS_LINE_1']);?>"
+            size="60" id="ADDRESS_LINE_1" name="ADDRESS_LINE_1" 
+            value="<?php echo($address['ADDRESS_LINE_1']);?>"
             data-validation-help="Please enter address line 1" 
             data-validation="required" 
             data-validation-error-msg="Address line 1 is required"/>
@@ -320,9 +321,9 @@ if(isset($_POST['submitted']))
         	<label for="ADDRESS_LINE_2">ADDRESS LINE 2:</label>
             <input type="text" 
             size="40" 
-            id="ADDRESS_LINE_2"  name="ADDRESS_LINE_2" value="<?php echo($address['ADDRESS_LINE_2']);?>"
+            id="ADDRESS_LINE_2"  name="ADDRESS_LINE_2" 
+            value="<?php echo($address['ADDRESS_LINE_2']);?>"
             data-validation-help="Please enter address line 2" 
-            data-validation="required" 
             data-validation-error-msg="Address line 2 is required"/>
         </li>
 		<li>
@@ -330,7 +331,7 @@ if(isset($_POST['submitted']))
             <input type="text" 
             size="10" 
             id="ADDRESS_POSTAL_CODE" name="ADDRESS_POSTAL_CODE" 
-            value="<?php echo($address['ADDRESS_LINE_2']);?>"
+            value="<?php echo($address['ADDRESS_POSTAL_CODE']);?>"
             data-validation-help="Please enter address postal code" 
             data-validation="required" 
             data-validation-error-msg="Address postal code is required"/>
@@ -357,8 +358,7 @@ if(isset($_POST['submitted']))
 		</li>
         <li>
             <label for="ADDRESS_REGION_CODE">ADDRESS REGION CODE:</label>
-             <id="ADDRESS_TYPE_CODE" name="ADDRESS_REGION_CODE" />
-             <?php echo($common->getRegionList($address['ADDRESS_REGION_CODE'])); ?>
+            <?php echo($common->getRegionList($address['ADDRESS_REGION_CODE'])); ?>
          </li>
 		<li>
         	<label for="ADDRESS_COUNTRY_CODE">ADDRESS COUNTRY CODE:</label>
@@ -371,7 +371,6 @@ if(isset($_POST['submitted']))
             id="ADDRESS_PHONE_NO" name="ADDRESS_PHONE_NO" 
             value="<?php echo($address['ADDRESS_PHONE_NO']);?>"
             data-validation-help="Please enter address phone number" 
-            data-validation="required" 
             data-validation-error-msg="Address phone number is required"/>
         </li>
 		<li>
@@ -381,7 +380,6 @@ if(isset($_POST['submitted']))
             id="ADDRESS_BEGIN_DT" name="ADDRESS_BEGIN_DT"
             value="<?php echo($address['ADDRESS_BEGIN_DT']);?>"
             data-validation-help="Please enter address begin date" 
-            data-validation="required" 
             data-validation-error-msg="Address begin date is required"/>
   		</li>
 		<li>
@@ -480,6 +478,7 @@ if(isset($_POST['submitted']))
 								<input name="status_cd" type="hidden" value="<?php echo($employee_address['STATUS']);?>" />
 								<input name="rowid" type="hidden" value="<?php echo($employee_address['ROW_ID']);?>" />
 								<input name="empid" type="hidden" value="<?php echo($employee_address['EMPLOYEE_ROW_ID']);?>" />
+								<input name="modified_by" type="hidden" id="modified_by" value="<?php echo($_SESSION['userid'])?>" />
 								<input name="submitted" type="hidden" id="submitted" value="1"/>
 					</form>
 					</td> </tr>
