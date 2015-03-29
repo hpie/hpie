@@ -1,0 +1,96 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title></title>
+    <link href="../Styles/Site.css" rel="stylesheet" type="text/css" />
+
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body>
+
+    <form runat="server">
+    <div class="page">
+        <div class="header">
+           
+            <div class="loginDisplay">
+                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                    <AnonymousTemplate>
+                        [ <a href="~/Account/Login.aspx" ID="HeadLoginStatus" runat="server">Log In</a> ]
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Welcome <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>!
+                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out" LogoutPageUrl="~/"/> ]
+                    </LoggedInTemplate>
+                </asp:LoginView>
+            </div>
+            <div class="clear hideSkiplink">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">
+                    <Items>
+                        <asp:MenuItem NavigateUrl="~/admin/Default.aspx" Text="Add New Center" 
+                            Value="Add New Center"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/admin/reportcard_all.aspx" Text="Report Card" 
+                            Value="Report Card"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/admin/cen_categ_wise_detail.aspx" 
+                            Text="Center Wise Report Card" Value="Center Wise Report Card">
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="View" Value="View" 
+                            ImageUrl="~/admin/images/arrow-down-icon.png">
+                            <asp:MenuItem NavigateUrl="~/admin/center_details.aspx" Text="Center Detail" 
+                                Value="Center Detail"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/admin/batch_status.aspx" Text="Batch Status" 
+                                Value="Batch Status"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/admin/Details.aspx" Text="Student Detail" 
+                                Value="Students Detail"></asp:MenuItem>
+                            <asp:MenuItem Text="Attendace Sheet" Value="Attendace Sheet" 
+                                NavigateUrl="~/admin/AttendanceSheet.aspx"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/admin/monthly_atten.aspx" 
+                                Text="Monthly Attendance Report" Value="Monthly Attendance Sheet">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/admin/marks_detail_view.aspx" Text="Marks Detail" 
+                                Value="Marks Detail"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/admin/marks_detail.aspx" Text="Marks Edit/Delete" 
+                                Value="Marks Edit/Delete"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/admin/placement_view.aspx" Text="Placement" 
+                                Value="Placement"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/admin/support_visit_view.aspx" 
+                                Text="Support Visit Report" Value="Support Visit Report"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/admin/add_items.aspx" Text="Settings" 
+                            Value="Settings" ImageUrl="~/admin/images/arrow-down-icon.png">
+                            <asp:MenuItem NavigateUrl="~/admin/Add City.aspx" Text="Add new City" 
+                                Value="Add new City"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/admin/bank_details.aspx" Text="Add New Bank Name" 
+                                Value="Add New Bank Name"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/admin/add_items.aspx" Text="Add new Project" 
+                                Value="Add new Project"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/admin/addCourse.aspx" Text="Add Course" 
+                                Value="Add Course"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/admin/tracking_detail.aspx" 
+                            Text="Student Tracking" Value="Student Tracking"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/admin/Monthly_Stipend.aspx" 
+                            Text="Monthly Stipend " Value="Monthly Stipend "></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/admin/upload.aspx" Text="Upload Files" 
+                            Value="Upload Files"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/admin/user.aspx" Text="User Details" 
+                            Value="User Details"></asp:MenuItem>
+                    </Items>
+                </asp:Menu>
+            </div>
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+        
+    </div>
+    </form>
+</body>
+</html>
