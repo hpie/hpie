@@ -1,0 +1,129 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title></title>
+    <link href="../Styles/Site.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+    
+</head>
+
+<body>
+
+    <form runat="server">
+    <div class="page">
+        <div class="header">
+          
+            <div class="loginDisplay">
+                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                    <AnonymousTemplate>
+                        [ <a href="~/Account/Login.aspx" ID="HeadLoginStatus" runat="server">Log In</a> ]
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Welcome <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>!
+                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out" LogoutPageUrl="~/"/> ]
+                    </LoggedInTemplate>
+                </asp:LoginView>
+            </div>
+            <div class="clear hideSkiplink">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" 
+                    EnableViewState="False" IncludeStyleBlock="False" Orientation="Horizontal" 
+                    Height="40px" Font-Size="12pt">
+                    <DynamicHoverStyle Height="40px" />
+                    <DynamicMenuItemStyle Height="40px" />
+                    <DynamicMenuStyle Height="40px" />
+                    <DynamicSelectedStyle Height="40px" />
+                  
+                    <DynamicItemTemplate>
+                        <%# Eval("Text") %>
+                    </DynamicItemTemplate>
+                  
+                    <Items>
+                        <asp:MenuItem NavigateUrl="~/user/Default.aspx" Text="Add New Student" />
+                        <asp:MenuItem NavigateUrl="~/user/training_status.aspx" 
+                            Text="Update Student Status" Value="Update Student Status"></asp:MenuItem>
+                        <asp:MenuItem Text="View/Upload/Download" 
+                            ImageUrl="~/user/images/arrow-down-icon.png" Value="View">
+                            <asp:MenuItem NavigateUrl="~/user/Details.aspx" Text="Student Details" 
+                                Value="Student Details"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/user/batch_status.aspx" Text="Batch Status" 
+                                Value="Batch Status"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/user/Download.aspx" Text="Download" 
+                                Value="Download"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/user/atten_upload.aspx" 
+                                Text="Upload Attendance Sheet" Value="Upload Attendance Sheet">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/user/AttendanceSheet.aspx" 
+                                Text="View Attendance Sheet" Value="View Attendance Sheet"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem ImageUrl="~/user/images/arrow-down-icon.png" 
+                            Text="Monthly Attendence Report" Value="Monthly Attendence Report">
+                            <asp:MenuItem NavigateUrl="~/user/monthly_atten.aspx" Text="Add" Value="Add">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/user/monthly_atten_view.aspx" Text="View" 
+                                Value="View"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Marks" 
+                            Value="Marks" ImageUrl="~/user/images/arrow-down-icon.png">
+                            <asp:MenuItem NavigateUrl="~/user/marks_detail.aspx" Text="ADD" Value="ADD">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/user/marks_detail_view.aspx" Text="View" 
+                                Value="View"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Placements" Value="Placements" 
+                            ImageUrl="~/user/images/arrow-down-icon.png">
+                            <asp:MenuItem NavigateUrl="~/user/placement.aspx" Text="Add Detail" 
+                                Value="Add Detail"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/user/placement_view.aspx" Text="View" Value="View">
+                            </asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem ImageUrl="~/user/images/arrow-down-icon.png" Text="Suport Visit" 
+                            Value="Suport Visit">
+                            <asp:MenuItem NavigateUrl="~/user/support_visit_view.aspx" Text="View" 
+                                Value="View"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem ImageUrl="~/user/images/arrow-down-icon.png" 
+                            Text="Student Tracking" Value="Student Tracking">
+                            <asp:MenuItem NavigateUrl="~/user/tracking.aspx" Text="Add Details" 
+                                Value="Add Details"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/user/tracking_detail.aspx" Text="View Details" 
+                                Value="View Details"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Monthly Stipend " 
+                            Value="Monthly Stipend " ImageUrl="~/user/images/arrow-down-icon.png">
+                            <asp:MenuItem NavigateUrl="~/user/Monthly_Stipend.aspx" Text="Add" Value="Add">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/user/Monthly_Stipend_view.aspx" Text="View" 
+                                Value="View"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/user/profile.aspx" Text="Profile" Value="Profile">
+                        </asp:MenuItem>
+                    </Items>
+                    <StaticHoverStyle Height="40px" />
+                    <StaticMenuItemStyle Height="40px" Font-Size="9pt" />
+                    <StaticMenuStyle Height="40px" />
+                    <StaticSelectedStyle Height="40px" Font-Size="9pt" />
+                </asp:Menu>
+                <asp:SqlDataSource ID="SqlDataSource_sess" runat="server" 
+                    ConnectionString="<%$ ConnectionStrings:hpieConnectionString %>" 
+                    SelectCommand="SELECT * FROM [login] where un=@un">
+                    <SelectParameters>
+                        <asp:Parameter Name="un" />
+                    </SelectParameters>
+                </asp:SqlDataSource>
+            </div>
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+        
+    </div>
+    </form>
+</body>
+</html>
