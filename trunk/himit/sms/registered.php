@@ -27,13 +27,13 @@ session_start();
     
     <?php
 	if($_SESSION['id'])
-	echo '<h1>Hello, '.$_SESSION['usr'].'! You are registered and logged in!</h1>';
+	echo '<h1>Hello, '.$_SESSION['user'].'! You are registered and logged in!</h1>';
 	else echo '<h1>Please, <a href="index.php">login</a> and come back later!</h1>';
     ?>
     </div>
     
   <div class="container tutorial-info">
-  This is a Himit Test Page. View the <a href="http://himit.in/" target="_blank">Him IT</a>, or the <a href="http://sms.himit.in/">SMS site</a>.    </div>
+  This is a Himit Test Page. View the <a href="http://himit.in/" target="_blank">HIM IT</a>, or the <a href="http://sms.himit.in/">SMS site</a>.    </div>
 </div>
 
 
