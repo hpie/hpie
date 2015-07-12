@@ -1,0 +1,19 @@
+<?php
+	define('INCLUDE_CHECK',true);
+	require '../connect.php';
+	session_name('smsLogin');
+	// Starting the session
+	session_start();
+	
+$id = intval($_REQUEST['id']);
+
+include 'conn.php';
+
+$sql = "delete from my_account_contact_groups where ROW_ID=$id";
+$result = @mysql_query($sql);
+if ($result){
+	echo json_encode(array('success'=>true));
+} else {
+	echo json_encode(array('errorMsg'=>'Some errors occured.'));
+}
+?>
