@@ -53,6 +53,11 @@
         onselectedindexchanged="GridView1_SelectedIndexChanged" 
         onrowdatabound="GridView1_RowDataBound">
         <Columns>
+           <asp:TemplateField HeaderText="Sr. No.">   
+              <ItemTemplate>
+                   <%# Container.DataItemIndex + 1 %>   
+              </ItemTemplate>
+            </asp:TemplateField>
             <asp:BoundField DataField="center_code_main" HeaderText="Center Code" 
                 SortExpression="center_code_main" />
             <asp:BoundField DataField="name" HeaderText="Name" SortExpression="name" />

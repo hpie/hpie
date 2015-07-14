@@ -40,13 +40,15 @@ public partial class profile2 : System.Web.UI.Page
     }
     protected void DataList1_UpdateCommand(object source, DataListCommandEventArgs e)
     {
-        string name, website, address, ph, std;
-
+        string email, name, website, address, ph, std;
+        email = ((TextBox)(e.Item.FindControl("txt1"))).Text;
         name = ((TextBox)(e.Item.FindControl("txt2"))).Text;
         website = ((TextBox)(e.Item.FindControl("txt3"))).Text;
         address = ((TextBox)(e.Item.FindControl("txt4"))).Text;
         ph = ((TextBox)(e.Item.FindControl("txt5"))).Text;
         std = ((TextBox)(e.Item.FindControl("std"))).Text;
+
+        SqlDataSource1.UpdateParameters["cemail"].DefaultValue = email;
         SqlDataSource1.UpdateParameters["name"].DefaultValue = name;
         SqlDataSource1.UpdateParameters["website"].DefaultValue = website;
         SqlDataSource1.UpdateParameters["address"].DefaultValue = address;

@@ -193,13 +193,22 @@
                     </td>
                 </tr>
                 <tr>
-                    <td rowspan="4">
+                    <td rowspan="5">
                         &nbsp;</td>
                     <td class="style35">
                         Student ID</td>
                     <td>
                         <asp:TextBox ID="s_id" runat="server" CssClass="ttxt" ReadOnly="True" 
                             Text='<%# Eval("s_id_main") %>'></asp:TextBox>
+                    </td>
+                    <td colspan="2"> </td>
+                </tr>
+                <tr>
+                    <td class="style35">
+                        Student Registration Number </td>
+                    <td>
+                        <asp:TextBox ID="s_regno" runat="server" CssClass="ttxt" 
+                            Text='<%# Eval("s_regno") %>'></asp:TextBox>
                     </td>
                     <td colspan="2">
                         <strong>Correspondent<br />-----------------------------------------------------------------------------------</strong></td>
@@ -643,6 +652,14 @@
                             </tr>
                             <tr>
                                 <td class="style29">
+                                    Aadhar Number</td>
+                                <td>
+                                    <asp:TextBox ID="aadhar_no" runat="server" CssClass="ttxt" 
+                                        Text='<%# Eval("aadhar_no") %>'></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="style29">
                                     Annual Income</td>
                                 <td>
                                     <asp:TextBox ID="ann_inc" runat="server" CssClass="ttxt" 
@@ -924,6 +941,13 @@
                 </tr>
                 <tr>
                     <td class="style2" colspan="2">
+                        Student Registration Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <asp:Label ID="s_regno" runat="server" ReadOnly="True" 
+                            Text='<%# Eval("s_regno") %>'></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="style2" colspan="2">
                         Student Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <asp:Label ID="s_name" runat="server" Text='<%# Eval("s_name") %>'></asp:Label>
                         -<asp:Label ID="Label6" runat="server" Text='<%# Eval("s_name2") %>'></asp:Label>
@@ -1183,6 +1207,14 @@
                             </tr>
                             <tr>
                                 <td>
+                                    Aadhar Number
+                                </td>
+                                <td>
+                                    <asp:Label ID="aadhar_no" runat="server" Text='<%# Eval("aadhar_no") %>'></asp:Label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     Annual Income</td>
                                 <td>
                                     <asp:Label ID="gen7" runat="server" Text='<%# Eval("an_income") %>'></asp:Label>
@@ -1359,20 +1391,21 @@
         
         
         
-    SelectCommand="SELECT dbo.student_detail.course, student_detail.code, student_detail.s_id, student_detail.s_name, student_detail.s_f_name, student_detail.dob, student_detail.gen, student_detail.email, student_detail.landline, student_detail.mobile, student_detail.addr, student_detail.state, student_detail.p_code, student_detail.degree, student_detail.quli, student_detail.an_income, student_detail.social_status, student_detail.phy_chall, student_detail.bank_ac, student_detail.bank_name, student_detail.ifsc_code, student_detail.bpl_irdp_no, student_detail.center_code, student_detail.p_addr, student_detail.p_state, student_detail.p_p_code, student_detail.s_id_main, student_detail.img, student_detail.project_code, city.city, distt.distt, distt_1.distt AS distt2, city_1.city AS city2, student_detail.date_of_add, course_detail.course_name, project.project_name, student_detail.tr_date, student_detail.tr_com_date, student_detail.tr_status, student_detail.s_name2, student_detail.s_name3, student_detail.f_name2, student_detail.f_name3, student_detail.m_status, student_detail.addr2, student_detail.addr3, student_detail.travel, student_detail.other_inc, student_detail.tot_inc, student_detail.age, student_detail.SSC_Sub, student_detail.SSC_Yr, student_detail.SSC_Per, student_detail.HSC_Sub, student_detail.HSC_Yr, student_detail.HSC_Per, student_detail.Gra_Sub, student_detail.Gra_Yr, student_detail.Gra_Per, student_detail.Post_Gra_Sub, student_detail.Post_Gra_Yr, student_detail.Post_Gra_Per, student_detail.complevel, student_detail.std_code, student_detail.per_corres_same, student_detail.sub_date, student_detail.p_addr2, student_detail.p_addr3, city.code AS Expr1 FROM student_detail INNER JOIN city ON student_detail.city = city.code INNER JOIN distt ON student_detail.distt = distt.code INNER JOIN city AS city_1 ON student_detail.p_city = city_1.code INNER JOIN distt AS distt_1 ON student_detail.p_distt = distt_1.code INNER JOIN course_detail ON student_detail.course = course_detail.code INNER JOIN project ON student_detail.project_code = project.code WHERE (student_detail.s_id_main = @s_id_main) and (student_detail.center_code=@code)" 
+    SelectCommand="SELECT dbo.student_detail.course, student_detail.code, student_detail.s_id, student_detail.s_regno, student_detail.s_name, student_detail.s_f_name, student_detail.dob, student_detail.gen, student_detail.email, student_detail.landline, student_detail.mobile, student_detail.addr, student_detail.state, student_detail.p_code, student_detail.degree, student_detail.quli, student_detail.an_income, student_detail.social_status, student_detail.phy_chall, student_detail.bank_ac, student_detail.bank_name, student_detail.ifsc_code, student_detail.bpl_irdp_no, student_detail.aadhar_no, student_detail.center_code, student_detail.p_addr, student_detail.p_state, student_detail.p_p_code, student_detail.s_id_main, student_detail.img, student_detail.project_code, city.city, distt.distt, distt_1.distt AS distt2, city_1.city AS city2, student_detail.date_of_add, course_detail.course_name, project.project_name, student_detail.tr_date, student_detail.tr_com_date, student_detail.tr_status, student_detail.s_name2, student_detail.s_name3, student_detail.f_name2, student_detail.f_name3, student_detail.m_status, student_detail.addr2, student_detail.addr3, student_detail.travel, student_detail.other_inc, student_detail.tot_inc, student_detail.age, student_detail.SSC_Sub, student_detail.SSC_Yr, student_detail.SSC_Per, student_detail.HSC_Sub, student_detail.HSC_Yr, student_detail.HSC_Per, student_detail.Gra_Sub, student_detail.Gra_Yr, student_detail.Gra_Per, student_detail.Post_Gra_Sub, student_detail.Post_Gra_Yr, student_detail.Post_Gra_Per, student_detail.complevel, student_detail.std_code, student_detail.per_corres_same, student_detail.sub_date, student_detail.p_addr2, student_detail.p_addr3, city.code AS Expr1 FROM student_detail INNER JOIN city ON student_detail.city = city.code INNER JOIN distt ON student_detail.distt = distt.code INNER JOIN city AS city_1 ON student_detail.p_city = city_1.code INNER JOIN distt AS distt_1 ON student_detail.p_distt = distt_1.code INNER JOIN course_detail ON student_detail.course = course_detail.code INNER JOIN project ON student_detail.project_code = project.code WHERE (student_detail.s_id_main = @s_id_main) and (student_detail.center_code=@code)" 
     
         
         
         
         
         
-        UpdateCommand="UPDATE student_detail SET s_name = @s_name, s_f_name = @s_f_name, dob = @dob, gen = @gen, email = @email, landline = @landline, mobile = @mobile, addr = @addr, city = @city, distt = @distt, state = @state, p_code = @p_code, degree = @degree, quli = @quli, an_income = @an_income, social_status = @social_status, phy_chall = @phy_chall, bank_ac = @bank_ac, bank_name = @bank_name, ifsc_code = @ifsc_code, bpl_irdp_no = @bpl_irdp_no, p_addr = @p_addr, p_city = @p_city, p_distt = @p_distt, p_state = @p_state, p_p_code = @p_p_code, img = @img, course = @course, date_of_add = @date_of_add, project_code = @project_code, tr_date = @tr_date, tr_com_date = @tr_com_date, s_name2 = @s_name2, s_name3 = @s_name3, f_name2 = @f_name2, f_name3 = @f_name3, m_status = @m_status, addr2 = @addr2, addr3 = @addr3, travel = @travel, other_inc = @other_inc, tot_inc = @tot_inc, age = @age, SSC_Sub = @SSC_Sub, SSC_Yr = @SSC_Yr, SSC_Per = @SSC_Per, HSC_Sub = @HSC_Sub, HSC_Yr = @HSC_Yr, HSC_Per = @HSC_Per, Gra_Sub = @Gra_Sub, Gra_Yr = @Gra_Yr, Gra_Per = @Gra_Per, Post_Gra_Sub = @Post_Gra_Sub, Post_Gra_Yr = @Post_Gra_Yr, Post_Gra_Per = @Post_Gra_Per, std_code = @std_code, per_corres_same = @per_corres_same, p_addr2 =@p_addr2, p_addr3 =@p_addr3 WHERE (s_id_main = @main)">
+        UpdateCommand="UPDATE student_detail SET s_regno = @s_regno, s_name = @s_name, s_f_name = @s_f_name, dob = @dob, gen = @gen, email = @email, landline = @landline, mobile = @mobile, addr = @addr, city = @city, distt = @distt, state = @state, p_code = @p_code, degree = @degree, quli = @quli, an_income = @an_income, social_status = @social_status, phy_chall = @phy_chall, bank_ac = @bank_ac, bank_name = @bank_name, ifsc_code = @ifsc_code, bpl_irdp_no = @bpl_irdp_no, aadhar_no = @aadhar_no, p_addr = @p_addr, p_city = @p_city, p_distt = @p_distt, p_state = @p_state, p_p_code = @p_p_code, img = @img, course = @course, date_of_add = @date_of_add, project_code = @project_code, tr_date = @tr_date, tr_com_date = @tr_com_date, s_name2 = @s_name2, s_name3 = @s_name3, f_name2 = @f_name2, f_name3 = @f_name3, m_status = @m_status, addr2 = @addr2, addr3 = @addr3, travel = @travel, other_inc = @other_inc, tot_inc = @tot_inc, age = @age, SSC_Sub = @SSC_Sub, SSC_Yr = @SSC_Yr, SSC_Per = @SSC_Per, HSC_Sub = @HSC_Sub, HSC_Yr = @HSC_Yr, HSC_Per = @HSC_Per, Gra_Sub = @Gra_Sub, Gra_Yr = @Gra_Yr, Gra_Per = @Gra_Per, Post_Gra_Sub = @Post_Gra_Sub, Post_Gra_Yr = @Post_Gra_Yr, Post_Gra_Per = @Post_Gra_Per, std_code = @std_code, per_corres_same = @per_corres_same, p_addr2 =@p_addr2, p_addr3 =@p_addr3 WHERE (s_id_main = @main)">
         <SelectParameters>
             <asp:QueryStringParameter Name="s_id_main" QueryStringField="sid" 
                 Type="String" />
             <asp:SessionParameter Name="code" SessionField="start_a" />
         </SelectParameters>
         <UpdateParameters>
+            <asp:Parameter Name="s_regno" />
             <asp:Parameter Name="s_name" />
             <asp:Parameter Name="s_f_name" />
             <asp:Parameter Name="dob" />
@@ -1394,6 +1427,7 @@
             <asp:Parameter Name="bank_name" />
             <asp:Parameter Name="ifsc_code" />
             <asp:Parameter Name="bpl_irdp_no" />
+            <asp:Parameter Name="aadhar_no" />
           
             <asp:Parameter Name="p_addr" />
             <asp:Parameter Name="p_city" />

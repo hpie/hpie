@@ -160,6 +160,7 @@ public partial class user_details_1 : System.Web.UI.Page
 
             }
 
+            SqlDataSource1.UpdateParameters["s_regno"].DefaultValue = ((TextBox)(e.Item.FindControl("s_regno"))).Text;
             SqlDataSource1.UpdateParameters["s_name"].DefaultValue = ((TextBox)(e.Item.FindControl("s_name"))).Text;
             SqlDataSource1.UpdateParameters["s_f_name"].DefaultValue = ((TextBox)(e.Item.FindControl("s_f_name"))).Text;
             SqlDataSource1.UpdateParameters["dob"].DefaultValue = ((TextBox)(e.Item.FindControl("dob"))).Text;
@@ -181,6 +182,7 @@ public partial class user_details_1 : System.Web.UI.Page
             SqlDataSource1.UpdateParameters["bank_name"].DefaultValue = ((DropDownList)(e.Item.FindControl("DropDownList1"))).SelectedValue;
             SqlDataSource1.UpdateParameters["ifsc_code"].DefaultValue = ((TextBox)(e.Item.FindControl("ifsc_code"))).Text;
             SqlDataSource1.UpdateParameters["bpl_irdp_no"].DefaultValue = ((TextBox)(e.Item.FindControl("bpl_irdp"))).Text;
+            SqlDataSource1.UpdateParameters["aadhar_no"].DefaultValue = ((TextBox)(e.Item.FindControl("aadhar_no"))).Text;
 
             SqlDataSource1.UpdateParameters["p_addr"].DefaultValue = ((TextBox)(e.Item.FindControl("p_addr"))).Text;
             SqlDataSource1.UpdateParameters["p_city"].DefaultValue = ((DropDownList)(e.Item.FindControl("DropDownList6"))).SelectedValue;

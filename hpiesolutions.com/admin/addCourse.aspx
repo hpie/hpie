@@ -39,14 +39,62 @@
              </td>
              <td rowspan="5" valign="top">
                  <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
-                     DataSourceID="SqlDataSource1" DataKeyNames="code">
+                     DataSourceID="SqlDataSource1" DataKeyNames="code"
+                     onrowupdating="GridView1_RowUpdating">
                      <Columns>
-                         <asp:BoundField DataField="course_name" HeaderText="Course Name" 
-                             SortExpression="course_name" />
-                         <asp:BoundField DataField="period" HeaderText="Duration" 
-                             SortExpression="period" />
-                         <asp:BoundField DataField="min_qui" HeaderText="Minimum Qualification" 
-                             SortExpression="min_qui" />
+                         <asp:TemplateField HeaderText="Sr. No.">   
+                            <ItemTemplate>
+                                <%# Container.DataItemIndex + 1 %>   
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                         <asp:TemplateField HeaderText="Course Name" SortExpression="course_name">
+                             <EditItemTemplate>
+                                 <asp:TextBox ID="sub" runat="server" Text='<%# Bind("course_name") %>'></asp:TextBox>
+                             </EditItemTemplate>
+                             <ItemTemplate>
+                                 <asp:Label ID="sub" runat="server" Text='<%# Bind("course_name") %>'></asp:Label>
+                             </ItemTemplate>
+                         </asp:TemplateField>
+
+                         <asp:TemplateField HeaderText="Duration" SortExpression="period">
+                             <EditItemTemplate>
+                                 <asp:DropDownList ID="coursePeriod" runat="server" 
+                                     SelectedValue='<%# Bind("period") %>'>
+                                    <asp:ListItem>1 Year</asp:ListItem>
+                                    <asp:ListItem>8 Months</asp:ListItem>
+                                    <asp:ListItem>6 Months</asp:ListItem>
+                                    <asp:ListItem>4 Months</asp:ListItem>
+                                    <asp:ListItem>3 Months</asp:ListItem>
+                                    <asp:ListItem>2 Months</asp:ListItem>
+                                    <asp:ListItem>1 Month</asp:ListItem>
+                                    <asp:ListItem>45 Days</asp:ListItem>
+                                    <asp:ListItem>15 Days</asp:ListItem>
+                                    <asp:ListItem>1 Week</asp:ListItem>
+                                     <asp:ListItem Selected="True"></asp:ListItem>
+                                 </asp:DropDownList>
+                             </EditItemTemplate>
+                             <ItemTemplate>
+                                 <asp:Label ID="Label1" runat="server" Text='<%# Bind("period") %>'></asp:Label>
+                             </ItemTemplate>
+                         </asp:TemplateField>
+                         
+                         <asp:TemplateField HeaderText="Duration" SortExpression="min_qui">
+                             <EditItemTemplate>
+                                 <asp:DropDownList ID="courseQualification" runat="server" 
+                                     SelectedValue='<%# Bind("min_qui") %>'>
+                                     <asp:ListItem>Matric</asp:ListItem>
+                                     <asp:ListItem>10+1</asp:ListItem>
+                                     <asp:ListItem>10+2</asp:ListItem>
+                                     <asp:ListItem>Graduation</asp:ListItem>
+                                     <asp:ListItem Selected="True"></asp:ListItem>
+                                 </asp:DropDownList>
+                             </EditItemTemplate>
+                             <ItemTemplate>
+                                 <asp:Label ID="Label1" runat="server" Text='<%# Bind("min_qui") %>'></asp:Label>
+                             </ItemTemplate>
+                         </asp:TemplateField>
+
+                         <asp:CommandField ShowEditButton="True" />
                      </Columns>
                  </asp:GridView>
                  <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
@@ -54,6 +102,7 @@
                      SelectCommand="SELECT * FROM [course_detail]" 
                      
                      InsertCommand="INSERT INTO course_detail(course_name, period, min_qui) VALUES (@course_name, @period, @min_qui)" 
+                     UpdateCommand="UPDATE course_detail SET course_name=@courseName, period=@coursePeriod, min_qui=@courseName where (code = @code)" 
                      DeleteCommand="Delete FROM [course_detail] where code=@code">
                      <DeleteParameters>
                          <asp:ControlParameter ControlID="GridView1" Name="code" 
@@ -67,6 +116,13 @@
                          <asp:ControlParameter ControlID="DropDownList2" Name="min_qui" 
                              PropertyName="SelectedValue" />
                      </InsertParameters>
+                     <UpdateParameters>
+                         <asp:Parameter Name="courseName" />
+                         <asp:Parameter Name="coursePeriod" />
+                         <asp:Parameter Name="courseQualification" />
+                         <asp:ControlParameter ControlID="GridView1" Name="code" 
+                             PropertyName="SelectedDataKey" />
+                     </UpdateParameters>
                  </asp:SqlDataSource>
              </td>
          </tr>
@@ -76,7 +132,15 @@
              <td>
                  <asp:DropDownList ID="DropDownList1" runat="server" CssClass="ttxt2">
                      <asp:ListItem>1 Year</asp:ListItem>
+                     <asp:ListItem>8 Months</asp:ListItem>
                      <asp:ListItem>6 Months</asp:ListItem>
+                     <asp:ListItem>4 Months</asp:ListItem>
+                     <asp:ListItem>3 Months</asp:ListItem>
+                     <asp:ListItem>2 Months</asp:ListItem>
+                     <asp:ListItem>1 Month</asp:ListItem>
+                     <asp:ListItem>45 Days</asp:ListItem>
+                     <asp:ListItem>15 Days</asp:ListItem>
+                     <asp:ListItem>1 Week</asp:ListItem>
                  </asp:DropDownList>
              </td>
          </tr>
@@ -125,6 +189,11 @@
                      onrowupdating="GridView2_RowUpdating" 
                      onrowdeleting="GridView2_RowDeleting">
                      <Columns>
+                        <asp:TemplateField HeaderText="Sr. No.">   
+                            <ItemTemplate>
+                                <%# Container.DataItemIndex + 1 %>   
+                            </ItemTemplate>
+                        </asp:TemplateField>
                          <asp:TemplateField HeaderText="Subject" SortExpression="sub">
                              <EditItemTemplate>
                                  <asp:TextBox ID="sub" runat="server" Text='<%# Bind("sub") %>'></asp:TextBox>
@@ -139,6 +208,7 @@
                              <EditItemTemplate>
                                  <asp:DropDownList ID="dur" runat="server" 
                                      SelectedValue='<%# Bind("duration") %>'>
+                                     <asp:ListItem>5 Days</asp:ListItem>
                                      <asp:ListItem>10 Days</asp:ListItem>
                                      <asp:ListItem>15 Days</asp:ListItem>
                                      <asp:ListItem>1 Month</asp:ListItem>
@@ -201,6 +271,7 @@
                  Duration</td>
              <td>
                  <asp:DropDownList ID="DropDownList4" runat="server">
+                     <asp:ListItem>5 Days</asp:ListItem>
                      <asp:ListItem>10 Days</asp:ListItem>
                      <asp:ListItem>15 Days</asp:ListItem>
                      <asp:ListItem>1 Month</asp:ListItem>

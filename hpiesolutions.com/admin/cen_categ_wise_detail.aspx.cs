@@ -13,7 +13,14 @@ public partial class admin_cen_categ_wise_detail : System.Web.UI.Page
    Int32 sc_tot5, st_tot5, obc_tot5, min_tot5, tot_tot5;
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Page.IsPostBack == false)
+        {
 
+        }
+        else
+        {
+            DataList1.DataBind();
+        }
     }
     protected void DataList1_ItemDataBound(object sender, DataListItemEventArgs e)
     {

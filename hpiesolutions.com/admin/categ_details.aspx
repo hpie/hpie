@@ -16,6 +16,11 @@
             CellPadding="3" DataSourceID="SqlDataSource1" 
             EmptyDataText="-No Record Available-" Width="1065px">
             <Columns>
+                <asp:TemplateField HeaderText="Sr. No.">   
+                    <ItemTemplate>
+                        <%# Container.DataItemIndex + 1 %>   
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:BoundField DataField="s_name" HeaderText="Student Name" 
                     SortExpression="s_name" />
                 <asp:BoundField DataField="s_f_name" HeaderText="Father's Name" 
@@ -45,9 +50,11 @@
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
             ConnectionString="<%$ ConnectionStrings:hpieConnectionString %>" 
             
-            SelectCommand="SELECT dbo.student_detail.code, dbo.student_detail.s_id, dbo.student_detail.s_name, dbo.student_detail.s_f_name, dbo.student_detail.dob, dbo.student_detail.gen, dbo.student_detail.email, dbo.student_detail.landline, dbo.student_detail.mobile, dbo.student_detail.addr, dbo.student_detail.distt, dbo.student_detail.state, dbo.student_detail.p_code, dbo.student_detail.degree, dbo.student_detail.quli, dbo.student_detail.an_income, dbo.student_detail.social_status, dbo.student_detail.phy_chall, dbo.student_detail.bank_ac, dbo.student_detail.bank_name, dbo.student_detail.ifsc_code, dbo.student_detail.bpl_irdp_no, dbo.student_detail.center_code, dbo.student_detail.p_addr, dbo.student_detail.p_city, dbo.student_detail.p_distt, dbo.student_detail.p_state, dbo.student_detail.p_p_code, dbo.student_detail.s_id_main, dbo.student_detail.img, dbo.student_detail.course, dbo.student_detail.date_of_add, dbo.student_detail.sub_date, dbo.student_detail.project_code, dbo.student_detail.tr_date, dbo.student_detail.tr_com_date, dbo.student_detail.tr_status, dbo.city.city, dbo.tb1.name FROM dbo.student_detail INNER JOIN dbo.city ON dbo.student_detail.city = dbo.city.code INNER JOIN dbo.tb1 ON dbo.student_detail.center_code = dbo.tb1.center_code_main WHERE (dbo.student_detail.social_status = @social_status) order by dbo.tb1.center_code_main">
+            SelectCommand="SELECT dbo.student_detail.code, dbo.student_detail.s_id, dbo.student_detail.s_name, dbo.student_detail.s_f_name, dbo.student_detail.dob, dbo.student_detail.gen, dbo.student_detail.email, dbo.student_detail.landline, dbo.student_detail.mobile, dbo.student_detail.addr, dbo.student_detail.distt, dbo.student_detail.state, dbo.student_detail.p_code, dbo.student_detail.degree, dbo.student_detail.quli, dbo.student_detail.an_income, dbo.student_detail.social_status, dbo.student_detail.phy_chall, dbo.student_detail.bank_ac, dbo.student_detail.bank_name, dbo.student_detail.ifsc_code, dbo.student_detail.bpl_irdp_no, dbo.student_detail.center_code, dbo.student_detail.p_addr, dbo.student_detail.p_city, dbo.student_detail.p_distt, dbo.student_detail.p_state, dbo.student_detail.p_p_code, dbo.student_detail.s_id_main, dbo.student_detail.img, dbo.student_detail.course, dbo.student_detail.date_of_add, dbo.student_detail.sub_date, dbo.student_detail.project_code, dbo.student_detail.tr_date, dbo.student_detail.tr_com_date, dbo.student_detail.tr_status, dbo.city.city, dbo.tb1.name FROM dbo.student_detail INNER JOIN dbo.city ON dbo.student_detail.city = dbo.city.code INNER JOIN dbo.tb1 ON dbo.student_detail.center_code = dbo.tb1.center_code_main WHERE (dbo.student_detail.social_status = @social_status) AND (dbo.student_detail.project_code = @project_code) order by dbo.tb1.center_code_main">
             <SelectParameters>
                 <asp:QueryStringParameter Name="social_status" QueryStringField="sid" 
+                    Type="String" />
+                 <asp:QueryStringParameter Name="project_code" QueryStringField="pcode" 
                     Type="String" />
             </SelectParameters>
         </asp:SqlDataSource>

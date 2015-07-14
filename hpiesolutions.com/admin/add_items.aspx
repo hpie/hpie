@@ -77,6 +77,11 @@
                 <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
                     DataKeyNames="code" DataSourceID="SqlDataSource5" style="text-align: left">
                     <Columns>
+                    <asp:TemplateField HeaderText="Sr. No.">   
+                            <ItemTemplate>
+                                <%# Container.DataItemIndex + 1 %>   
+                            </ItemTemplate>
+                    </asp:TemplateField>
                         <asp:BoundField DataField="project" HeaderText="Project Name" 
                             SortExpression="project_name" />
                     </Columns>

@@ -15,6 +15,11 @@
             EmptyDataText="-No Record Available-" ShowHeaderWhenEmpty="True" 
             style="font-family: Verdana; font-size: 10pt">
             <Columns>
+                <asp:TemplateField HeaderText="Sr. No.">   
+                    <ItemTemplate>
+                        <%# Container.DataItemIndex + 1 %>   
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:BoundField DataField="s_id_main" HeaderText="Student ID" 
                     SortExpression="s_id_main" />
                 <asp:BoundField DataField="s_name" HeaderText="Name" SortExpression="s_name" />
@@ -43,9 +48,11 @@
             ConnectionString="<%$ ConnectionStrings:hpieConnectionString %>" 
             
         
-            SelectCommand="SELECT s_name, s_f_name, social_status, center_code, s_id_main, tr_date, tr_com_date FROM dbo.student_detail WHERE (tr_status = @tr_status) ORDER BY center_code, s_id">
+            SelectCommand="SELECT s_name, s_f_name, social_status, center_code, s_id_main, tr_date, tr_com_date FROM dbo.student_detail WHERE (tr_status = @tr_status) AND ([project_code] = @project_code) ORDER BY center_code, s_id">
             <SelectParameters>
                 <asp:Parameter DefaultValue="Dropped" Name="tr_status" Type="String" />
+                <asp:QueryStringParameter Name="project_code" QueryStringField="pcode" 
+                    Type="String" />
             </SelectParameters>
         </asp:SqlDataSource>
     

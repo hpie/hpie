@@ -171,7 +171,7 @@ ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))(.jpg|.JPG|.gif|
             </td>
         </tr>
         <tr>
-            <td  rowspan="4" class="style38">
+            <td  rowspan="5" class="style38">
                 &nbsp;</td>
             <td class="style35">
                 Student ID</td>
@@ -179,10 +179,23 @@ ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))(.jpg|.JPG|.gif|
                 <asp:TextBox ID="s_id" runat="server" CssClass="ttxt" ReadOnly="True"></asp:TextBox>
                 <asp:Label ID="t1" runat="server" Visible="False"></asp:Label>
             </td>
-            <td colspan="2">
-                <strong>Correspondent<br /> 
-                -----------------------------------------------------------------------------------</strong></td>
+            <td colspan="2"> </td>
+                
         </tr>
+        <tr>
+            <td class="style35">
+                Student Registration Number<asp:RequiredFieldValidator ID="RequiredFieldValidator9" 
+                    runat="server" ControlToValidate="s_regno" ErrorMessage="*" ForeColor="#990000" 
+                    SetFocusOnError="True"></asp:RequiredFieldValidator>
+            <td>
+                <asp:TextBox ID="s_regno" runat="server" CssClass="ttxt"></asp:TextBox>
+            </td>
+            <td colspan="2"> <strong>Correspondent<br /> 
+                -----------------------------------------------------------------------------------</strong></td>
+                
+        </tr>
+
+       
         <tr>
             <td class="style35">
                 Student First Name<asp:RequiredFieldValidator ID="RequiredFieldValidator1" 
@@ -586,6 +599,13 @@ ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))(.jpg|.JPG|.gif|
                             <asp:TextBox ID="bpl_irdp" runat="server" CssClass="ttxt"></asp:TextBox>
                         </td>
                     </tr>
+                     <tr>
+                        <td class="style29">
+                            Aadhar Card Number</td>
+                        <td>
+                            <asp:TextBox ID="aadhar_no" runat="server" CssClass="ttxt"></asp:TextBox>
+                        </td>
+                    </tr>
                     <tr>
                         <td class="style29">
                             Annual Income</td>
@@ -599,13 +619,7 @@ ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))(.jpg|.JPG|.gif|
                         <td>
                             <asp:TextBox ID="other_inc" runat="server" CssClass="ttxt"></asp:TextBox>
                         </td>
-                    </tr>
-                    <tr>
-                        <td class="style29">
-                            &nbsp;</td>
-                        <td>
-                            &nbsp;</td>
-                    </tr>
+                    </tr>                    
                     <tr>
                         <td class="style29">
                             &nbsp;</td>
@@ -823,13 +837,14 @@ ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))(.jpg|.JPG|.gif|
                     style="color: #FF0000"></asp:Label>
                 &nbsp;<asp:SqlDataSource ID="SqlDataSource4" runat="server" 
                     ConnectionString="<%$ ConnectionStrings:hpieConnectionString %>" 
-                    InsertCommand="INSERT INTO student_detail(s_id, s_name, s_f_name, dob, gen, email, landline, mobile, addr, city, distt, state, p_code, degree, quli, an_income, social_status, phy_chall, bank_ac, bank_name, ifsc_code, bpl_irdp_no, center_code, p_addr, p_city, p_distt, p_state, p_p_code, s_id_main, img, course, date_of_add, sub_date, project_code, tr_status, tr_date, tr_com_date, s_name2, s_name3, f_name2, f_name3, m_status, addr2, addr3, travel, other_inc, tot_inc, age, SSC_Sub, SSC_Yr, SSC_Per, HSC_Sub, HSC_Yr, HSC_Per, Gra_Sub, Gra_Yr, Gra_Per, Post_Gra_Sub, Post_Gra_Yr, Post_Gra_Per, complevel, std_code, per_corres_same, p_addr2, p_addr3) VALUES (@s_id, @s_name, @s_f_name, @dob, @gen, @email, @landline, @mobile, @addr, @city, @distt, @state, @p_code, @degree, @quli, @an_income, @social_status, @phy_chall, @bank_ac, @bank_name, @ifsc_code, @bpl_irdp_no, @center_code, @p_addr, @p_city, @p_distt, @p_state, @p_p_code, @s_id_main, @img, @course, @date_of_add, @sub_date, @project_code, @tr_status, @tr_date, @tr_com_date, @s_name2, @s_name3, @f_name2, @f_name3, @m_status, @addr2, @addr3, @travel, @other_inc, @tot_inc, @age, @SSC_Sub, @SSC_Yr, @SSC_Per, @HSC_Sub, @HSC_Yr, @HSC_Per, @Gra_Sub, @Gra_Yr, @Gra_Per, @Post_Gra_Sub, @Post_Gra_Yr, @Post_Gra_Per, @complevel, @std_code, @per_corres_same, @p_addr2, @p_addr3)" 
+                    InsertCommand="INSERT INTO student_detail(s_id, s_regno, s_name, s_f_name, dob, gen, email, landline, mobile, addr, city, distt, state, p_code, degree, quli, an_income, social_status, phy_chall, bank_ac, bank_name, ifsc_code, bpl_irdp_no, aadhar_no, center_code, p_addr, p_city, p_distt, p_state, p_p_code, s_id_main, img, course, date_of_add, sub_date, project_code, tr_status, tr_date, tr_com_date, s_name2, s_name3, f_name2, f_name3, m_status, addr2, addr3, travel, other_inc, tot_inc, age, SSC_Sub, SSC_Yr, SSC_Per, HSC_Sub, HSC_Yr, HSC_Per, Gra_Sub, Gra_Yr, Gra_Per, Post_Gra_Sub, Post_Gra_Yr, Post_Gra_Per, complevel, std_code, per_corres_same, p_addr2, p_addr3) VALUES (@s_id, @s_regno, @s_name, @s_f_name, @dob, @gen, @email, @landline, @mobile, @addr, @city, @distt, @state, @p_code, @degree, @quli, @an_income, @social_status, @phy_chall, @bank_ac, @bank_name, @ifsc_code, @bpl_irdp_no, @aadhar_no, @center_code, @p_addr, @p_city, @p_distt, @p_state, @p_p_code, @s_id_main, @img, @course, @date_of_add, @sub_date, @project_code, @tr_status, @tr_date, @tr_com_date, @s_name2, @s_name3, @f_name2, @f_name3, @m_status, @addr2, @addr3, @travel, @other_inc, @tot_inc, @age, @SSC_Sub, @SSC_Yr, @SSC_Per, @HSC_Sub, @HSC_Yr, @HSC_Per, @Gra_Sub, @Gra_Yr, @Gra_Per, @Post_Gra_Sub, @Post_Gra_Yr, @Post_Gra_Per, @complevel, @std_code, @per_corres_same, @p_addr2, @p_addr3)" 
                     
                     
                     
                     SelectCommand="SELECT * FROM [student_detail] where center_code=@code order by code desc">
                     <InsertParameters>
                         <asp:ControlParameter ControlID="t1" Name="s_id" PropertyName="Text" />
+                        <asp:ControlParameter ControlID="s_regno" Name="s_regno" PropertyName="Text" />
                         <asp:ControlParameter ControlID="s_name" Name="s_name" PropertyName="Text" />
                         <asp:ControlParameter ControlID="s_f_name" Name="s_f_name" 
                             PropertyName="Text" />
@@ -865,6 +880,7 @@ ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))(.jpg|.JPG|.gif|
                             PropertyName="Text" />
                         <asp:ControlParameter ControlID="bpl_irdp" Name="bpl_irdp_no" 
                             PropertyName="Text" />
+                        <asp:ControlParameter ControlID="aadhar_no" Name="aadhar_no" PropertyName="Text" />
                         <asp:SessionParameter Name="center_code" SessionField="start_a" />
                         <asp:ControlParameter ControlID="p_addr" Name="p_addr" PropertyName="Text" />
                         <asp:ControlParameter ControlID="DropDownList6" Name="p_city" 

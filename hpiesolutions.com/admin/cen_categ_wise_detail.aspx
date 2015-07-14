@@ -51,6 +51,42 @@
     </style>
     </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
+
+<div class="banner">
+        Report For...</div>
+    <table class="style1">
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Project Code
+            </td>
+            <td>
+                <asp:DropDownList ID="p_code" runat="server" DataSourceID="SqlDataSource8" DataTextField="project_name"
+                    DataValueField="code" CssClass="ttxt2" AutoPostBack="True">
+                </asp:DropDownList>
+                <asp:SqlDataSource ID="SqlDataSource8" runat="server" ConnectionString="<%$ ConnectionStrings:hpieConnectionString %>"
+                    SelectCommand="SELECT * FROM [project]"></asp:SqlDataSource>
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td class="style1">
+                &nbsp;
+            </td>
+        </tr>
+    </table>
     <div class="banner">
         Center Category Wise Detail  </div>
     <br />
@@ -300,10 +336,11 @@
                     <br />
                     <asp:SqlDataSource ID="SqlDataSource2" runat="server" 
                         ConnectionString="<%$ ConnectionStrings:hpieConnectionString %>" 
-                        SelectCommand="SELECT * FROM [student_detail] WHERE (([center_code] = @center_code) AND ([course] = @course))">
+                        SelectCommand="SELECT * FROM [student_detail] WHERE (([center_code] = @center_code) AND ([course] = @course)) AND (project_code=@code)">
                         <SelectParameters>
                             <asp:Parameter Name="center_code" />
                             <asp:Parameter Name="course" />
+                            <asp:ControlParameter ControlID="p_code" Name="code" PropertyName="SelectedValue" />
                         </SelectParameters>
                     </asp:SqlDataSource>
                 </td>
