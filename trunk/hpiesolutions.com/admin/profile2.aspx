@@ -561,12 +561,13 @@
         SelectCommand="SELECT tb1.code, tb1.email, tb1.name, tb1.website, tb1.address, tb1.ph, tb1.country, tb1.state, tb1.pcode, tb1.center_code, tb1.pass, tb1.center_code_main, tb1.role, tb1.std_code, distt.distt, city.city FROM tb1 INNER JOIN city ON tb1.city = city.code INNER JOIN distt ON tb1.dist = distt.code WHERE (tb1.center_code_main = @center_code)" 
         
         
-        UpdateCommand="UPDATE tb1 SET name =@name, website =@website, address =@address, ph =@ph, std_code=@std where code=@code">
+        UpdateCommand="UPDATE tb1 SET email =@cemail, name =@name, website =@website, address =@address, ph =@ph, std_code=@std where code=@code">
         <SelectParameters>
             <asp:QueryStringParameter Name="center_code" QueryStringField="cd" 
                 Type="String" />
         </SelectParameters>
         <UpdateParameters>
+            <asp:Parameter Name="cemail" />
             <asp:Parameter Name="name" />
             <asp:Parameter Name="website" />
             <asp:Parameter Name="address" />

@@ -38,6 +38,11 @@
                 <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
                     DataSourceID="SqlDataSource1">
                     <Columns>
+                    <asp:TemplateField HeaderText="Sr. No.">   
+                            <ItemTemplate>
+                                <%# Container.DataItemIndex + 1 %>   
+                            </ItemTemplate>
+                    </asp:TemplateField>
                         <asp:BoundField DataField="bank_name" HeaderText="bank_name" 
                             SortExpression="bank_name" />
                     </Columns>

@@ -36,9 +36,11 @@
                                          </asp:GridView>
                                          <asp:SqlDataSource ID="SqlDataSource2" runat="server" 
                                              ConnectionString="<%$ ConnectionStrings:hpieConnectionString %>" 
-                                             SelectCommand="SELECT batch_status.code, batch_status.project_code, batch_status.center_code, batch_status.batch_no, batch_status.date, batch_status.s_date, batch_status.e_date, batch_status.course, subject.sub, course_detail.course_name FROM batch_status INNER JOIN course_detail ON batch_status.course = course_detail.code INNER JOIN subject ON batch_status.sub = subject.code WHERE (batch_status.center_code = @center_code)">
+                                             SelectCommand="SELECT batch_status.code, batch_status.project_code, batch_status.center_code, batch_status.batch_no, batch_status.date, batch_status.s_date, batch_status.e_date, batch_status.course, subject.sub, course_detail.course_name FROM batch_status INNER JOIN course_detail ON batch_status.course = course_detail.code INNER JOIN subject ON batch_status.sub = subject.code WHERE (batch_status.center_code = @center_code) AND (batch_status.course = @course) AND (batch_status.project_code = @pcode)">
                                              <SelectParameters>
                                                  <asp:SessionParameter Name="center_code" SessionField="start_a" Type="String" />
+                                                 <asp:ControlParameter ControlID="c_name" Name="course" PropertyName="SelectedValue" />
+                                                 <asp:ControlParameter ControlID="p_code" Name="pcode" PropertyName="SelectedValue" />
                                              </SelectParameters>
                                          </asp:SqlDataSource>
             </td>

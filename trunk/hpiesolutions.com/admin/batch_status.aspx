@@ -82,6 +82,11 @@
                 DataSourceID="SqlDataSource3" Width="918px" 
                 EmptyDataText="-No Record Available -" DataKeyNames="code">
                 <Columns>
+                    <asp:TemplateField HeaderText="Sr. No.">   
+                            <ItemTemplate>
+                                <%# Container.DataItemIndex + 1 %>   
+                            </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:BoundField DataField="project_name" HeaderText="Project Code" 
                         SortExpression="project_code" />
                     <asp:BoundField DataField="center_code" HeaderText="Center Code" 

@@ -16,6 +16,11 @@
             EmptyDataText="-No Data Available-" 
             style="font-size: 10pt; font-family: Verdana">
             <Columns>
+                <asp:TemplateField HeaderText="Sr. No.">   
+                    <ItemTemplate>
+                        <%# Container.DataItemIndex + 1 %>   
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:BoundField DataField="name" HeaderText="Student Name" 
                     SortExpression="name" />
                 <asp:BoundField DataField="ccname" HeaderText="Center Name" 
@@ -48,7 +53,11 @@
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
             ConnectionString="<%$ ConnectionStrings:hpieConnectionString %>" 
             
-            SelectCommand="SELECT dbo.placement.code, dbo.placement.center_code, dbo.placement.project_code, dbo.placement.s_id, dbo.placement.c_name, dbo.placement.c_add, dbo.placement.city, dbo.placement.desig, dbo.placement.j_date, dbo.placement.salary, dbo.placement.c_per_name, dbo.placement.c_per_no, dbo.placement.date, dbo.placement.course, dbo.placement.name, dbo.tb1.center_code_main, dbo.tb1.name AS ccname FROM dbo.placement INNER JOIN dbo.tb1 ON dbo.placement.center_code = dbo.tb1.center_code_main ORDER BY dbo.placement.code DESC">
+            SelectCommand="SELECT dbo.placement.code, dbo.placement.center_code, dbo.placement.project_code, dbo.placement.s_id, dbo.placement.c_name, dbo.placement.c_add, dbo.placement.city, dbo.placement.desig, dbo.placement.j_date, dbo.placement.salary, dbo.placement.c_per_name, dbo.placement.c_per_no, dbo.placement.date, dbo.placement.course, dbo.placement.name, dbo.tb1.center_code_main, dbo.tb1.name AS ccname FROM dbo.placement INNER JOIN dbo.tb1 ON dbo.placement.center_code = dbo.tb1.center_code_main WHERE (dbo.placement.project_code = @project_code) ORDER BY dbo.placement.code DESC">
+            <SelectParameters>
+                <asp:QueryStringParameter Name="project_code" QueryStringField="pcode" 
+                    Type="String" />
+            </SelectParameters>
         </asp:SqlDataSource>
     
     </div>

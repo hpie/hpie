@@ -83,7 +83,8 @@
             </td>
             <td>
                 <asp:DropDownList ID="p_code" runat="server" DataSourceID="SqlDataSource8" DataTextField="project_name"
-                    DataValueField="code" CssClass="ttxt2" AutoPostBack="True">
+                    DataValueField="code" CssClass="ttxt2" AutoPostBack="True" OnSelectedIndexChanged="pcode_Change">
+                    <asp:ListItem Text="--Select--" Value="0" />
                 </asp:DropDownList>
                 <asp:SqlDataSource ID="SqlDataSource8" runat="server" ConnectionString="<%$ ConnectionStrings:hpieConnectionString %>"
                     SelectCommand="SELECT * FROM [project]"></asp:SqlDataSource>
@@ -98,8 +99,8 @@
             </td>
         </tr>
     </table>
-    <div class="banner">
-        Report Card</div>
+ <div  id="resultDiv" runat="server" visible="false">
+    <div class="banner">Report Card</div>
     <table class="style1">
         <tr>
             <td class="style2">
@@ -285,4 +286,5 @@
             </td>
         </tr>
     </table>
+ </div>
 </asp:Content>

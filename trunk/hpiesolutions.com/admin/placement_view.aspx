@@ -169,6 +169,11 @@
                    CellPadding="3" style="font-size: 9pt" 
                    Width="881px">
                    <Columns>
+                   <asp:TemplateField HeaderText="Sr. No.">   
+                    <ItemTemplate>
+                       <%# Container.DataItemIndex + 1 %>   
+                    </ItemTemplate>
+                   </asp:TemplateField>
                        <asp:BoundField DataField="s_id" HeaderText="Student ID" 
                            SortExpression="s_id" />
                        <asp:BoundField DataField="name" HeaderText="Name" />

@@ -43,4 +43,16 @@ public partial class admin_addCourse : System.Web.UI.Page
         SqlDataSource2.Delete();
         GridView2.DataBind();
     }
+
+
+    protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    {
+        SqlDataSource1.UpdateParameters["code"].DefaultValue = GridView1.DataKeys[e.RowIndex].Value.ToString();
+        SqlDataSource1.UpdateParameters["courseName"].DefaultValue = ((TextBox)(GridView1.Rows[e.RowIndex].FindControl("course_name"))).Text.ToString();
+        SqlDataSource1.UpdateParameters["coursePeriod"].DefaultValue = ((DropDownList)(GridView1.Rows[e.RowIndex].FindControl("period"))).SelectedItem.Text;
+        SqlDataSource1.UpdateParameters["courseQualification"].DefaultValue = ((DropDownList)(GridView1.Rows[e.RowIndex].FindControl("min_qui"))).SelectedItem.Text;
+        SqlDataSource1.Update();
+        GridView1.EditIndex = -1;
+        GridView1.DataBind();
+    }
 }

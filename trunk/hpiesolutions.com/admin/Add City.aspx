@@ -39,6 +39,11 @@
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
                 DataSourceID="SqlDataSource2" Width="292px">
                 <Columns>
+                    <asp:TemplateField HeaderText="Sr. No.">   
+                            <ItemTemplate>
+                                <%# Container.DataItemIndex + 1 %>   
+                            </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:BoundField DataField="city" HeaderText="City" SortExpression="city" />
                     <asp:BoundField DataField="distt" HeaderText="Distt" SortExpression="distt" />
                 </Columns>
