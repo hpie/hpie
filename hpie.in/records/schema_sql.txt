@@ -1,0 +1,196 @@
+--
+-- Table structure for table `hpie_center`
+--
+
+CREATE TABLE IF NOT EXISTS `hpie_center` (
+  `center_code` varchar(20) NOT NULL,
+  `center_name` varchar(100) NOT NULL,
+  `center_address_line1` varchar(100) NOT NULL,
+  `center_address_line2` varchar(100) DEFAULT NULL,
+  `center_address_line3` varchar(100) DEFAULT NULL,
+  `center_block` varchar(20) DEFAULT NULL,
+  `center_atc_status` varchar(5) NOT NULL DEFAULT 'P' COMMENT 'P=Pending R=Requested A=Approved',
+  `center_certificate_status` varchar(5)  NOT NULL DEFAULT 'P' COMMENT 'P=Pending R=Requested D=Dispatched G=Given',
+  `center_kit_status` varchar(5) DEFAULT 'P' COMMENT 'P=Pending R=Requested D=Dispatched G=Given',
+  `center_doc_status` varchar(5) DEFAULT 'P' COMMENT 'P=Pending I=Incomplete C=Complete',
+  `center_grade` varchar(5) DEFAULT NULL,
+  `center_atc_approval_dt` date DEFAULT NULL,
+  `city` varchar(50) NOT NULL,
+  `district` varchar(20) NOT NULL,
+  `state` varchar(50) NOT NULL,
+  `pincode` varchar(10) NOT NULL,
+  `contact_no` varchar(12) NOT NULL,
+  `email_id` varchar(50) DEFAULT NULL,
+  `website` varchar(50) DEFAULT NULL,
+  `status` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(20) DEFAULT 'SYSTEM',
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`center_code`),
+  UNIQUE KEY `hpie_center_name` (`center_name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `hpie_center_contact` (
+  `row_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `center_code` varchar(20) NOT NULL,
+  `contact_fname` varchar(100) NOT NULL,
+  `contact_mname` varchar(100) NOT NULL,
+  `contact_lname` varchar(100) NOT NULL,
+  `contact_phone` varchar(12) NOT NULL,
+  `contact_mobile` varchar(12) NOT NULL,
+  `contact_office` varchar(12) NOT NULL,
+  `email_id` varchar(50) DEFAULT NULL,
+  `status` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(20) DEFAULT 'SYSTEM',
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`row_id`),
+  UNIQUE KEY `hpie_contact_phone` (`contact_phone`),
+  UNIQUE KEY `hpie_contact_mobile` (`contact_mobile`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `hpie_center_faculty` (
+  `row_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `center_code` varchar(20) NOT NULL,
+  `faculty_fname` varchar(100) NOT NULL,
+  `faculty_mname` varchar(100) NOT NULL,
+  `faculty_lname` varchar(100) NOT NULL,
+  `faculty_qualification` varchar(50) NOT NULL,
+  `faculty_phone` varchar(12) NOT NULL,
+  `faculty_mobile` varchar(12) NOT NULL,
+  `contact_office` varchar(12) NOT NULL,
+  `email_id` varchar(50) DEFAULT NULL,
+  `status` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(20) DEFAULT 'SYSTEM',
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`row_id`),
+  UNIQUE KEY `hpie_faculty_email_id` (`email_id`),
+  UNIQUE KEY `hpie_faculty_phone` (`faculty_phone`),
+  UNIQUE KEY `hpie_faculty_mobile` (`faculty_mobile`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `hpie_center_assets` (
+  `row_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `center_code` varchar(20) NOT NULL,
+  `asset_name` varchar(50) NOT NULL,
+  `asset_make` varchar(50) NOT NULL,
+  `asset_model` varchar(50) NOT NULL,
+  `asset_serial_code` varchar(50)  DEFAULT NULL,
+  `asset_count` int NOT NULL DEFAULT 0,
+  `status` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(20) DEFAULT 'SYSTEM',
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`row_id`),
+  UNIQUE KEY `hpie_asset_serial_code` (`asset_serial_code`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `hpie_center_facility` (
+  `row_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `center_code` varchar(20) NOT NULL,
+  `facility_name` varchar(100) NOT NULL,
+  `facility_area` varchar(20) NOT NULL,
+  `facility_classes` varchar(10) NOT NULL,
+  `facility_labs` varchar(10) NOT NULL,
+  `facility_restrooms` varchar(10) NOT NULL,
+  `facility_library` varchar(10) NOT NULL,
+  `status` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(20) DEFAULT 'SYSTEM',
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`row_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `hpie_center_transact` (
+  `row_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `center_code` varchar(20) NOT NULL,
+  `transact_account_no` varchar(50) NOT NULL,
+  `transact_account_bank` varchar(20) NOT NULL,
+  `transact_account_branch` varchar(20) NOT NULL,
+  `transact_account_ifsc` varchar(20) NOT NULL,
+  `transact_account_pan` varchar(20) NOT NULL,
+  `transact_account_st_no` varchar(20) NOT NULL,
+  `status` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(20) DEFAULT 'SYSTEM',
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`row_id`),
+  UNIQUE KEY `hpie_transact_acount_no` (`transact_account_no`),
+  UNIQUE KEY `hpie_transact_acount_pan` (`transact_account_pan`),
+  UNIQUE KEY `hpie_transact_acount_st_no` (`transact_account_st_no`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `hpie_student` (
+  `student_code` varchar(20) NOT NULL,
+  `student_fname` varchar(100) NOT NULL,
+  `student_mname` varchar(100) NOT NULL,
+  `student_lname` varchar(100) NOT NULL,
+  `student_fathername` varchar(100) NOT NULL,
+  `student_mothername` varchar(100) NOT NULL,
+  `student_gender` varchar(10) NOT NULL,
+  `student_dob` date NOT NULL,
+  `student_address_line1` varchar(100) NOT NULL,
+  `student_address_line2` varchar(100) DEFAULT NULL,
+  `city` varchar(50) NOT NULL,
+  `state` varchar(50) NOT NULL,
+  `pincode` varchar(10) NOT NULL,
+  `contact_no` varchar(12) NOT NULL,
+  `email_id` varchar(50) DEFAULT NULL,
+  `status` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(20) DEFAULT 'SYSTEM',
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`student_code`),
+  UNIQUE KEY `hpie_student_email_id` (`email_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `hpie_course` (
+  `course_code` varchar(20) NOT NULL,
+  `course_name` varchar(100) NOT NULL,
+  `course_duration` varchar(100) NOT NULL,
+  `course_details` varchar(500) NOT NULL,
+  `status` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(20) DEFAULT 'SYSTEM',
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`course_code`),
+  UNIQUE KEY `hpie_course_name` (`course_name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `hpie_student_course` (
+  `row_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `student_code` varchar(20) NOT NULL,
+  `course_code` varchar(20) NOT NULL,
+  `center_code` varchar(20) NOT NULL,
+  `sc_start_dt` date NOT NULL,
+  `sc_fee` int NOT NULL DEFAULT '0',
+  `sc_books_status` varchar(5) DEFAULT 'P' COMMENT 'P=Pending R=Requested A=Awarded',
+  `sc_completed_dt` date NOT NULL,
+  `sc_exam_dt` date NOT NULL,
+  `sc_status` VARCHAR(5) DEFAULT  'A' COMMENT 'A=Admitted D=Dropped Out F=Failed P=Passed',
+  `sc_certificate_status` varchar(5) DEFAULT 'P' COMMENT 'P=Pending R=Requested A=Awarded',
+  `sc_certificate_no` varchar(20) NOT NULL,
+  `status` varchar(5) DEFAULT 'A',
+  `created_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(20) DEFAULT 'SYSTEM',
+  `updated_dt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_by` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`row_id`),
+  UNIQUE KEY `hpie_student_course_code` (`student_code`, `course_code`, `center_code`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+
