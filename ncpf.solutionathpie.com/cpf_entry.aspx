@@ -282,6 +282,14 @@
                 <asp:TextBox ID="shared" runat="server">0</asp:TextBox>
             </td>
         </tr>
+
+        <tr>
+            <td class="style3">
+                Board Share Arear</td>
+            <td>
+                <asp:TextBox ID="Shared_arear" runat="server">0</asp:TextBox>
+            </td>
+        </tr>
         <tr>
             <td class="style3">
                 Division</td>
@@ -329,7 +337,7 @@
             <td>
                 <asp:SqlDataSource ID="SqlDataSource2" runat="server" 
                     ConnectionString="<%$ ConnectionStrings:himuda %>" 
-                    InsertCommand="INSERT INTO cpf(Name_Des, AC, During_Year, Recovery_o_adv,date,div,Arear,Shared) VALUES (@Name_Des, @AC, @During_Year, @Recovery_o_adv,@date,@div,@Arear,@Shared)" 
+                    InsertCommand="INSERT INTO cpf(Name_Des, AC, During_Year, Recovery_o_adv,date,div,Arear,Shared,Shared_arear) VALUES (@Name_Des, @AC, @During_Year, @Recovery_o_adv,@date,@div,@Arear,@Shared,@Shared_arear)" 
                     SelectCommand="SELECT * FROM [cpf] where id=@id" 
                     
                     
@@ -338,7 +346,7 @@
                     
                     
                     
-                    UpdateCommand="UPDATE dbo.cpf SET During_Year = @During_Year, Recovery_o_adv = @Recovery_o_adv, Arear = @Arear, Shared = @Shared, Div =@Div WHERE (ID = @id)">
+                    UpdateCommand="UPDATE dbo.cpf SET During_Year = @During_Year, Recovery_o_adv = @Recovery_o_adv, Arear = @Arear, Shared = @Shared, Shared_arear = @Shared_arear, Div =@Div WHERE (ID = @id)">
                     <SelectParameters>
                         <asp:ControlParameter ControlID="ListBox1" Name="id" 
                             PropertyName="SelectedValue" />
@@ -354,6 +362,8 @@
                             DefaultValue="0" />
                         <asp:ControlParameter ControlID="shared" DefaultValue="" Name="Shared" 
                             PropertyName="Text" />
+                        <asp:ControlParameter ControlID="Shared_arear" Name="Shared_arear" PropertyName="Text" 
+                            DefaultValue="0" />
                         <asp:ControlParameter ControlID="DropDownList4" DefaultValue="" Name="Div" 
                             PropertyName="SelectedValue" />
                     </UpdateParameters>
@@ -369,6 +379,8 @@
                         <asp:ControlParameter ControlID="arear" Name="Arear" PropertyName="Text" 
                             DefaultValue="0" />
                         <asp:ControlParameter ControlID="shared" Name="Shared" PropertyName="Text" />
+                        <asp:ControlParameter ControlID="Shared_arear" Name="Shared_arear" PropertyName="Text" 
+                            DefaultValue="0" />
                     </InsertParameters>
                 </asp:SqlDataSource>
                                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" 

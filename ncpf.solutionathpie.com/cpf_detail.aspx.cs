@@ -65,6 +65,11 @@ public partial class cpf_detail : System.Web.UI.Page
         TextBox7.Text = "";
         TextBox2.Text = "";
         Label2.Text = "Record Saved";
+
+        //recalculate
+        DateTime sdate = Convert.ToDateTime("04/01/" + TextBox1.Text.ToString().Substring(6, 4));
+        triggerRecalculation(DropDownList1.SelectedItem.Text.ToString(), sdate);
+
        // Response.Redirect("cpf_detail.aspx");
     }
     protected void TextBox1_TextChanged(object sender, EventArgs e)
@@ -87,6 +92,10 @@ public partial class cpf_detail : System.Web.UI.Page
         TextBox2.Text = dv.Table.Rows[0]["cpf_adv"].ToString();
         TextBox3.Text = dv.Table.Rows[0]["adjment"].ToString();
         TextBox7.Text = dv.Table.Rows[0]["cpf_withd"].ToString();
+
+        
+
+
     }
     private void bind()
     {
@@ -96,6 +105,13 @@ public partial class cpf_detail : System.Web.UI.Page
         DataView dv = (DataView)(SqlDataSource2.Select(DataSourceSelectArguments.Empty));
         ListBox1.DataSource = dv;
         ListBox1.DataBind();
+
+
+
+        //recalculate
+        DateTime sdate = Convert.ToDateTime("04/01/" + TextBox1.Text.ToString().Substring(6, 4));
+        triggerRecalculation(DropDownList1.SelectedItem.Text.ToString(), sdate);
+
     }
     protected void LinkButton1_Click(object sender, EventArgs e)
     {
@@ -106,13 +122,19 @@ public partial class cpf_detail : System.Web.UI.Page
         //DateTime dt1 = Convert.ToDateTime(DateTime.Parse(TextBox1.Text.ToString(), System.Globalization.CultureInfo.CreateSpecificCulture("en-CA")).ToString());
         if (TextBox8.Text != "")
         {
-            DateTime dt2 = Convert.ToDateTime(DateTime.Parse(TextBox1.Text.ToString(), System.Globalization.CultureInfo.CreateSpecificCulture("en-CA")).ToString());
+            DateTime dt2 = Convert.ToDateTime(DateTime.Parse(TextBox8.Text.ToString(), System.Globalization.CultureInfo.CreateSpecificCulture("en-CA")).ToString());
             SqlDataSource2.InsertParameters["date1"].DefaultValue = dt2.ToString();
         }
         DateTime dt1 = Convert.ToDateTime(DateTime.Parse(TextBox1.Text.ToString(), System.Globalization.CultureInfo.CreateSpecificCulture("en-CA")).ToString());
         SqlDataSource2.UpdateParameters["date"].DefaultValue = dt1.ToString();
         SqlDataSource2.UpdateParameters["ac"].DefaultValue = DropDownList1.SelectedItem.Text.ToString();
         SqlDataSource2.Update();
+
+        
+        //recalculate
+        DateTime sdate = Convert.ToDateTime("04/01/" + TextBox1.Text.ToString().Substring(6, 4));
+        triggerRecalculation(DropDownList1.SelectedItem.Text.ToString(), sdate);
+
     }
     protected void Button3_Click(object sender, EventArgs e)
     {
@@ -146,8 +168,8 @@ public partial class cpf_detail : System.Web.UI.Page
             {
 
                 //pob = pob + ((odur + orec) + (ocpf - oadjment) + pob + Convert.ToDecimal(ds.Tables[1].Rows[i]["ob"]));
-               if(ds.Tables[1].Rows[i]["shared_ob"].ToString()!="")
-                pob = pob + Convert.ToDecimal(ds.Tables[1].Rows[i]["shared_ob"]);
+               //if(ds.Tables[1].Rows[i]["shared_ob"].ToString()!="")
+                //pob = pob + Convert.ToDecimal(ds.Tables[1].Rows[i]["shared_ob"]);
                // if (ds.Tables[1].Rows[i]["Ins_ob"].ToString() != "")
                     //pinsob = pinsob + Convert.ToDecimal(ds.Tables[1].Rows[i]["Ins_ob"]);
                 //if (ds.Tables[1].Rows[i]["Shared_ob"].ToString() != "")
@@ -681,13 +703,83 @@ public partial class cpf_detail : System.Web.UI.Page
         //}
         //else
         //{
-        TextBox7.Text = Math.Round(gt).ToString();
+        //TextBox7.Text = Math.Round(gt).ToString(); commented sunil as getting value from proc [employeeWithdrawalCalculation] call
         // }
        
+
+        try
+        {
+            DateTime dt1 = Convert.ToDateTime(DateTime.Parse(TextBox1.Text.ToString(), System.Globalization.CultureInfo.CreateSpecificCulture("en-CA")).ToString());
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["himuda"].ConnectionString);
+            SqlCommand sqlComm = new SqlCommand("employeeWithdrawalCalculation", conn);
+            sqlComm.Parameters.AddWithValue("@account", DropDownList1.SelectedItem.Text.ToString());
+            sqlComm.Parameters.AddWithValue("@year", dt1);
+            sqlComm.CommandType = CommandType.StoredProcedure;
+
+            conn.Open();
+            int rowAffected = sqlComm.ExecuteNonQuery();
+
+            SqlDataAdapter adp1 = new SqlDataAdapter(sqlComm);
+            
+            DataSet prcods = new DataSet();
+            adp1.Fill(prcods);
+             if (prcods.Tables[0].Rows.Count == 0)
+             {
+                 TextBox7.Text = "0";
+             }else
+             {
+                 //t_accountName t_account t_withdraw 
+                 DataRow dr =  prcods.Tables[0].Rows[0];    
+                 TextBox7.Text = dr["t_withdraw"].ToString();
+                
+                 //foreach (DataRow dr in ds.Tables[0].Rows) //Tables[1]....
+                //{
+                //if(dr["ColumName"].ToString()==....)
+                // store the value for that name
+                //}
+             }
+            
+            conn.Close();
+           
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("SQL Error" + ex.Message.ToString());
+        }
+
+
     }
     protected void TextBox8_TextChanged(object sender, EventArgs e)
     {
         epf();
         shared();
     }
+
+
+    protected void triggerRecalculation(String account, DateTime sdate)
+    {
+        try
+        {
+            //String session = DropDownList1.SelectedItem.Text;
+            //DateTime sdate = Convert.ToDateTime("04/01/" + DropDownList1.SelectedItem.Text);
+            //DateTime edate = Convert.ToDateTime("03/31/" + session.Substring(5, 4));
+            //String ac = DropDownList3.SelectedItem.Text;
+
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["himuda"].ConnectionString);
+            SqlCommand sqlComm = new SqlCommand("employeeBalanceCalculation", conn);
+            sqlComm.Parameters.AddWithValue("@account", account);
+            sqlComm.Parameters.AddWithValue("@year", sdate);
+            sqlComm.CommandType = CommandType.StoredProcedure;
+
+            conn.Open();
+            int rowAffected = sqlComm.ExecuteNonQuery();
+            conn.Close();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("SQL Error" + ex.Message.ToString());
+        }
+    }
+
+
 }

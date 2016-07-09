@@ -25,6 +25,7 @@
                     <asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Search" />
                 &nbsp;
                     <asp:LinkButton ID="LinkButton1" runat="server" onclick="LinkButton1_Click">Export</asp:LinkButton>
+                    <asp:HiddenField ID="ReportDateParam" runat="server" />
                 </td>
             </tr>
         </table>
@@ -38,136 +39,20 @@
             <Columns>
                 <asp:TemplateField HeaderText="Sr.No">
                     <ItemTemplate>
-                        <asp:Label ID="Label3" runat="server" Text="<%# Container.DataItemIndex+1 %>"></asp:Label>
+                        <asp:Label ID="Label" runat="server" Text="<%#r3 %>"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Name &amp; Designation">
-                    <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
-                         <asp:Label ID="Label7" runat="server" Text='<%# Eval("des") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="A/C No.">
-                    <ItemTemplate>
-                        <asp:Label ID="Label2" runat="server" Text='<%# Eval("AC") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Opening Balance">
-                    <FooterTemplate>
-                        <asp:Label ID="Label8" runat="server" Text="<%#f8 %>"></asp:Label>
-                    </FooterTemplate>
-                
-                    <ItemTemplate>
-                        <asp:Label ID="Label4" runat="server"  ></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Board Share">
-                    <FooterTemplate>
-                        <asp:Label ID="Label9" runat="server" Text="<%#f9 %>"></asp:Label>
-                    </FooterTemplate>
-                    <ItemTemplate>
-                         <asp:Label ID="Label5" runat="server"></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Sub. During the year" Visible="False">
-                    <FooterTemplate>
-                        <asp:Label ID="Label10" runat="server" Text="<%#f10 %>"></asp:Label>
-                    </FooterTemplate>
-                    <ItemTemplate>
-                       
-                        <asp:Label ID="Label6" runat="server"></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Total (4+5+6)" Visible="False">
-                    <FooterTemplate>
-                        <asp:Label ID="Label11" runat="server" Text="<%#f11 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="CPF Advance" Visible="False">
-                    <FooterTemplate>
-                        <asp:Label ID="Label12" runat="server" Text="<%#f12 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Final Payment">
-                    <FooterTemplate>
-                        <asp:Label ID="Label13" runat="server" Text="<%#f13 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Closing Balance">
-                    <FooterTemplate>
-                        <asp:Label ID="Label14" runat="server" Text="<%#f14 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Opening Balance" Visible="False">
-                    <FooterTemplate>
-                        <asp:Label ID="Label15" runat="server" Text="<%#f15 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="During the year" Visible="False">
-                    <FooterTemplate>
-                        <asp:Label ID="Label16" runat="server" Text="<%#f16 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Adjustment with LIC" Visible="False">
-                    <FooterTemplate>
-                        <asp:Label ID="Label17" runat="server" Text="<%#f17 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Total (11+12-13)" Visible="False">
-                    <FooterTemplate>
-                        <asp:Label ID="Label18" runat="server" Text="<%#f18 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Interset  Opening Balance as on">
-                    <FooterTemplate>
-                        <asp:Label ID="Label19" runat="server" Text="<%#f19 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="During the year ">
-                    <FooterTemplate>
-                        <asp:Label ID="Label20" runat="server" Text="<%#f20 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Final Payment">
-                    <FooterTemplate>
-                        <asp:Label ID="Label21" runat="server" Text="<%#f21 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Total (11+12-13)">
-                    <FooterTemplate>
-                        <asp:Label ID="Label22" runat="server" Text="<%#f22 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Opening Balance as on " Visible="False">
-                    <FooterTemplate>
-                        <asp:Label ID="Label23" runat="server" Text="<%#f23 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="During the year " Visible="False">
-                    <FooterTemplate>
-                        <asp:Label ID="Label24" runat="server" Text="<%#f24 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Final Payment" Visible="False">
-                    <FooterTemplate>
-                        <asp:Label ID="Label25" runat="server" Text="<%#f25 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Total" Visible="False">
-                    <FooterTemplate>
-                        <asp:Label ID="Label26" runat="server" Text="<%#f26 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Total Interest " Visible="False">
-                    <FooterTemplate>
-                        <asp:Label ID="Label27" runat="server" Text="<%#f27 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Grand Total ">
-                    <FooterTemplate>
-                        <asp:Label ID="Label28" runat="server" Text="<%#f28 %>"></asp:Label>
-                    </FooterTemplate>
-                </asp:TemplateField>
+                <asp:BoundField DataField="t_accountName" HeaderText="Name &amp; Designation" ItemStyle-HorizontalAlign="Left" />
+                <asp:BoundField DataField ="t_account" HeaderText="A/C No" />
+                <asp:BoundField DataField="t_openingBalance" HeaderText="Opening Balance" ItemStyle-HorizontalAlign="Right" />
+                <asp:BoundField DataField="t_totalBoardShare" HeaderText="Board Share" ItemStyle-HorizontalAlign="Right"/>
+                <asp:BoundField DataField="t_totalWithdrawal6" HeaderText="Final Payment" ItemStyle-HorizontalAlign="Right"/>
+                <asp:BoundField DataField="t_closingBalance" HeaderText="Closing Balance" ItemStyle-HorizontalAlign="Right"/>
+                <asp:BoundField DataField="t_interestOpeningBalance" HeaderText="Interset  Opening Balance as on" ItemStyle-HorizontalAlign="Right"/>
+                <asp:BoundField DataField="t_interestDuringYear" HeaderText="During the year" ItemStyle-HorizontalAlign="Right"/>
+                <asp:BoundField DataField="t_totalWithdrawal10" HeaderText="Final Payment" ItemStyle-HorizontalAlign="Right"/>
+                <asp:BoundField DataField="t_total8910" HeaderText="Total (11+12-13)" ItemStyle-HorizontalAlign="Right"/>
+                <asp:BoundField DataField="t_grandTotal" HeaderText="Grand Total" ItemStyle-HorizontalAlign="Right"/>
             </Columns>
             <FooterStyle BackColor="White" ForeColor="#000066" Font-Bold="True" />
             <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
@@ -177,9 +62,11 @@
        </div>
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
             ConnectionString="<%$ ConnectionStrings:himuda %>" 
-            
-            
-            SelectCommand="SELECT* from employee where ac is not null order by ac">
+                 SelectCommand="Annual_Report_Board_Share"
+            SelectCommandType="StoredProcedure">
+            <SelectParameters>
+                <asp:ControlParameter Name="year" ControlID="ReportDateParam" PropertyName="Value" />
+            </SelectParameters>
         </asp:SqlDataSource>
     
     </div>
@@ -241,15 +128,13 @@
             width: 129px;
             height: 25px;
         }
+         .numberStyle
+        {
+            text-align:right;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" runat="server" contentplaceholderid="head">
-    
-
-
-
-
-
 
 </asp:Content>
 

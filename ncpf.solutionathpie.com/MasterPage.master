@@ -140,6 +140,8 @@ window.open('','','letf=0,top=0,width=1,height=1,toolbar=0,scrollbars=0,status=0
                         </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/deput.aspx" Text="Deputation" Value="Deputation">
                         </asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/recalculate.aspx" Text="Recalculate" Value="Recalculate">
+                        </asp:MenuItem>
                     </Items>
                 </asp:Menu>
             </asp:ContentPlaceHolder>

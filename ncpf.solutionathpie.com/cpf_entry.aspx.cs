@@ -74,7 +74,7 @@ public partial class cpf_entry : System.Web.UI.Page
         }
 
 
-        string st1 = "SELECT  *from employee where ac=" + DropDownList3.SelectedValue;
+        string st1 = "SELECT * from employee where ac=" + DropDownList3.SelectedValue;
 
 
 
@@ -91,18 +91,37 @@ public partial class cpf_entry : System.Web.UI.Page
         SqlDataSource2.InsertParameters["div"].DefaultValue = DropDownList4.SelectedValue.ToString();
         SqlDataSource2.InsertParameters["AC"].DefaultValue = DropDownList3.SelectedItem.Text.ToString();
         SqlDataSource2.InsertParameters["Arear"].DefaultValue =arear.Text .ToString();
-      string st="select * from cpf where ac='"+DropDownList3.SelectedItem.Text+"' and date='"+dt+"'";
-      SqlDataAdapter adp = new SqlDataAdapter(st, ConfigurationManager.ConnectionStrings["himuda"].ConnectionString);
+        SqlDataSource2.InsertParameters["Shared_arear"].DefaultValue = Shared_arear.Text.ToString();
+
+        // Account Ceased check added by Sunil
+        //string st="select * from cpf where ac='"+DropDownList3.SelectedItem.Text+"' and date='"+dt+"'";
+        string st = "select * from cpf_detail where ac='" + DropDownList3.SelectedItem.Text + "' and date1 is not null";
+        SqlDataAdapter adp = new SqlDataAdapter(st, ConfigurationManager.ConnectionStrings["himuda"].ConnectionString);
         DataSet ds = new DataSet();
         adp.Fill(ds);
         if (ds.Tables[0].Rows.Count == 0)
         {
-            SqlDataSource2.Insert();
-            Label2.Text = "Record Saved";
+            //SqlDataSource2.Insert();
+            //Label2.Text = "Record Saved";
         }
         else
         {
-            Label2.Text = "Record Already Saved Please Update Record";
+            Label2.Text = "Failed: Account is Ceased or Subscription Stopped. Entry not Possible";
+        }
+
+        // duplicate record check added by Sunil   
+        st = "select * from cpf where ac='" + DropDownList3.SelectedItem.Text + "' and date='" + dt + "'";
+        SqlDataAdapter dupadp = new SqlDataAdapter(st, ConfigurationManager.ConnectionStrings["himuda"].ConnectionString);
+        DataSet dupds = new DataSet();
+        dupadp.Fill(dupds);
+        if (ds.Tables[0].Rows.Count == 0)
+        {
+            SqlDataSource2.Insert();
+            Label2.Text = "Record Saved Successfully";
+        }
+        else
+        {
+            Label2.Text = "Save Failed: Record Already Exist. Please Update Record";
         }
         //TextBox1.Text = "0";
         //arear.Text = "0";
@@ -137,6 +156,7 @@ public partial class cpf_entry : System.Web.UI.Page
         TextBox1.Text = dv.Table.Rows[0]["recovery_o_adv"].ToString();
         arear.Text = dv.Table.Rows[0]["Arear"].ToString();
         shared.Text = dv.Table.Rows[0]["Shared"].ToString();
+        Shared_arear.Text = dv.Table.Rows[0]["Shared_arear"].ToString();
         //TextBox4.Text = dv.Table.Rows[0]["div"].ToString();
         DropDownList4.Items.FindByValue(DropDownList4.SelectedValue).Selected = false;
         DropDownList4.Items.FindByValue(dv.Table.Rows[0]["div"].ToString()).Selected = true;
@@ -155,12 +175,54 @@ public partial class cpf_entry : System.Web.UI.Page
         //SqlDataSource2.UpdateParameters["date"].DefaultValue = dt.ToString();
         //SqlDataSource2.UpdateParameters["div"].DefaultValue = DropDownList4.SelectedValue.ToString();
         //SqlDataSource2.UpdateParameters["Arear"].DefaultValue = arear.Text.ToString();
-        
-        SqlDataSource2.Update();
+
+        // Account Ceased check added by Sunil   
+        //string st = "select * from cpf_detail where ac='" + DropDownList3.SelectedItem.Text + "' and date='" + dt + "'";
+        string st = "select * from cpf_detail where ac='" + DropDownList3.SelectedItem.Text + "' and date1 is not null";
+        SqlDataAdapter adp = new SqlDataAdapter(st, ConfigurationManager.ConnectionStrings["himuda"].ConnectionString);
+        DataSet ds = new DataSet();
+        adp.Fill(ds);
+        if (ds.Tables[0].Rows.Count == 0)
+        {
+            SqlDataSource2.Update();
+            Label2.Text = "Record Updated Successfully";
+        }
+        else
+        {
+            Label2.Text = "Update Failed: Account is Ceased or Subscription Stopped. Update not allowed.";
+        }
+
+
         TextBox1.Text = "0";
         arear.Text = "0";
+        Shared_arear.Text = "0";
         TextBox3.Text = "0";
-        Label2.Text = "Record Updated";
+
         list();
+    }
+
+    protected void triggerRecalculation()
+    {
+        try
+        {
+            //String session = DropDownList1.SelectedItem.Text;
+            DateTime sdate = Convert.ToDateTime("04/01/" + DropDownList1.SelectedItem.Text);
+            //DateTime edate = Convert.ToDateTime("03/31/" + session.Substring(5, 4));
+            String ac = DropDownList3.SelectedItem.Text;
+
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["himuda"].ConnectionString);
+            SqlCommand sqlComm = new SqlCommand("employeeBalanceCalculation", conn);
+            sqlComm.Parameters.AddWithValue("@account", ac);
+            sqlComm.Parameters.AddWithValue("@year", sdate);
+            sqlComm.CommandType = CommandType.StoredProcedure;
+
+            conn.Open();
+            int rowAffected = sqlComm.ExecuteNonQuery();
+            conn.Close();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("SQL Error" + ex.Message.ToString());
+        }
     }
 }

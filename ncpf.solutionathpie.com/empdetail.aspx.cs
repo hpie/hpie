@@ -24,8 +24,8 @@ public partial class empdetail : System.Web.UI.Page
         {
             //DropDownList3.Items.Add(y.ToString() + "-" + Convert.ToInt32(y + 1));
             DateTime dt = Convert.ToDateTime("04/01/" + y);
-DropDownList3.Items.Add(new ListItem(y.ToString() + "-" + Convert.ToInt32(y + 1),dt.ToString()));
-//DropDownList3.Items.Add(new ListItem(dt.ToString(), dt.ToString()));
+            DropDownList3.Items.Add(new ListItem(y.ToString() + "-" + Convert.ToInt32(y + 1),dt.ToString()));
+            //DropDownList3.Items.Add(new ListItem(dt.ToString(), dt.ToString()));
        
         }
     }
@@ -61,6 +61,7 @@ DropDownList3.Items.Add(new ListItem(y.ToString() + "-" + Convert.ToInt32(y + 1)
         if (ds12.Tables[0].Rows.Count == 0)
         {
             SqlDataSource3.Insert();
+            triggerRecalculation();
             //TextBox1.Text = "";
             //TextBox2.Text = "";
             //TextBox3.Text = "";
@@ -75,6 +76,7 @@ DropDownList3.Items.Add(new ListItem(y.ToString() + "-" + Convert.ToInt32(y + 1)
     protected void Button2_Click(object sender, EventArgs e)
     {
         SqlDataSource3.Update();
+        triggerRecalculation();
         Response.Redirect("empdetail.aspx");
     }
     protected void Button3_Click(object sender, EventArgs e)
@@ -87,16 +89,17 @@ DropDownList3.Items.Add(new ListItem(y.ToString() + "-" + Convert.ToInt32(y + 1)
     protected void Button5_Click(object sender, EventArgs e)
     {
         DataView dv = (DataView)(SqlDataSource4.Select(DataSourceSelectArguments.Empty));
-        TextBox1.Text = dv.Table.Rows[0][1].ToString();
-        TextBox2.Text = dv.Table.Rows[0][2].ToString();
-        TextBox3.Text = dv.Table.Rows[0][3].ToString();
-        TextBox4.Text = dv.Table.Rows[0]["share_ob"].ToString();
-        TextBox5.Text = dv.Table.Rows[0]["ins_ob"].ToString();
+        TextBox1.Text = dv.Table.Rows[0]["AC"].ToString();
+        TextBox2.Text = dv.Table.Rows[0]["Name"].ToString();
+        TextBox3.Text = dv.Table.Rows[0]["OB"].ToString();
+        TextBox4.Text = dv.Table.Rows[0]["Share_ob"].ToString();
+        TextBox5.Text = dv.Table.Rows[0]["Ins_ob"].ToString();
+        TextBox6.Text = dv.Table.Rows[0]["Board_share_interest_OB"].ToString();
         DropDownList1.Items.FindByValue(DropDownList1.SelectedValue).Selected = false; ;
-        DropDownList1.Items.FindByValue(dv.Table.Rows[0][4].ToString()).Selected = true; ;
+        DropDownList1.Items.FindByValue(dv.Table.Rows[0]["Dept"].ToString()).Selected = true; ;
         DropDownList2.Items.FindByValue(DropDownList2.SelectedValue).Selected = false;
-        DropDownList2.Items.FindByValue(dv.Table.Rows[0][5].ToString()).Selected=true;
-        DateTime yy =Convert.ToDateTime( dv.Table.Rows[0]["session"].ToString());
+        DropDownList2.Items.FindByValue(dv.Table.Rows[0]["Des"].ToString()).Selected=true;
+        DateTime yy =Convert.ToDateTime( dv.Table.Rows[0]["Session"].ToString());
         //string yy1 = yy.ToString("MM/dd/yyyy");
         DropDownList3.Items.FindByValue(DropDownList3.SelectedValue).Selected = false;
         DropDownList3.Items.FindByValue(dv.Table.Rows[0]["session"].ToString()).Selected = true; ;
@@ -104,4 +107,31 @@ DropDownList3.Items.Add(new ListItem(y.ToString() + "-" + Convert.ToInt32(y + 1)
         Button3.Enabled = true;
         Button1.Enabled = false;
     }
+
+    protected void triggerRecalculation()
+    {
+        try
+        {
+            String session = DropDownList3.SelectedItem.Text;
+            DateTime sdate = Convert.ToDateTime("04/01/" + session.Substring(0, 4));
+            DateTime edate = Convert.ToDateTime("03/31/" + session.Substring(5, 4));
+            String ac = TextBox1.Text;
+
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["himuda"].ConnectionString);
+            SqlCommand sqlComm = new SqlCommand("employeeBalanceCalculation", conn);
+            sqlComm.Parameters.AddWithValue("@account", ac);
+            sqlComm.Parameters.AddWithValue("@year", sdate);
+            sqlComm.CommandType = CommandType.StoredProcedure;
+
+            conn.Open();
+            int rowAffected = sqlComm.ExecuteNonQuery();
+            conn.Close();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("SQL Error" + ex.Message.ToString());
+        }
+    }
+
+
 }
