@@ -117,6 +117,23 @@
                 <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
             </td>
         </tr>
+
+         <!-- Sunil added New-->       
+        <tr>
+            <td>
+                Board Share Arrear</td>
+            <td>
+                <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Board Share Interest OB</td>
+            <td>
+                <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+
         <tr>
             <td class="style24">
                 </td>
@@ -144,12 +161,12 @@
                 <asp:SqlDataSource ID="SqlDataSource3" runat="server" 
                     ConnectionString="<%$ ConnectionStrings:himuda %>" 
                     DeleteCommand="DELETE FROM Employee WHERE (ID = @ID)" 
-                    InsertCommand="INSERT INTO Employee(AC, Name, OB, Dept, Des, Session,Share_ob,Ins_ob) VALUES (@AC, @Name, @OB, @Dept, @Des, @Session,@Share_ob,@Ins_ob)" 
+                    InsertCommand="INSERT INTO Employee(AC, Name, OB, Dept, Des, Session,Share_ob,Ins_ob,Board_share_arrear,Board_share_interest_OB) VALUES (@AC, @Name, @OB, @Dept, @Des, @Session,@Share_ob,@Ins_ob,@Brd_share_arrear,@Brd_share_ins_ob)" 
                     SelectCommand="SELECT * FROM [Employee] order by ID" 
                     
                     
                     
-                    UpdateCommand="UPDATE Employee SET Name = @Name, OB = @OB, Dept = @Dept, Des = @Des, Session = @Session,Share_ob=@Shared_ob,Ins_ob=@Ins_ob WHERE (AC = @AC)">
+                    UpdateCommand="UPDATE Employee SET Name = @Name, OB = @OB, Dept = @Dept, Des = @Des, Session = @Session,Share_ob=@Shared_ob,Ins_ob=@Ins_ob,Board_share_arrear=@Brd_share_arrear, Board_share_interest_OB= @Brd_share_ins_ob WHERE (AC = @AC)">
                     <DeleteParameters>
                         <asp:ControlParameter ControlID="ListBox1" Name="ID" 
                             PropertyName="SelectedValue" />
@@ -170,6 +187,10 @@
                             PropertyName="Text" DefaultValue="0" />
                         <asp:ControlParameter ControlID="TextBox5" Name="Ins_ob" PropertyName="Text" 
                             DefaultValue="0" />
+                        <asp:ControlParameter ControlID="TextBox6" DefaultValue="0" Name="Brd_share_arrear" 
+                            PropertyName="Text" />
+                        <asp:ControlParameter ControlID="TextBox7" DefaultValue="0" Name="Brd_share_ins_ob" 
+                            PropertyName="Text" />
                     </UpdateParameters>
                     <InsertParameters>
                         <asp:ControlParameter ControlID="TextBox1" Name="AC" PropertyName="Text" />
@@ -185,6 +206,10 @@
                         <asp:ControlParameter ControlID="TextBox4" DefaultValue="0" Name="Share_ob" 
                             PropertyName="Text" />
                         <asp:ControlParameter ControlID="TextBox5" DefaultValue="0" Name="Ins_ob" 
+                            PropertyName="Text" />
+                        <asp:ControlParameter ControlID="TextBox6" DefaultValue="0" Name="Brd_share_arrear" 
+                            PropertyName="Text" />
+                        <asp:ControlParameter ControlID="TextBox7" DefaultValue="0" Name="Brd_share_ins_ob" 
                             PropertyName="Text" />
                     </InsertParameters>
                 </asp:SqlDataSource>

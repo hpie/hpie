@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="detail1.aspx.cs" Inherits="detail" Title="Untitled Page" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="detail1.aspx.cs" Inherits="detail" Title="Himuda EPF Board Share" %>
 <%@ Register
     Assembly="AjaxControlToolkit"
     Namespace="AjaxControlToolkit"
@@ -23,7 +23,7 @@ $("input[id$='HdnValue']").val(html);
          var oldPage = document.body.innerHTML;
 
          //Reset the page's HTML with div's HTML only
-         document.body.innerHTML = "<html><head><title></title></head><body>" + divElements + "</body>";
+         document.body.innerHTML = "<html><head><title>EPF Board Share</title></head><body>" + divElements + "</body>";
 
          //Print Page
          window.print();
@@ -35,7 +35,13 @@ $("input[id$='HdnValue']").val(html);
          return false;
      }
     </script>
+
     <style type="text/css">
+        @media print {
+            @page {
+                margin: 4.0cm;
+            }
+        }    
         .style1
         {
             width: 353px;
@@ -91,6 +97,44 @@ $("input[id$='HdnValue']").val(html);
         {
             width: 129px;
             height: 25px;
+        }
+        
+        #subscriptionHeader
+        {
+        }
+        
+        #ContentPlaceHolder1_headerTable
+        {
+            width: 860px;
+            background-color: #7779AF;
+            /*text-align: right;*/
+        }
+        #ContentPlaceHolder1_headerTable td
+        {
+             font-family: Verdana; 
+             font-size: medium;
+             border: 1px solid #000000;
+        }
+        #subscriptionGrid
+        {
+          /*position:relative;
+          top:50px;
+          left:200px;*/
+        }
+        #subscriptionFooter
+        {
+        }
+        #ContentPlaceHolder1_footetTable
+        {
+            width: 480px;
+             background-color: #CCCCCC;
+            /*text-align: right;*/
+        }
+        #ContentPlaceHolder1_footetTable td
+        {
+            font-family: Verdana; 
+            font-size: medium;
+            border: 1px solid #000000;
         }
     </style>
 </asp:Content>
@@ -148,46 +192,90 @@ $("input[id$='HdnValue']").val(html);
        
           </asp:Panel>
         <br />
-    
+    </p>
 
-             <div id="print">
-    <div id="divPrint" runat="server"   >
-        <table cellpadding="0" class="style3"  runat="server" visible="false"  id="dd">
+   <div id="div_print">
+    <div id="divPrint" runat="server">
+   
+   <center>
+        <div id="boardShareHeader">
+        <table cellpadding="0" class="style3"  runat="server" visible="true"  id="headerTable">
             <tr>
                 <td class="style4">
-                    Name</td>
-                <td>
-                    <asp:Label ID="Label2" runat="server"></asp:Label>
+                        &nbsp;
                 </td>
+                <td> Year </td>
                 <td class="style5">
-                <asp:Label ID="Label9" runat="server" Text="Label"></asp:Label>
-                <asp:Label ID="Label10" runat="server" Text="Label"></asp:Label>
-                <asp:Label ID="Label11" runat="server" Text="Label"></asp:Label>
-                <asp:Label ID="Label12" runat="server" Text="Label"></asp:Label>
-                <asp:Label ID="Label13" runat="server" Text="Label"></asp:Label>
-                                            <asp:Label ID="Label15" runat="server" Text="Label"></asp:Label>
-                                            <asp:Label ID="Label16" runat="server" Text="Label"></asp:Label>
-                                            </td>
+                    <asp:Label ID="LabelSession" runat="server"></asp:Label>
+                </td>
                 <td>
-                    &nbsp;</td>
+                        &nbsp;
+                </td>
             </tr>
             <tr>
                 <td class="style4">
-                    Account Number </td>             <td>
-                    <asp:Label ID="Label3" runat="server"></asp:Label>
+                        &nbsp;
                 </td>
+                <td> Name </td>
                 <td class="style5">
-                    OPENING BALANCE&nbsp;
-                    <asp:Label ID="Label4" runat="server" Text="0"></asp:Label>
+                    <asp:Label ID="LabelName" runat="server"></asp:Label>
+                    <!-- 
+                    <asp:Label ID="Label9" runat="server" Text="Label"></asp:Label>
+                    <asp:Label ID="Label10" runat="server" Text="Label"></asp:Label>
+                    <asp:Label ID="Label11" runat="server" Text="Label"></asp:Label>
+                    <asp:Label ID="Label12" runat="server" Text="Label"></asp:Label>
+                    <asp:Label ID="Label13" runat="server" Text="Label"></asp:Label>
+                    <asp:Label ID="Label15" runat="server" Text="Label"></asp:Label>
+                    <asp:Label ID="Label16" runat="server" Text="Label"></asp:Label>
+                    -->
                 </td>
                 <td>
-                    Rs.<asp:Label ID="Label14" runat="server" Text="0"></asp:Label>
-                    <asp:Label ID="Label5" runat="server" Text="0"></asp:Label>
+                        &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="style4">
+                        &nbsp;
+                </td>
+                <td> Designation </td>
+                 <td class="style5">
+                    <asp:Label ID="LabelDesignation" runat="server"></asp:Label>
+                </td>
+                <td>
+                        &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="style4">
+                        &nbsp;
+                </td>
+                <td> Account Number </td>
+                 <td class="style5">
+                    <asp:Label ID="LabelAccountNo" runat="server"></asp:Label>
+                </td>
+                <td>
+                        &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="style4">
+                        &nbsp;
+                </td>
+                <td> OPENING BALANCE </td>
+                <td class="style5">
+                    <asp:Label ID="LabelShareOpeningBalance" runat="server" Text="0"></asp:Label>
+                </td>
+                <td>
+                        &nbsp;
                 </td>
             </tr>
         </table>
-                                    <br />
-      <div id="div_print">
+    </div>
+    
+      <br />
+    <div>
+    
+    <%--
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" onrowdatabound="GridView1_RowDataBound1" 
         style="font-family: Verdana; font-size: small" 
               onrowcreated="GridView1_RowCreated" BackColor="White" 
@@ -226,50 +314,68 @@ $("input[id$='HdnValue']").val(html);
         <SortedDescendingCellStyle BackColor="#CAC9C9" />
         <SortedDescendingHeaderStyle BackColor="#00547E" />
     </asp:GridView>
+     --%>
+    <div id="boardShareGrid">
+     <asp:GridView ID="boardShareGridView" runat="server" AutoGenerateColumns="false" HeaderStyle-BackColor="#7779AF" HeaderStyle-ForeColor="Black" OnRowDataBound="boardShareGridView_RowDataBound"
+     style="font-family: Verdana; font-size: small" BackColor="White"  BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="3" Width="860px">
+        <Columns>
+            <asp:BoundField DataField="t_account" HeaderText="Account No" Visible="false" />
+            <asp:BoundField DataField ="t_monthCalculation" HeaderText="Month" />
+            <asp:BoundField DataField="t_monthlyShare" HeaderText="Share" ItemStyle-HorizontalAlign="Right" />
+            <asp:BoundField DataField="t_monthlyShareArrear" HeaderText="Board Share" ItemStyle-HorizontalAlign="Right"/>
+            <asp:BoundField DataField="t_totalMonthly" HeaderText="Total" ItemStyle-HorizontalAlign="Right"/>
+            <asp:BoundField DataField="t_sumYearlyShareBalance" HeaderText="Monthly Balance" ItemStyle-HorizontalAlign="Right"/>
+            
+        </Columns>
+        </asp:GridView>
     </div>
+
+    </div>
+    <!-- 
     <table cellpadding="0" cellspacing="0">
         <tr>
             <td class="style8">
                 &nbsp;</td>
             <td class="style9">
                 &nbsp;<td class="style7">
-                <asp:Label ID="Label6" runat="server" style="font-weight: 700" Text="Label" Visible="False"></asp:Label>
+                <asp:Label ID="Label6" runat="server" style="font-weight: 700" Text="Label" Visible="true"></asp:Label>
             </td>
         </tr>
-        </table>
+     </table>
+     -->
     <br />
-    <table cellpadding="0" cellspacing="0" class="style10" runat="server" visible="false">
+    <div id="boardShareFooter">
+    <table cellpadding="0" cellspacing="0" class="style10" runat="server" visible="true" id="footetTable">
         <tr>
             <td class="style11">
-                BALANCE FBALANCE FROM PREVIOUS YEAR</td>
-            <td>
-                &nbsp;</td>
-        </tr>
-        <tr>
-            <td class="style11">
-                DEPOSITS AND REFUNDS</td>          <td>
-                &nbsp;</td>
-        </tr>
-        <tr>
-            <td class="style11">
-                INTEREST FOR
-                <asp:Label ID="Label8" runat="server" Text="Label"></asp:Label>
+                BALANCE FROM PREVIOUS YEAR</td>
+            <td align="right">
+                <asp:Label ID="LabelFShareOpeningBalance" runat="server" Text="0"></asp:Label>    
             </td>
-            <td>
-                &nbsp;</td>
         </tr>
         <tr>
-            <td class="style11">
-                LESS ADVANCES/WITHDRAWLS(-)</td>
-            <td>
-                &nbsp;</td>
-        </tr>
-        <tr>
-            <td class="style11">
-                BALANCE AS ON
+            <td class="style11">DEPOSITS AND REFUNDS</td>
+            <td align="right">
+                <asp:Label ID="LabelFShareFinalPayment" runat="server" Text="0"></asp:Label>
             </td>
-            <td>
-                &nbsp;</td>
+        </tr>
+        <tr>
+            <td class="style11">INTEREST FOR <asp:Label ID="LabelFSession" runat="server" Text="Label"></asp:Label></td>
+            <td align="right">
+                <asp:Label ID="LabelFShareInterest" runat="server" Text="0"></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td class="style11">LESS ADVANCES/WITHDRAWLS(-)</td>
+            <td align="right">
+                 <asp:Label ID="LabelFAdvance" runat="server" Text="0"></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td class="style11">BALANCE AS ON</td>
+            <td align="right">
+                <asp:Label ID="LabelFShareCurrentBalance" runat="server" Text="0"></asp:Label>
+            </td>
         </tr>
         <tr>
             <td class="style11">
@@ -277,10 +383,13 @@ $("input[id$='HdnValue']").val(html);
             <td>
                 &nbsp;</td>
         </tr>
-        
     </table>
+    </div>
+    </center>
+
   </div>
  <br />   
  </div>
+
 </asp:Content>
 
